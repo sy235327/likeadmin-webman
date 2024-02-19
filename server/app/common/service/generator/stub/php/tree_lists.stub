@@ -1,0 +1,80 @@
+<?php
+
+{NAMESPACE}
+
+
+{USE}
+use app\common\lists\ListsSearchInterface;
+use app\common\lists\ListsExcelInterface;
+use app\common\enum\ExportEnum;
+
+
+/**
+ * {CLASS_COMMENT}
+ * Class {UPPER_CAMEL_NAME}Lists
+ * @package app\{MODULE_NAME}\lists{PACKAGE_NAME}
+ */
+class {UPPER_CAMEL_NAME}Lists extends {EXTENDS_LISTS} implements ListsSearchInterface,ListsExcelInterface
+{
+    public bool $tree = true;
+
+
+    /**
+     * @notes 设置搜索条件
+     * @return \string[][]
+     * @author bingo
+     * @date {DATE}
+     */
+    public function setSearch(): array
+    {
+        return [
+            {QUERY_CONDITION}
+        ];
+    }
+
+
+    /**
+     * @notes 获取{NOTES}列表
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @author bingo
+     * @date {DATE}
+     */
+    public function lists(): array
+    {
+        $lists = {UPPER_CAMEL_NAME}::where($this->searchWhere)
+            ->field([{FIELD_DATA}])
+            ->order(['{PK}' => 'desc'])
+            ->select()
+            ->toArray();
+        if($this->export == ExportEnum::EXPORT){
+            return $lists;
+        }
+        return linear_to_tree($lists, 'children', '{TREE_ID}', '{TREE_PID}');
+    }
+
+
+    /**
+     * @notes 获取{NOTES}数量
+     * @return int
+     * @author bingo
+     * @date {DATE}
+     */
+    public function count(): int
+    {
+        return {UPPER_CAMEL_NAME}::where($this->searchWhere)->count();
+    }
+
+    public function setExcelFields(): array
+    {
+
+        return [];
+    }
+
+    public function setFileName(): string
+    {
+        return '{CLASS_COMMENT}';
+    }
+}

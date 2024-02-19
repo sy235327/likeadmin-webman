@@ -4,7 +4,7 @@
 namespace app\common\cache;
 
 
-use support\Cache;
+use think\facade\Cache;
 
 class BaseCache extends Cache
 {
@@ -18,25 +18,17 @@ class BaseCache extends Cache
     public function __construct(){
         $this->tagName = get_class($this);
     }
-    /**
-     * 自增缓存（针对数值缓存）
-     * @access public
-     * @param string $name 缓存变量名
-     * @param int    $step 步长
-     * @return false|int
-     */
-    public function inc(string $name, int $step = 1,$ttl = 0)
+    public function get($key, $default = null)
     {
-        if ($raw = $this->get($name)) {
-            $value  = $raw + $step;
-            $expire = $ttl;
-        } else {
-            $value  = $step;
-            $expire = 0;
-        }
-
-        return $this->set($name, $value, $expire) ? $value : false;
+        // TODO: Implement get() method.
+        return Cache::get($key,$default);
     }
+    public function delete($key)
+    {
+        // TODO: Implement get() method.
+        return Cache::delete($key);
+    }
+
     /**
      * @notes 重写父类set，自动打上标签
      * @param string $key

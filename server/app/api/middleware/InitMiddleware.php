@@ -21,28 +21,26 @@ use app\common\exception\ControllerExtendException;
 use app\common\exception\HttpException;
 use think\exception\ClassNotFoundException;
 use Webman\Http\Request;
-use function app\api\http\middleware\invoke;
+use Webman\Http\Response;
+use Webman\MiddlewareInterface;
 
 
-class InitMiddleware
+class InitMiddleware implements MiddlewareInterface
 {
 
     /**
      * @notes 初始化
-     * @param $request
-     * @param \Closure $next
      * @return mixed
      * @throws ControllerExtendException
      * @author 段誉
      * @date 2022/9/6 18:17
      */
-    public function handle(Request $request, \Closure $next)
+    public function process(Request $request, callable $handler): Response
     {
         $controllerClass = null;
         //获取控制器
         try {
             $controller = str_replace('.', '\\', $request->controller);
-            $controller = '\\app\\api\\controller\\' . $controller . 'Controller';
             $controllerClass = new $controller;
             if (($controllerClass instanceof BaseApiController) === false) {
                 throw new ControllerExtendException($controller, '404');
@@ -52,7 +50,6 @@ class InitMiddleware
         }
         //创建控制器对象
         $request->controllerObject = $controllerClass;
-        return $next($request);
+        return $handler($request);
     }
-
 }

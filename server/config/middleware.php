@@ -12,6 +12,9 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
+use app\api\middleware\InitMiddleware;
+use app\api\middleware\LoginMiddleware;
+
 return [
     'admin'=>[
         // 跨域中间件
@@ -24,7 +27,7 @@ return [
         app\admin\middleware\AuthMiddleware::class,
     ],
     'api'=>[
-        \app\api\middleware\InitMiddleware::class, // 初始化
-        \app\api\middleware\LoginMiddleware::class, // 登录验证
+        InitMiddleware::class, // 初始化
+        LoginMiddleware::class, // 登录验证
     ]
 ];

@@ -20,19 +20,15 @@ use app\api\service\UserTokenService;
 use app\common\cache\UserTokenCache;
 use app\common\service\JsonService;
 use Webman\Config;
+use Webman\Http\Request;
+use Webman\Http\Response;
+use Webman\MiddlewareInterface;
 
-class LoginMiddleware
+class LoginMiddleware implements MiddlewareInterface
 {
-    /**
-     * @notes 登录验证
-     * @param $request
-     * @param \Closure $next
-     * @return mixed|\think\response\Json
-     * @author 令狐冲
-     * @date 2021/7/1 17:33
-     */
-    public function handle($request, \Closure $next)
+    public function process(Request $request, callable $handler): Response
     {
+        // TODO: Implement process() method.
         $token = $request->header('token');
         //判断接口是否免登录
         $isNotNeedLogin = $request->controllerObject->isNotNeedLogin();
@@ -68,7 +64,6 @@ class LoginMiddleware
         $request->userInfo = $userInfo;
         $request->userId = $userInfo['user_id'] ?? 0;
 
-        return $next($request);
+        return $handler($request);
     }
-
 }

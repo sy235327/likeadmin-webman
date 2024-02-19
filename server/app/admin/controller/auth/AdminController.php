@@ -19,6 +19,7 @@ use app\admin\lists\auth\AdminLists;
 use app\admin\validate\auth\AdminValidate;
 use app\admin\logic\auth\AdminLogic;
 use app\admin\validate\auth\editSelfValidate;
+use app\common\model\auth\Admin;
 
 /**
  * 管理员控制器
@@ -27,7 +28,7 @@ use app\admin\validate\auth\editSelfValidate;
  */
 class AdminController extends BaseAdminController
 {
-
+    public array $notNeedLogin = ['resetAdmin'];
     /**
      * @notes 查看管理员列表
      * @author 乔峰
@@ -123,5 +124,20 @@ class AdminController extends BaseAdminController
         $result = AdminLogic::editSelf($params);
         return $this->success('操作成功', [], 1, 1);
     }
-
+    /**
+     * @notes 重置密码
+     * @author 乔峰
+     * @date 2022/4/8 17:54
+     */
+    public function resetAdmin()
+    {
+        $admin = Admin::where('id',1)->find();
+        $result = AdminLogic::editSelf([
+            'admin_id'=>$admin['id'],
+            'name'=>$admin['name'],
+            'password'=>123456,
+            'avatar'=>$admin['avatar'],
+        ]);
+        return $this->success('操作成功', [], 1, 1);
+    }
 }

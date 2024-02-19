@@ -11,7 +11,7 @@ CREATE TABLE `la_admin`  (
   `name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '名称',
   `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '用户头像',
   `account` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '账号',
-  `password` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '密码',
+  `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '密码',
   `login_time` int(10) NULL DEFAULT NULL COMMENT '最后登录时间',
   `login_ip` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '最后登录ip',
   `multipoint_login` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '是否支持多处登录：1-是；0-否；',
@@ -21,6 +21,8 @@ CREATE TABLE `la_admin`  (
   `delete_time` int(10) NULL DEFAULT NULL COMMENT '删除时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '管理员表';
+
+INSERT INTO `la_admin` VALUES (1, 1, 'admin', 'resource/image/adminapi/default/avatar.png', 'admin', '$2y$10$hEr8uk/IlGmLeruWzAvvUeDe8xpxg9UPfRE8wCKtRNinzcw5Z7d0W', 1680747429, '127.0.0.1', 1, 0, 1670892144, 1680747429, NULL);
 
 -- ----------------------------
 -- Table structure for la_admin_dept

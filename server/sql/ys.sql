@@ -1,0 +1,1 @@
+INSERT INTO `la_admin` VALUES (1, 1, 'admin', 'resource/image/adminapi/default/avatar.png', 'admin', '$2y$10$hEr8uk/IlGmLeruWzAvvUeDe8xpxg9UPfRE8wCKtRNinzcw5Z7d0W', 1680747429, '127.0.0.1', 1, 0, 1670892144, 1680747429, NULL);

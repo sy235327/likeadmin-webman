@@ -124,6 +124,26 @@ if (!function_exists('strUcwords')){
         return $str;
     }
 }
+if (!function_exists('strToUnderLineSpacing')){
+    function strToUnderLineSpacing($str): string {
+        $tmp_array = [];
+
+        for ($i = 0; $i < strlen($str); $i++) {
+            $ascii_code = ord($str[$i]);
+            if ($ascii_code >= 65 && $ascii_code <= 90) {
+                if ($i == 0) {
+                    $tmp_array[] = chr($ascii_code + 32);
+                } else {
+                    $tmp_array[] = '_' . chr($ascii_code + 32);
+                }
+            } else {
+                $tmp_array[] = $str[$i];
+            }
+        }
+
+        return implode('', $tmp_array);
+    }
+}
 if (!function_exists('url')) {
     /**
      * Url生成

@@ -105,7 +105,7 @@ class GeneratorLogic extends BaseLogic
                 'remark' => $params['remark'] ?? '',
                 'generate_type' => $params['generate_type'],
                 'module_name' => $params['module_name'],
-                'class_dir' => isset($params['class_dir']) ?strUcwords($params['class_dir']): '',
+                'class_dir' => isset($params['class_dir']) ?strToUnderLineSpacing($params['class_dir']): '',
                 'class_comment' => isset($params['class_comment']) ?strUcwords($params['class_comment']): '',
                 'menu' => $options['menu'],
                 'delete' => $options['delete'],

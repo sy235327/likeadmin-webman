@@ -19,7 +19,7 @@ use app\common\logic\BaseLogic;
 use app\common\model\tools\GenerateColumn;
 use app\common\model\tools\GenerateTable;
 use app\common\service\generator\GenerateService;
-use support\Db;
+use think\facade\Db;
 
 
 /**
@@ -62,7 +62,7 @@ class GeneratorLogic extends BaseLogic
      */
     public static function selectTable($params, $adminId)
     {
-        Db::beginTransaction();
+        Db::startTrans();
         try {
             foreach ($params['table'] as $item) {
                 // 添加主表基础信息
@@ -91,7 +91,7 @@ class GeneratorLogic extends BaseLogic
      */
     public static function editTable($params)
     {
-        Db::beginTransaction();
+        Db::startTrans();
         try {
             // 格式化配置
             $options = self::formatConfigByTableData($params);
@@ -147,7 +147,7 @@ class GeneratorLogic extends BaseLogic
      */
     public static function deleteTable($params)
     {
-        Db::beginTransaction();
+        Db::startTrans();
         try {
             GenerateTable::whereIn('id', $params['id'])->delete();
             GenerateColumn::whereIn('table_id', $params['id'])->delete();
@@ -170,7 +170,7 @@ class GeneratorLogic extends BaseLogic
      */
     public static function syncColumn($params)
     {
-        Db::beginTransaction();
+        Db::startTrans();
         try {
             // table 信息
             $table = GenerateTable::findOrEmpty($params['id']);

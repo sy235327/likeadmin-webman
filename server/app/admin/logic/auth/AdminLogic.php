@@ -24,7 +24,7 @@ use app\common\model\auth\AdminRole;
 use app\common\model\auth\AdminSession;
 use app\common\cache\AdminTokenCache;
 use app\common\service\FileService;
-use support\Db;
+use think\facade\Db;
 use Webman\Config;
 
 /**
@@ -43,7 +43,7 @@ class AdminLogic extends BaseLogic
      */
     public static function add(array $params)
     {
-        Db::beginTransaction();
+        Db::startTrans();
         try {
             $password = password_hash($params['password'],PASSWORD_DEFAULT);
             $defaultAvatar = config('project.default_image.admin_avatar');
@@ -85,7 +85,7 @@ class AdminLogic extends BaseLogic
      */
     public static function edit(array $params): bool
     {
-        Db::beginTransaction();
+        Db::startTrans();
         try {
             // 基础信息
             $data = [
@@ -151,7 +151,7 @@ class AdminLogic extends BaseLogic
      */
     public static function delete(array $params): bool
     {
-        Db::beginTransaction();
+        Db::startTrans();
         try {
             $admin = Admin::findOrEmpty($params['id']);
             if ($admin->root == YesNoEnum::YES) {

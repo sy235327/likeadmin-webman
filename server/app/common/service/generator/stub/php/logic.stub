@@ -5,7 +5,7 @@
 
 {USE}
 use app\common\logic\BaseLogic;
-use support\Db;
+use think\facade\Db;
 
 
 /**
@@ -26,7 +26,7 @@ class {UPPER_CAMEL_NAME}Logic extends BaseLogic
      */
     public static function add(array $params): bool
     {
-        Db::beginTransaction();
+        Db::startTrans();
         try {
             {UPPER_CAMEL_NAME}::create([
 {CREATE_DATA}
@@ -51,7 +51,7 @@ class {UPPER_CAMEL_NAME}Logic extends BaseLogic
      */
     public static function edit(array $params): bool
     {
-        Db::beginTransaction();
+        Db::startTrans();
         try {
             {UPPER_CAMEL_NAME}::where('{PK}', $params['{PK}'])->update([
 {UPDATE_DATA}

@@ -16,7 +16,7 @@ namespace app\api\logic;
 
 use app\common\cache\WebScanLoginCache;
 use app\common\logic\BaseLogic;
-use support\Db;
+use think\facade\Db;
 use app\api\service\{UserTokenService, WechatUserService};
 use app\common\enum\{LoginEnum, user\UserTerminalEnum, YesNoEnum};
 use app\common\service\{
@@ -163,7 +163,7 @@ class LoginLogic extends BaseLogic
      */
     public static function oaLogin(array $params)
     {
-        Db::beginTransaction();
+        Db::startTrans();
         try {
             //通过code获取微信 openid
             $response = (new WeChatOaService())->getOaResByCode($params['code']);
@@ -221,7 +221,7 @@ class LoginLogic extends BaseLogic
      */
     public static function mnpLogin(array $params)
     {
-        Db::beginTransaction();
+        Db::startTrans();
         try {
             //通过code获取微信 openid
             $response = (new WeChatMnpService())->getMnpResByCode($params['code']);
@@ -385,7 +385,7 @@ class LoginLogic extends BaseLogic
      */
     public static function scanLogin($params)
     {
-        Db::beginTransaction();
+        Db::startTrans();
         try {
             // 通过code 获取 access_token,openid,unionid等信息
             $userAuth = WeChatRequestService::getUserAuthByCode($params['code']);

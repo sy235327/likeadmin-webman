@@ -20,7 +20,7 @@ use app\common\{
     logic\BaseLogic,
     model\auth\SystemRoleMenu
 };
-use support\Db;
+use think\facade\Db;
 
 
 /**
@@ -40,7 +40,7 @@ class RoleLogic extends BaseLogic
      */
     public static function add(array $params): bool
     {
-        Db::beginTransaction();
+        Db::startTrans();
         try {
             $menuId = !empty($params['menu_id']) ? $params['menu_id'] : [];
 
@@ -81,7 +81,7 @@ class RoleLogic extends BaseLogic
      */
     public static function edit(array $params): bool
     {
-        Db::beginTransaction();
+        Db::startTrans();
         try {
             $menuId = !empty($params['menu_id']) ? $params['menu_id'] : [];
 

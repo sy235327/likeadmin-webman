@@ -18,7 +18,7 @@ class {UPPER_CAMEL_NAME}Controller extends {EXTENDS_CONTROLLER}
 
     /**
      * @notes 获取{NOTES}列表
-     * @return \think\response\Json
+     * @return \support\Response
      * @author bingo
      * @date {DATE}
      */
@@ -30,7 +30,7 @@ class {UPPER_CAMEL_NAME}Controller extends {EXTENDS_CONTROLLER}
 
     /**
      * @notes 添加{NOTES}
-     * @return \think\response\Json
+     * @return \support\Response
      * @author bingo
      * @date {DATE}
      */
@@ -47,7 +47,7 @@ class {UPPER_CAMEL_NAME}Controller extends {EXTENDS_CONTROLLER}
 
     /**
      * @notes 编辑{NOTES}
-     * @return \think\response\Json
+     * @return \support\Response
      * @author bingo
      * @date {DATE}
      */
@@ -64,7 +64,7 @@ class {UPPER_CAMEL_NAME}Controller extends {EXTENDS_CONTROLLER}
 
     /**
      * @notes 删除{NOTES}
-     * @return \think\response\Json
+     * @return \support\Response
      * @author bingo
      * @date {DATE}
      */
@@ -78,7 +78,7 @@ class {UPPER_CAMEL_NAME}Controller extends {EXTENDS_CONTROLLER}
 
     /**
      * @notes 获取{NOTES}详情
-     * @return \think\response\Json
+     * @return \support\Response
      * @author bingo
      * @date {DATE}
      */

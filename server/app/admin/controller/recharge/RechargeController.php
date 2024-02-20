@@ -29,7 +29,7 @@ class RechargeController extends BaseAdminController
 
     /**
      * @notes 获取充值设置
-     * @return \think\response\Json
+     * @return \support\Response
      * @author 段誉
      * @date 2023/2/22 16:48
      */
@@ -42,7 +42,7 @@ class RechargeController extends BaseAdminController
 
     /**
      * @notes 充值设置
-     * @return \think\response\Json
+     * @return \support\Response
      * @author 段誉
      * @date 2023/2/22 16:48
      */
@@ -59,7 +59,7 @@ class RechargeController extends BaseAdminController
 
     /**
      * @notes 充值记录
-     * @return \think\response\Json
+     * @return \support\Response
      * @author 段誉
      * @date 2023/2/24 16:01
      */
@@ -71,7 +71,7 @@ class RechargeController extends BaseAdminController
 
     /**
      * @notes 退款
-     * @return \think\response\Json
+     * @return \support\Response
      * @author 段誉
      * @date 2023/2/28 17:29
      */
@@ -89,7 +89,7 @@ class RechargeController extends BaseAdminController
 
     /**
      * @notes 重新退款
-     * @return \think\response\Json
+     * @return \support\Response
      * @author 段誉
      * @date 2023/2/28 19:17
      */

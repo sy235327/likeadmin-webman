@@ -29,7 +29,7 @@ class AccountLogController extends BaseAdminController
 
     /**
      * @notes 账户流水明细
-     * @return \think\response\Json
+     * @return \support\Response
      * @author 段誉
      * @date 2023/2/24 15:25
      */
@@ -41,7 +41,7 @@ class AccountLogController extends BaseAdminController
 
     /**
      * @notes 用户余额变动类型
-     * @return \think\response\Json
+     * @return \support\Response
      * @author 段誉
      * @date 2023/2/24 15:25
      */

@@ -30,7 +30,7 @@ class RefundController extends BaseAdminController
 
     /**
      * @notes 退还统计
-     * @return \think\response\Json
+     * @return \support\Response
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
@@ -46,7 +46,7 @@ class RefundController extends BaseAdminController
 
     /**
      * @notes 退款记录
-     * @return \think\response\Json
+     * @return \support\Response
      * @author 段誉
      * @date 2023/3/1 9:47
      */
@@ -58,7 +58,7 @@ class RefundController extends BaseAdminController
 
     /**
      * @notes 退款日志
-     * @return \think\response\Json
+     * @return \support\Response
      * @author 段誉
      * @date 2023/3/1 9:47
      */

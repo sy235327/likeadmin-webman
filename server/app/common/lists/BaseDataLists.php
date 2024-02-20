@@ -129,7 +129,7 @@ abstract class BaseDataLists implements ListsInterface
 
     /**
      * @notes 导出初始化
-     * @return false|\think\response\Json
+     * @return false|\support\Response
      * @author 令狐冲
      * @date 2021/7/31 01:15
      */

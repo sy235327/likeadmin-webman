@@ -24,7 +24,7 @@ class UserValidate extends BaseValidate
 
     /**
      * @notes 详情场景
-     * @return \app\admin\validate\user\UserValidate
+     * @return \app\adminapi\validate\user\UserValidate
      * @author 乔峰
      * @date 2022/9/22 16:35
      */

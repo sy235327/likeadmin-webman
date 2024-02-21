@@ -17,11 +17,11 @@ return [
         // 跨域中间件
         app\common\http\middleware\AdminAllowMiddleware::class,
         // 初始化
-        app\admin\middleware\InitMiddleware::class,
+        app\adminapi\middleware\InitMiddleware::class,
         // 登录验证
-        app\admin\middleware\LoginMiddleware::class,
+        app\adminapi\middleware\LoginMiddleware::class,
         // 权限认证
-        app\admin\middleware\AuthMiddleware::class,
+        app\adminapi\middleware\AuthMiddleware::class,
     ],
     'api'=>[
         \app\api\middleware\InitMiddleware::class, // 初始化

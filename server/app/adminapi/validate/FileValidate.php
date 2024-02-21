@@ -30,7 +30,7 @@ class FileValidate extends BaseValidate
 
     /**
      * @notes id验证场景
-     * @return \app\admin\validate\FileValidate
+     * @return \app\adminapi\validate\FileValidate
      * @author 乔峰
      * @date 2021/12/29 14:32
      */

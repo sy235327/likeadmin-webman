@@ -14,10 +14,10 @@
 
 namespace app\adminapi\controller\article;
 
-use app\admin\controller\BaseAdminController;
-use app\admin\lists\article\ArticleLists;
-use app\admin\logic\article\ArticleLogic;
-use app\admin\validate\article\ArticleValidate;
+use app\adminapi\controller\BaseAdminController;
+use app\adminapi\lists\article\ArticleLists;
+use app\adminapi\logic\article\ArticleLogic;
+use app\adminapi\validate\article\ArticleValidate;
 
 /**
  * 资讯管理控制器

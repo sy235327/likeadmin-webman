@@ -4,7 +4,7 @@
 namespace app\common\cache;
 
 
-use app\admin\logic\auth\AuthLogic;
+use app\adminapi\logic\auth\AuthLogic;
 use think\facade\Cache;
 
 class AdminAuthCache extends BaseCache

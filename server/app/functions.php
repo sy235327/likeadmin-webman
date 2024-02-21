@@ -462,3 +462,17 @@ if (!function_exists('download_file')) {
         return $fileSrc;
     }
 }
+
+if (!function_exists('handle_file_url')) {
+    function handle_file_url($list,$fileNameList = [])
+    {
+        foreach ($list as &$item){
+            foreach ($fileNameList as $name){
+                if (isset($item[$name])){
+                    $item[$name] = $item[$name]?FileService::getFileUrl($item[$name]):$item[$name];
+                }
+            }
+        }
+        return $list;
+    }
+}

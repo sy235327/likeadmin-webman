@@ -98,7 +98,7 @@ class ListsGenerator extends BaseGenerator implements GenerateInterface
      */
     public function getUseContent()
     {
-        if ($this->moduleName == 'admin') {
+        if ($this->moduleName == 'adminapi') {
             $tpl = "use app\\" . $this->moduleName . "\\lists\\BaseAdminDataLists;" . PHP_EOL;
         } else {
             $tpl = "use app\\common\\lists\\BaseDataLists;" . PHP_EOL;
@@ -152,7 +152,7 @@ class ListsGenerator extends BaseGenerator implements GenerateInterface
     public function getExtendsListsContent()
     {
         $tpl = 'BaseAdminDataLists';
-        if ($this->moduleName != 'admin') {
+        if ($this->moduleName != 'adminapi') {
             $tpl = 'BaseDataLists';
         }
         return $tpl;

@@ -434,7 +434,7 @@ class VueEditGenerator extends BaseGenerator implements GenerateInterface
         if ($admin_url){
             $dir = $admin_url . '/src/views/' . $this->getTableName() . '/';
         }else{
-            $dir = dirname(root_path()). '/admin/src/views/' . $this->getTableName() . '/';
+            $dir = dirname(root_path()). '/adminapi/src/views/' . $this->getTableName() . '/';
         }
         $this->checkDir($dir);
         return $dir;

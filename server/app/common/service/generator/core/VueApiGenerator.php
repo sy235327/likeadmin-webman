@@ -85,7 +85,7 @@ class VueApiGenerator extends BaseGenerator implements GenerateInterface
         if ($admin_url){
             $dir = $admin_url . '/src/api/';
         }else{
-            $dir = dirname(root_path()). '/admin/src/api/';
+            $dir = dirname(root_path()). '/adminapi/src/api/';
         }
         $this->checkDir($dir);
         return $dir;

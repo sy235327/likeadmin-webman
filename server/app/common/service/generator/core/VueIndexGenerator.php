@@ -249,7 +249,7 @@ class VueIndexGenerator extends BaseGenerator implements GenerateInterface
         if ($admin_url){
             $dir = $admin_url . '/src/views/' .  $this->getLowerTableName() . '/';
         }else{
-            $dir = dirname(root_path()) . '/admin/src/views/' . $this->getLowerTableName() . '/';
+            $dir = dirname(root_path()) . '/adminapi/src/views/' . $this->getLowerTableName() . '/';
         }
         $this->checkDir($dir);
         return $dir;

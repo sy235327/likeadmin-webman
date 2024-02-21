@@ -13,7 +13,7 @@
  */
 
 use Webman\Route;
-Route::group('/admin',function (){
+Route::group('/adminapi',function (){
     //获取网站信息
     Route::get('/get_web_site',[app\admin\controller\setting\web\WebSettingController::class,'getWebsite']);
     //设置网站信息

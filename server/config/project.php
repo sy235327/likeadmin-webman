@@ -7,13 +7,13 @@ return [
     'website' => [
         'name' => getenv('project.web_name')?:'likeadmin', // 网站名称
         'url' => getenv('project.web_url')?:'www.likeadmin.cn/', // 网站地址
-        'login_image' => 'image/admin/login_image.png',
-        'web_logo' => 'image/admin/web_logo.jpg', // 网站logo
-        'web_favicon' => 'image/admin/web_favicon.ico', // 网站图标
+        'login_image' => 'resource/image/admin/login_image.png',
+        'web_logo' => 'resource/image/admin/web_logo.jpg', // 网站logo
+        'web_favicon' => 'resource/image/admin/web_favicon.ico', // 网站图标
         'shop_name' => 'likeadmin', // 商城名称
-        'shop_logo' => 'image/admin/shop_logo.png', // 商城图标
-        'pc_logo' => 'image/admin/pc_logo.png', // pc_logo
-        'pc_ico' => 'image/admin/web_favicon.ico', // pc_ico
+        'shop_logo' => 'resource/image/admin/shop_logo.png', // 商城图标
+        'pc_logo' => 'resource/image/admin/pc_logo.png', // pc_logo
+        'pc_ico' => 'resource/image/admin/web_favicon.ico', // pc_ico
         'pc_title' => 'likeadmin', // PC网站标题
     ],
 
@@ -50,18 +50,18 @@ return [
 
     // 各种默认图片
     'default_image' => [
-        'admin_avatar' => 'image/admin/avatar.png',
-        'user_avatar' => 'image/admin/default_avatar.png',
-        'qq_group' => 'image/admin/qq_group.png', // qq群
-        'customer_service' => 'image/admin/customer_service.jpg', // 客服
-        'menu_admin' => '/image/admin/menu_admin.png',// 首页快捷菜单-管理员
-        'menu_role' => 'image/admin/menu_role.png', // 首页快捷菜单-角色
-        'menu_dept' => 'image/admin/menu_dept.png',// 首页快捷菜单-部门
-        'menu_dict' => 'image/admin/menu_dict.png',// 首页快捷菜单-字典
-        'menu_generator' => 'image/admin/menu_generator.png',// 首页快捷菜单-代码生成器
-        'menu_auth' => 'image/admin/menu_auth.png',// 首页快捷菜单-菜单权限
-        'menu_web' => 'image/admin/menu_web.png',// 首页快捷菜单-网站信息
-        'menu_file' => 'image/admin/menu_file.png',// 首页快捷菜单-素材中心
+        'admin_avatar' => 'resource/image/admin/avatar.png',
+        'user_avatar' => 'resource/image/admin/default_avatar.png',
+        'qq_group' => 'resource/image/admin/qq_group.png', // qq群
+        'customer_service' => 'resource/image/admin/customer_service.jpg', // 客服
+        'menu_admin' => '/resource/image/admin/menu_admin.png',// 首页快捷菜单-管理员
+        'menu_role' => 'resource/image/admin/menu_role.png', // 首页快捷菜单-角色
+        'menu_dept' => 'resource/image/admin/menu_dept.png',// 首页快捷菜单-部门
+        'menu_dict' => 'resource/image/admin/menu_dict.png',// 首页快捷菜单-字典
+        'menu_generator' => 'resource/image/admin/menu_generator.png',// 首页快捷菜单-代码生成器
+        'menu_auth' => 'resource/image/admin/menu_auth.png',// 首页快捷菜单-菜单权限
+        'menu_web' => 'resource/image/admin/menu_web.png',// 首页快捷菜单-网站信息
+        'menu_file' => 'resource/image/admin/menu_file.png',// 首页快捷菜单-素材中心
     ],
 
     // 文件上传限制 (图片)

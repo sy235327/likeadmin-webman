@@ -13,7 +13,7 @@
  */
 
 return [
-    'admin'=>[
+    'adminapi'=>[
         // 跨域中间件
         app\common\http\middleware\AdminAllowMiddleware::class,
         // 初始化

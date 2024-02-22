@@ -4,4 +4,7 @@
 *.log
 .env
 /tests/tmp
+/public/uploads
+/public/admin
+/public/pc
 /tests/.phpunit.result.cache

@@ -12,13 +12,13 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-use Webman\Route;
-Route::group('/adminapi',function (){
-    //获取网站信息
-    Route::get('/get_web_site',[app\adminapi\controller\setting\web\WebSettingController::class,'getWebsite']);
-    //设置网站信息
-    Route::post('/set_web_site',[app\adminapi\controller\setting\web\WebSettingController::class,'setWebsite']);
-});
+//use Webman\Route;
+//Route::group('/adminapi',function (){
+//    //获取网站信息
+//    Route::get('/get_web_site',[app\adminapi\controller\setting\web\WebSettingController::class,'getWebsite']);
+//    //设置网站信息
+//    Route::post('/set_web_site',[app\adminapi\controller\setting\web\WebSettingController::class,'setWebsite']);
+//});
 
 
 

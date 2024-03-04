@@ -1,15 +1,10 @@
 <template>
     <div>
         <el-card class="!border-none mb-3" shadow="never" :body-style="{ padding: '10px' }">
-            <el-form
-                ref="formRef"
-                class="mb-[-16px] serach-list"
-                :model="queryParams"
-                inline
-            >
-{SEARCH_VIEW}
+            <el-form ref="formRef" class="mb-[-16px] serach-list" :model="queryParams" inline>
+                {SEARCH_VIEW}
                 <div>
-                    <el-form-item  label="&nbsp;" label-width="100px">
+                    <el-form-item label="&nbsp;" label-width="100px">
                         <el-button type="primary" @click="getLists">查询</el-button>
                         <el-button @click="resetParams">重置</el-button>
                     </el-form-item>
@@ -25,12 +20,21 @@
                         </template>
                         新增
                     </el-button>
-<!--                <el-button @click="handleExpand"> 展开/折叠 </el-button>-->
+                    <!--                <el-button @click="handleExpand"> 展开/折叠 </el-button>-->
                 </div>
-                <export-data class="ml-2.5" :fetch-fun="api{UPPER_CAMEL_NAME}Lists" :params="queryParams" :page-size="size"/>
+                <export-data
+                    class="ml-2.5"
+                    :fetch-fun="api{UPPER_CAMEL_NAME}Lists"
+                    :params="queryParams"
+                    :page-size="size"
+                />
             </div>
             <div class="mt-3">
-                <el-table border stripe lazy highlight-current-row
+                <el-table
+                    border
+                    stripe
+                    lazy
+                    highlight-current-row
                     v-loading="loading"
                     ref="tableRef"
                     class="mt-3"
@@ -45,7 +49,7 @@
                             {{ row.parentIndex }}
                         </template>
                     </el-table-column>
-{LISTS_VIEW}
+                    {LISTS_VIEW}
                     <el-table-column label="操作" width="160" fixed="right">
                         <template #default="{ row }">
                             <el-button
@@ -56,7 +60,7 @@
                             >
                                 新增
                             </el-button>
-                             <el-button
+                            <el-button
                                 v-perms="['{PERMS_EDIT}']"
                                 type="primary"
                                 link
@@ -77,10 +81,20 @@
                 </el-table>
             </div>
             <div class="flex mt-3 justify-end">
-                <el-pagination background layout="total, sizes, prev, pager, next, jumper" :total="1000" />
+                <el-pagination
+                    background
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="1000"
+                />
             </div>
         </el-card>
-        <edit-popup v-if="showEdit" ref="editRef" :dict-data="dictData" @success="getLists" @close="showEdit = false" />
+        <edit-popup
+            v-if="showEdit"
+            ref="editRef"
+            :dict-data="dictData"
+            @success="getLists"
+            @close="showEdit = false"
+        />
     </div>
 </template>
 
@@ -189,10 +203,8 @@ onMounted(() => {
 })
 </script>
 
-
 <style>
-.el-form--inline .el-form-item{
-    margin-right:20px;
+.el-form--inline .el-form-item {
+    margin-right: 20px;
 }
 </style>
-

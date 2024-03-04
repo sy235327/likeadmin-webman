@@ -1,4 +1,9 @@
-<el-table-column label="{COLUMN_COMMENT}" prop="{COLUMN_NAME}" sortable show-overflow-tooltip>
+<el-table-column
+    label="{COLUMN_COMMENT}"
+    prop="{COLUMN_NAME}"
+    sortable
+    show-overflow-tooltip
+>
     <template #default="{ row }">
         <dict-value :options="dictData.{DICT_TYPE}" :value="row.{COLUMN_NAME}" />
     </template>

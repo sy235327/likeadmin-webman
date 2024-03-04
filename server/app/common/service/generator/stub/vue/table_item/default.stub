@@ -1,1 +1,6 @@
-<el-table-column label="{COLUMN_COMMENT}" prop="{COLUMN_NAME}" sortable show-overflow-tooltip />
+<el-table-column
+    label="{COLUMN_COMMENT}"
+    prop="{COLUMN_NAME}"
+    sortable
+    show-overflow-tooltip
+/>

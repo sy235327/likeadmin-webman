@@ -9,7 +9,7 @@
             @close="handleClose"
         >
             <el-form ref="formRef" :model="formData" label-width="90px" :rules="formRules">
-{FORM_VIEW}
+                {FORM_VIEW}
             </el-form>
         </popup>
     </div>
@@ -75,8 +75,8 @@ const getDetail = async (row: Record<string, any>) => {
 const handleSubmit = async () => {
     await formRef.value?.validate()
     const data = { ...formData, {CHECKBOX_JOIN} }
-    mode.value == 'edit' 
-        ? await api{UPPER_CAMEL_NAME}Edit(data) 
+    mode.value == 'edit'
+        ? await api{UPPER_CAMEL_NAME}Edit(data)
         : await api{UPPER_CAMEL_NAME}Add(data)
     popupRef.value?.close()
     emit('success')

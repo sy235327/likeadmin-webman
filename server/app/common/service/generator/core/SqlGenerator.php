@@ -81,7 +81,7 @@ class SqlGenerator extends BaseGenerator implements GenerateInterface
      */
     public function getMenuTableNameContent()
     {
-        $tablePrefix = config('database.connections.mysql.prefix');
+        $tablePrefix = config('thinkorm.connections.mysql.prefix');
         return $tablePrefix . 'system_menu';
     }
 

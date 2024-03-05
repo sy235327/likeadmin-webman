@@ -13,6 +13,8 @@
  */
 
 use Workerman\Worker;
+//慢进程，nginx反向代理部分需要慢执行的路由到TASK_LISTEN的端口进程执行解决堵塞问题
+//https://www.workerman.net/doc/webman/others/task.html
 $task = [
     'name' => 'name',
     'handler' => \Webman\App::class,

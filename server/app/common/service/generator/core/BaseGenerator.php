@@ -34,6 +34,11 @@ abstract class BaseGenerator
      * @var string
      */
     protected $classDir;
+    /**
+     * 类描述
+     * @var string
+     */
+    protected $classComment;
 
     /**
      * 表信息
@@ -120,6 +125,7 @@ abstract class BaseGenerator
         $this->setModuleName($tableData['module_name']);
         // 设置类目录
         $this->setClassDir($tableData['class_dir'] ?? '');
+        $this->setClassComment($tableData['class_comment'] ?? $tableData['table_name']);
         // 替换模板变量
         $this->replaceVariables();
     }
@@ -467,6 +473,10 @@ abstract class BaseGenerator
     public function isTreeCrud()
     {
         return $this->tableData['template_type'] == GeneratorEnum::TEMPLATE_TYPE_TREE;
+    }
+
+    public function setClassComment(string $class_comment):void {
+        $this->classComment = $class_comment;
     }
 
 }

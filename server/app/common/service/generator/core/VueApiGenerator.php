@@ -67,9 +67,9 @@ class VueApiGenerator extends BaseGenerator implements GenerateInterface
     {
         $content = $this->getTableName();
         if (!empty($this->classDir)) {
-            $content = $this->classDir . '/' . $this->getTableName();
+            $content = $this->classDir . '/' . $this->classComment;
         }
-        return Str::lower($content);
+        return $content;
     }
 
 

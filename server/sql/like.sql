@@ -22,7 +22,7 @@ CREATE TABLE `la_admin`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '管理员表';
 
-INSERT INTO `la_admin` VALUES (1, 1, 'adminapi', 'resource/image/adminapi/default/avatar.png', 'adminapi', '$2y$10$hEr8uk/IlGmLeruWzAvvUeDe8xpxg9UPfRE8wCKtRNinzcw5Z7d0W', 1680747429, '127.0.0.1', 1, 0, 1670892144, 1680747429, NULL);
+INSERT INTO `la_admin` VALUES (1, 1, 'admin', 'resource/image/adminapi/default/avatar.png', 'admin', '$2y$10$hEr8uk/IlGmLeruWzAvvUeDe8xpxg9UPfRE8wCKtRNinzcw5Z7d0W', 1680747429, '127.0.0.1', 1, 0, 1670892144, 1680747429, NULL);
 
 -- ----------------------------
 -- Table structure for la_admin_dept

@@ -675,10 +675,10 @@
     fast-glob "^3.2.11"
     fs-extra "^10.0.0"
 
-"@dcloudio/uts-darwin-arm64@3.0.0-alpha-3050520220824001":
+"@dcloudio/uts-win32-x64-msvc@3.0.0-alpha-3050520220824001":
   version "3.0.0-alpha-3050520220824001"
-  resolved "https://registry.npmmirror.com/@dcloudio/uts-darwin-arm64/-/uts-darwin-arm64-3.0.0-alpha-3050520220824001.tgz"
-  integrity sha512-wHLdtps0ER0nBIz84+CKK2F1lE+c7ezyQW78V+/vvR3I3Ted17XQdBpgoYj70GoAcB/JtPYIjaTcqR8zsOVuWA==
+  resolved "https://registry.npmmirror.com/@dcloudio/uts-win32-x64-msvc/-/uts-win32-x64-msvc-3.0.0-alpha-3050520220824001.tgz"
+  integrity sha512-YBsiaIyNLfOw/RbNA7e2oHge2OXeadSlpbR5Zt5yqWzFaMWSdZ0/4fei9YLqYT4k6ZRwouFYIVPPXGeV6Kz/2w==
 
 "@dcloudio/uts@3.0.0-alpha-3050520220824001":
   version "3.0.0-alpha-3050520220824001"
@@ -1675,15 +1675,10 @@ es-module-lexer@^0.9.3:
   resolved "https://registry.npmmirror.com/es-module-lexer/-/es-module-lexer-0.9.3.tgz"
   integrity sha512-1HQ2M2sPtxwnvOvT1ZClHyQDiggdNjURWpY2we6aMKCQiUVxTmVs2UYPLIrD84sS+kMdUwfBSylbJPwNnBrnHQ==
 
-esbuild-darwin-64@0.14.54:
+esbuild-windows-64@0.14.54:
   version "0.14.54"
-  resolved "https://registry.npmmirror.com/esbuild-darwin-64/-/esbuild-darwin-64-0.14.54.tgz"
-  integrity sha512-jtdKWV3nBviOd5v4hOpkVmpxsBy90CGzebpbO9beiqUYVMBtSc0AL9zGftFuBon7PNDcdvNCEuQqw2x0wP9yug==
-
-esbuild-darwin-arm64@0.14.54:
-  version "0.14.54"
-  resolved "https://registry.npmmirror.com/esbuild-darwin-arm64/-/esbuild-darwin-arm64-0.14.54.tgz"
-  integrity sha512-OPafJHD2oUPyvJMrsCvDGkRrVCar5aVyHfWGQzY1dWnzErjrDuSETxwA2HSsyg2jORLY8yBfzc1MIpUkXlctmw==
+  resolved "https://registry.npmmirror.com/esbuild-windows-64/-/esbuild-windows-64-0.14.54.tgz"
+  integrity sha512-AoHTRBUuYwXtZhjXZbA1pGfTo8cJo3vZIcWGLiUcTNgHpJJMC1rVA44ZereBHMJtotyN71S8Qw0npiCIkW96cQ==
 
 esbuild@^0.14.27:
   version "0.14.54"
@@ -2084,11 +2079,6 @@ fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmmirror.com/fs.realpath/-/fs.realpath-1.0.0.tgz"
   integrity sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==
-
-fsevents@~2.3.2:
-  version "2.3.2"
-  resolved "https://registry.npmmirror.com/fsevents/-/fsevents-2.3.2.tgz"
-  integrity sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==
 
 function-bind@^1.1.1:
   version "1.1.1"

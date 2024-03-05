@@ -37,7 +37,7 @@ class DataController extends BaseAdminController
      */
     public function article()
     {
-        $limit = $this->request->get('limit/d', 10);
+        $limit = $this->request->get('limit', 10);
         $result = DecorateDataLogic::getArticleLists($limit);
         return $this->success('获取成功', $result);
     }

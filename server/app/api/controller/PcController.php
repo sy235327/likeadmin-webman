@@ -86,8 +86,8 @@ class PcController extends BaseApiController
      */
     public function articleDetail()
     {
-        $id = $this->request->get('id/d', 0);
-        $source = $this->request->get('source/s', 'default');
+        $id = $this->request->get('id', 0);
+        $source = $this->request->get('source', 'default');
         $result = PcLogic::getArticleDetail($this->userId, $id, $source);
         return $this->data($result);
     }

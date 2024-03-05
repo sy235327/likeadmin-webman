@@ -71,7 +71,7 @@ class IndexController extends BaseApiController
      */
     public function policy()
     {
-        $type = $this->request->get('type/s', '');
+        $type = $this->request->get('type', '');
         $result = IndexLogic::getPolicyByType($type);
         return $this->data($result);
     }
@@ -85,7 +85,7 @@ class IndexController extends BaseApiController
      */
     public function decorate()
     {
-        $id = $this->request->get('id/d');
+        $id = $this->request->get('id');
         $result = IndexLogic::getDecorate($id);
         return $this->data($result);
     }

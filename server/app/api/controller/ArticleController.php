@@ -74,7 +74,7 @@ class ArticleController extends BaseApiController
      */
     public function detail()
     {
-        $id = $this->request->get('id/d');
+        $id = $this->request->get('id');
         $result = ArticleLogic::detail($id, $this->userId);
         return $this->data($result);
     }
@@ -88,7 +88,7 @@ class ArticleController extends BaseApiController
      */
     public function addCollect()
     {
-        $articleId = $this->request->post('id/d');
+        $articleId = $this->request->post('id');
         ArticleLogic::addCollect($articleId, $this->userId);
         return $this->success('操作成功');
     }
@@ -102,7 +102,7 @@ class ArticleController extends BaseApiController
      */
     public function cancelCollect()
     {
-        $articleId = $this->request->post('id/d');
+        $articleId = $this->request->post('id');
         ArticleLogic::cancelCollect($articleId, $this->userId);
         return $this->success('操作成功');
     }

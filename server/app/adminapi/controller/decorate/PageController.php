@@ -35,7 +35,7 @@ class PageController extends BaseAdminController
      */
     public function detail()
     {
-        $id = $this->request->get('id/d');
+        $id = $this->request->get('id');
         $result = DecoratePageLogic::getDetail($id);
         return $this->success('获取成功', $result);
     }

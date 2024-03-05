@@ -87,6 +87,51 @@ trait ListsSearchTrait
                         $where[] = [$whereField, 'find in set', $this->params[$paramsName]];
                     }
                     break;
+                case 'find_in_set_to_like': // find_in_set查询
+                    foreach ($whereFields as $whereField) {
+                        $paramsName = substr_symbol_behind($whereField);
+                        if (!isset($this->params[$paramsName]) || $this->params[$paramsName] == '') {
+                            continue;
+                        }
+                        $ids = $this->params[$paramsName];
+                        if (!is_array($ids)){
+                            $ids = explode(',',$ids);
+                        }
+                        $likeStr = '';
+                        foreach ($ids as $id){
+                            if ($id){
+                                $likeStr .= ','.$id.',%';
+                            }
+                        }
+                        if ($likeStr){
+                            $likeStr = '%'.$likeStr;
+                            $where[] = function ($query) use ($whereField, $likeStr) {
+                                $query->whereRaw("concat(',',".$whereField.",',') like '".$likeStr."'");
+                            };
+                        }
+                    }
+                    break;
+                case 'other':
+                    foreach ($whereFields as $whereField=>$func) {
+                        $paramsName = substr_symbol_behind($whereField);
+                        if (!isset($this->params[$paramsName]) || empty($this->params[$paramsName])) {
+                            continue;
+                        }
+                        $where = $func($where,$whereField,$this->params,$paramsName);
+                    }
+                    break;
+                //支持value=0的筛查
+                case 'other_zero':
+                    foreach ($whereFields as $whereField=>$func) {
+                        $paramsName = substr_symbol_behind($whereField);
+                        if (!isset($this->params[$paramsName])||
+                            $this->params[$paramsName] === ''||
+                            $this->params[$paramsName] === null) {
+                            continue;
+                        }
+                        $where = $func($where,$whereField,$this->params,$paramsName);
+                    }
+                    break;
             }
         }
         return $where;

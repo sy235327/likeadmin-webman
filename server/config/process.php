@@ -13,8 +13,22 @@
  */
 
 use Workerman\Worker;
-
-return [
+$task = [
+    'name' => 'name',
+    'handler' => \Webman\App::class,
+    'listen' => getenv('TASK_LISTEN'),
+    'count' => 8, // 进程数
+    'user' => '',
+    'group' => '',
+    'reusePort' => true,
+    'constructor' => [
+        'request_class' => \support\Request::class, // request类设置
+        'logger' => \support\Log::channel('default'), // 日志实例
+        'app_path' => app_path(), // app目录位置
+        'public_path' => public_path() // public目录位置
+    ]
+];
+$returnData = [
     // File update detection and automatic reload
     'monitor' => [
         'handler' => process\Monitor::class,
@@ -38,5 +52,9 @@ return [
                 'enable_memory_monitor' => DIRECTORY_SEPARATOR === '/',
             ]
         ]
-    ]
+    ],
 ];
+if (getenv('TASK_STATUS',false)===true){
+    $returnData['task'] = $task;
+}
+return $returnData;

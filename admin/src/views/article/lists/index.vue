@@ -3,22 +3,12 @@
         <el-card class="!border-none" shadow="never">
             <el-form ref="formRef" class="mb-[-16px]" :model="queryParams" :inline="true">
                 <el-form-item label="文章标题">
-                    <el-input
-                        class="w-[280px]"
-                        v-model="queryParams.title"
-                        clearable
-                        @keyup.enter="resetPage"
-                    />
+                    <el-input class="w-[280px]" v-model="queryParams.title" clearable @keyup.enter="resetPage" />
                 </el-form-item>
                 <el-form-item label="栏目名称">
                     <el-select class="w-[280px]" v-model="queryParams.cid">
                         <el-option label="全部" value />
-                        <el-option
-                            v-for="item in optionsData.article_cate"
-                            :key="item.id"
-                            :label="item.name"
-                            :value="item.id"
-                        />
+                        <el-option v-for="item in optionsData.article_cate" :key="item.id" :label="item.name" :value="item.id" />
                     </el-select>
                 </el-form-item>
                 <el-form-item label="文章状态">
@@ -54,46 +44,23 @@
                 <el-table-column label="ID" prop="id" min-width="80" />
                 <el-table-column label="封面" min-width="100">
                     <template #default="{ row }">
-                        <image-contain
-                            v-if="row.image"
-                            :src="row.image"
-                            :width="60"
-                            :height="45"
-                            :preview-src-list="[row.image]"
-                            preview-teleported
-                            fit="contain"
-                        />
+                        <image-contain v-if="row.image" :src="row.image" :width="60" :height="45" :preview-src-list="[row.image]" preview-teleported fit="contain" />
                     </template>
                 </el-table-column>
-                <el-table-column
-                    label="标题"
-                    prop="title"
-                    min-width="160"
-                    show-tooltip-when-overflow
-                />
+                <el-table-column label="标题" prop="title" min-width="160" show-tooltip-when-overflow />
                 <el-table-column label="栏目" prop="cate_name" min-width="100" />
                 <el-table-column label="作者" prop="author" min-width="120" />
                 <el-table-column label="浏览量" prop="click" min-width="100" />
                 <el-table-column label="状态" min-width="100">
                     <template #default="{ row }">
-                        <el-switch
-                            v-perms="['article.article/updateStatus']"
-                            v-model="row.is_show"
-                            :active-value="1"
-                            :inactive-value="0"
-                            @change="changeStatus($event, row.id)"
-                        />
+                        <el-switch v-perms="['article.article/updateStatus']" v-model="row.is_show" :active-value="1" :inactive-value="0" @change="changeStatus($event, row.id)" />
                     </template>
                 </el-table-column>
                 <el-table-column label="排序" prop="sort" min-width="100" />
                 <el-table-column label="发布时间" prop="create_time" min-width="120" />
                 <el-table-column label="操作" width="120" fixed="right">
                     <template #default="{ row }">
-                        <el-button
-                            v-perms="['article.article/edit', 'article.article/add:edit']"
-                            type="primary"
-                            link
-                        >
+                        <el-button v-perms="['article.article/edit', 'article.article/add:edit']" type="primary" link>
                             <router-link
                                 :to="{
                                     path: getRoutePath('article.article/add:edit'),
@@ -105,14 +72,7 @@
                                 编辑
                             </router-link>
                         </el-button>
-                        <el-button
-                            v-perms="['article.article/delete']"
-                            type="danger"
-                            link
-                            @click="handleDelete(row.id)"
-                        >
-                            删除
-                        </el-button>
+                        <el-button v-perms="['article.article/delete']" type="danger" link @click="handleDelete(row.id)"> 删除 </el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -123,15 +83,15 @@
     </div>
 </template>
 <script lang="ts" setup name="articleLists">
-import { articleLists, articleDelete, articleStatus, articleCateAll } from '@/api/article'
-import { useDictOptions } from '@/hooks/useDictOptions'
-import { usePaging } from '@/hooks/usePaging'
-import { getRoutePath } from '@/router'
-import feedback from '@/utils/feedback'
+import { articleLists, articleDelete, articleStatus, articleCateAll } from "@/api/article"
+import { useDictOptions } from "@/hooks/useDictOptions"
+import { usePaging } from "@/hooks/usePaging"
+import { getRoutePath } from "@/router"
+import feedback from "@/utils/feedback"
 const queryParams = reactive({
-    title: '',
-    cid: '',
-    is_show: ''
+    title: "",
+    cid: "",
+    is_show: ""
 })
 
 const { pager, getLists, resetPage, resetParams } = usePaging({
@@ -157,7 +117,7 @@ const changeStatus = async (is_show: any, id: number) => {
 }
 
 const handleDelete = async (id: number) => {
-    await feedback.confirm('确定要删除？')
+    await feedback.confirm("确定要删除？")
     await articleDelete({ id })
     getLists()
 }

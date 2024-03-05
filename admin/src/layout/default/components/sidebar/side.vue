@@ -14,11 +14,11 @@
 </template>
 
 <script setup lang="ts">
-import useAppStore from '@/stores/modules/app'
-import useSettingStore from '@/stores/modules/setting'
-import useUserStore from '@/stores/modules/user'
-import SideLogo from './logo.vue'
-import SideMenu from './menu.vue'
+import useAppStore from "@/stores/modules/app"
+import useSettingStore from "@/stores/modules/setting"
+import useUserStore from "@/stores/modules/user"
+import SideLogo from "./logo.vue"
+import SideMenu from "./menu.vue"
 
 const appStore = useAppStore()
 const isCollapsed = computed(() => {
@@ -36,17 +36,17 @@ const userStore = useUserStore()
 const routes = computed(() => userStore.routes)
 
 const sideStyle = computed(() => {
-    return sideTheme.value == 'dark'
+    return sideTheme.value == "dark"
         ? {
-              '--side-dark-color': settingStore.sideDarkColor
+              "--side-dark-color": settingStore.sideDarkColor
           }
-        : ''
+        : ""
 })
 const menuProp = computed(() => {
     return {
-        backgroundColor: sideTheme.value == 'dark' ? settingStore.sideDarkColor : '',
-        textColor: sideTheme.value == 'dark' ? 'var(--el-color-white)' : '',
-        activeTextColor: sideTheme.value == 'dark' ? 'var(--el-color-white)' : ''
+        backgroundColor: sideTheme.value == "dark" ? settingStore.sideDarkColor : "",
+        textColor: sideTheme.value == "dark" ? "var(--el-color-white)" : "",
+        activeTextColor: sideTheme.value == "dark" ? "var(--el-color-white)" : ""
     }
 })
 const handleSelect = () => {

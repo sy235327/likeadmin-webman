@@ -13,14 +13,14 @@
     </div>
 </template>
 <script lang="ts" setup name="decorationPc">
-import Menu from './component/pages/menu.vue'
-import PreviewPc from './component/pages/preview-pc.vue'
-import AttrSetting from './component/pages/attr-setting.vue'
-import widgets from './component/widgets'
-import { getDecoratePages, setDecoratePages } from '@/api/decoration'
-import { getNonDuplicateID } from '@/utils/util'
+import Menu from "./component/pages/menu.vue"
+import PreviewPc from "./component/pages/preview-pc.vue"
+import AttrSetting from "./component/pages/attr-setting.vue"
+import widgets from "./component/widgets"
+import { getDecoratePages, setDecoratePages } from "@/api/decoration"
+import { getNonDuplicateID } from "@/utils/util"
 enum pagesTypeEnum {
-    HOME = '4'
+    HOME = "4"
 }
 
 const generatePageData = (widgetNames: string[]) => {
@@ -44,18 +44,18 @@ const menus: Record<
     [pagesTypeEnum.HOME]: {
         id: 4,
         type: 4,
-        name: '首页装修',
+        name: "首页装修",
         pageData: []
     }
 })
 
-const activeMenu = ref('4')
+const activeMenu = ref("4")
 const selectWidgetIndex = ref(0)
 const getPageData = computed(() => {
     return menus[activeMenu.value]?.pageData ?? []
 })
 const getSelectWidget = computed(() => {
-    return menus[activeMenu.value]?.pageData[selectWidgetIndex.value] ?? ''
+    return menus[activeMenu.value]?.pageData[selectWidgetIndex.value] ?? ""
 })
 
 const getData = async () => {

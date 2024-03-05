@@ -2,16 +2,16 @@
     <div></div>
 </template>
 <script lang="ts" setup>
-import type { PropType } from 'vue'
-import type options from './options'
+import type { PropType } from "vue"
+import type options from "./options"
 type OptionsType = ReturnType<typeof options>
 const props = defineProps({
     content: {
-        type: Object as PropType<OptionsType['content']>,
+        type: Object as PropType<OptionsType["content"]>,
         default: () => ({})
     },
     styles: {
-        type: Object as PropType<OptionsType['styles']>,
+        type: Object as PropType<OptionsType["styles"]>,
         default: () => ({})
     }
 })

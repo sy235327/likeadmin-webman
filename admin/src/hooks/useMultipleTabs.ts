@@ -1,5 +1,5 @@
-import useTabsStore from '@/stores/modules/multipleTabs'
-import useSettingStore from '@/stores/modules/setting'
+import useTabsStore from "@/stores/modules/multipleTabs"
+import useSettingStore from "@/stores/modules/setting"
 
 export default function useMultipleTabs() {
     const router = useRouter()

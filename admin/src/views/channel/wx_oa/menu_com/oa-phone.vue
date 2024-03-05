@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { useMenuOa } from './useMenuOa'
-import useSettingStore from '@/stores/modules/setting'
+import { useMenuOa } from "./useMenuOa"
+import useSettingStore from "@/stores/modules/setting"
 
 // 菜单颜色（这里采用全局颜色）
 const settingStore = useSettingStore()
-const themeColor = computed(() => settingStore.theme || '#4A5DFF')
+const themeColor = computed(() => settingStore.theme || "#4A5DFF")
 
 const { menuList, menuIndex, handleAddMenu } = useMenuOa(useMenuOa)
 </script>
@@ -24,18 +24,12 @@ const { menuList, menuIndex, handleAddMenu } = useMenuOa(useMenuOa)
             <template v-for="(menuItem, i) in menuList" :key="i">
                 <div class="relative flex-1" @click="menuIndex = i">
                     <!-- 一级菜单 -->
-                    <div
-                        class="flex items-center justify-center flex-1 text-sm oa-phone-menu-item"
-                        :class="{ 'active-menu': menuIndex === i }"
-                    >
+                    <div class="flex items-center justify-center flex-1 text-sm oa-phone-menu-item" :class="{ 'active-menu': menuIndex === i }">
                         {{ menuItem.name }}
                     </div>
 
                     <!-- 二级菜单 -->
-                    <div
-                        class="oa-phone-menu-subitem"
-                        v-show="menuItem.sub_button.length && menuItem.has_menu"
-                    >
+                    <div class="oa-phone-menu-subitem" v-show="menuItem.sub_button.length && menuItem.has_menu">
                         <template v-for="(subItem, index2) in menuItem.sub_button" :key="index2">
                             <div class="oa-phone-menu-subitem-title">
                                 {{ subItem.name }}
@@ -92,7 +86,7 @@ const { menuList, menuIndex, handleAddMenu } = useMenuOa(useMenuOa)
         }
 
         .active-menu::after {
-            content: '';
+            content: "";
             width: 100%;
             height: 41px;
             top: -1px;

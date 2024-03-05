@@ -1,14 +1,14 @@
 const cache = {
-    key: 'like_admin_',
+    key: "like_admin_",
     //设置缓存(expire为缓存时效)
     set(key: string, value: any, expire?: string) {
         key = this.getKey(key)
         let data: any = {
-            expire: expire ? this.time() + expire : '',
+            expire: expire ? this.time() + expire : "",
             value
         }
 
-        if (typeof data === 'object') {
+        if (typeof data === "object") {
             data = JSON.stringify(data)
         }
         try {

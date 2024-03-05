@@ -1,13 +1,6 @@
 <template>
     <div class="edit-popup">
-        <popup
-            ref="popupRef"
-            :title="popupTitle"
-            :async="true"
-            width="550px"
-            @confirm="handleSubmit"
-            @close="handleClose"
-        >
+        <popup ref="popupRef" :title="popupTitle" :async="true" width="550px" @confirm="handleSubmit" @close="handleClose">
             <el-form ref="formRef" :model="formData" label-width="84px" :rules="formRules">
                 <el-form-item label="支付方式">
                     <el-radio :label="popupTitle" :model-value="popupTitle" />
@@ -36,66 +29,40 @@
                             <el-radio-group v-model="formData.config.merchant_type">
                                 <el-radio label="ordinary_merchant">普通商户</el-radio>
                             </el-radio-group>
-                            <div class="form-tips">
-                                暂时只支持普通商户类型，服务商户类型模式暂不支持
-                            </div>
+                            <div class="form-tips">暂时只支持普通商户类型，服务商户类型模式暂不支持</div>
                         </div>
                     </el-form-item>
 
                     <el-form-item label="微信支付商户号" prop="config.mch_id">
                         <div class="flex-1">
-                            <el-input
-                                v-model="formData.config.mch_id"
-                                placeholder="请输入微信支付商户号"
-                            />
+                            <el-input v-model="formData.config.mch_id" placeholder="请输入微信支付商户号" />
                             <div class="form-tips">微信支付商户号（MCHID）</div>
                         </div>
                     </el-form-item>
 
                     <el-form-item label="商户API密钥" prop="config.pay_sign_key">
-                        <el-input
-                            v-model="formData.config.pay_sign_key"
-                            placeholder="请输入微信支付商户API密钥"
-                        />
+                        <el-input v-model="formData.config.pay_sign_key" placeholder="请输入微信支付商户API密钥" />
                         <span class="form-tips">微信支付商户API密钥（paySignKey）</span>
                     </el-form-item>
 
                     <el-form-item label="微信支付证书" prop="config.apiclient_cert">
-                        <el-input
-                            type="textarea"
-                            rows="3"
-                            v-model="formData.config.apiclient_cert"
-                            placeholder="请输入微信支付证书"
-                        />
+                        <el-input type="textarea" rows="3" v-model="formData.config.apiclient_cert" placeholder="请输入微信支付证书" />
 
-                        <span class="form-tips">
-                            微信支付证书（apiclient_cert.pem），前往微信商家平台生成并黏贴至此处
-                        </span>
+                        <span class="form-tips"> 微信支付证书（apiclient_cert.pem），前往微信商家平台生成并黏贴至此处 </span>
                     </el-form-item>
 
                     <el-form-item label="微信支付证书密钥" prop="config.apiclient_key">
-                        <el-input
-                            type="textarea"
-                            rows="3"
-                            v-model="formData.config.apiclient_key"
-                            placeholder="请输入微信支付证书密钥"
-                        />
-                        <span class="form-tips">
-                            微信支付证书密钥（apiclient_key.pem），前往微信商家平台生成并黏贴至此处
-                        </span>
+                        <el-input type="textarea" rows="3" v-model="formData.config.apiclient_key" placeholder="请输入微信支付证书密钥" />
+                        <span class="form-tips"> 微信支付证书密钥（apiclient_key.pem），前往微信商家平台生成并黏贴至此处 </span>
                     </el-form-item>
 
                     <el-form-item label="支付授权目录">
                         <div>
                             <div>
                                 <span class="mr-[20px]">{{ formData.domain }}</span>
-                                <el-button link type="primary" v-copy="formData.domain">
-                                    复制
-                                </el-button>
+                                <el-button link type="primary" v-copy="formData.domain"> 复制 </el-button>
                             </div>
-                            <span class="form-tips">
-                                支付授权目录仅用于参考，复制后前往微信商家平台填写
-                            </span>
+                            <span class="form-tips"> 支付授权目录仅用于参考，复制后前往微信商家平台填写 </span>
                         </div>
                     </el-form-item>
                 </template>
@@ -114,42 +81,27 @@
                             <el-radio-group v-model="formData.config.merchant_type">
                                 <el-radio label="ordinary_merchant">普通商户</el-radio>
                             </el-radio-group>
-                            <div class="form-tips">
-                                暂时只支持普通商户类型，服务商户类型模式暂不支持
-                            </div>
+                            <div class="form-tips">暂时只支持普通商户类型，服务商户类型模式暂不支持</div>
                         </div>
                     </el-form-item>
 
                     <el-form-item label="应用ID" prop="config.app_id">
                         <div class="flex-1">
-                            <el-input
-                                v-model="formData.config.app_id"
-                                placeholder="请输入支付宝应用ID"
-                            />
+                            <el-input v-model="formData.config.app_id" placeholder="请输入支付宝应用ID" />
                             <span class="form-tips"> 支付宝应用APP_ID </span>
                         </div>
                     </el-form-item>
 
                     <el-form-item label="应用私钥" prop="config.private_key">
                         <div class="flex-1">
-                            <el-input
-                                type="textarea"
-                                rows="3"
-                                v-model="formData.config.private_key"
-                                placeholder="请输入支付宝应用私钥"
-                            />
+                            <el-input type="textarea" rows="3" v-model="formData.config.private_key" placeholder="请输入支付宝应用私钥" />
                             <span class="form-tips">支付宝应用私钥（private_key） </span>
                         </div>
                     </el-form-item>
 
                     <el-form-item label="支付宝公钥" prop="config.ali_public_key">
                         <div class="flex-1">
-                            <el-input
-                                type="textarea"
-                                rows="3"
-                                v-model="formData.config.ali_public_key"
-                                placeholder="请输入支付宝公钥"
-                            />
+                            <el-input type="textarea" rows="3" v-model="formData.config.ali_public_key" placeholder="请输入支付宝公钥" />
                             <span class="form-tips">支付宝公钥（ali_public_key） </span>
                         </div>
                     </el-form-item>
@@ -165,10 +117,10 @@
     </div>
 </template>
 <script lang="ts" setup>
-import type { FormInstance, FormRules } from 'element-plus'
-import { getPayConfig, setPayConfig } from '@/api/setting/pay'
-import Popup from '@/components/popup/index.vue'
-const emit = defineEmits(['success', 'close'])
+import type { FormInstance, FormRules } from "element-plus"
+import { getPayConfig, setPayConfig } from "@/api/setting/pay"
+import Popup from "@/components/popup/index.vue"
+const emit = defineEmits(["success", "close"])
 const formRef = shallowRef<FormInstance>()
 const popupRef = shallowRef<InstanceType<typeof Popup>>()
 enum PayWayEnum {
@@ -179,32 +131,32 @@ enum PayWayEnum {
 const popupTitle = computed(() => {
     switch (formData.pay_way) {
         case PayWayEnum.BALANCE:
-            return '余额支付'
+            return "余额支付"
         case PayWayEnum.WECHAT:
-            return '微信支付'
+            return "微信支付"
         case PayWayEnum.ALIPAY:
-            return '支付宝支付'
+            return "支付宝支付"
     }
 })
 const formData = reactive({
-    id: '',
+    id: "",
     pay_way: 0,
-    name: '',
-    icon: '',
+    name: "",
+    icon: "",
     sort: 0,
-    remark: '',
-    domain: '',
+    remark: "",
+    domain: "",
     config: {
-        interface_version: '',
-        merchant_type: '',
-        mch_id: '',
-        pay_sign_key: '',
-        apiclient_cert: '',
-        apiclient_key: '',
-        mode: '',
-        app_id: '',
-        private_key: '',
-        ali_public_key: ''
+        interface_version: "",
+        merchant_type: "",
+        mch_id: "",
+        pay_sign_key: "",
+        apiclient_cert: "",
+        apiclient_key: "",
+        mode: "",
+        app_id: "",
+        private_key: "",
+        ali_public_key: ""
     }
 })
 
@@ -212,49 +164,49 @@ const formRules: FormRules = {
     name: [
         {
             required: true,
-            message: '请输入显示名称'
+            message: "请输入显示名称"
         }
     ],
-    'config.mch_id': [
+    "config.mch_id": [
         {
             required: true,
-            message: '请输入微信支付商户号'
+            message: "请输入微信支付商户号"
         }
     ],
-    'config.pay_sign_key': [
+    "config.pay_sign_key": [
         {
             required: true,
-            message: '请输入微信支付商户API密钥'
+            message: "请输入微信支付商户API密钥"
         }
     ],
-    'config.apiclient_cert': [
+    "config.apiclient_cert": [
         {
             required: true,
-            message: '请输入微信支付证书'
+            message: "请输入微信支付证书"
         }
     ],
-    'config.apiclient_key': [
+    "config.apiclient_key": [
         {
             required: true,
-            message: '请输入微信支付证书密钥'
+            message: "请输入微信支付证书密钥"
         }
     ],
-    'config.app_id': [
+    "config.app_id": [
         {
             required: true,
-            message: '请输入支付宝应用ID'
+            message: "请输入支付宝应用ID"
         }
     ],
-    'config.private_key': [
+    "config.private_key": [
         {
             required: true,
-            message: '请输入支付宝应用私钥'
+            message: "请输入支付宝应用私钥"
         }
     ],
-    'config.ali_public_key': [
+    "config.ali_public_key": [
         {
             required: true,
-            message: '请输入支付宝公钥'
+            message: "请输入支付宝公钥"
         }
     ]
 }
@@ -263,7 +215,7 @@ const handleSubmit = async () => {
     await formRef.value?.validate()
     await setPayConfig(formData)
     popupRef.value?.close()
-    emit('success')
+    emit("success")
 }
 
 const open = () => {
@@ -287,7 +239,7 @@ const getDetail = async (row: Record<string, any>) => {
 }
 
 const handleClose = () => {
-    emit('close')
+    emit("close")
 }
 
 defineExpose({

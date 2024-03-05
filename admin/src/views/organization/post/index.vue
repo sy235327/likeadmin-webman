@@ -3,20 +3,10 @@
         <el-card class="!border-none" shadow="never">
             <el-form ref="formRef" class="mb-[-16px]" :model="queryParams" :inline="true">
                 <el-form-item label="岗位编码">
-                    <el-input
-                        class="w-[280px]"
-                        v-model="queryParams.code"
-                        clearable
-                        @keyup.enter="resetPage"
-                    />
+                    <el-input class="w-[280px]" v-model="queryParams.code" clearable @keyup.enter="resetPage" />
                 </el-form-item>
                 <el-form-item label="岗位名称">
-                    <el-input
-                        class="w-[280px]"
-                        v-model="queryParams.name"
-                        clearable
-                        @keyup.enter="resetPage"
-                    />
+                    <el-input class="w-[280px]" v-model="queryParams.name" clearable @keyup.enter="resetPage" />
                 </el-form-item>
                 <el-form-item label="岗位状态">
                     <el-select class="w-[280px]" v-model="queryParams.status">
@@ -28,12 +18,7 @@
                 <el-form-item>
                     <el-button type="primary" @click="resetPage">查询</el-button>
                     <el-button @click="resetParams">重置</el-button>
-                    <export-data
-                        class="ml-2.5"
-                        :fetch-fun="jobsLists"
-                        :params="queryParams"
-                        :page-size="pager.size"
-                    />
+                    <export-data class="ml-2.5" :fetch-fun="jobsLists" :params="queryParams" :page-size="pager.size" />
                 </el-form-item>
             </el-form>
         </el-card>
@@ -61,22 +46,8 @@
                 </el-table-column>
                 <el-table-column label="操作" width="120" fixed="right">
                     <template #default="{ row }">
-                        <el-button
-                            v-perms="['dept.jobs/edit']"
-                            type="primary"
-                            link
-                            @click="handleEdit(row)"
-                        >
-                            编辑
-                        </el-button>
-                        <el-button
-                            v-perms="['dept.jobs/delete']"
-                            type="danger"
-                            link
-                            @click="handleDelete(row.id)"
-                        >
-                            删除
-                        </el-button>
+                        <el-button v-perms="['dept.jobs/edit']" type="primary" link @click="handleEdit(row)"> 编辑 </el-button>
+                        <el-button v-perms="['dept.jobs/delete']" type="danger" link @click="handleDelete(row.id)"> 删除 </el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -88,16 +59,16 @@
     </div>
 </template>
 <script lang="ts" setup name="post">
-import { jobsDelete, jobsLists } from '@/api/org/post'
-import { usePaging } from '@/hooks/usePaging'
-import feedback from '@/utils/feedback'
-import EditPopup from './edit.vue'
+import { jobsDelete, jobsLists } from "@/api/org/post"
+import { usePaging } from "@/hooks/usePaging"
+import feedback from "@/utils/feedback"
+import EditPopup from "./edit.vue"
 const editRef = shallowRef<InstanceType<typeof EditPopup>>()
 const showEdit = ref(false)
 const queryParams = reactive({
-    code: '',
-    name: '',
-    status: ''
+    code: "",
+    name: "",
+    status: ""
 })
 
 const { pager, getLists, resetPage, resetParams } = usePaging({
@@ -108,18 +79,18 @@ const { pager, getLists, resetPage, resetParams } = usePaging({
 const handleAdd = async () => {
     showEdit.value = true
     await nextTick()
-    editRef.value?.open('add')
+    editRef.value?.open("add")
 }
 
 const handleEdit = async (data: any) => {
     showEdit.value = true
     await nextTick()
-    editRef.value?.open('edit')
+    editRef.value?.open("edit")
     editRef.value?.getDetail(data)
 }
 
 const handleDelete = async (id: number) => {
-    await feedback.confirm('确定要删除？')
+    await feedback.confirm("确定要删除？")
     await jobsDelete({ id })
     getLists()
 }

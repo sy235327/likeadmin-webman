@@ -39,13 +39,13 @@
     </div>
 </template>
 <script lang="ts" setup name="h5Config">
-import { getH5Config, setH5Config } from '@/api/channel/h5'
+import { getH5Config, setH5Config } from "@/api/channel/h5"
 
 const formData = reactive({
     status: 0,
     page_status: 0,
-    page_url: '',
-    url: ''
+    page_url: "",
+    url: ""
 })
 
 const getDetail = async () => {

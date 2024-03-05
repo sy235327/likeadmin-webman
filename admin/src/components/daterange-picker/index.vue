@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-import { withDefaults, computed } from 'vue'
+import { withDefaults, computed } from "vue"
 
 /* Props S */
 const props = withDefaults(
@@ -20,11 +20,11 @@ const props = withDefaults(
         endTime?: string
     }>(),
     {
-        startTime: '',
-        endTime: ''
+        startTime: "",
+        endTime: ""
     }
 )
-const emit = defineEmits(['update:startTime', 'update:endTime'])
+const emit = defineEmits(["update:startTime", "update:endTime"])
 
 const content = computed<any>({
     get: () => {
@@ -32,11 +32,11 @@ const content = computed<any>({
     },
     set: (value: Event | any) => {
         if (value === null) {
-            emit('update:startTime', '')
-            emit('update:endTime', '')
+            emit("update:startTime", "")
+            emit("update:endTime", "")
         } else {
-            emit('update:startTime', value[0])
-            emit('update:endTime', value[1])
+            emit("update:startTime", value[0])
+            emit("update:endTime", value[1])
         }
     }
 })

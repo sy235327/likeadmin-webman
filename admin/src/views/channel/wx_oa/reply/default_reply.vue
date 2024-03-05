@@ -27,21 +27,14 @@
                 <el-table-column label="回复内容" prop="content" min-width="120" />
                 <el-table-column label="状态" min-width="120">
                     <template #default="{ row }">
-                        <el-switch
-                            v-model="row.status"
-                            :active-value="1"
-                            :inactive-value="0"
-                            @change="changeStatus(row.id)"
-                        />
+                        <el-switch v-model="row.status" :active-value="1" :inactive-value="0" @change="changeStatus(row.id)" />
                     </template>
                 </el-table-column>
                 <el-table-column label="排序" prop="sort" min-width="120" />
                 <el-table-column label="操作" width="120" fixed="right">
                     <template #default="{ row }">
                         <el-button type="primary" link @click="handleEdit(row)"> 编辑 </el-button>
-                        <el-button type="danger" link @click="handleDelete(row.id)">
-                            删除
-                        </el-button>
+                        <el-button type="danger" link @click="handleDelete(row.id)"> 删除 </el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -53,10 +46,10 @@
     </div>
 </template>
 <script lang="ts" setup>
-import { oaReplyDel, getOaReplyList, changeOaReplyStatus } from '@/api/channel/wx_oa'
-import { usePaging } from '@/hooks/usePaging'
-import feedback from '@/utils/feedback'
-import EditPopup from './edit.vue'
+import { oaReplyDel, getOaReplyList, changeOaReplyStatus } from "@/api/channel/wx_oa"
+import { usePaging } from "@/hooks/usePaging"
+import feedback from "@/utils/feedback"
+import EditPopup from "./edit.vue"
 const editRef = shallowRef<InstanceType<typeof EditPopup>>()
 const showEdit = ref(false)
 
@@ -64,7 +57,7 @@ const getContentType = computed(() => {
     return (val: number) => {
         switch (val) {
             case 1:
-                return '文本'
+                return "文本"
         }
     }
 })
@@ -79,20 +72,20 @@ const { pager, getLists } = usePaging({
 const handleAdd = async () => {
     showEdit.value = true
     await nextTick()
-    editRef.value?.open('add', 1)
+    editRef.value?.open("add", 1)
 }
 
 const handleEdit = async (data: any) => {
     showEdit.value = true
     await nextTick()
-    editRef.value?.open('edit', 1)
+    editRef.value?.open("edit", 1)
     editRef.value?.getDetail(data)
 }
 
 const handleDelete = async (id: number) => {
-    await feedback.confirm('确定要删除？')
+    await feedback.confirm("确定要删除？")
     await oaReplyDel({ id })
-    feedback.msgSuccess('删除成功')
+    feedback.msgSuccess("删除成功")
     getLists()
 }
 

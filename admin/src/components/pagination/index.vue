@@ -24,12 +24,12 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
     modelValue: () => ({}),
     pageSizes: () => [15, 20, 30, 40],
-    layout: 'total, sizes, prev, pager, next, jumper'
+    layout: "total, sizes, prev, pager, next, jumper"
 })
 
 const emit = defineEmits<{
-    (event: 'change'): void
-    (event: 'update:modelValue', value: any): void
+    (event: "change"): void
+    (event: "update:modelValue", value: any): void
 }>()
 
 const pager = computed({
@@ -37,14 +37,14 @@ const pager = computed({
         return props.modelValue
     },
     set(value) {
-        emit('update:modelValue', value)
+        emit("update:modelValue", value)
     }
 })
 const sizeChange = () => {
     pager.value.page = 1
-    emit('change')
+    emit("change")
 }
 const pageChange = () => {
-    emit('change')
+    emit("change")
 }
 </script>

@@ -22,13 +22,7 @@
                     <el-table size="large" :data="formData.data">
                         <el-table-column label="关键词" prop="describe" min-width="160">
                             <template #default="{ row }">
-                                <el-input
-                                    v-model="row.name"
-                                    clearable
-                                    placeholder="请输入关键字"
-                                    show-word-limit
-                                    maxlength="30"
-                                />
+                                <el-input v-model="row.name" clearable placeholder="请输入关键字" show-word-limit maxlength="30" />
                             </template>
                         </el-table-column>
                         <el-table-column label="排序" prop="describe" min-width="160">
@@ -38,14 +32,7 @@
                         </el-table-column>
                         <el-table-column label="操作" min-width="80" fixed="right">
                             <template #default="{ $index }">
-                                <el-button
-                                    v-perms="['setting:storage:edit']"
-                                    type="danger"
-                                    link
-                                    @click="handleDel($index)"
-                                >
-                                    删除
-                                </el-button>
+                                <el-button v-perms="['setting:storage:edit']" type="danger" link @click="handleDel($index)"> 删除 </el-button>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -80,8 +67,8 @@
 </template>
 
 <script setup lang="ts" name="search">
-import { getSearch, setSearch } from '@/api/setting/search'
-import type { Search } from '@/api/setting/search'
+import { getSearch, setSearch } from "@/api/setting/search"
+import type { Search } from "@/api/setting/search"
 
 const formData = reactive<Search>({
     status: 1,
@@ -101,13 +88,13 @@ const getData = async () => {
             formData[key] = data[key]
         }
     } catch (error) {
-        console.log('获取=>', error)
+        console.log("获取=>", error)
     }
 }
 
 const handleAdd = () => {
     formData.data.push({
-        name: '',
+        name: "",
         sort: 0
     })
 }
@@ -121,7 +108,7 @@ const handleSave = async () => {
         await setSearch(formData)
         getData()
     } catch (error) {
-        console.log('保存=>', error)
+        console.log("保存=>", error)
     }
 }
 

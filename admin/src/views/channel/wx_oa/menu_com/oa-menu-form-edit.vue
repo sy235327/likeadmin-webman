@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import oaMenuForm from './oa-menu-form.vue'
+import oaMenuForm from "./oa-menu-form.vue"
 
 const emit = defineEmits<{
-    (event: 'add', value: any): void
-    (event: 'edit', value: any): void
+    (event: "add", value: any): void
+    (event: "edit", value: any): void
 }>()
 
 const props = withDefaults(
@@ -12,7 +12,7 @@ const props = withDefaults(
         subItem?: any
     }>(),
     {
-        modular: 'edit',
+        modular: "edit",
         subItem: {}
     }
 )
@@ -21,11 +21,11 @@ const menuFormEditRef = shallowRef()
 const menuFromPopupRef = shallowRef()
 
 const form = {
-    name: '',
-    type: 'view',
-    url: '',
-    appid: '',
-    pagepath: ''
+    name: "",
+    type: "view",
+    url: "",
+    appid: "",
+    pagepath: ""
 }
 
 watchEffect(() => {
@@ -39,10 +39,10 @@ watchEffect(() => {
 
 const handleRules = async () => {
     await menuFormEditRef.value.menuFormRef.validate()
-    if (props.modular === 'edit') {
-        emit('edit', { ...form })
+    if (props.modular === "edit") {
+        emit("edit", { ...form })
     } else {
-        emit('add', { ...form })
+        emit("add", { ...form })
     }
     menuFromPopupRef.value.close()
     menuFormEditRef.value.menuFormRef.resetFields()
@@ -50,13 +50,7 @@ const handleRules = async () => {
 </script>
 
 <template>
-    <popup
-        ref="menuFromPopupRef"
-        async
-        :clickModalClose="false"
-        :title="`${modular === 'add' ? '新增' : '编辑'}子菜单`"
-        @confirm="handleRules"
-    >
+    <popup ref="menuFromPopupRef" async :clickModalClose="false" :title="`${modular === 'add' ? '新增' : '编辑'}子菜单`" @confirm="handleRules">
         <oa-menu-form
             ref="menuFormEditRef"
             modular="secondary"

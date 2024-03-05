@@ -1,12 +1,12 @@
 export default () => ({
-    title: '首页轮播图',
-    name: 'banner',
+    title: "首页轮播图",
+    name: "banner",
     content: {
         enabled: 1,
         data: [
             {
-                image: '',
-                name: '',
+                image: "",
+                name: "",
                 link: {}
             }
         ]

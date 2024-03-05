@@ -13,9 +13,9 @@
   }
  */
 
-import type { RouteRecordRaw } from 'vue-router'
-import { PageEnum } from '@/enums/pageEnum'
-import Layout from '@/layout/default/index.vue'
+import type { RouteRecordRaw } from "vue-router"
+import { PageEnum } from "@/enums/pageEnum"
+import Layout from "@/layout/default/index.vue"
 
 export const LAYOUT = () => Promise.resolve(Layout)
 
@@ -23,27 +23,27 @@ export const INDEX_ROUTE_NAME = Symbol()
 
 export const constantRoutes: Array<RouteRecordRaw> = [
     {
-        path: '/:pathMatch(.*)*',
-        component: () => import('@/views/error/404.vue')
+        path: "/:pathMatch(.*)*",
+        component: () => import("@/views/error/404.vue")
     },
     {
         path: PageEnum.ERROR_403,
-        component: () => import('@/views/error/403.vue')
+        component: () => import("@/views/error/403.vue")
     },
     {
         path: PageEnum.LOGIN,
-        component: () => import('@/views/account/login.vue')
+        component: () => import("@/views/account/login.vue")
     },
     {
-        path: '/user',
+        path: "/user",
         component: LAYOUT,
         children: [
             {
-                path: 'setting',
-                component: () => import('@/views/user/setting.vue'),
+                path: "setting",
+                component: () => import("@/views/user/setting.vue"),
                 name: Symbol(),
                 meta: {
-                    title: '个人设置'
+                    title: "个人设置"
                 }
             }
         ]

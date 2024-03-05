@@ -1,60 +1,43 @@
 <template>
     <div class="border border-br flex flex-col" :style="styles">
-        <toolbar
-            class="border-b border-br"
-            :editor="editorRef"
-            :defaultConfig="toolbarConfig"
-            :mode="mode"
-        />
-        <w-editor
-            class="overflow-y-auto flex-1"
-            v-model="valueHtml"
-            :defaultConfig="editorConfig"
-            :mode="mode"
-            @onCreated="handleCreated"
-        />
-        <material-picker
-            ref="materialPickerRef"
-            :type="fileType"
-            :limit="-1"
-            hidden-upload
-            @change="selectChange"
-        />
+        <toolbar class="border-b border-br" :editor="editorRef" :defaultConfig="toolbarConfig" :mode="mode" />
+        <w-editor class="overflow-y-auto flex-1" v-model="valueHtml" :defaultConfig="editorConfig" :mode="mode" @onCreated="handleCreated" />
+        <material-picker ref="materialPickerRef" :type="fileType" :limit="-1" hidden-upload @change="selectChange" />
     </div>
 </template>
 <script setup lang="ts">
-import '@wangeditor/editor/dist/css/style.css' // 引入 css
-import { Editor as WEditor, Toolbar } from '@wangeditor/editor-for-vue'
-import type { IEditorConfig, IToolbarConfig } from '@wangeditor/editor'
-import MaterialPicker from '@/components/material/picker.vue'
-import { addUnit } from '@/utils/util'
-import type { CSSProperties } from 'vue'
+import "@wangeditor/editor/dist/css/style.css" // 引入 css
+import { Editor as WEditor, Toolbar } from "@wangeditor/editor-for-vue"
+import type { IEditorConfig, IToolbarConfig } from "@wangeditor/editor"
+import MaterialPicker from "@/components/material/picker.vue"
+import { addUnit } from "@/utils/util"
+import type { CSSProperties } from "vue"
 
 const props = withDefaults(
     defineProps<{
         modelValue?: string
-        mode?: 'default' | 'simple'
+        mode?: "default" | "simple"
         height?: string | number
         width?: string | number
         toolbarConfig?: Partial<IToolbarConfig>
     }>(),
     {
-        modelValue: '',
-        mode: 'default',
-        height: '100%',
-        width: 'auto',
+        modelValue: "",
+        mode: "default",
+        height: "100%",
+        width: "auto",
         toolbarConfig: () => ({})
     }
 )
 
 const emit = defineEmits<{
-    (event: 'update:modelValue', value: string): void
+    (event: "update:modelValue", value: string): void
 }>()
 
 // 编辑器实例，必须用 shallowRef
 const editorRef = shallowRef()
 const materialPickerRef = shallowRef<InstanceType<typeof MaterialPicker>>()
-const fileType = ref('')
+const fileType = ref("")
 
 let insertFn: any
 
@@ -62,14 +45,14 @@ const editorConfig: Partial<IEditorConfig> = {
     MENU_CONF: {
         uploadImage: {
             customBrowseAndUpload(insert: any) {
-                fileType.value = 'image'
+                fileType.value = "image"
                 materialPickerRef.value?.showPopup(-1)
                 insertFn = insert
             }
         },
         uploadVideo: {
             customBrowseAndUpload(insert: any) {
-                fileType.value = 'video'
+                fileType.value = "video"
                 materialPickerRef.value?.showPopup(-1)
                 insertFn = insert
             }
@@ -86,7 +69,7 @@ const valueHtml = computed({
         return props.modelValue
     },
     set(value) {
-        emit('update:modelValue', value)
+        emit("update:modelValue", value)
     }
 })
 

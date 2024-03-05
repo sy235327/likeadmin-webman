@@ -18,16 +18,16 @@
 </template>
 
 <script setup lang="ts">
-import useUserStore from '@/stores/modules/user'
-import feedback from '@/utils/feedback'
+import useUserStore from "@/stores/modules/user"
+import feedback from "@/utils/feedback"
 const userStore = useUserStore()
 
 const userInfo = computed(() => userStore.userInfo)
 
 const handleCommand = async (command: string) => {
     switch (command) {
-        case 'logout':
-            await feedback.confirm('确定退出登录吗？')
+        case "logout":
+            await feedback.confirm("确定退出登录吗？")
             userStore.logout()
     }
 }

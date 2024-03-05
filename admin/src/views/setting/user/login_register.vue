@@ -17,14 +17,8 @@
 
                 <el-form-item label="强制绑定手机" prop="coerce_mobile">
                     <div>
-                        <el-switch
-                            v-model="formData.coerce_mobile"
-                            :active-value="1"
-                            :inactive-value="0"
-                        />
-                        <span class="mt-1 ml-2">{{
-                            formData.coerce_mobile ? '开启' : '关闭'
-                        }}</span>
+                        <el-switch v-model="formData.coerce_mobile" :active-value="1" :inactive-value="0" />
+                        <span class="mt-1 ml-2">{{ formData.coerce_mobile ? "开启" : "关闭" }}</span>
 
                         <div class="form-tips">
                             1、如果开启，则新用户在注册完成之后要强制绑定手机号<br />
@@ -35,13 +29,9 @@
 
                 <el-form-item label="政策协议" prop="login_agreement">
                     <div>
-                        <el-switch
-                            v-model="formData.login_agreement"
-                            :active-value="1"
-                            :inactive-value="0"
-                        />
+                        <el-switch v-model="formData.login_agreement" :active-value="1" :inactive-value="0" />
                         <span class="mt-1 ml-2">
-                            {{ formData.login_agreement ? '开启' : '关闭' }}
+                            {{ formData.login_agreement ? "开启" : "关闭" }}
                         </span>
 
                         <div class="form-tips">登录/注册会员时，是否显示服务协议和隐私政策</div>
@@ -54,25 +44,15 @@
 
                 <el-form-item label="第三方登录" prop="third_auth">
                     <div>
-                        <el-switch
-                            v-model="formData.third_auth"
-                            :active-value="1"
-                            :inactive-value="0"
-                        />
+                        <el-switch v-model="formData.third_auth" :active-value="1" :inactive-value="0" />
                         <span class="mt-1 ml-2">
-                            {{ formData.third_auth ? '开启' : '关闭' }}
+                            {{ formData.third_auth ? "开启" : "关闭" }}
                         </span>
 
                         <div class="form-tips">登录时支持第三方登录，新用户授权即自动注册账号</div>
 
                         <div>
-                            <el-checkbox
-                                v-model="formData.wechat_auth"
-                                :true-label="1"
-                                :false-label="0"
-                            >
-                                微信登录
-                            </el-checkbox>
+                            <el-checkbox v-model="formData.wechat_auth" :true-label="1" :false-label="0"> 微信登录 </el-checkbox>
                         </div>
                     </div>
                 </el-form-item>
@@ -80,9 +60,7 @@
                 <el-form-item label="微信开放平台">
                     <div>
                         <a href="https://open.weixin.qq.com/" target="_blank">
-                            <el-button type="primary" link class="underline">
-                                前往微信开放平台
-                            </el-button>
+                            <el-button type="primary" link class="underline"> 前往微信开放平台 </el-button>
                         </a>
 
                         <div class="form-tips">
@@ -102,9 +80,9 @@
 </template>
 
 <script lang="ts" setup name="loginRegister">
-import type { LoginSetup } from '@/api/setting/user'
-import { getLogin, setLogin } from '@/api/setting/user'
-import type { FormInstance, FormRules } from 'element-plus'
+import type { LoginSetup } from "@/api/setting/user"
+import { getLogin, setLogin } from "@/api/setting/user"
+import type { FormInstance, FormRules } from "element-plus"
 const formRef = ref<FormInstance>()
 
 // 表单数据
@@ -123,23 +101,23 @@ const rules = reactive<FormRules>({
         {
             required: true,
             validator: (rule: any, value: any, callback: any) => {
-                const loginWay = formData.login_way.join('').length
+                const loginWay = formData.login_way.join("").length
                 if (loginWay === 0) {
-                    callback(new Error('登录方式至少选择一项！'))
+                    callback(new Error("登录方式至少选择一项！"))
                 } else {
-                    if (formData.login_way !== '') {
+                    if (formData.login_way !== "") {
                         if (!formRef.value) return
-                        formRef.value.validateField('checkPass', () => null)
+                        formRef.value.validateField("checkPass", () => null)
                     }
                     callback()
                 }
             },
-            trigger: 'change'
+            trigger: "change"
         }
     ],
-    coerce_mobile: [{ required: true, trigger: 'blur' }],
-    login_agreement: [{ required: true, trigger: 'blur' }],
-    third_auth: [{ required: true, trigger: 'blur' }]
+    coerce_mobile: [{ required: true, trigger: "blur" }],
+    login_agreement: [{ required: true, trigger: "blur" }],
+    third_auth: [{ required: true, trigger: "blur" }]
 })
 
 // 获取登录注册数据
@@ -151,7 +129,7 @@ const getData = async () => {
             formData[key] = data[key]
         }
     } catch (error) {
-        console.log('获取=>', error)
+        console.log("获取=>", error)
     }
 }
 
@@ -162,7 +140,7 @@ const handleSubmit = async () => {
         await setLogin(formData)
         getData()
     } catch (error) {
-        console.log('保存=>', error)
+        console.log("保存=>", error)
     }
 }
 

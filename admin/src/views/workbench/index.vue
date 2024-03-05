@@ -20,11 +20,7 @@
                             <a :href="workbenchData.version.channel.website" target="_blank">
                                 <el-button type="success" size="small">官网</el-button>
                             </a>
-                            <a
-                                class="ml-3"
-                                :href="workbenchData.version.channel.gitee"
-                                target="_blank"
-                            >
+                            <a class="ml-3" :href="workbenchData.version.channel.gitee" target="_blank">
                                 <el-button type="danger" size="small">Gitee</el-button>
                             </a>
                         </div>
@@ -35,9 +31,7 @@
                 <template #header>
                     <div>
                         <span class="card-title">今日数据</span>
-                        <span class="text-tx-secondary text-xs ml-4">
-                            更新时间：{{ workbenchData.today.time }}
-                        </span>
+                        <span class="text-tx-secondary text-xs ml-4"> 更新时间：{{ workbenchData.today.time }} </span>
                     </div>
                 </template>
 
@@ -45,30 +39,22 @@
                     <div class="w-1/2 md:w-1/4">
                         <div class="leading-10">访问量(人)</div>
                         <div class="text-6xl">{{ workbenchData.today.today_visitor }}</div>
-                        <div class="text-tx-secondary text-xs">
-                            总访问量：{{ workbenchData.today.total_visitor }}
-                        </div>
+                        <div class="text-tx-secondary text-xs">总访问量：{{ workbenchData.today.total_visitor }}</div>
                     </div>
                     <div class="w-1/2 md:w-1/4">
                         <div class="leading-10">销售额(元)</div>
                         <div class="text-6xl">{{ workbenchData.today.today_sales }}</div>
-                        <div class="text-tx-secondary text-xs">
-                            总销售额：{{ workbenchData.today.total_sales }}
-                        </div>
+                        <div class="text-tx-secondary text-xs">总销售额：{{ workbenchData.today.total_sales }}</div>
                     </div>
                     <div class="w-1/2 md:w-1/4">
                         <div class="leading-10">订单量(笔)</div>
                         <div class="text-6xl">{{ workbenchData.today.order_num }}</div>
-                        <div class="text-tx-secondary text-xs">
-                            总订单量：{{ workbenchData.today.order_sum }}
-                        </div>
+                        <div class="text-tx-secondary text-xs">总订单量：{{ workbenchData.today.order_sum }}</div>
                     </div>
                     <div class="w-1/2 md:w-1/4">
                         <div class="leading-10">新增用户</div>
                         <div class="text-6xl">{{ workbenchData.today.today_new_user }}</div>
-                        <div class="text-tx-secondary text-xs">
-                            总访用户：{{ workbenchData.today.total_new_user }}
-                        </div>
+                        <div class="text-tx-secondary text-xs">总访用户：{{ workbenchData.today.total_new_user }}</div>
                     </div>
                 </div>
             </el-card>
@@ -79,11 +65,7 @@
                     <span>常用功能</span>
                 </template>
                 <div class="flex flex-wrap">
-                    <div
-                        v-for="item in workbenchData.menu"
-                        class="md:w-[12.5%] w-1/4 flex flex-col items-center"
-                        :key="item"
-                    >
+                    <div v-for="item in workbenchData.menu" class="md:w-[12.5%] w-1/4 flex flex-col items-center" :key="item">
                         <router-link :to="item.url" class="mb-3 flex flex-col items-center">
                             <image-contain width="40px" height="40px" :src="item?.image" />
                             <div class="mt-2">{{ item.name }}</div>
@@ -98,11 +80,7 @@
                     <span>访问量趋势图</span>
                 </template>
                 <div>
-                    <v-charts
-                        style="height: 350px"
-                        :option="workbenchData.visitorOption"
-                        :autoresize="true"
-                    />
+                    <v-charts style="height: 350px" :option="workbenchData.visitorOption" :autoresize="true" />
                 </div>
             </el-card>
             <el-card class="!border-none mb-4" shadow="never">
@@ -117,12 +95,7 @@
                                 'border-b border-br': index == 0
                             }"
                         >
-                            <image-contain
-                                :width="120"
-                                :height="120"
-                                class="flex-none"
-                                :src="item.image"
-                            />
+                            <image-contain :width="120" :height="120" class="flex-none" :src="item.image" />
                             <div class="ml-2">
                                 <div>{{ item.title }}</div>
                                 <div class="text-tx-regular text-xs mt-4">{{ item.desc }}</div>
@@ -136,17 +109,17 @@
 </template>
 
 <script lang="ts" setup name="workbench">
-import { getWorkbench } from '@/api/app'
-import vCharts from 'vue-echarts'
+import { getWorkbench } from "@/api/app"
+import vCharts from "vue-echarts"
 // 表单数据
 const workbenchData: any = reactive({
     version: {
-        version: '', // 版本号
-        website: '', // 官网
-        based: '',
+        version: "", // 版本号
+        website: "", // 官网
+        based: "",
         channel: {
-            gitee: '',
-            website: ''
+            gitee: "",
+            website: ""
         }
     },
     support: [],
@@ -157,27 +130,27 @@ const workbenchData: any = reactive({
 
     visitorOption: {
         xAxis: {
-            type: 'category',
+            type: "category",
             data: [0]
         },
         yAxis: {
-            type: 'value'
+            type: "value"
         },
         legend: {
-            data: ['访问量']
+            data: ["访问量"]
         },
         itemStyle: {
             // 点的颜色。
-            color: 'red'
+            color: "red"
         },
         tooltip: {
-            trigger: 'axis'
+            trigger: "axis"
         },
         series: [
             {
-                name: '访问量',
+                name: "访问量",
                 data: [0],
-                type: 'line',
+                type: "line",
                 smooth: true
             }
         ]
@@ -207,7 +180,7 @@ const getData = () => {
             })
         })
         .catch((err: any) => {
-            console.log('err', err)
+            console.log("err", err)
         })
 }
 

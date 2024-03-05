@@ -6,13 +6,13 @@
 </template>
 
 <script setup lang="ts">
-import useSettingStore from '@/stores/modules/setting'
-import LayoutSetting from './drawer.vue'
+import useSettingStore from "@/stores/modules/setting"
+import LayoutSetting from "./drawer.vue"
 const settingStore = useSettingStore()
 
 const openSetting = () => {
     settingStore.setSetting({
-        key: 'showDrawer',
+        key: "showDrawer",
         value: true
     })
 }

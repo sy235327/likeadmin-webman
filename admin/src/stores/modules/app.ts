@@ -1,5 +1,5 @@
-import { getConfig } from '@/api/app'
-import { defineStore } from 'pinia'
+import { getConfig } from "@/api/app"
+import { defineStore } from "pinia"
 interface AppSate {
     config: Record<string, any>
     isMobile: boolean
@@ -8,7 +8,7 @@ interface AppSate {
 }
 
 const useAppStore = defineStore({
-    id: 'app',
+    id: "app",
     state: (): AppSate => {
         return {
             config: {},
@@ -19,7 +19,7 @@ const useAppStore = defineStore({
     },
     actions: {
         getImageUrl(url: string) {
-            return url ? `${this.config.oss_domain}${url}` : ''
+            return url ? `${this.config.oss_domain}${url}` : ""
         },
         getConfig() {
             return new Promise((resolve, reject) => {

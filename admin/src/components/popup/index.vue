@@ -4,15 +4,7 @@
             <!-- 触发弹窗 -->
             <slot name="trigger"></slot>
         </div>
-        <el-dialog
-            v-model="visible"
-            :custom-class="customClass"
-            :center="center"
-            :append-to-body="true"
-            :width="width"
-            :close-on-click-modal="clickModalClose"
-            @closed="close"
-        >
+        <el-dialog v-model="visible" :custom-class="customClass" :center="center" :append-to-body="true" :width="width" :close-on-click-modal="clickModalClose" @closed="close">
             <!-- 弹窗内容 -->
             <template v-if="title" #header>{{ title }}</template>
 
@@ -24,11 +16,7 @@
                     <el-button v-if="cancelButtonText" @click="handleEvent('cancel')">
                         {{ cancelButtonText }}
                     </el-button>
-                    <el-button
-                        v-if="confirmButtonText"
-                        type="primary"
-                        @click="handleEvent('confirm')"
-                    >
+                    <el-button v-if="confirmButtonText" type="primary" @click="handleEvent('confirm')">
                         {{ confirmButtonText }}
                     </el-button>
                 </div>
@@ -43,27 +31,27 @@ export default defineComponent({
         title: {
             // 弹窗标题
             type: String,
-            default: ''
+            default: ""
         },
         content: {
             // 弹窗内容
             type: String,
-            default: ''
+            default: ""
         },
         confirmButtonText: {
             // 确认按钮内容
             type: [String, Boolean],
-            default: '确定'
+            default: "确定"
         },
         cancelButtonText: {
             // 取消按钮内容
             type: [String, Boolean],
-            default: '取消'
+            default: "取消"
         },
         width: {
             // 弹窗的宽度
             type: String,
-            default: '400px'
+            default: "400px"
         },
         disabled: {
             // 是否禁用
@@ -87,16 +75,16 @@ export default defineComponent({
         },
         customClass: {
             type: String,
-            default: ''
+            default: ""
         }
     },
-    emits: ['confirm', 'cancel', 'close', 'open'],
+    emits: ["confirm", "cancel", "close", "open"],
     setup(props, { emit }) {
         const visible = ref(false)
 
-        const handleEvent = (type: 'confirm' | 'cancel') => {
+        const handleEvent = (type: "confirm" | "cancel") => {
             emit(type)
-            if (!props.async || type === 'cancel') {
+            if (!props.async || type === "cancel") {
                 close()
             }
         }
@@ -104,17 +92,17 @@ export default defineComponent({
         const close = () => {
             visible.value = false
             nextTick(() => {
-                emit('close')
+                emit("close")
             })
         }
         const open = () => {
             if (props.disabled) {
                 return
             }
-            emit('open')
+            emit("open")
             visible.value = true
         }
-        provide('visible', visible)
+        provide("visible", visible)
         return {
             visible,
             handleEvent,

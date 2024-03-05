@@ -19,11 +19,7 @@
                     <el-table-column prop="require" label="要求"></el-table-column>
                     <el-table-column label="状态">
                         <template #default="scope">
-                            <icon
-                                v-if="scope.row.status"
-                                name="el-icon-Select"
-                                class="text-success"
-                            />
+                            <icon v-if="scope.row.status" name="el-icon-Select" class="text-success" />
                             <icon v-else name="el-icon-CloseBold" class="text-danger" />
                         </template>
                     </el-table-column>
@@ -40,11 +36,7 @@
                     <el-table-column prop="require" label="要求"></el-table-column>
                     <el-table-column label="状态">
                         <template #default="scope">
-                            <icon
-                                v-if="scope.row.status"
-                                name="el-icon-Select"
-                                class="text-success"
-                            />
+                            <icon v-if="scope.row.status" name="el-icon-Select" class="text-success" />
                             <icon v-else name="el-icon-CloseBold" class="text-danger" />
                         </template>
                     </el-table-column>
@@ -56,7 +48,7 @@
 </template>
 
 <script lang="ts" setup name="environment">
-import { systemInfo } from '@/api/setting/system'
+import { systemInfo } from "@/api/setting/system"
 const info = reactive({
     server: [], // 服务器信息
     env: [], // PHP环境要求

@@ -4,31 +4,17 @@
             <el-page-header content="编辑数据表" @back="$router.back()" />
         </el-card>
         <el-card class="mt-4 !border-none" shadow="never">
-            <el-form
-                ref="formRef"
-                class="ls-form"
-                :model="formData"
-                label-width="100px"
-                :rules="rules"
-            >
+            <el-form ref="formRef" class="ls-form" :model="formData" label-width="100px" :rules="rules">
                 <el-tabs v-model="activeName">
                     <el-tab-pane label="基础信息" name="base">
                         <el-form-item label="表名称" prop="table_name">
                             <div class="w-80">
-                                <el-input
-                                    v-model="formData.table_name"
-                                    placeholder="请输入表名称"
-                                    clearable
-                                />
+                                <el-input v-model="formData.table_name" placeholder="请输入表名称" clearable />
                             </div>
                         </el-form-item>
                         <el-form-item label="表描述" prop="table_comment">
                             <div class="w-80">
-                                <el-input
-                                    v-model="formData.table_comment"
-                                    placeholder="请输入表描述"
-                                    clearable
-                                />
+                                <el-input v-model="formData.table_comment" placeholder="请输入表描述" clearable />
                             </div>
                         </el-form-item>
                         <el-form-item label="作者">
@@ -61,47 +47,27 @@
                             <el-table-column label="物理类型" prop="column_type" />
                             <el-table-column label="必填" width="80">
                                 <template v-slot="{ row }">
-                                    <el-checkbox
-                                        v-model="row.is_required"
-                                        :true-label="1"
-                                        :false-label="0"
-                                    />
+                                    <el-checkbox v-model="row.is_required" :true-label="1" :false-label="0" />
                                 </template>
                             </el-table-column>
                             <el-table-column label="插入" width="80">
                                 <template v-slot="{ row }">
-                                    <el-checkbox
-                                        v-model="row.is_insert"
-                                        :true-label="1"
-                                        :false-label="0"
-                                    />
+                                    <el-checkbox v-model="row.is_insert" :true-label="1" :false-label="0" />
                                 </template>
                             </el-table-column>
                             <el-table-column label="编辑" width="80">
                                 <template v-slot="{ row }">
-                                    <el-checkbox
-                                        v-model="row.is_update"
-                                        :true-label="1"
-                                        :false-label="0"
-                                    />
+                                    <el-checkbox v-model="row.is_update" :true-label="1" :false-label="0" />
                                 </template>
                             </el-table-column>
                             <el-table-column label="列表" width="80">
                                 <template v-slot="{ row }">
-                                    <el-checkbox
-                                        v-model="row.is_lists"
-                                        :true-label="1"
-                                        :false-label="0"
-                                    />
+                                    <el-checkbox v-model="row.is_lists" :true-label="1" :false-label="0" />
                                 </template>
                             </el-table-column>
                             <el-table-column label="查询" width="80">
                                 <template v-slot="{ row }">
-                                    <el-checkbox
-                                        v-model="row.is_query"
-                                        :true-label="1"
-                                        :false-label="0"
-                                    />
+                                    <el-checkbox v-model="row.is_query" :true-label="1" :false-label="0" />
                                 </template>
                             </el-table-column>
                             <el-table-column label="查询方式">
@@ -137,22 +103,10 @@
                                     <el-select
                                         v-model="row.dict_type"
                                         clearable
-                                        :disabled="
-                                            !(
-                                                row.view_type == 'select' ||
-                                                row.view_type == 'radio' ||
-                                                row.view_type == 'checkbox'
-                                            )
-                                        "
+                                        :disabled="!(row.view_type == 'select' || row.view_type == 'radio' || row.view_type == 'checkbox')"
                                         placeholder="字典类型"
                                     >
-                                        <el-option
-                                            v-for="(item, index) in optionsData.dict_type"
-                                            :key="index"
-                                            :label="item.name"
-                                            :value="item.type"
-                                            :disabled="!item.status"
-                                        />
+                                        <el-option v-for="(item, index) in optionsData.dict_type" :key="index" :label="item.name" :value="item.type" :disabled="!item.status" />
                                     </el-select>
                                 </template>
                             </el-table-column>
@@ -171,28 +125,15 @@
                                 <el-radio :label="1">软删除</el-radio>
                             </el-radio-group>
                         </el-form-item>
-                        <el-form-item
-                            label="删除字段"
-                            prop="delete.name"
-                            v-if="formData.delete.type == 1"
-                        >
+                        <el-form-item label="删除字段" prop="delete.name" v-if="formData.delete.type == 1">
                             <el-select class="w-80" v-model="formData.delete.name" clearable>
-                                <el-option
-                                    v-for="item in formData.table_column"
-                                    :key="item.id"
-                                    :value="item.column_name"
-                                    :label="`${item.column_name}：${item.column_comment}`"
-                                />
+                                <el-option v-for="item in formData.table_column" :key="item.id" :value="item.column_name" :label="`${item.column_name}：${item.column_comment}`" />
                             </el-select>
                         </el-form-item>
                         <template v-if="formData.template_type == 1">
                             <el-form-item label="树表ID" prop="treePrimary">
                                 <div>
-                                    <el-select
-                                        class="w-80"
-                                        v-model="formData.tree.tree_id"
-                                        clearable
-                                    >
+                                    <el-select class="w-80" v-model="formData.tree.tree_id" clearable>
                                         <el-option
                                             v-for="item in formData.table_column"
                                             :key="item.id"
@@ -205,11 +146,7 @@
                             </el-form-item>
                             <el-form-item label="树表父ID" prop="treeParent">
                                 <div>
-                                    <el-select
-                                        class="w-80"
-                                        v-model="formData.tree.tree_pid"
-                                        clearable
-                                    >
+                                    <el-select class="w-80" v-model="formData.tree.tree_pid" clearable>
                                         <el-option
                                             v-for="item in formData.table_column"
                                             :key="item.id"
@@ -234,16 +171,10 @@
                         <el-form-item label="类描述">
                             <div class="w-80">
                                 <div>
-                                    <el-input
-                                        v-model="formData.class_comment"
-                                        placeholder="请输入文件描述"
-                                        clearable
-                                    />
+                                    <el-input v-model="formData.class_comment" placeholder="请输入文件描述" clearable />
                                 </div>
                                 <div class="form-tips">
-                                    <div>
-                                        例：填写test,生成文件描述为test控制器(test逻辑/test模型)
-                                    </div>
+                                    <div>例：填写test,生成文件描述为test控制器(test逻辑/test模型)</div>
                                 </div>
                             </div>
                         </el-form-item>
@@ -256,27 +187,17 @@
                         </el-form-item>
                         <el-form-item label="模块名" prop="module_name">
                             <div class="w-80">
-                                <el-input
-                                    v-model="formData.module_name"
-                                    placeholder="请输入模块名"
-                                    clearable
-                                />
+                                <el-input v-model="formData.module_name" placeholder="请输入模块名" clearable />
                                 <div class="form-tips">生成文件所在模块</div>
                             </div>
                         </el-form-item>
                         <el-form-item label="类目录">
                             <div class="w-80">
                                 <div>
-                                    <el-input
-                                        v-model="formData.class_dir"
-                                        placeholder="请输入文件所在目录"
-                                        clearable
-                                    />
+                                    <el-input v-model="formData.class_dir" placeholder="请输入文件所在目录" clearable />
                                 </div>
                                 <div class="form-tips">
-                                    <div>
-                                        例：填写test,则在app/模块名/controller/test下生成控制器
-                                    </div>
+                                    <div>例：填写test,则在app/模块名/controller/test下生成控制器</div>
                                 </div>
                             </div>
                         </el-form-item>
@@ -298,11 +219,7 @@
                         </el-form-item>
                         <el-form-item label="菜单名称" prop="menu.name">
                             <div class="w-80">
-                                <el-input
-                                    v-model="formData.menu.name"
-                                    placeholder="请输入菜单名称"
-                                    clearable
-                                />
+                                <el-input v-model="formData.menu.name" placeholder="请输入菜单名称" clearable />
                             </div>
                         </el-form-item>
                         <el-form-item label="菜单构建" prop="menu.type" required>
@@ -311,9 +228,7 @@
                                     <el-radio :label="1">自动构建</el-radio>
                                     <el-radio :label="0">手动添加</el-radio>
                                 </el-radio-group>
-                                <div class="form-tips">
-                                    自动构建：自动执行生成菜单sql。手动添加：自行添加菜单。
-                                </div>
+                                <div class="form-tips">自动构建：自动执行生成菜单sql。手动添加：自行添加菜单。</div>
                             </div>
                         </el-form-item>
                     </el-tab-pane>
@@ -348,16 +263,8 @@
                                 <el-table-column prop="foreign_key" label="外键" />
                                 <el-table-column label="操作">
                                     <template #default="{ row, $index }">
-                                        <el-button
-                                            link
-                                            type="primary"
-                                            @click="showEditPopup('edit', row, $index)"
-                                        >
-                                            编辑
-                                        </el-button>
-                                        <el-button link type="danger" @click="handelDelete($index)">
-                                            删除
-                                        </el-button>
+                                        <el-button link type="primary" @click="showEditPopup('edit', row, $index)"> 编辑 </el-button>
+                                        <el-button link type="danger" @click="handelDelete($index)"> 删除 </el-button>
                                     </template>
                                 </el-table-column>
                             </el-table>
@@ -382,43 +289,43 @@
 </template>
 
 <script lang="ts" setup name="tableEdit">
-import { generateEdit, tableDetail } from '@/api/tools/code'
-import type { FormInstance } from 'element-plus'
-import feedback from '@/utils/feedback'
-import { useDictOptions } from '@/hooks/useDictOptions'
-import { dictTypeAll } from '@/api/setting/dict'
-import { menuAll } from '@/api/perms/menu'
-import RelationsAdd from '../components/relations-add.vue'
-import { cloneDeep } from 'lodash'
+import { generateEdit, tableDetail } from "@/api/tools/code"
+import type { FormInstance } from "element-plus"
+import feedback from "@/utils/feedback"
+import { useDictOptions } from "@/hooks/useDictOptions"
+import { dictTypeAll } from "@/api/setting/dict"
+import { menuAll } from "@/api/perms/menu"
+import RelationsAdd from "../components/relations-add.vue"
+import { cloneDeep } from "lodash"
 const route = useRoute()
 const router = useRouter()
-const activeName = ref('column')
+const activeName = ref("column")
 const showEdit = ref(false)
 const relationTypes = [
     {
-        name: '一对一',
-        value: 'has_one'
+        name: "一对一",
+        value: "has_one"
     },
     {
-        name: '一对多',
-        value: 'has_many'
+        name: "一对多",
+        value: "has_many"
     }
 ]
 const formData = reactive({
-    id: '',
-    table_name: '',
-    table_comment: '',
-    author: '',
-    remark: '',
+    id: "",
+    table_name: "",
+    table_comment: "",
+    author: "",
+    remark: "",
     template_type: 0,
     generate_type: 0,
-    module_name: '',
-    class_dir: '',
-    class_comment: '',
+    module_name: "",
+    class_dir: "",
+    class_comment: "",
     table_column: [] as any[],
     menu: {
         pid: 0,
-        name: '',
+        name: "",
         type: 0
     },
     tree: {
@@ -427,7 +334,7 @@ const formData = reactive({
         tree_name: 0
     },
     delete: {
-        name: '',
+        name: "",
         type: 0
     },
     relations: [] as any[]
@@ -436,15 +343,15 @@ let editIndex = 0
 const formRef = shallowRef<FormInstance>()
 const editRef = shallowRef<InstanceType<typeof RelationsAdd>>()
 const rules = reactive({
-    table_name: [{ required: true, message: '请输入表名称' }],
-    table_comment: [{ required: true, message: '请输入表描述' }],
-    module_name: [{ required: true, message: '请输入模块名' }],
-    generate_type: [{ required: true, trigger: 'change' }],
-    template_type: [{ required: true, trigger: 'change' }],
-    ['menu.pid']: [{ required: true, message: '请选择父级菜单' }],
-    ['menu.name']: [{ required: true, message: '请输入菜单名称' }],
-    ['delete.type']: [{ required: true, trigger: 'change' }],
-    ['delete.name']: [{ required: true, message: '请选择删除字段' }]
+    table_name: [{ required: true, message: "请输入表名称" }],
+    table_comment: [{ required: true, message: "请输入表描述" }],
+    module_name: [{ required: true, message: "请输入模块名" }],
+    generate_type: [{ required: true, trigger: "change" }],
+    template_type: [{ required: true, trigger: "change" }],
+    ["menu.pid"]: [{ required: true, message: "请选择父级菜单" }],
+    ["menu.name"]: [{ required: true, message: "请输入菜单名称" }],
+    ["delete.type"]: [{ required: true, trigger: "change" }],
+    ["delete.name"]: [{ required: true, message: "请选择删除字段" }]
 })
 
 const showEditPopup = async (type: string, data?: any, index?: number) => {
@@ -484,11 +391,9 @@ const getDetails = async () => {
         () => formData.generate_type,
         (value) => {
             if (value == 1) {
-                feedback
-                    .confirm('生成到模块方式如遇同名文件会覆盖旧文件，确定要选择此方式吗？')
-                    .catch(() => {
-                        formData.generate_type = 0
-                    })
+                feedback.confirm("生成到模块方式如遇同名文件会覆盖旧文件，确定要选择此方式吗？").catch(() => {
+                    formData.generate_type = 0
+                })
             }
         }
     )
@@ -504,7 +409,7 @@ const { optionsData } = useDictOptions<{
     menu: {
         api: menuAll,
         transformData(data) {
-            const menu = { id: 0, name: '顶级', children: [] }
+            const menu = { id: 0, name: "顶级", children: [] }
             menu.children = data
             return [menu]
         }

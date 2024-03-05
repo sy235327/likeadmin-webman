@@ -4,21 +4,10 @@
             <el-page-header :content="$route.meta.title" @back="$router.back()" />
         </el-card>
         <el-card class="mt-4 !border-none" shadow="never">
-            <el-form
-                ref="formRef"
-                class="ls-form"
-                :model="formData"
-                label-width="85px"
-                :rules="rules"
-            >
+            <el-form ref="formRef" class="ls-form" :model="formData" label-width="85px" :rules="rules">
                 <el-form-item label="名称" prop="name">
                     <div class="w-80">
-                        <el-input
-                            v-model="formData.name"
-                            placeholder="请输入名称"
-                            maxlength="30"
-                            clearable
-                        />
+                        <el-input v-model="formData.name" placeholder="请输入名称" maxlength="30" clearable />
                     </div>
                 </el-form-item>
                 <el-form-item label="类型" prop="type">
@@ -28,20 +17,12 @@
                 </el-form-item>
                 <el-form-item label="命令" prop="command">
                     <div class="w-80">
-                        <el-input
-                            v-model="formData.command"
-                            placeholder="请输入thinkphp命令，如vresion"
-                            clearable
-                        />
+                        <el-input v-model="formData.command" placeholder="请输入thinkphp命令，如vresion" clearable />
                     </div>
                 </el-form-item>
                 <el-form-item label="参数" prop="params">
                     <div class="w-80">
-                        <el-input
-                            v-model="formData.params"
-                            placeholder="请输入参数，例:--id 8 --name 测试"
-                            clearable
-                        />
+                        <el-input v-model="formData.params" placeholder="请输入参数，例:--id 8 --name 测试" clearable />
                     </div>
                 </el-form-item>
                 <el-form-item label="状态">
@@ -49,11 +30,7 @@
                 </el-form-item>
                 <el-form-item label="规则" prop="expression">
                     <div class="w-80">
-                        <el-input
-                            @blur="getExpression"
-                            v-model="formData.expression"
-                            placeholder="请输入crontab规则，例：5 9 * * *"
-                        />
+                        <el-input @blur="getExpression" v-model="formData.expression" placeholder="请输入crontab规则，例：5 9 * * *" />
                     </div>
                 </el-form-item>
                 <el-form-item>
@@ -64,14 +41,7 @@
                 </el-form-item>
                 <el-form-item label="备注" prop="remark">
                     <div class="w-80">
-                        <el-input
-                            v-model="formData.remark"
-                            type="textarea"
-                            :autosize="{ minRows: 3, maxRows: 6 }"
-                            :maxlength="200"
-                            show-word-limit
-                            clearable
-                        />
+                        <el-input v-model="formData.remark" type="textarea" :autosize="{ minRows: 3, maxRows: 6 }" :maxlength="200" show-word-limit clearable />
                     </div>
                 </el-form-item>
             </el-form>
@@ -83,19 +53,19 @@
 </template>
 
 <script lang="ts" setup name="scheduledTaskEdit">
-import type { FormInstance } from 'element-plus'
-import { crontabAdd, crontabEdit, crontabDetail, crontabExpression } from '@/api/setting/system'
-import useMultipleTabs from '@/hooks/useMultipleTabs'
+import type { FormInstance } from "element-plus"
+import { crontabAdd, crontabEdit, crontabDetail, crontabExpression } from "@/api/setting/system"
+import useMultipleTabs from "@/hooks/useMultipleTabs"
 
 const route = useRoute()
 const router = useRouter()
 const formData = reactive({
-    id: '',
-    name: '',
-    command: '',
-    expression: '',
-    params: '',
-    remark: '',
+    id: "",
+    name: "",
+    command: "",
+    expression: "",
+    params: "",
+    remark: "",
     status: 1,
     type: 1
 })
@@ -103,9 +73,9 @@ const formData = reactive({
 const { removeTab } = useMultipleTabs()
 const formRef = shallowRef<FormInstance>()
 const rules = reactive({
-    name: [{ required: true, message: '请输入名称' }],
-    command: [{ required: true, message: '请输入thankphp命令，如vresion' }],
-    expression: [{ required: true, message: '请输入crontab规则，例：5 9 * * *' }]
+    name: [{ required: true, message: "请输入名称" }],
+    command: [{ required: true, message: "请输入thankphp命令，如vresion" }],
+    expression: [{ required: true, message: "请输入crontab规则，例：5 9 * * *" }]
 })
 
 const getDetails = async () => {
@@ -120,7 +90,7 @@ const getDetails = async () => {
 
 const expressionLists = ref([])
 const getExpression = async () => {
-    await formRef.value?.validateField(['expression'])
+    await formRef.value?.validateField(["expression"])
     const res = await crontabExpression({
         expression: formData.expression
     })

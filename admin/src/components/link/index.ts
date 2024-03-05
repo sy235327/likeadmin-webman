@@ -1,6 +1,6 @@
 export enum LinkTypeEnum {
-    'SHOP_PAGES' = 'shop',
-    'CUSTOM_LINK' = 'custom'
+    "SHOP_PAGES" = "shop",
+    "CUSTOM_LINK" = "custom"
 }
 
 export interface Link {

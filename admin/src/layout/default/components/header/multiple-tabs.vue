@@ -1,12 +1,7 @@
 <template>
     <div class="app-tabs pl-4 flex bg-body">
         <div class="flex-1 min-w-0">
-            <el-tabs
-                :model-value="currentTab"
-                :closable="tabsLists.length > 1"
-                @tab-change="handleChange"
-                @tab-remove="removeTab($event)"
-            >
+            <el-tabs :model-value="currentTab" :closable="tabsLists.length > 1" @tab-change="handleChange" @tab-remove="removeTab($event)">
                 <template v-for="item in tabsLists" :key="item.fullPath">
                     <el-tab-pane :label="item.title" :name="item.fullPath"></el-tab-pane>
                 </template>
@@ -28,9 +23,9 @@
 </template>
 
 <script setup lang="ts">
-import useMultipleTabs from '@/hooks/useMultipleTabs'
-import { useWatchRoute } from '@/hooks/useWatchRoute'
-import useTabsStore, { getRouteParams } from '@/stores/modules/multipleTabs'
+import useMultipleTabs from "@/hooks/useMultipleTabs"
+import { useWatchRoute } from "@/hooks/useWatchRoute"
+import useTabsStore, { getRouteParams } from "@/stores/modules/multipleTabs"
 const router = useRouter()
 const tabsStore = useTabsStore()
 const { removeOtherTab, addTab, removeAllTab, removeTab, tabsLists, currentTab } = useMultipleTabs()
@@ -45,13 +40,13 @@ const handleChange = (fullPath: any) => {
 
 const handleCommand = (command: any) => {
     switch (command) {
-        case 'closeCurrent':
+        case "closeCurrent":
             removeTab()
             break
-        case 'closeOther':
+        case "closeOther":
             removeOtherTab()
             break
-        case 'closeAll':
+        case "closeAll":
             removeAllTab()
             break
     }
@@ -84,7 +79,7 @@ const handleCommand = (command: any) => {
                 &.is-active {
                     background-color: var(--el-color-primary-light-9);
                     &::before {
-                        content: '';
+                        content: "";
                         display: inline-block;
                         width: 6px;
                         height: 6px;
@@ -95,7 +90,7 @@ const handleCommand = (command: any) => {
                     }
                     &::after {
                         position: absolute;
-                        content: '';
+                        content: "";
                         display: block;
                         top: 0;
                         height: 2px;

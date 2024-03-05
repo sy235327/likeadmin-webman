@@ -1,4 +1,4 @@
-import axios, { type AxiosRequestConfig, type Canceler } from 'axios'
+import axios, { type AxiosRequestConfig, type Canceler } from "axios"
 
 const cancelerMap = new Map<string, Canceler>()
 

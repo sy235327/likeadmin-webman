@@ -3,13 +3,7 @@
         <el-card class="!border-none" shadow="never">
             <el-page-header content="编辑通知设置" @back="$router.back()" />
         </el-card>
-        <el-form
-            ref="formRef"
-            :model="formData"
-            label-width="120px"
-            :rules="rules"
-            v-loading="loading"
-        >
+        <el-form ref="formRef" :model="formData" label-width="120px" :rules="rules" v-loading="loading">
             <el-card class="!border-none mt-4" shadow="never">
                 <div class="font-medium mb-7">通知名称</div>
                 <el-form-item label="通知名称"> {{ formData.scene_name }} </el-form-item>
@@ -26,20 +20,13 @@
                 </el-form-item>
                 <el-form-item label="模板ID" prop="sms_notice.template_id">
                     <div class="w-80">
-                        <el-input
-                            v-model="formData.sms_notice.template_id"
-                            placeholder="请输入模板ID"
-                        />
+                        <el-input v-model="formData.sms_notice.template_id" placeholder="请输入模板ID" />
                     </div>
                 </el-form-item>
                 <el-form-item label="短信内容" prop="sms_notice.content">
                     <div class="flex-1">
                         <div class="w-full max-w-[320px]">
-                            <el-input
-                                type="textarea"
-                                :autosize="{ minRows: 6, maxRows: 6 }"
-                                v-model="formData.sms_notice.content"
-                            />
+                            <el-input type="textarea" :autosize="{ minRows: 6, maxRows: 6 }" v-model="formData.sms_notice.content" />
                         </div>
                         <div class="form-tips">
                             <div v-for="(item, index) in formData.sms_notice.tips" :key="index">
@@ -57,25 +44,25 @@
 </template>
 
 <script lang="ts" setup name="noticeEdit">
-import type { FormInstance } from 'element-plus'
-import feedback from '@/utils/feedback'
-import { noticeDetail, setNoticeConfig } from '@/api/message'
-import useMultipleTabs from '@/hooks/useMultipleTabs'
-import { pick } from 'lodash'
+import type { FormInstance } from "element-plus"
+import feedback from "@/utils/feedback"
+import { noticeDetail, setNoticeConfig } from "@/api/message"
+import useMultipleTabs from "@/hooks/useMultipleTabs"
+import { pick } from "lodash"
 
 const route = useRoute()
 const router = useRouter()
 
 const loading = ref(false)
 const formData = reactive({
-    id: '',
-    scene_name: '',
-    type: '',
-    scene_desc: '',
+    id: "",
+    scene_name: "",
+    type: "",
+    scene_desc: "",
     sms_notice: {
         status: 0,
-        template_id: '',
-        content: '',
+        template_id: "",
+        content: "",
         tips: []
     },
     oa_notice: {},
@@ -84,18 +71,18 @@ const formData = reactive({
 })
 
 const rules = {
-    'sms_notice.template_id': [
+    "sms_notice.template_id": [
         {
             required: true,
-            message: '请输入模板ID',
-            trigger: 'blur'
+            message: "请输入模板ID",
+            trigger: "blur"
         }
     ],
-    'sms_notice.content': [
+    "sms_notice.content": [
         {
             required: true,
-            message: '请输入短信内容',
-            trigger: 'blur'
+            message: "请输入短信内容",
+            trigger: "blur"
         }
     ]
 }
@@ -118,10 +105,10 @@ const handleSave = async () => {
     await formRef.value?.validate()
     const data = {
         id: formData.id,
-        template: pick(formData, ['sms_notice', 'oa_notice', 'mnp_notice', 'system_notice'])
+        template: pick(formData, ["sms_notice", "oa_notice", "mnp_notice", "system_notice"])
     }
     await setNoticeConfig(data)
-    feedback.msgSuccess('操作成功')
+    feedback.msgSuccess("操作成功")
     removeTab()
     router.back()
 }

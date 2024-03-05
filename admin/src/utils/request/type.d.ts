@@ -1,7 +1,7 @@
-import type { AxiosRequestConfig, AxiosResponse } from 'axios'
+import type { AxiosRequestConfig, AxiosResponse } from "axios"
 
-import 'axios'
-declare module 'axios' {
+import "axios"
+declare module "axios" {
     // 扩展 RouteMeta
     interface AxiosRequestConfig {
         retryCount?: number
@@ -24,9 +24,7 @@ export interface RequestOptions {
 export interface AxiosHooks {
     requestInterceptorsHook?: (config: AxiosRequestConfig) => AxiosRequestConfig
     requestInterceptorsCatchHook?: (error: Error) => void
-    responseInterceptorsHook?: (
-        response: AxiosResponse<RequestData<T>>
-    ) => AxiosResponse<RequestData> | RequestData | T
+    responseInterceptorsHook?: (response: AxiosResponse<RequestData<T>>) => AxiosResponse<RequestData> | RequestData | T
     responseInterceptorsCatchHook?: (error: AxiosError) => void
 }
 

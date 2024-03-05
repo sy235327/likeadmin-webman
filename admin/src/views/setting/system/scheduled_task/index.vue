@@ -1,10 +1,7 @@
 <template>
     <div>
         <el-card shadow="never" class="!border-none">
-            <router-link
-                v-perms="['crontab.crontab/add', 'crontab.crontab/add:edit']"
-                :to="getRoutePath('crontab.crontab/add:edit')"
-            >
+            <router-link v-perms="['crontab.crontab/add', 'crontab.crontab/add:edit']" :to="getRoutePath('crontab.crontab/add:edit')">
                 <el-button type="primary" class="mb-[16px]">
                     <template #icon>
                         <icon name="el-icon-Plus" />
@@ -13,13 +10,7 @@
                 </el-button>
             </router-link>
 
-            <el-table
-                ref="paneTable"
-                class="m-t-24"
-                :data="pager.lists"
-                v-loading="pager.loading"
-                style="width: 100%"
-            >
+            <el-table ref="paneTable" class="m-t-24" :data="pager.lists" v-loading="pager.loading" style="width: 100%">
                 <el-table-column prop="name" label="名称" min-width="120" />
                 <el-table-column prop="type_desc" label="类型" min-width="100" />
                 <el-table-column prop="command" label="命令" min-width="100" />
@@ -53,14 +44,7 @@
                                     <el-button type="primary" link> 编辑 </el-button>
                                 </router-link>
                             </el-button>
-                            <el-button
-                                v-perms="['crontab.crontab/delete']"
-                                type="danger"
-                                link
-                                @click="handleDelete(row.id)"
-                            >
-                                删除
-                            </el-button>
+                            <el-button v-perms="['crontab.crontab/delete']" type="danger" link @click="handleDelete(row.id)"> 删除 </el-button>
                         </div>
                     </template>
                 </el-table-column>
@@ -74,10 +58,10 @@
 </template>
 
 <script lang="ts" setup name="scheduledTask">
-import { crontabLists, crontabDel } from '@/api/setting/system'
-import { usePaging } from '@/hooks/usePaging'
-import { getRoutePath } from '@/router'
-import feedback from '@/utils/feedback'
+import { crontabLists, crontabDel } from "@/api/setting/system"
+import { usePaging } from "@/hooks/usePaging"
+import { getRoutePath } from "@/router"
+import feedback from "@/utils/feedback"
 
 const { pager, getLists } = usePaging({
     fetchFun: crontabLists,
@@ -85,7 +69,7 @@ const { pager, getLists } = usePaging({
 })
 
 const handleDelete = async (id: number) => {
-    await feedback.confirm('确定要删除？')
+    await feedback.confirm("确定要删除？")
     await crontabDel({ id })
     getLists()
 }

@@ -1,14 +1,7 @@
 <template>
     <div class="icon-select">
-        <el-popover
-            trigger="contextmenu"
-            v-model:visible="state.popoverVisible"
-            :width="state.popoverWidth"
-        >
-            <div
-                @mouseover.stop="state.mouseoverSelect = true"
-                @mouseout.stop="state.mouseoverSelect = false"
-            >
+        <el-popover trigger="contextmenu" v-model:visible="state.popoverVisible" :width="state.popoverWidth">
+            <div @mouseover.stop="state.mouseoverSelect = true" @mouseout.stop="state.mouseoverSelect = false">
                 <div>
                     <div class="flex justify-between">
                         <div class="mb-3">请选择图标</div>
@@ -54,12 +47,7 @@
                     <template #prepend>
                         <div class="flex items-center" v-if="modelValue">
                             <el-tooltip class="flex-1 w-20" :content="modelValue" placement="top">
-                                <icon
-                                    class="mr-1"
-                                    :key="modelValue"
-                                    :name="modelValue"
-                                    :size="16"
-                                />
+                                <icon class="mr-1" :key="modelValue" :name="modelValue" :size="16" />
                             </el-tooltip>
                         </div>
 
@@ -77,32 +65,32 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, nextTick, onMounted, reactive, shallowRef, watch } from 'vue'
-import { useEventListener } from '@vueuse/core'
-import { ElInput } from 'element-plus'
-import { getElementPlusIconNames, getLocalIconNames } from './index'
+import { computed, nextTick, onMounted, reactive, shallowRef, watch } from "vue"
+import { useEventListener } from "@vueuse/core"
+import { ElInput } from "element-plus"
+import { getElementPlusIconNames, getLocalIconNames } from "./index"
 interface Props {
     modelValue: string
     disabled?: boolean
 }
 withDefaults(defineProps<Props>(), {
-    modelValue: '',
+    modelValue: "",
     disabled: false
 })
 
 const emits = defineEmits<{
-    (e: 'update:modelValue', value: string): void
-    (e: 'change', value: string): void
+    (e: "update:modelValue", value: string): void
+    (e: "change", value: string): void
 }>()
 
 const tabIndex = ref(0)
 const iconTabsMap = [
     {
-        name: 'element图标',
+        name: "element图标",
         icons: getElementPlusIconNames()
     },
     {
-        name: '本地图标',
+        name: "本地图标",
         icons: getLocalIconNames()
     }
 ]
@@ -110,7 +98,7 @@ const iconTabsMap = [
 const inputRef = shallowRef<InstanceType<typeof ElInput>>()
 
 const state = reactive({
-    inputValue: '',
+    inputValue: "",
     popoverVisible: false,
     popoverWidth: 0,
     mouseoverSelect: false,
@@ -131,13 +119,13 @@ const handleBlur = () => {
 // 选中图标
 const handleSelect = (icon: string) => {
     state.mouseoverSelect = state.popoverVisible = false
-    emits('update:modelValue', icon)
-    emits('change', icon)
+    emits("update:modelValue", icon)
+    emits("change", icon)
 }
 //取消选中
 const handleClear = () => {
-    emits('update:modelValue', '')
-    emits('change', '')
+    emits("update:modelValue", "")
+    emits("change", "")
 }
 
 //根据输入框内容塞选
@@ -163,7 +151,7 @@ const getInputWidth = () => {
 }
 
 //监听body点击事件
-useEventListener(document.body, 'click', () => {
+useEventListener(document.body, "click", () => {
     state.popoverVisible = state.inputFocus || state.mouseoverSelect ? true : false
 })
 

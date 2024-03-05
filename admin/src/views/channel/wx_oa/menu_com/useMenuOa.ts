@@ -1,8 +1,8 @@
-import { ref } from 'vue'
-import feedback from '@/utils/feedback'
-import type { FormRules } from 'element-plus'
-import { setOaMenuSave, getOaMenu, setOaMenuPublish } from '@/api/channel/wx_oa'
-import type { Menu } from '@/api/channel/wx_oa'
+import { ref } from "vue"
+import feedback from "@/utils/feedback"
+import type { FormRules } from "element-plus"
+import { setOaMenuSave, getOaMenu, setOaMenuPublish } from "@/api/channel/wx_oa"
+import type { Menu } from "@/api/channel/wx_oa"
 
 // 菜单实例
 export const menuRef = shallowRef()
@@ -15,55 +15,54 @@ export const rules = reactive<FormRules>({
     name: [
         {
             required: true,
-            message: '必填项不能为空',
-            trigger: ['blur', 'change']
+            message: "必填项不能为空",
+            trigger: ["blur", "change"]
         },
         {
             min: 1,
             max: 12,
-            message: '长度限制12个字符',
-            trigger: ['blur', 'change']
+            message: "长度限制12个字符",
+            trigger: ["blur", "change"]
         }
     ],
     menuType: [
         {
             required: true,
-            message: '必填项不能为空',
-            trigger: ['blur', 'change']
+            message: "必填项不能为空",
+            trigger: ["blur", "change"]
         }
     ],
     visitType: [
         {
             required: true,
-            message: '必填项不能为空',
-            trigger: ['blur', 'change']
+            message: "必填项不能为空",
+            trigger: ["blur", "change"]
         }
     ],
     url: [
         {
             required: true,
-            message: '必填项不能为空',
-            trigger: ['blur', 'change']
+            message: "必填项不能为空",
+            trigger: ["blur", "change"]
         },
         {
-            pattern:
-                /(http|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/,
-            message: '请输入合法的网址链接',
-            trigger: ['blur', 'change']
+            pattern: /(http|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/,
+            message: "请输入合法的网址链接",
+            trigger: ["blur", "change"]
         }
     ],
     appId: [
         {
             required: true,
-            message: '必填项不能为空',
-            trigger: ['blur', 'change']
+            message: "必填项不能为空",
+            trigger: ["blur", "change"]
         }
     ],
     pagePath: [
         {
             required: true,
-            message: '必填项不能为空',
-            trigger: ['blur', 'change']
+            message: "必填项不能为空",
+            trigger: ["blur", "change"]
         }
     ]
 })
@@ -74,12 +73,12 @@ export const useMenuOa = (ref: any) => {
     // 添加主菜单
     const handleAddMenu = () => {
         menuList.value.push({
-            name: '菜单名称',
+            name: "菜单名称",
             has_menu: false,
-            type: 'view',
-            url: '',
-            appid: '',
-            pagepath: '',
+            type: "view",
+            url: "",
+            appid: "",
+            pagepath: "",
             sub_button: []
         })
     }
@@ -88,7 +87,7 @@ export const useMenuOa = (ref: any) => {
     const handleAddSubMenu = (event?: Menu) => {
         const index = menuIndex.value
         if (menuList.value[index].sub_button.length >= 5) {
-            feedback.msgError('已添加上限～')
+            feedback.msgError("已添加上限～")
             return
         }
         menuList.value[index].sub_button.push(event)
@@ -118,7 +117,7 @@ export const useMenuOa = (ref: any) => {
         try {
             menuList.value = await getOaMenu()
         } catch (error) {
-            console.log('获取菜单=>', error)
+            console.log("获取菜单=>", error)
         }
     }
 

@@ -18,19 +18,14 @@
                 :style="widget.styles"
             ></div>
             <slot>
-                <component
-                    :is="widgets[widget?.name]?.content"
-                    :content="widget.content"
-                    :styles="widget.styles"
-                    :key="widget.id"
-                />
+                <component :is="widgets[widget?.name]?.content" :content="widget.content" :styles="widget.styles" :key="widget.id" />
             </slot>
         </div>
     </div>
 </template>
 <script lang="ts" setup>
-import widgets from '../widgets'
-import type { PropType } from 'vue'
+import widgets from "../widgets"
+import type { PropType } from "vue"
 
 defineProps({
     pageData: {
@@ -44,12 +39,12 @@ defineProps({
 })
 
 const emit = defineEmits<{
-    (event: 'update:modelValue', value: number): void
+    (event: "update:modelValue", value: number): void
 }>()
 
 const handleClick = (widget: any, index: number) => {
     if (widget.disabled) return
-    emit('update:modelValue', index)
+    emit("update:modelValue", index)
 }
 </script>
 

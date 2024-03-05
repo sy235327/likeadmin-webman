@@ -2,21 +2,8 @@
     <div class="material-index">
         <el-card class="!border-none" shadow="never">
             <el-tabs v-model="activeTab">
-                <el-tab-pane
-                    v-for="item in tabsMap"
-                    :label="item.name"
-                    :name="item.type"
-                    :index="item.type"
-                    :key="item.type"
-                    lazy
-                >
-                    <material
-                        :type="item.type"
-                        mode="page"
-                        file-size="120px"
-                        :limit="-1"
-                        :page-size="20"
-                    />
+                <el-tab-pane v-for="item in tabsMap" :label="item.name" :name="item.type" :index="item.type" :key="item.type" lazy>
+                    <material :type="item.type" mode="page" file-size="120px" :limit="-1" :page-size="20" />
                 </el-tab-pane>
             </el-tabs>
         </el-card>
@@ -26,15 +13,15 @@
 <script lang="ts" setup name="material">
 const tabsMap = [
     {
-        type: 'image',
-        name: '图片'
+        type: "image",
+        name: "图片"
     },
     {
-        type: 'video',
-        name: '视频'
+        type: "video",
+        name: "视频"
     }
 ]
-const activeTab = ref('image')
+const activeTab = ref("image")
 </script>
 
 <style lang="scss" scoped>

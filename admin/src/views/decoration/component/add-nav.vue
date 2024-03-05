@@ -5,12 +5,7 @@
                 <template v-slot:item="{ element: item, index }">
                     <del-wrap class="max-w-[400px]" :key="index" @close="handleDelete(index)">
                         <div class="bg-fill-light flex items-center w-full p-4 mb-4 cursor-move">
-                            <material-picker
-                                v-model="item.image"
-                                upload-class="bg-body"
-                                size="60px"
-                                exclude-domain
-                            >
+                            <material-picker v-model="item.image" upload-class="bg-body" size="60px" exclude-domain>
                                 <template #upload>
                                     <div class="upload-btn w-[60px] h-[60px]">
                                         <icon name="el-icon-Plus" :size="20" />
@@ -38,9 +33,9 @@
     </div>
 </template>
 <script lang="ts" setup>
-import feedback from '@/utils/feedback'
-import type { PropType } from 'vue'
-import Draggable from 'vuedraggable'
+import feedback from "@/utils/feedback"
+import type { PropType } from "vue"
+import Draggable from "vuedraggable"
 const props = defineProps({
     modelValue: {
         type: Array as PropType<any[]>,
@@ -56,21 +51,21 @@ const props = defineProps({
     }
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(["update:modelValue"])
 const navLists = computed({
     get() {
         return props.modelValue
     },
     set(value) {
-        emit('update:modelValue', value)
+        emit("update:modelValue", value)
     }
 })
 
 const handleAdd = () => {
     if (props.modelValue?.length < props.max) {
         navLists.value.push({
-            image: '',
-            name: '导航名称',
+            image: "",
+            name: "导航名称",
             link: {}
         })
     } else {

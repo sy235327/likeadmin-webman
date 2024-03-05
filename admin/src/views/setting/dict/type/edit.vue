@@ -1,20 +1,7 @@
 <template>
     <div class="edit-popup">
-        <popup
-            ref="popupRef"
-            :title="popupTitle"
-            :async="true"
-            width="550px"
-            @confirm="handleSubmit"
-            @close="handleClose"
-        >
-            <el-form
-                class="ls-form"
-                ref="formRef"
-                :rules="rules"
-                :model="formData"
-                label-width="84px"
-            >
+        <popup ref="popupRef" :title="popupTitle" :async="true" width="550px" @confirm="handleSubmit" @close="handleClose">
+            <el-form class="ls-form" ref="formRef" :rules="rules" :model="formData" label-width="84px">
                 <el-form-item label="字典名称" prop="name">
                     <el-input v-model="formData.name" placeholder="请输入字典名称" clearable />
                 </el-form-item>
@@ -28,67 +15,60 @@
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="备注" prop="remark">
-                    <el-input
-                        v-model="formData.remark"
-                        type="textarea"
-                        :autosize="{ minRows: 4, maxRows: 6 }"
-                        clearable
-                        maxlength="200"
-                        show-word-limit
-                    />
+                    <el-input v-model="formData.remark" type="textarea" :autosize="{ minRows: 4, maxRows: 6 }" clearable maxlength="200" show-word-limit />
                 </el-form-item>
             </el-form>
         </popup>
     </div>
 </template>
 <script lang="ts" setup>
-import type { FormInstance } from 'element-plus'
-import Popup from '@/components/popup/index.vue'
-import { dictTypeAdd, dictTypeEdit } from '@/api/setting/dict'
-const emit = defineEmits(['success', 'close'])
+import type { FormInstance } from "element-plus"
+import Popup from "@/components/popup/index.vue"
+import { dictTypeAdd, dictTypeEdit } from "@/api/setting/dict"
+const emit = defineEmits(["success", "close"])
 const formRef = shallowRef<FormInstance>()
 const popupRef = shallowRef<InstanceType<typeof Popup>>()
-const mode = ref('add')
+const mode = ref("add")
 const popupTitle = computed(() => {
-    return mode.value == 'edit' ? '编辑字典类型' : '新增字典类型'
+    return mode.value == "edit" ? "编辑字典类型" : "新增字典类型"
 })
 const formData = reactive({
-    id: '',
-    name: '',
-    type: '',
+    id: "",
+    name: "",
+    type: "",
     status: 1,
-    remark: ''
+    remark: ""
 })
 
 const rules = {
     name: [
         {
             required: true,
-            message: '请输入字典名称',
-            trigger: ['blur']
+            message: "请输入字典名称",
+            trigger: ["blur"]
         }
     ],
     type: [
         {
             required: true,
-            message: '请输入字典类型',
-            trigger: ['blur']
+            message: "请输入字典类型",
+            trigger: ["blur"]
         }
     ]
 }
 
 const handleSubmit = async () => {
     await formRef.value?.validate()
-    mode.value == 'edit' ? await dictTypeEdit(formData) : await dictTypeAdd(formData)
+    mode.value == "edit" ? await dictTypeEdit(formData) : await dictTypeAdd(formData)
     popupRef.value?.close()
-    emit('success')
+    emit("success")
 }
 
 const handleClose = () => {
-    emit('close')
+    emit("close")
 }
 
-const open = (type = 'add') => {
+const open = (type = "add") => {
     mode.value = type
     popupRef.value?.open()
 }

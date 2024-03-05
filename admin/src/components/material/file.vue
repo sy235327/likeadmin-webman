@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue"
 export default defineComponent({
     props: {
         // 图片地址
@@ -25,15 +25,15 @@ export default defineComponent({
         // 图片尺寸
         fileSize: {
             type: String,
-            default: '100px'
+            default: "100px"
         },
         // 文件类型
         type: {
             type: String,
-            default: 'image'
+            default: "image"
         }
     },
-    emits: ['close']
+    emits: ["close"]
 })
 </script>
 

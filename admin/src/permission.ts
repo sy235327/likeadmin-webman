@@ -2,16 +2,16 @@
  * 权限控制
  */
 
-import NProgress from 'nprogress'
-import router, { findFirstValidRoute } from './router'
-import 'nprogress/nprogress.css'
-import { isExternal } from './utils/validate'
-import useUserStore from './stores/modules/user'
-import { INDEX_ROUTE, INDEX_ROUTE_NAME } from './router/routes'
-import { PageEnum } from './enums/pageEnum'
-import useTabsStore from './stores/modules/multipleTabs'
-import { clearAuthInfo } from './utils/auth'
-import config from './config'
+import NProgress from "nprogress"
+import router, { findFirstValidRoute } from "./router"
+import "nprogress/nprogress.css"
+import { isExternal } from "./utils/validate"
+import useUserStore from "./stores/modules/user"
+import { INDEX_ROUTE, INDEX_ROUTE_NAME } from "./router/routes"
+import { PageEnum } from "./enums/pageEnum"
+import useTabsStore from "./stores/modules/multipleTabs"
+import { clearAuthInfo } from "./utils/auth"
+import config from "./config"
 
 // NProgress配置
 NProgress.configure({ showSpinner: false })

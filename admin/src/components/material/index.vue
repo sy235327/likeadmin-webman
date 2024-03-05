@@ -16,10 +16,7 @@
                         >
                             <template v-slot="{ data }">
                                 <div class="flex flex-1 items-center min-w-0 pr-4">
-                                    <img
-                                        class="w-[20px] h-[16px] mr-3"
-                                        src="@/assets/images/icon_folder.png"
-                                    />
+                                    <img class="w-[20px] h-[16px] mr-3" src="@/assets/images/icon_folder.png" />
                                     <span class="flex-1 truncate mr-2">
                                         <overflow-tooltip :content="data.name" />
                                     </span>
@@ -37,9 +34,7 @@
                                                     teleported
                                                 >
                                                     <div>
-                                                        <el-dropdown-item>
-                                                            命名分组
-                                                        </el-dropdown-item>
+                                                        <el-dropdown-item> 命名分组 </el-dropdown-item>
                                                     </div>
                                                 </popover-input>
                                                 <div @click="handleDeleteCate(data.id)">
@@ -56,14 +51,7 @@
             </div>
 
             <div class="flex justify-center p-2 border-t border-br">
-                <popover-input
-                    @confirm="handleAddCate"
-                    size="default"
-                    width="400px"
-                    :limit="20"
-                    show-limit
-                    teleported
-                >
+                <popover-input @confirm="handleAddCate" size="default" width="400px" :limit="20" show-limit teleported>
                     <el-button> 添加分组 </el-button>
                 </popover-input>
             </div>
@@ -71,41 +59,15 @@
         <div class="material__center flex flex-col">
             <div class="operate-btn flex">
                 <div class="flex-1 flex">
-                    <upload
-                        v-if="type == 'image'"
-                        class="mr-3"
-                        :data="{ cid: cateId }"
-                        :type="type"
-                        :show-progress="true"
-                        @change="refresh"
-                    >
+                    <upload v-if="type == 'image'" class="mr-3" :data="{ cid: cateId }" :type="type" :show-progress="true" @change="refresh">
                         <el-button type="primary">本地上传</el-button>
                     </upload>
-                    <upload
-                        v-if="type == 'video'"
-                        class="mr-3"
-                        :data="{ cid: cateId }"
-                        :type="type"
-                        :show-progress="true"
-                        @change="refresh"
-                    >
+                    <upload v-if="type == 'video'" class="mr-3" :data="{ cid: cateId }" :type="type" :show-progress="true" @change="refresh">
                         <el-button type="primary">本地上传</el-button>
                     </upload>
-                    <el-button
-                        v-if="mode == 'page'"
-                        :disabled="!select.length"
-                        @click.stop="batchFileDelete()"
-                    >
-                        删除
-                    </el-button>
+                    <el-button v-if="mode == 'page'" :disabled="!select.length" @click.stop="batchFileDelete()"> 删除 </el-button>
 
-                    <popup
-                        v-if="mode == 'page'"
-                        class="ml-3"
-                        @confirm="batchFileMove"
-                        :disabled="!select.length"
-                        title="移动文件"
-                    >
+                    <popup v-if="mode == 'page'" class="ml-3" @confirm="batchFileMove" :disabled="!select.length" title="移动文件">
                         <template #trigger>
                             <el-button :disabled="!select.length">移动</el-button>
                         </template>
@@ -114,22 +76,13 @@
                             <span class="mr-5">移动文件至</span>
                             <el-select v-model="moveId" placeholder="请选择">
                                 <template v-for="item in cateLists" :key="item.id">
-                                    <el-option
-                                        v-if="item.id !== ''"
-                                        :label="item.name"
-                                        :value="item.id"
-                                    ></el-option>
+                                    <el-option v-if="item.id !== ''" :label="item.name" :value="item.id"></el-option>
                                 </template>
                             </el-select>
                         </div>
                     </popup>
                 </div>
-                <el-input
-                    class="w-60"
-                    placeholder="请输入名称"
-                    v-model="fileParams.name"
-                    @keyup.enter="refresh"
-                >
+                <el-input class="w-60" placeholder="请输入名称" v-model="fileParams.name" @keyup.enter="refresh">
                     <template #append>
                         <el-button @click="refresh">
                             <template #icon>
@@ -164,31 +117,14 @@
                 </div>
             </div>
             <div class="mt-3" v-if="mode == 'page'">
-                <el-checkbox
-                    :disabled="!pager.lists.length"
-                    v-model="isCheckAll"
-                    @change="selectAll"
-                    :indeterminate="isIndeterminate"
-                >
-                    当页全选
-                </el-checkbox>
+                <el-checkbox :disabled="!pager.lists.length" v-model="isCheckAll" @change="selectAll" :indeterminate="isIndeterminate"> 当页全选 </el-checkbox>
             </div>
             <div class="material-center__content flex flex-col flex-1 mb-1 min-h-0">
                 <el-scrollbar v-if="pager.lists.length" v-show="listShowType == 'normal'">
                     <ul class="file-list flex flex-wrap mt-4">
-                        <li
-                            class="file-item-wrap"
-                            v-for="item in pager.lists"
-                            :key="item.id"
-                            :style="{ width: fileSize }"
-                        >
+                        <li class="file-item-wrap" v-for="item in pager.lists" :key="item.id" :style="{ width: fileSize }">
                             <del-wrap @close="batchFileDelete([item.id])">
-                                <file-item
-                                    :uri="item.uri"
-                                    :file-size="fileSize"
-                                    :type="type"
-                                    @click="selectFile(item)"
-                                >
+                                <file-item :uri="item.uri" :file-size="fileSize" :type="type" @click="selectFile(item)">
                                     <div class="item-selected" v-if="isSelect(item.id)">
                                         <icon :size="24" name="el-icon-Check" color="#fff" />
                                     </div>
@@ -197,35 +133,16 @@
 
                             <overflow-tooltip class="mt-1" :content="item.name" />
                             <div class="operation-btns flex items-center">
-                                <popover-input
-                                    @confirm="handleFileRename($event, item.id)"
-                                    size="default"
-                                    :value="item.name"
-                                    width="400px"
-                                    :limit="50"
-                                    show-limit
-                                    teleported
-                                >
+                                <popover-input @confirm="handleFileRename($event, item.id)" size="default" :value="item.name" width="400px" :limit="50" show-limit teleported>
                                     <el-button type="primary" link> 重命名 </el-button>
                                 </popover-input>
-                                <el-button type="primary" link @click="handlePreview(item.uri)">
-                                    查看
-                                </el-button>
+                                <el-button type="primary" link @click="handlePreview(item.uri)"> 查看 </el-button>
                             </div>
                         </li>
                     </ul>
                 </el-scrollbar>
 
-                <el-table
-                    ref="tableRef"
-                    class="mt-4"
-                    v-show="listShowType == 'table'"
-                    :data="pager.lists"
-                    width="100%"
-                    height="100%"
-                    size="large"
-                    @row-click="selectFile"
-                >
+                <el-table ref="tableRef" class="mt-4" v-show="listShowType == 'table'" :data="pager.lists" width="100%" height="100%" size="large" @row-click="selectFile">
                     <el-table-column width="55">
                         <template #default="{ row }">
                             <el-checkbox :modelValue="isSelect(row.id)" @change="selectFile(row)" />
@@ -247,65 +164,30 @@
                     <el-table-column label="操作" width="150" fixed="right">
                         <template #default="{ row }">
                             <div class="inline-block">
-                                <popover-input
-                                    @confirm="handleFileRename($event, row.id)"
-                                    size="default"
-                                    :value="row.name"
-                                    width="400px"
-                                    :limit="50"
-                                    show-limit
-                                    teleported
-                                >
+                                <popover-input @confirm="handleFileRename($event, row.id)" size="default" :value="row.name" width="400px" :limit="50" show-limit teleported>
                                     <el-button type="primary" link> 重命名 </el-button>
                                 </popover-input>
                             </div>
                             <div class="inline-block">
-                                <el-button type="primary" link @click.stop="handlePreview(row.uri)">
-                                    查看
-                                </el-button>
+                                <el-button type="primary" link @click.stop="handlePreview(row.uri)"> 查看 </el-button>
                             </div>
                             <div class="inline-block">
-                                <el-button
-                                    type="primary"
-                                    link
-                                    @click.stop="batchFileDelete([row.id])"
-                                >
-                                    删除
-                                </el-button>
+                                <el-button type="primary" link @click.stop="batchFileDelete([row.id])"> 删除 </el-button>
                             </div>
                         </template>
                     </el-table-column>
                 </el-table>
 
-                <div
-                    class="flex flex-1 justify-center items-center"
-                    v-if="!pager.loading && !pager.lists.length"
-                >
-                    暂无数据~
-                </div>
+                <div class="flex flex-1 justify-center items-center" v-if="!pager.loading && !pager.lists.length">暂无数据~</div>
             </div>
             <div class="material-center__footer flex justify-between items-center mt-2">
                 <div class="flex">
                     <template v-if="mode == 'page'">
                         <span class="mr-3">
-                            <el-checkbox
-                                :disabled="!pager.lists.length"
-                                v-model="isCheckAll"
-                                @change="selectAll"
-                                :indeterminate="isIndeterminate"
-                            >
-                                当页全选
-                            </el-checkbox>
+                            <el-checkbox :disabled="!pager.lists.length" v-model="isCheckAll" @change="selectAll" :indeterminate="isIndeterminate"> 当页全选 </el-checkbox>
                         </span>
-                        <el-button :disabled="!select.length" @click="batchFileDelete()">
-                            删除
-                        </el-button>
-                        <popup
-                            class="ml-3 inline"
-                            @confirm="batchFileMove"
-                            :disabled="!select.length"
-                            title="移动文件"
-                        >
+                        <el-button :disabled="!select.length" @click="batchFileDelete()"> 删除 </el-button>
+                        <popup class="ml-3 inline" @confirm="batchFileMove" :disabled="!select.length" title="移动文件">
                             <template #trigger>
                                 <el-button :disabled="!select.length">移动</el-button>
                             </template>
@@ -314,22 +196,14 @@
                                 <span class="mr-5">移动文件至</span>
                                 <el-select v-model="moveId" placeholder="请选择">
                                     <template v-for="item in cateLists" :key="item.id">
-                                        <el-option
-                                            v-if="item.id !== ''"
-                                            :label="item.name"
-                                            :value="item.id"
-                                        ></el-option>
+                                        <el-option v-if="item.id !== ''" :label="item.name" :value="item.id"></el-option>
                                     </template>
                                 </el-select>
                             </div>
                         </popup>
                     </template>
                 </div>
-                <pagination
-                    v-model="pager"
-                    @change="getFileList"
-                    layout="total, prev, pager, next, jumper"
-                />
+                <pagination v-model="pager" @change="getFileList" layout="total, prev, pager, next, jumper" />
             </div>
         </div>
         <div class="material__right" v-if="mode == 'picker'">
@@ -346,11 +220,7 @@
                         <li class="mb-4" v-for="item in select" :key="item.id">
                             <div class="select-item">
                                 <del-wrap @close="cancelSelete(item.id)">
-                                    <file-item
-                                        :uri="item.uri"
-                                        file-size="100px"
-                                        :type="type"
-                                    ></file-item>
+                                    <file-item :uri="item.uri" file-size="100px" :type="type"></file-item>
                                 </del-wrap>
                             </div>
                         </li>
@@ -363,14 +233,14 @@
 </template>
 
 <script lang="ts" setup>
-import { useCate, useFile } from './hook'
-import FileItem from './file.vue'
-import Preview from './preview.vue'
-import type { Ref } from 'vue'
+import { useCate, useFile } from "./hook"
+import FileItem from "./file.vue"
+import Preview from "./preview.vue"
+import type { Ref } from "vue"
 const props = defineProps({
     fileSize: {
         type: String,
-        default: '100px'
+        default: "100px"
     },
     limit: {
         type: Number,
@@ -378,44 +248,35 @@ const props = defineProps({
     },
     type: {
         type: String,
-        default: 'image'
+        default: "image"
     },
     mode: {
         type: String,
-        default: 'picker'
+        default: "picker"
     },
     pageSize: {
         type: Number,
         default: 15
     }
 })
-const emit = defineEmits(['change'])
+const emit = defineEmits(["change"])
 const { limit } = toRefs(props)
 const typeValue = computed<number>(() => {
     switch (props.type) {
-        case 'image':
+        case "image":
             return 10
-        case 'video':
+        case "video":
             return 20
-        case 'file':
+        case "file":
             return 30
         default:
             return 0
     }
 })
-const visible: Ref<boolean> = inject('visible')!
-const previewUrl = ref('')
+const visible: Ref<boolean> = inject("visible")!
+const previewUrl = ref("")
 const showPreview = ref(false)
-const {
-    treeRef,
-    cateId,
-    cateLists,
-    handleAddCate,
-    handleEditCate,
-    handleDeleteCate,
-    getCateLists,
-    handleCatSelect
-} = useCate(typeValue.value)
+const { treeRef, cateId, cateLists, handleAddCate, handleEditCate, handleDeleteCate, getCateLists, handleCatSelect } = useCate(typeValue.value)
 
 const {
     tableRef,
@@ -460,14 +321,14 @@ watch(
     }
 )
 watch(cateId, () => {
-    fileParams.name = ''
+    fileParams.name = ""
     refresh()
 })
 
 watch(
     select,
     (val: any[]) => {
-        emit('change', val)
+        emit("change", val)
         if (val.length == pager.lists.length && val.length !== 0) {
             isIndeterminate.value = false
             isCheckAll.value = true
@@ -486,7 +347,7 @@ watch(
 )
 
 onMounted(() => {
-    props.mode == 'page' && getData()
+    props.mode == "page" && getData()
 })
 
 defineExpose({

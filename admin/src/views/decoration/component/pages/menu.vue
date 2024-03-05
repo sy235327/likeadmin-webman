@@ -1,16 +1,12 @@
 <template>
-    <el-menu
-        :default-active="modelValue"
-        class="w-[160px] min-h-[668px] pages-menu"
-        @select="handleSelect"
-    >
+    <el-menu :default-active="modelValue" class="w-[160px] min-h-[668px] pages-menu" @select="handleSelect">
         <el-menu-item v-for="(item, key) in menus" :index="key" :key="item.id">
             <span>{{ item.name }}</span>
         </el-menu-item>
     </el-menu>
 </template>
 <script lang="ts" setup>
-import type { PropType } from 'vue'
+import type { PropType } from "vue"
 
 defineProps({
     menus: {
@@ -19,14 +15,14 @@ defineProps({
     },
     modelValue: {
         type: String,
-        default: '1'
+        default: "1"
     }
 })
 const emit = defineEmits<{
-    (event: 'update:modelValue', value: string): void
+    (event: "update:modelValue", value: string): void
 }>()
 const handleSelect = (index: string) => {
-    emit('update:modelValue', index)
+    emit("update:modelValue", index)
 }
 </script>
 

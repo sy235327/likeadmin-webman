@@ -15,7 +15,7 @@ const props = defineProps({
     }
 })
 const emit = defineEmits<{
-    (event: 'update:modelValue', value: any): void
+    (event: "update:modelValue", value: any): void
 }>()
 
 const color = computed({
@@ -23,10 +23,10 @@ const color = computed({
         return props.modelValue
     },
     set(value) {
-        emit('update:modelValue', value)
+        emit("update:modelValue", value)
     }
 })
-const predefineColors = ['#409EFF', '#28C76F', '#EA5455', '#FF9F43', '#01CFE8', '#4A5DFF']
+const predefineColors = ["#409EFF", "#28C76F", "#EA5455", "#FF9F43", "#01CFE8", "#4A5DFF"]
 const reset = () => {
     color.value = props.defaultColor
 }

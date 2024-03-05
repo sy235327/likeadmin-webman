@@ -53,11 +53,11 @@
 </template>
 <script lang="ts" setup>
 const state = reactive({
-    value1: '',
+    value1: "",
     value2: [],
-    value3: '',
-    value4: '',
-    value5: '',
-    value6: ''
+    value3: "",
+    value4: "",
+    value5: "",
+    value6: ""
 })
 </script>

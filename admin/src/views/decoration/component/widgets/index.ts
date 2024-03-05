@@ -1,4 +1,4 @@
-const widgets: Record<string, any> = import.meta.glob('./**/index.ts', { eager: true })
+const widgets: Record<string, any> = import.meta.glob("./**/index.ts", { eager: true })
 interface Widget {
     attr: any
     content: any
@@ -7,7 +7,7 @@ interface Widget {
 console.log(widgets)
 const exportWidgets: Record<string, Widget> = {}
 Object.keys(widgets).forEach((key) => {
-    const widgetName = key.replace(/^\.\/([\w-]+).*/gi, '$1')
+    const widgetName = key.replace(/^\.\/([\w-]+).*/gi, "$1")
     exportWidgets[widgetName] = widgets[key]?.default
 })
 

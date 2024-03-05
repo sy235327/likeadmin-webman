@@ -19,17 +19,17 @@
     </div>
 </template>
 <script lang="ts" setup>
-import type { PropType } from 'vue'
-import type options from './options'
-import AddNav from '../../add-nav.vue'
+import type { PropType } from "vue"
+import type options from "./options"
+import AddNav from "../../add-nav.vue"
 type OptionsType = ReturnType<typeof options>
 defineProps({
     content: {
-        type: Object as PropType<OptionsType['content']>,
+        type: Object as PropType<OptionsType["content"]>,
         default: () => ({})
     },
     styles: {
-        type: Object as PropType<OptionsType['styles']>,
+        type: Object as PropType<OptionsType["styles"]>,
         default: () => ({})
     }
 })

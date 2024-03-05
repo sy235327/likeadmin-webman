@@ -1,11 +1,11 @@
-import request from '@/utils/request'
+import request from "@/utils/request"
 
 /**
  * @return { Promise }
  * @description 获取用户设置
  */
 export function getUserSetup() {
-    return request.get({ url: '/setting/user/user/getConfig' })
+    return request.get({ url: "/setting/user/user/getConfig" })
 }
 
 /**
@@ -14,7 +14,7 @@ export function getUserSetup() {
  * @description 设置用户设置
  */
 export function setUserSetup(params: { default_avatar: string }) {
-    return request.post({ url: '/setting/user/user/setConfig', params })
+    return request.post({ url: "/setting/user/user/setConfig", params })
 }
 
 /**
@@ -22,7 +22,7 @@ export function setUserSetup(params: { default_avatar: string }) {
  * @description 设置登录注册规则
  */
 export function getLogin() {
-    return request.get({ url: '/setting/user/user/getRegisterConfig' })
+    return request.get({ url: "/setting/user/user/getRegisterConfig" })
 }
 
 export interface LoginSetup {
@@ -39,5 +39,5 @@ export interface LoginSetup {
  * @description 设置登录注册规则
  */
 export function setLogin(params: LoginSetup) {
-    return request.post({ url: '/setting/user/user/setRegisterConfig', params })
+    return request.post({ url: "/setting/user/user/setRegisterConfig", params })
 }

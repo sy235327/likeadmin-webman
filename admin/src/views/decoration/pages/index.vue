@@ -13,16 +13,16 @@
     </div>
 </template>
 <script lang="ts" setup name="decorationPages">
-import Menu from '../component/pages/menu.vue'
-import Preview from '../component/pages/preview.vue'
-import AttrSetting from '../component/pages/attr-setting.vue'
-import widgets from '../component/widgets'
-import { getDecoratePages, setDecoratePages } from '@/api/decoration'
-import { getNonDuplicateID } from '@/utils/util'
+import Menu from "../component/pages/menu.vue"
+import Preview from "../component/pages/preview.vue"
+import AttrSetting from "../component/pages/attr-setting.vue"
+import widgets from "../component/widgets"
+import { getDecoratePages, setDecoratePages } from "@/api/decoration"
+import { getNonDuplicateID } from "@/utils/util"
 enum pagesTypeEnum {
-    HOME = '1',
-    USER = '2',
-    SERVICE = '3'
+    HOME = "1",
+    USER = "2",
+    SERVICE = "3"
 }
 
 const generatePageData = (widgetNames: string[]) => {
@@ -46,30 +46,30 @@ const menus: Record<
     [pagesTypeEnum.HOME]: {
         id: 1,
         type: 1,
-        name: '首页装修',
-        pageData: generatePageData(['search', 'banner', 'nav', 'news'])
+        name: "首页装修",
+        pageData: generatePageData(["search", "banner", "nav", "news"])
     },
     [pagesTypeEnum.USER]: {
         id: 2,
         type: 2,
-        name: '个人中心',
-        pageData: generatePageData(['user-info', 'my-service', 'user-banner'])
+        name: "个人中心",
+        pageData: generatePageData(["user-info", "my-service", "user-banner"])
     },
     [pagesTypeEnum.SERVICE]: {
         id: 3,
         type: 3,
-        name: '客服设置',
-        pageData: generatePageData(['customer-service'])
+        name: "客服设置",
+        pageData: generatePageData(["customer-service"])
     }
 })
 
-const activeMenu = ref('1')
+const activeMenu = ref("1")
 const selectWidgetIndex = ref(-1)
 const getPageData = computed(() => {
     return menus[activeMenu.value]?.pageData ?? []
 })
 const getSelectWidget = computed(() => {
-    return menus[activeMenu.value]?.pageData[selectWidgetIndex.value] ?? ''
+    return menus[activeMenu.value]?.pageData[selectWidgetIndex.value] ?? ""
 })
 
 const getData = async () => {

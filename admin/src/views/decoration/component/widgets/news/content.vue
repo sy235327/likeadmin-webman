@@ -1,13 +1,7 @@
 <template>
     <div class="news">
-        <div class="flex items-center news-title mx-[10px] my-[15px] text-[17px] font-medium">
-            最新资讯
-        </div>
-        <div
-            v-for="item in newsList"
-            :key="item.id"
-            class="news-card flex bg-white px-[10px] py-[16px] text-[#333] border-[#f2f2f2] border-b"
-        >
+        <div class="flex items-center news-title mx-[10px] my-[15px] text-[17px] font-medium">最新资讯</div>
+        <div v-for="item in newsList" :key="item.id" class="news-card flex bg-white px-[10px] py-[16px] text-[#333] border-[#f2f2f2] border-b">
             <div class="mr-[10px]" v-if="item.image">
                 <img :src="item.image" class="w-[120px] h-[90px] object-contain" />
             </div>
@@ -30,17 +24,17 @@
 </template>
 
 <script lang="ts" setup>
-import type { PropType } from 'vue'
-import { getDecorateArticle } from '@/api/decoration'
-import type options from './options'
+import type { PropType } from "vue"
+import { getDecorateArticle } from "@/api/decoration"
+import type options from "./options"
 type OptionsType = ReturnType<typeof options>
 const props = defineProps({
     content: {
-        type: Object as PropType<OptionsType['content']>,
+        type: Object as PropType<OptionsType["content"]>,
         default: () => ({})
     },
     styles: {
-        type: Object as PropType<OptionsType['styles']>,
+        type: Object as PropType<OptionsType["styles"]>,
         default: () => ({})
     }
 })
@@ -58,7 +52,7 @@ getData()
 .news {
     .news-title {
         &::before {
-            content: '';
+            content: "";
             width: 4px;
             height: 17px;
             display: block;

@@ -2,27 +2,16 @@
     <div class="logo">
         <image-contain :width="szie" :height="szie" :src="config.web_logo" />
         <transition name="title-width">
-            <div
-                v-show="showTitle"
-                class="logo-title overflow-hidden whitespace-nowrap"
-                :class="{ 'text-white': theme == ThemeEnum.DARK }"
-                :style="{ left: `${szie + 16}px` }"
-            >
-                <overflow-tooltip
-                    :content="title || config.web_name"
-                    :teleported="true"
-                    placement="bottom"
-                    overflo-type="unset"
-                >
-                </overflow-tooltip>
+            <div v-show="showTitle" class="logo-title overflow-hidden whitespace-nowrap" :class="{ 'text-white': theme == ThemeEnum.DARK }" :style="{ left: `${szie + 16}px` }">
+                <overflow-tooltip :content="title || config.web_name" :teleported="true" placement="bottom" overflo-type="unset"> </overflow-tooltip>
             </div>
         </transition>
     </div>
 </template>
 
 <script setup lang="ts">
-import useAppStore from '@/stores/modules/app'
-import { ThemeEnum } from '@/enums/appEnums'
+import useAppStore from "@/stores/modules/app"
+import { ThemeEnum } from "@/enums/appEnums"
 defineProps({
     szie: { type: Number, default: 34 },
     title: { type: String },

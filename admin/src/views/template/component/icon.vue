@@ -23,11 +23,7 @@
                 <icon-picker v-model="state.value" />
             </div>
         </el-card>
-        <el-card
-            header="element-plus图标库大全（点击复制图标名称）"
-            shadow="none"
-            class="!border-none mt-4"
-        >
+        <el-card header="element-plus图标库大全（点击复制图标名称）" shadow="none" class="!border-none mt-4">
             <div class="flex items-center">
                 <div class="flex flex-wrap">
                     <div v-for="item in getElementPlusIconNames()" :key="item" class="m-1">
@@ -38,11 +34,7 @@
                 </div>
             </div>
         </el-card>
-        <el-card
-            header="本地图标库大全（点击复制图标名称）"
-            shadow="none"
-            class="!border-none mt-4"
-        >
+        <el-card header="本地图标库大全（点击复制图标名称）" shadow="none" class="!border-none mt-4">
             <div class="flex items-center">
                 <div class="flex flex-wrap">
                     <div v-for="item in getLocalIconNames()" :key="item" class="m-1">
@@ -56,9 +48,9 @@
     </div>
 </template>
 <script lang="ts" setup>
-import Icon from '@/components/icon/index.vue'
-import { getElementPlusIconNames, getLocalIconNames } from '@/components/icon'
+import Icon from "@/components/icon/index.vue"
+import { getElementPlusIconNames, getLocalIconNames } from "@/components/icon"
 const state = reactive({
-    value: ''
+    value: ""
 })
 </script>

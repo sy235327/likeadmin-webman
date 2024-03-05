@@ -5,5 +5,5 @@
 </template>
 
 <script lang="ts" setup>
-import Error from './components/error.vue'
+import Error from "./components/error.vue"
 </script>

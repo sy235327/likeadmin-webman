@@ -12,30 +12,10 @@
         >
             <div class="flex p-3" @click.stop="">
                 <div class="popover-input__input mr-[10px] flex-1">
-                    <el-select
-                        class="flex-1"
-                        :size="size"
-                        v-if="type == 'select'"
-                        v-model="inputValue"
-                        :teleported="teleported"
-                    >
-                        <el-option
-                            v-for="item in options"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value"
-                        ></el-option>
+                    <el-select class="flex-1" :size="size" v-if="type == 'select'" v-model="inputValue" :teleported="teleported">
+                        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
                     </el-select>
-                    <el-input
-                        v-else
-                        v-model.trim="inputValue"
-                        :maxlength="limit"
-                        :show-word-limit="showLimit"
-                        :type="type"
-                        :size="size"
-                        clearable
-                        :placeholder="placeholder"
-                    />
+                    <el-input v-else v-model.trim="inputValue" :maxlength="limit" :show-word-limit="showLimit" :type="type" :size="size" clearable :placeholder="placeholder" />
                 </div>
                 <div class="popover-input__btns flex-none">
                     <el-button link @click="close">取消</el-button>
@@ -52,8 +32,8 @@
 </template>
 
 <script lang="ts" setup>
-import { useEventListener } from '@vueuse/core'
-import type { PropType } from 'vue'
+import { useEventListener } from "@vueuse/core"
+import type { PropType } from "vue"
 
 const props = defineProps({
     value: {
@@ -61,11 +41,11 @@ const props = defineProps({
     },
     type: {
         type: String,
-        default: 'text'
+        default: "text"
     },
     width: {
         type: [Number, String],
-        default: '300px'
+        default: "300px"
     },
     placeholder: String,
     disabled: {
@@ -77,8 +57,8 @@ const props = defineProps({
         default: () => []
     },
     size: {
-        type: String as PropType<'default' | 'small' | 'large'>,
-        default: 'default'
+        type: String as PropType<"default" | "small" | "large">,
+        default: "default"
     },
     limit: {
         type: Number,
@@ -93,13 +73,13 @@ const props = defineProps({
         default: true
     }
 })
-const emit = defineEmits(['confirm'])
+const emit = defineEmits(["confirm"])
 const visible = ref(false)
 const inPopover = ref(false)
 const inputValue = ref()
 const handleConfirm = () => {
     close()
-    emit('confirm', inputValue.value)
+    emit("confirm", inputValue.value)
 }
 const handleOpen = () => {
     if (props.disabled) {
@@ -121,7 +101,7 @@ watch(
     }
 )
 
-useEventListener(document.documentElement, 'click', () => {
+useEventListener(document.documentElement, "click", () => {
     if (inPopover.value) return
     close()
 })

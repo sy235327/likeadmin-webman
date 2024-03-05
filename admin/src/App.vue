@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useDark, useWindowSize, useThrottleFn } from '@vueuse/core'
-import zhCn from 'element-plus/lib/locale/lang/zh-cn'
-import useAppStore from './stores/modules/app'
-import useSettingStore from './stores/modules/setting'
-import { ScreenEnum } from './enums/appEnums'
+import { useDark, useWindowSize, useThrottleFn } from "@vueuse/core"
+import zhCn from "element-plus/lib/locale/lang/zh-cn"
+import useAppStore from "./stores/modules/app"
+import useSettingStore from "./stores/modules/setting"
+import { ScreenEnum } from "./enums/appEnums"
 const appStore = useAppStore()
 const settingStore = useSettingStore()
 const elConfig = {
@@ -22,8 +22,8 @@ onMounted(async () => {
         favicon.href = data.web_favicon
         return
     }
-    favicon = document.createElement('link')
-    favicon.rel = 'icon'
+    favicon = document.createElement("link")
+    favicon.rel = "icon"
     favicon.href = data.web_favicon
     document.head.appendChild(favicon)
 })

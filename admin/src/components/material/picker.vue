@@ -1,13 +1,6 @@
 <template>
     <div class="material-select">
-        <popup
-            ref="popupRef"
-            width="830px"
-            custom-class="body-padding"
-            :title="`选择${tipsText}`"
-            @confirm="handleConfirm"
-            @close="handleClose"
-        >
+        <popup ref="popupRef" width="830px" custom-class="body-padding" :title="`选择${tipsText}`" @confirm="handleConfirm" @close="handleClose">
             <template v-if="!hiddenUpload" #trigger>
                 <div class="material-select__trigger clearfix" @click.stop>
                     <draggable class="draggable" v-model="fileList" animation="300" item-key="id">
@@ -21,11 +14,7 @@
                                 @click="showPopup(index)"
                             >
                                 <del-wrap @close="deleteImg(index)">
-                                    <file-item
-                                        :uri="excludeDomain ? getImageUrl(element) : element"
-                                        :file-size="size"
-                                        :type="type"
-                                    ></file-item>
+                                    <file-item :uri="excludeDomain ? getImageUrl(element) : element" :file-size="size" :type="type"></file-item>
                                 </del-wrap>
                                 <div class="operation-btns text-xs text-center">
                                     <span>修改</span>
@@ -62,13 +51,7 @@
             </template>
             <el-scrollbar>
                 <div class="material-wrap">
-                    <material
-                        ref="materialRef"
-                        :type="type"
-                        :file-size="fileSize"
-                        :limit="meterialLimit"
-                        @change="selectChange"
-                    />
+                    <material ref="materialRef" :type="type" :file-size="fileSize" :limit="meterialLimit" @change="selectChange" />
                 </div>
             </el-scrollbar>
         </popup>
@@ -77,13 +60,13 @@
 </template>
 
 <script lang="ts">
-import Draggable from 'vuedraggable'
-import Popup from '@/components/popup/index.vue'
-import FileItem from './file.vue'
-import Material from './index.vue'
-import Preview from './preview.vue'
-import useAppStore from '@/stores/modules/app'
-import { useThrottleFn } from '@vueuse/core'
+import Draggable from "vuedraggable"
+import Popup from "@/components/popup/index.vue"
+import FileItem from "./file.vue"
+import Material from "./index.vue"
+import Preview from "./preview.vue"
+import useAppStore from "@/stores/modules/app"
+import { useThrottleFn } from "@vueuse/core"
 export default defineComponent({
     components: {
         Popup,
@@ -100,17 +83,17 @@ export default defineComponent({
         // 文件类型
         type: {
             type: String,
-            default: 'image'
+            default: "image"
         },
         // 选择器尺寸
         size: {
             type: String,
-            default: '100px'
+            default: "100px"
         },
         // 文件尺寸
         fileSize: {
             type: String,
-            default: '100px'
+            default: "100px"
         },
         // 选择数量限制
         limit: {
@@ -129,7 +112,7 @@ export default defineComponent({
         },
         uploadClass: {
             type: String,
-            default: ''
+            default: ""
         },
         //选择的url排出域名
         excludeDomain: {
@@ -138,11 +121,11 @@ export default defineComponent({
         }
     },
 
-    emits: ['change', 'update:modelValue'],
+    emits: ["change", "update:modelValue"],
     setup(props, { emit }) {
         const popupRef = ref<InstanceType<typeof Popup>>()
         const materialRef = ref<InstanceType<typeof Material>>()
-        const previewUrl = ref('')
+        const previewUrl = ref("")
         const showPreview = ref(false)
         const fileList = ref<any[]>([])
         const select = ref<any[]>([])
@@ -152,12 +135,12 @@ export default defineComponent({
         const { getImageUrl } = useAppStore()
         const tipsText = computed(() => {
             switch (props.type) {
-                case 'image':
-                    return '图片'
-                case 'video':
-                    return '视频'
+                case "image":
+                    return "图片"
+                case "video":
+                    return "视频"
                 default:
-                    return ''
+                    return ""
             }
         })
 
@@ -173,9 +156,7 @@ export default defineComponent({
         })
         const handleConfirm = useThrottleFn(
             () => {
-                const selectUri = select.value.map((item) =>
-                    props.excludeDomain ? item.url : item.uri
-                )
+                const selectUri = select.value.map((item) => (props.excludeDomain ? item.url : item.uri))
                 if (!isAdd.value) {
                     fileList.value.splice(currentIndex.value, 1, selectUri.shift())
                 } else {
@@ -201,9 +182,9 @@ export default defineComponent({
             select.value = val
         }
         const handleChange = () => {
-            const valueImg = limit.value != 1 ? fileList.value : fileList.value[0] || ''
-            emit('update:modelValue', valueImg)
-            emit('change', valueImg)
+            const valueImg = limit.value != 1 ? fileList.value : fileList.value[0] || ""
+            emit("update:modelValue", valueImg)
+            emit("change", valueImg)
             handleClose()
         }
 
@@ -227,14 +208,14 @@ export default defineComponent({
         watch(
             modelValue,
             (val: any[] | string) => {
-                fileList.value = Array.isArray(val) ? val : val == '' ? [] : [val]
+                fileList.value = Array.isArray(val) ? val : val == "" ? [] : [val]
             },
             {
                 immediate: true
             }
         )
-        provide('limit', props.limit)
-        provide('hiddenUpload', props.hiddenUpload)
+        provide("limit", props.limit)
+        provide("hiddenUpload", props.hiddenUpload)
         return {
             popupRef,
             materialRef,

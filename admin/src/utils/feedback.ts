@@ -1,11 +1,5 @@
-import {
-    ElMessage,
-    ElMessageBox,
-    ElNotification,
-    ElLoading,
-    type ElMessageBoxOptions
-} from 'element-plus'
-import type { LoadingInstance } from 'element-plus/es/components/loading/src/loading'
+import { ElMessage, ElMessageBox, ElNotification, ElLoading, type ElMessageBoxOptions } from "element-plus"
+import type { LoadingInstance } from "element-plus/es/components/loading/src/loading"
 
 export class Feedback {
     private loadingInstance: LoadingInstance | null = null
@@ -31,19 +25,19 @@ export class Feedback {
     }
     // 弹出提示
     alert(msg: string) {
-        ElMessageBox.alert(msg, '系统提示')
+        ElMessageBox.alert(msg, "系统提示")
     }
     // 错误提示
     alertError(msg: string) {
-        ElMessageBox.alert(msg, '系统提示', { type: 'error' })
+        ElMessageBox.alert(msg, "系统提示", { type: "error" })
     }
     // 成功提示
     alertSuccess(msg: string) {
-        ElMessageBox.alert(msg, '系统提示', { type: 'success' })
+        ElMessageBox.alert(msg, "系统提示", { type: "success" })
     }
     // 警告提示
     alertWarning(msg: string) {
-        ElMessageBox.alert(msg, '系统提示', { type: 'warning' })
+        ElMessageBox.alert(msg, "系统提示", { type: "warning" })
     }
     // 通知提示
     notify(msg: string) {
@@ -63,17 +57,17 @@ export class Feedback {
     }
     // 确认窗体
     confirm(msg: string) {
-        return ElMessageBox.confirm(msg, '温馨提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
+        return ElMessageBox.confirm(msg, "温馨提示", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning"
         })
     }
     // 提交内容
     prompt(content: string, title: string, options?: ElMessageBoxOptions) {
         return ElMessageBox.prompt(content, title, {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
             ...options
         })
     }

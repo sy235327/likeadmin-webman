@@ -1,32 +1,15 @@
 <template>
     <div class="data-table">
-        <popup
-            ref="popupRef"
-            :clickModalClose="false"
-            title="选择表"
-            width="900px"
-            :async="true"
-            @confirm="handleConfirm"
-        >
+        <popup ref="popupRef" :clickModalClose="false" title="选择表" width="900px" :async="true" @confirm="handleConfirm">
             <template #trigger>
                 <slot></slot>
             </template>
             <el-form class="ls-form" :model="formData" inline>
                 <el-form-item label="表名称">
-                    <el-input
-                        class="w-[280px]"
-                        v-model="formData.name"
-                        clearable
-                        @keyup.enter="resetPage"
-                    />
+                    <el-input class="w-[280px]" v-model="formData.name" clearable @keyup.enter="resetPage" />
                 </el-form-item>
                 <el-form-item label="表描述">
-                    <el-input
-                        class="w-[280px]"
-                        v-model="formData.comment"
-                        clearable
-                        @keyup.enter="resetPage"
-                    />
+                    <el-input class="w-[280px]" v-model="formData.comment" clearable @keyup.enter="resetPage" />
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="resetPage">查询</el-button>
@@ -34,12 +17,7 @@
                 </el-form-item>
             </el-form>
             <div class="m-4" v-loading="pager.loading">
-                <el-table
-                    height="400"
-                    size="large"
-                    :data="pager.lists"
-                    @selection-change="handleSelectionChange"
-                >
+                <el-table height="400" size="large" :data="pager.lists" @selection-change="handleSelectionChange">
                     <el-table-column type="selection" width="55" />
                     <el-table-column label="表名称" prop="name" min-width="150" />
                     <el-table-column label="表描述" prop="comment" min-width="160" />
@@ -54,21 +32,21 @@
 </template>
 
 <script lang="ts" setup>
-import Popup from '@/components/popup/index.vue'
-import Pagination from '@/components/pagination/index.vue'
-import { usePaging } from '@/hooks/usePaging'
-import { dataTable, selectTable } from '@/api/tools/code'
-import feedback from '@/utils/feedback'
+import Popup from "@/components/popup/index.vue"
+import Pagination from "@/components/pagination/index.vue"
+import { usePaging } from "@/hooks/usePaging"
+import { dataTable, selectTable } from "@/api/tools/code"
+import feedback from "@/utils/feedback"
 
 const emit = defineEmits<{
-    (event: 'success'): void
+    (event: "success"): void
 }>()
 
 const popupRef = shallowRef<InstanceType<typeof Popup>>()
 
 const formData = reactive({
-    name: '', // 表名称
-    comment: '' // 表描述
+    name: "", // 表名称
+    comment: "" // 表描述
 })
 
 const { pager, getLists, resetParams, resetPage } = usePaging({
@@ -87,12 +65,12 @@ const handleSelectionChange = (val: any[]) => {
 }
 
 const handleConfirm = async () => {
-    if (!selectData.value.length) return feedback.msgError('请选择数据表')
+    if (!selectData.value.length) return feedback.msgError("请选择数据表")
     await selectTable({
         table: selectData.value
     })
     popupRef.value?.close()
-    emit('success')
+    emit("success")
 }
 
 watch(

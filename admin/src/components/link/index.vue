@@ -1,10 +1,6 @@
 <template>
     <div class="link flex">
-        <el-menu
-            :default-active="activeMenu"
-            class="w-[160px] min-h-[350px] link-menu"
-            @select="handleSelect"
-        >
+        <el-menu :default-active="activeMenu" class="w-[160px] min-h-[350px] link-menu" @select="handleSelect">
             <el-menu-item v-for="(item, index) in menus" :index="item.type" :key="index">
                 <span>{{ item.name }}</span>
             </el-menu-item>
@@ -17,10 +13,10 @@
 </template>
 
 <script lang="ts" setup>
-import type { PropType } from 'vue'
-import { LinkTypeEnum, type Link } from '.'
-import ShopPages from './shop-pages.vue'
-import CustomLink from './custom-link.vue'
+import type { PropType } from "vue"
+import { LinkTypeEnum, type Link } from "."
+import ShopPages from "./shop-pages.vue"
+import CustomLink from "./custom-link.vue"
 
 const props = defineProps({
     modelValue: {
@@ -29,17 +25,17 @@ const props = defineProps({
     }
 })
 const emit = defineEmits<{
-    (event: 'update:modelValue', value: any): void
+    (event: "update:modelValue", value: any): void
 }>()
 
 const menus = ref([
     {
-        name: '商城页面',
+        name: "商城页面",
         type: LinkTypeEnum.SHOP_PAGES,
         link: {}
     },
     {
-        name: '自定义链接',
+        name: "自定义链接",
         type: LinkTypeEnum.CUSTOM_LINK,
         link: {}
     }
@@ -66,7 +62,7 @@ const handleSelect = (index: string) => {
 
 watch(activeLink, (value) => {
     if (!value.type) return
-    emit('update:modelValue', value)
+    emit("update:modelValue", value)
 })
 
 watch(

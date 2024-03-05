@@ -14,14 +14,7 @@
                         <div class="text-tx-regular">账户余额</div>
                         <div class="mt-2 flex items-center">
                             ¥{{ formData.user_money }}
-                            <el-button
-                                v-perms="['user.user/adjustMoney']"
-                                type="primary"
-                                link
-                                @click="handleAdjust(formData.user_money)"
-                            >
-                                调整
-                            </el-button>
+                            <el-button v-perms="['user.user/adjustMoney']" type="primary" link @click="handleAdjust(formData.user_money)"> 调整 </el-button>
                         </div>
                     </div>
                 </div>
@@ -31,25 +24,15 @@
                 </el-form-item>
                 <el-form-item label="账号：">
                     {{ formData.account }}
-                    <popover-input
-                        class="ml-[10px]"
-                        @confirm="handleEdit($event, 'account')"
-                        :limit="32"
-                        v-perms="['user.user/edit']"
-                    >
+                    <popover-input class="ml-[10px]" @confirm="handleEdit($event, 'account')" :limit="32" v-perms="['user.user/edit']">
                         <el-button type="primary" link>
                             <icon name="el-icon-EditPen" />
                         </el-button>
                     </popover-input>
                 </el-form-item>
                 <el-form-item label="真实姓名：">
-                    {{ formData.real_name || '-' }}
-                    <popover-input
-                        class="ml-[10px]"
-                        @confirm="handleEdit($event, 'real_name')"
-                        :limit="32"
-                        v-perms="['user.user/edit']"
-                    >
+                    {{ formData.real_name || "-" }}
+                    <popover-input class="ml-[10px]" @confirm="handleEdit($event, 'real_name')" :limit="32" v-perms="['user.user/edit']">
                         <el-button type="primary" link>
                             <icon name="el-icon-EditPen" />
                         </el-button>
@@ -83,13 +66,8 @@
                     </popover-input>
                 </el-form-item>
                 <el-form-item label="联系电话：">
-                    {{ formData.mobile || '-' }}
-                    <popover-input
-                        class="ml-[10px]"
-                        type="number"
-                        @confirm="handleEdit($event, 'mobile')"
-                        v-perms="['user.user/edit']"
-                    >
+                    {{ formData.mobile || "-" }}
+                    <popover-input class="ml-[10px]" type="number" @confirm="handleEdit($event, 'mobile')" v-perms="['user.user/edit']">
                         <el-button type="primary" link>
                             <icon name="el-icon-EditPen" />
                         </el-button>
@@ -101,37 +79,33 @@
             </el-form>
         </el-card>
 
-        <account-adjust
-            v-model:show="adjustState.show"
-            :value="adjustState.value"
-            @confirm="handleConfirmAdjust"
-        />
+        <account-adjust v-model:show="adjustState.show" :value="adjustState.value" @confirm="handleConfirmAdjust" />
     </div>
 </template>
 
 <script lang="ts" setup name="consumerDetail">
-import type { FormInstance } from 'element-plus'
-import { adjustMoney, getUserDetail, userEdit } from '@/api/consumer'
-import { isEmpty } from '@/utils/util'
-import AccountAdjust from '../components/account-adjust.vue'
+import type { FormInstance } from "element-plus"
+import { adjustMoney, getUserDetail, userEdit } from "@/api/consumer"
+import { isEmpty } from "@/utils/util"
+import AccountAdjust from "../components/account-adjust.vue"
 const route = useRoute()
 const formData = reactive({
-    avatar: '',
-    channel: '',
-    create_time: '',
-    login_time: '',
-    mobile: '',
-    nickname: '',
+    avatar: "",
+    channel: "",
+    create_time: "",
+    login_time: "",
+    mobile: "",
+    nickname: "",
     real_name: 0,
     sex: 0,
-    sn: '',
-    account: '',
-    user_money: ''
+    sn: "",
+    account: "",
+    user_money: ""
 })
 
 const adjustState = reactive({
     show: false,
-    value: ''
+    value: ""
 })
 const formRef = shallowRef<FormInstance>()
 

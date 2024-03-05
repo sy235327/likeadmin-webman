@@ -11,9 +11,7 @@
                 </el-form-item>
                 <el-form-item>
                     <div>
-                        <div class="form-tips">
-                            用户注册时给的默认头像，建议尺寸：400*400像素，支持jpg，jpeg，png格式
-                        </div>
+                        <div class="form-tips">用户注册时给的默认头像，建议尺寸：400*400像素，支持jpg，jpeg，png格式</div>
                     </div>
                 </el-form-item>
             </el-form>
@@ -26,11 +24,11 @@
 </template>
 
 <script lang="ts" setup name="userSetup">
-import { getUserSetup, setUserSetup } from '@/api/setting/user'
+import { getUserSetup, setUserSetup } from "@/api/setting/user"
 
 // 表单数据
 const formData = reactive({
-    default_avatar: '' // 用户默认头像
+    default_avatar: "" // 用户默认头像
 })
 
 // 获取用户设置数据
@@ -42,7 +40,7 @@ const getData = async () => {
             formData[key] = data[key]
         }
     } catch (error) {
-        console.log('获取=>', error)
+        console.log("获取=>", error)
     }
 }
 
@@ -52,7 +50,7 @@ const handleSubmit = async () => {
         await setUserSetup(formData)
         getData()
     } catch (error) {
-        console.log('保存=>', error)
+        console.log("保存=>", error)
     }
 }
 

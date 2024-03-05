@@ -4,25 +4,21 @@
         <div class="text-[15px] mt-[7px] font-medium">{{ content.title }}</div>
         <div class="text-[#666] mt-[20px]">服务时间：{{ content.time }}</div>
         <div class="text-[#666] mt-[7px]">客服电话：{{ content.mobile }}</div>
-        <div
-            class="text-white text-[16px] rounded-[42px] bg-[#4173FF] w-full h-[42px] flex justify-center items-center mt-[50px]"
-        >
-            保存二维码图片
-        </div>
+        <div class="text-white text-[16px] rounded-[42px] bg-[#4173FF] w-full h-[42px] flex justify-center items-center mt-[50px]">保存二维码图片</div>
     </div>
 </template>
 <script lang="ts" setup>
-import type { PropType } from 'vue'
-import type options from './options'
-import DecorationImg from '../../decoration-img.vue'
+import type { PropType } from "vue"
+import type options from "./options"
+import DecorationImg from "../../decoration-img.vue"
 type OptionsType = ReturnType<typeof options>
 defineProps({
     content: {
-        type: Object as PropType<OptionsType['content']>,
+        type: Object as PropType<OptionsType["content"]>,
         default: () => ({})
     },
     styles: {
-        type: Object as PropType<OptionsType['styles']>,
+        type: Object as PropType<OptionsType["styles"]>,
         default: () => ({})
     }
 })

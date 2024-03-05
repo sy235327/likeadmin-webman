@@ -1,21 +1,11 @@
 <template>
     <div>
         <el-card class="!border-none" shadow="never">
-            <el-alert
-                type="warning"
-                title="温馨提示：用于管理网站的分类，只可添加到一级"
-                :closable="false"
-                show-icon
-            />
+            <el-alert type="warning" title="温馨提示：用于管理网站的分类，只可添加到一级" :closable="false" show-icon />
         </el-card>
         <el-card class="!border-none mt-4" shadow="never" v-loading="pager.loading">
             <div>
-                <el-button
-                    class="mb-4"
-                    v-perms="['article.articleCate/add']"
-                    type="primary"
-                    @click="handleAdd()"
-                >
+                <el-button class="mb-4" v-perms="['article.articleCate/add']" type="primary" @click="handleAdd()">
                     <template #icon>
                         <icon name="el-icon-Plus" />
                     </template>
@@ -39,22 +29,8 @@
                 <el-table-column label="排序" prop="sort" min-width="120" />
                 <el-table-column label="操作" width="120" fixed="right">
                     <template #default="{ row }">
-                        <el-button
-                            v-perms="['article.articleCate/edit']"
-                            type="primary"
-                            link
-                            @click="handleEdit(row)"
-                        >
-                            编辑
-                        </el-button>
-                        <el-button
-                            v-perms="['article.articleCate/delete']"
-                            type="danger"
-                            link
-                            @click="handleDelete(row.id)"
-                        >
-                            删除
-                        </el-button>
+                        <el-button v-perms="['article.articleCate/edit']" type="primary" link @click="handleEdit(row)"> 编辑 </el-button>
+                        <el-button v-perms="['article.articleCate/delete']" type="danger" link @click="handleDelete(row.id)"> 删除 </el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -66,10 +42,10 @@
     </div>
 </template>
 <script lang="ts" setup name="articleColumn">
-import { articleCateDelete, articleCateLists, articleCateStatus } from '@/api/article'
-import { usePaging } from '@/hooks/usePaging'
-import feedback from '@/utils/feedback'
-import EditPopup from './edit.vue'
+import { articleCateDelete, articleCateLists, articleCateStatus } from "@/api/article"
+import { usePaging } from "@/hooks/usePaging"
+import feedback from "@/utils/feedback"
+import EditPopup from "./edit.vue"
 const editRef = shallowRef<InstanceType<typeof EditPopup>>()
 const showEdit = ref(false)
 
@@ -79,18 +55,18 @@ const { pager, getLists } = usePaging({
 const handleAdd = async () => {
     showEdit.value = true
     await nextTick()
-    editRef.value?.open('add')
+    editRef.value?.open("add")
 }
 
 const handleEdit = async (data: any) => {
     showEdit.value = true
     await nextTick()
-    editRef.value?.open('edit')
+    editRef.value?.open("edit")
     editRef.value?.getDetail(data)
 }
 
 const handleDelete = async (id: number) => {
-    await feedback.confirm('确定要删除？')
+    await feedback.confirm("确定要删除？")
     await articleCateDelete({ id })
     getLists()
 }

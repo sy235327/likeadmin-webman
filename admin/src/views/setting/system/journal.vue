@@ -4,62 +4,31 @@
         <el-card class="!border-none" shadow="never">
             <el-form class="ls-form" :model="formData" inline>
                 <el-form-item label="管理员">
-                    <el-input
-                        class="w-[280px]"
-                        placeholder="请输入"
-                        v-model="formData.admin_name"
-                        clearable
-                        @keyup.enter="resetPage"
-                    />
+                    <el-input class="w-[280px]" placeholder="请输入" v-model="formData.admin_name" clearable @keyup.enter="resetPage" />
                 </el-form-item>
 
                 <el-form-item label="访问方式">
                     <el-select class="w-[280px]" v-model="formData.type" placeholder="请选择">
-                        <el-option
-                            v-for="(item, index) in visitType"
-                            :key="index"
-                            :label="item.label"
-                            :value="item.value"
-                        />
+                        <el-option v-for="(item, index) in visitType" :key="index" :label="item.label" :value="item.value" />
                     </el-select>
                 </el-form-item>
 
                 <el-form-item label="来源IP">
-                    <el-input
-                        class="w-[280px]"
-                        placeholder="请输入"
-                        v-model="formData.ip"
-                        clearable
-                        @keyup.enter="resetPage"
-                    />
+                    <el-input class="w-[280px]" placeholder="请输入" v-model="formData.ip" clearable @keyup.enter="resetPage" />
                 </el-form-item>
 
                 <el-form-item label="访问时间">
-                    <daterange-picker
-                        v-model:startTime="formData.start_time"
-                        v-model:endTime="formData.end_time"
-                    />
+                    <daterange-picker v-model:startTime="formData.start_time" v-model:endTime="formData.end_time" />
                 </el-form-item>
 
                 <el-form-item label="访问链接">
-                    <el-input
-                        class="w-[280px]"
-                        placeholder="请输入"
-                        v-model="formData.url"
-                        clearable
-                        @keyup.enter="resetPage"
-                    />
+                    <el-input class="w-[280px]" placeholder="请输入" v-model="formData.url" clearable @keyup.enter="resetPage" />
                 </el-form-item>
 
                 <el-form-item>
                     <el-button type="primary" @click="resetPage">查询</el-button>
                     <el-button @click="resetParams">重置</el-button>
-                    <export-data
-                        class="ml-2.5"
-                        :fetch-fun="systemLogLists"
-                        :params="formData"
-                        :page-size="pager.size"
-                    />
+                    <export-data class="ml-2.5" :fetch-fun="systemLogLists" :params="formData" :page-size="pager.size" />
                 </el-form-item>
             </el-form>
         </el-card>
@@ -86,8 +55,8 @@
 </template>
 
 <script setup lang="ts" name="journal">
-import { systemLogLists } from '@/api/setting/system'
-import { usePaging } from '@/hooks/usePaging'
+import { systemLogLists } from "@/api/setting/system"
+import { usePaging } from "@/hooks/usePaging"
 
 interface formDataObj {
     admin_name?: string // 管理员
@@ -100,39 +69,39 @@ interface formDataObj {
 
 // 查询表单
 const formData = ref<formDataObj>({
-    admin_name: '',
-    url: '',
-    ip: '',
-    type: '',
-    start_time: '',
-    end_time: ''
+    admin_name: "",
+    url: "",
+    ip: "",
+    type: "",
+    start_time: "",
+    end_time: ""
 })
 
 // 访问方式
 const visitType = ref<Array<any>>([
     {
-        label: '全部',
-        value: ''
+        label: "全部",
+        value: ""
     },
     {
-        label: 'get',
-        value: 'get'
+        label: "get",
+        value: "get"
     },
     {
-        label: 'post',
-        value: 'post'
+        label: "post",
+        value: "post"
     },
     {
-        label: 'put',
-        value: 'put'
+        label: "put",
+        value: "put"
     },
     {
-        label: 'delete',
-        value: 'delete'
+        label: "delete",
+        value: "delete"
     },
     {
-        label: 'option',
-        value: 'option'
+        label: "option",
+        value: "option"
     }
 ])
 

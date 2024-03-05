@@ -4,13 +4,7 @@
             <el-page-header :content="$route.meta.title" @back="$router.back()" />
         </el-card>
         <el-card class="mt-4 !border-none" shadow="never">
-            <el-form
-                ref="formRef"
-                class="ls-form"
-                :model="formData"
-                label-width="85px"
-                :rules="rules"
-            >
+            <el-form ref="formRef" class="ls-form" :model="formData" label-width="85px" :rules="rules">
                 <div class="xl:flex">
                     <div>
                         <el-form-item label="文章标题" prop="title">
@@ -27,18 +21,8 @@
                             </div>
                         </el-form-item>
                         <el-form-item label="文章栏目" prop="cid">
-                            <el-select
-                                class="w-80"
-                                v-model="formData.cid"
-                                placeholder="请选择文章栏目"
-                                clearable
-                            >
-                                <el-option
-                                    v-for="item in optionsData.article_cate"
-                                    :key="item.id"
-                                    :label="item.name"
-                                    :value="item.id"
-                                />
+                            <el-select class="w-80" v-model="formData.cid" placeholder="请选择文章栏目" clearable>
+                                <el-option v-for="item in optionsData.article_cate" :key="item.id" :label="item.name" :value="item.id" />
                             </el-select>
                         </el-form-item>
                         <el-form-item label="文章简介" prop="desc">
@@ -56,14 +40,7 @@
                         </el-form-item>
                         <el-form-item label="摘要" prop="abstract">
                             <div class="w-80">
-                                <el-input
-                                    type="textarea"
-                                    :autosize="{ minRows: 6, maxRows: 6 }"
-                                    v-model="formData.abstract"
-                                    maxlength="200"
-                                    show-word-limit
-                                    clearable
-                                />
+                                <el-input type="textarea" :autosize="{ minRows: 6, maxRows: 6 }" v-model="formData.abstract" maxlength="200" show-word-limit clearable />
                             </div>
                         </el-form-item>
                         <el-form-item label="文章封面" prop="image">
@@ -112,32 +89,32 @@
 </template>
 
 <script lang="ts" setup name="articleListsEdit">
-import type { FormInstance } from 'element-plus'
-import { useDictOptions } from '@/hooks/useDictOptions'
-import { articleDetail, articleEdit, articleAdd, articleCateAll } from '@/api/article'
-import useMultipleTabs from '@/hooks/useMultipleTabs'
+import type { FormInstance } from "element-plus"
+import { useDictOptions } from "@/hooks/useDictOptions"
+import { articleDetail, articleEdit, articleAdd, articleCateAll } from "@/api/article"
+import useMultipleTabs from "@/hooks/useMultipleTabs"
 
 const route = useRoute()
 const router = useRouter()
 const formData = reactive({
-    id: '',
-    title: '',
-    image: '',
-    cid: '',
-    desc: '',
-    author: '',
-    content: '',
+    id: "",
+    title: "",
+    image: "",
+    cid: "",
+    desc: "",
+    author: "",
+    content: "",
     click_virtual: 0,
     sort: 0,
     is_show: 1,
-    abstract: ''
+    abstract: ""
 })
 
 const { removeTab } = useMultipleTabs()
 const formRef = shallowRef<FormInstance>()
 const rules = reactive({
-    title: [{ required: true, message: '请输入文章标题', trigger: 'blur' }],
-    cid: [{ required: true, message: '请选择文章栏目', trigger: 'blur' }]
+    title: [{ required: true, message: "请输入文章标题", trigger: "blur" }],
+    cid: [{ required: true, message: "请选择文章栏目", trigger: "blur" }]
 })
 
 const getDetails = async () => {

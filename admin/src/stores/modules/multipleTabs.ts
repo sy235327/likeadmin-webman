@@ -1,13 +1,7 @@
-import { defineStore } from 'pinia'
-import { isExternal } from '@/utils/validate'
-import type {
-    LocationQuery,
-    RouteLocationNormalized,
-    RouteParamsRaw,
-    Router,
-    RouteRecordName
-} from 'vue-router'
-import { PageEnum } from '@/enums/pageEnum'
+import { defineStore } from "pinia"
+import { isExternal } from "@/utils/validate"
+import type { LocationQuery, RouteLocationNormalized, RouteParamsRaw, Router, RouteRecordName } from "vue-router"
+import { PageEnum } from "@/enums/pageEnum"
 
 interface TabItem {
     name: RouteRecordName
@@ -58,12 +52,12 @@ export const getRouteParams = (tabItem: TabItem) => {
 }
 
 const useTabsStore = defineStore({
-    id: 'tabs',
+    id: "tabs",
     state: (): TabsSate => ({
         cacheTabList: new Set(),
         tabList: [],
         tasMap: {},
-        indexRouteName: ''
+        indexRouteName: ""
     }),
     getters: {
         getTabList(): TabItem[] {
@@ -92,7 +86,7 @@ const useTabsStore = defineStore({
             this.cacheTabList = new Set()
             this.tabList = []
             this.tasMap = {}
-            this.indexRouteName = ''
+            this.indexRouteName = ""
         },
         addTab(router: Router) {
             const route = unref(router.currentRoute)

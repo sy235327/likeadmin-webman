@@ -1,10 +1,10 @@
 <script lang="ts">
-import { createVNode } from 'vue'
-import { ElIcon } from 'element-plus'
-import { EL_ICON_PREFIX, LOCAL_ICON_PREFIX } from './index'
-import svgIcon from './svg-icon.vue'
+import { createVNode } from "vue"
+import { ElIcon } from "element-plus"
+import { EL_ICON_PREFIX, LOCAL_ICON_PREFIX } from "./index"
+import svgIcon from "./svg-icon.vue"
 export default defineComponent({
-    name: 'Icon',
+    name: "Icon",
     props: {
         name: {
             type: String,
@@ -12,11 +12,11 @@ export default defineComponent({
         },
         size: {
             type: [String, Number],
-            default: '14px'
+            default: "14px"
         },
         color: {
             type: String,
-            default: 'inherit'
+            default: "inherit"
         }
     },
     setup(props) {
@@ -29,16 +29,16 @@ export default defineComponent({
                         size: props.size,
                         color: props.color
                     },
-                    () => [createVNode(resolveComponent(props.name.replace(EL_ICON_PREFIX, '')))]
+                    () => [createVNode(resolveComponent(props.name.replace(EL_ICON_PREFIX, "")))]
                 )
         }
         if (props.name.indexOf(LOCAL_ICON_PREFIX) === 0) {
             // 本地icon
             return () =>
                 h(
-                    'i',
+                    "i",
                     {
-                        class: ['local-icon']
+                        class: ["local-icon"]
                     },
                     createVNode(svgIcon, { ...props })
                 )

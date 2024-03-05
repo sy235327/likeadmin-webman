@@ -16,15 +16,7 @@
         >
             <slot></slot>
         </el-upload>
-        <el-dialog
-            v-if="showProgress && fileList.length"
-            v-model="visible"
-            title="上传进度"
-            :close-on-click-modal="false"
-            width="500px"
-            :modal="false"
-            @close="handleClose"
-        >
+        <el-dialog v-if="showProgress && fileList.length" v-model="visible" title="上传进度" :close-on-click-modal="false" width="500px" :modal="false" @close="handleClose">
             <div class="file-list p-4">
                 <template v-for="(item, index) in fileList" :key="index">
                     <div class="mb-5">
@@ -40,19 +32,19 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, shallowRef } from 'vue'
-import useUserStore from '@/stores/modules/user'
-import config from '@/config'
-import feedback from '@/utils/feedback'
-import type { ElUpload } from 'element-plus'
-import { RequestCodeEnum } from '@/enums/requestEnums'
+import { computed, defineComponent, ref, shallowRef } from "vue"
+import useUserStore from "@/stores/modules/user"
+import config from "@/config"
+import feedback from "@/utils/feedback"
+import type { ElUpload } from "element-plus"
+import { RequestCodeEnum } from "@/enums/requestEnums"
 export default defineComponent({
     components: {},
     props: {
         // 上传文件类型
         type: {
             type: String,
-            default: 'image'
+            default: "image"
         },
         // 是否支持多选
         multiple: {
@@ -75,7 +67,7 @@ export default defineComponent({
             default: false
         }
     },
-    emits: ['change', 'error', 'success'],
+    emits: ["change", "error", "success"],
     setup(props, { emit }) {
         const userStore = useUserStore()
         const uploadRefs = shallowRef<InstanceType<typeof ElUpload>>()
@@ -93,14 +85,14 @@ export default defineComponent({
         }
 
         const handleSuccess = (response: any, file: any, fileLists: any[]) => {
-            const allSuccess = fileLists.every((item) => item.status == 'success')
+            const allSuccess = fileLists.every((item) => item.status == "success")
             if (allSuccess) {
                 uploadRefs.value?.clearFiles()
                 visible.value = false
             }
-            emit('change', file)
+            emit("change", file)
             if (response.code == RequestCodeEnum.SUCCESS) {
-                emit('success', response)
+                emit("success", response)
             }
             if (response.code == RequestCodeEnum.FAIL && response.msg) {
                 feedback.msgError(response.msg)
@@ -110,8 +102,8 @@ export default defineComponent({
             feedback.msgError(`${file.name}文件上传失败`)
             uploadRefs.value?.abort(file)
             visible.value = false
-            emit('change', file)
-            emit('error', file)
+            emit("change", file)
+            emit("error", file)
         }
         const handleExceed = () => {
             feedback.msgError(`超出上传上限${props.limit}，请重新上传`)
@@ -123,12 +115,12 @@ export default defineComponent({
 
         const getAccept = computed(() => {
             switch (props.type) {
-                case 'image':
-                    return '.jpg,.png,.gif,.jpeg'
-                case 'video':
-                    return '.wmv,.avi,.mpg,.mpeg,.3gp,.mov,.mp4,.flv,.rmvb,.mkv'
+                case "image":
+                    return ".jpg,.png,.gif,.jpeg"
+                case "video":
+                    return ".wmv,.avi,.mpg,.mpeg,.3gp,.mov,.mp4,.flv,.rmvb,.mkv"
                 default:
-                    return '*'
+                    return "*"
             }
         })
         return {

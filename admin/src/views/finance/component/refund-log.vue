@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts" setup>
-import { refundLog } from '@/api/finance'
+import { refundLog } from "@/api/finance"
 const loading = ref(false)
 const logLists = ref([])
 const props = defineProps<{
@@ -36,7 +36,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-    (event: 'update:modelValue', value: boolean): void
+    (event: "update:modelValue", value: boolean): void
 }>()
 
 const show = computed<boolean>({
@@ -44,7 +44,7 @@ const show = computed<boolean>({
         return props.modelValue
     },
     set(value) {
-        emit('update:modelValue', value)
+        emit("update:modelValue", value)
     }
 })
 
@@ -56,8 +56,9 @@ const getRefundLog = async () => {
             record_id: props.refundId
         })
         logLists.value = res
-    } catch (error) {}
-    loading.value = false
+    } finally {
+        loading.value = false
+    }
 }
 
 watch(show, (value) => {

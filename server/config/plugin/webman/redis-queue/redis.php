@@ -1,7 +1,7 @@
 <?php
 return [
     'default' => [
-        'host' => 'redis://'.getenv('REDIS_QUEUE_CONNECTION','127.0.0.1').':'.getenv('REDIS_QUEUE_PORT','6379'),
+        'host' => 'redis://'.getenv('REDIS_QUEUE_HOST','127.0.0.1').':'.getenv('REDIS_QUEUE_PORT','6379'),
         'options' => [
             'auth' => getenv('REDIS_QUEUE_PASSWORD',null),       // 密码，字符串类型，可选参数
             'db' => getenv('REDIS_QUEUE_DB',0),            // 数据库

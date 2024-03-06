@@ -9,6 +9,7 @@ use Webman\RedisQueue\Redis;
  */
 class SendQueue
 {
+    public static string $QUEUE_LOG_PUSH = 'queue-send-mail';
     /**
      * 异步插入队列
      * @param $queue_name string 队列名

@@ -2,15 +2,25 @@
 
 namespace app\queue\redis;
 
+use app\queue\send\SendQueue;
 use Webman\RedisQueue\Consumer;
 
 class MySendMail implements Consumer
 {
+    /**
+     * 队列和配置初始化
+     */
+    public function __construct() {
+        $this->connection = getenv('REDIS_QUEUE_CONNECTION');
+        $this->queue = SendQueue::$QUEUE_LOG_PUSH;
+    }
+
     // 要消费的队列名
-    public $queue = 'my-send-mail';
+    public $queue = '';
 
     // 连接名，对应 plugin/webman/redis-queue/redis.php 里的连接`
-    public $connection = 'default';
+    public $connection = '';
+
 
     // 消费
     public function consume($data)

@@ -17,17 +17,18 @@ use support\Container;
 use support\Request;
 use support\Response;
 use support\Translation;
-use support\view\Raw;
 use support\view\Blade;
+use support\view\Raw;
 use support\view\ThinkPHP;
 use support\view\Twig;
-use Workerman\Worker;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 use Webman\App;
 use Webman\Config;
 use Webman\Route;
-
-// Webman version
-const WEBMAN_VERSION = '1.4';
+use Workerman\Protocols\Http\Session;
+use Workerman\Worker;
 
 // Project base path
 define('BASE_PATH', dirname(__DIR__));
@@ -39,11 +40,11 @@ define('BASE_PATH', dirname(__DIR__));
  */
 function run_path(string $path = ''): string
 {
-    static $run_path = '';
-    if (!$run_path) {
-        $run_path = \is_phar() ? \dirname(\Phar::running(false)) : BASE_PATH;
+    static $runPath = '';
+    if (!$runPath) {
+        $runPath = is_phar() ? dirname(Phar::running(false)) : BASE_PATH;
     }
-    return \path_combine($run_path, $path);
+    return path_combine($runPath, $path);
 }
 
 /**
@@ -54,9 +55,9 @@ function run_path(string $path = ''): string
 function base_path($path = ''): string
 {
     if (false === $path) {
-        return \run_path();
+        return run_path();
     }
-    return \path_combine(BASE_PATH, $path);
+    return path_combine(BASE_PATH, $path);
 }
 
 /**
@@ -66,7 +67,7 @@ function base_path($path = ''): string
  */
 function app_path(string $path = ''): string
 {
-    return \path_combine(BASE_PATH . DIRECTORY_SEPARATOR . 'app', $path);
+    return path_combine(BASE_PATH . DIRECTORY_SEPARATOR . 'app', $path);
 }
 
 /**
@@ -76,11 +77,11 @@ function app_path(string $path = ''): string
  */
 function public_path(string $path = ''): string
 {
-    static $public_path = '';
-    if (!$public_path) {
-        $public_path = \config('app.public_path') ? : \run_path('public');
+    static $publicPath = '';
+    if (!$publicPath) {
+        $publicPath = \config('app.public_path') ?: run_path('public');
     }
-    return \path_combine($public_path, $path);
+    return path_combine($publicPath, $path);
 }
 
 /**
@@ -90,7 +91,7 @@ function public_path(string $path = ''): string
  */
 function config_path(string $path = ''): string
 {
-    return \path_combine(BASE_PATH . DIRECTORY_SEPARATOR . 'config', $path);
+    return path_combine(BASE_PATH . DIRECTORY_SEPARATOR . 'config', $path);
 }
 
 /**
@@ -100,11 +101,11 @@ function config_path(string $path = ''): string
  */
 function runtime_path(string $path = ''): string
 {
-    static $runtime_path = '';
-    if (!$runtime_path) {
-        $runtime_path = \config('app.runtime_path') ? : \run_path('runtime');
+    static $runtimePath = '';
+    if (!$runtimePath) {
+        $runtimePath = \config('app.runtime_path') ?: run_path('runtime');
     }
-    return \path_combine($runtime_path, $path);
+    return path_combine($runtimePath, $path);
 }
 
 /**
@@ -138,7 +139,7 @@ function response(string $body = '', int $status = 200, array $headers = []): Re
  */
 function json($data, int $options = JSON_UNESCAPED_UNICODE): Response
 {
-    return new Response(200, ['Content-Type' => 'application/json'], \json_encode($data, $options));
+    return new Response(200, ['Content-Type' => 'application/json'], json_encode($data, $options));
 }
 
 /**
@@ -157,15 +158,15 @@ function xml($xml): Response
 /**
  * Jsonp response
  * @param $data
- * @param string $callback_name
+ * @param string $callbackName
  * @return Response
  */
-function jsonp($data, string $callback_name = 'callback'): Response
+function jsonp($data, string $callbackName = 'callback'): Response
 {
-    if (!\is_scalar($data) && null !== $data) {
-        $data = \json_encode($data);
+    if (!is_scalar($data) && null !== $data) {
+        $data = json_encode($data);
     }
-    return new Response(200, [], "$callback_name($data)");
+    return new Response(200, [], "$callbackName($data)");
 }
 
 /**
@@ -189,14 +190,15 @@ function redirect(string $location, int $status = 302, array $headers = []): Res
  * @param string $template
  * @param array $vars
  * @param string|null $app
+ * @param string|null $plugin
  * @return Response
  */
-function view(string $template, array $vars = [], string $app = null): Response
+function view(string $template, array $vars = [], string $app = null, string $plugin = null): Response
 {
     $request = \request();
-    $plugin =  $request->plugin ?? '';
+    $plugin = $plugin === null ? ($request->plugin ?? '') : $plugin;
     $handler = \config($plugin ? "plugin.$plugin.view.handler" : 'view.handler');
-    return new Response(200, [], $handler::render($template, $vars, $app));
+    return new Response(200, [], $handler::render($template, $vars, $app, $plugin));
 }
 
 /**
@@ -242,6 +244,9 @@ function think_view(string $template, array $vars = [], string $app = null): Res
  * @param array $vars
  * @param string|null $app
  * @return Response
+ * @throws LoaderError
+ * @throws RuntimeError
+ * @throws SyntaxError
  */
 function twig_view(string $template, array $vars = [], string $app = null): Response
 {
@@ -285,8 +290,8 @@ function route(string $name, ...$parameters): string
         return $route->url();
     }
 
-    if (\is_array(\current($parameters))) {
-        $parameters = \current($parameters);
+    if (is_array(current($parameters))) {
+        $parameters = current($parameters);
     }
 
     return $route->url($parameters);
@@ -296,7 +301,7 @@ function route(string $name, ...$parameters): string
  * Session
  * @param mixed $key
  * @param mixed $default
- * @return mixed
+ * @return mixed|bool|Session
  */
 function session($key = null, $default = null)
 {
@@ -304,14 +309,14 @@ function session($key = null, $default = null)
     if (null === $key) {
         return $session;
     }
-    if (\is_array($key)) {
+    if (is_array($key)) {
         $session->put($key);
         return null;
     }
-    if (\strpos($key, '.')) {
-        $key_array = \explode('.', $key);
+    if (strpos($key, '.')) {
+        $keyArray = explode('.', $key);
         $value = $session->all();
-        foreach ($key_array as $index) {
+        foreach ($keyArray as $index) {
             if (!isset($value[$index])) {
                 return $default;
             }
@@ -339,7 +344,7 @@ function trans(string $id, array $parameters = [], string $domain = null, string
 /**
  * Locale
  * @param string|null $locale
- * @return void
+ * @return string
  */
 function locale(string $locale = null): string
 {
@@ -347,6 +352,7 @@ function locale(string $locale = null): string
         return Translation::getLocale();
     }
     Translation::setLocale($locale);
+    return $locale;
 }
 
 /**
@@ -355,7 +361,7 @@ function locale(string $locale = null): string
  */
 function not_found(): Response
 {
-    return new Response(404, [], \file_get_contents(public_path() . '/404.html'));
+    return new Response(404, [], file_get_contents(public_path() . '/404.html'));
 }
 
 /**
@@ -367,18 +373,18 @@ function not_found(): Response
  */
 function copy_dir(string $source, string $dest, bool $overwrite = false)
 {
-    if (\is_dir($source)) {
+    if (is_dir($source)) {
         if (!is_dir($dest)) {
-            \mkdir($dest);
+            mkdir($dest);
         }
-        $files = \scandir($source);
+        $files = scandir($source);
         foreach ($files as $file) {
             if ($file !== "." && $file !== "..") {
-                \copy_dir("$source/$file", "$dest/$file");
+                copy_dir("$source/$file", "$dest/$file", $overwrite);
             }
         }
-    } else if (\file_exists($source) && ($overwrite || !\file_exists($dest))) {
-        \copy($source, $dest);
+    } else if (file_exists($source) && ($overwrite || !file_exists($dest))) {
+        copy($source, $dest);
     }
 }
 
@@ -389,14 +395,14 @@ function copy_dir(string $source, string $dest, bool $overwrite = false)
  */
 function remove_dir(string $dir): bool
 {
-    if (\is_link($dir) || \is_file($dir)) {
-        return \unlink($dir);
+    if (is_link($dir) || is_file($dir)) {
+        return unlink($dir);
     }
-    $files = \array_diff(\scandir($dir), array('.', '..'));
+    $files = array_diff(scandir($dir), array('.', '..'));
     foreach ($files as $file) {
-        (\is_dir("$dir/$file") && !\is_link($dir)) ? \remove_dir("$dir/$file") : \unlink("$dir/$file");
+        (is_dir("$dir/$file") && !is_link($dir)) ? remove_dir("$dir/$file") : unlink("$dir/$file");
     }
-    return \rmdir($dir);
+    return rmdir($dir);
 }
 
 /**
@@ -406,7 +412,7 @@ function remove_dir(string $dir): bool
  */
 function worker_bind($worker, $class)
 {
-    $callback_map = [
+    $callbackMap = [
         'onConnect',
         'onMessage',
         'onClose',
@@ -414,28 +420,29 @@ function worker_bind($worker, $class)
         'onBufferFull',
         'onBufferDrain',
         'onWorkerStop',
-        'onWebSocketConnect'
+        'onWebSocketConnect',
+        'onWorkerReload'
     ];
-    foreach ($callback_map as $name) {
-        if (\method_exists($class, $name)) {
+    foreach ($callbackMap as $name) {
+        if (method_exists($class, $name)) {
             $worker->$name = [$class, $name];
         }
     }
-    if (\method_exists($class, 'onWorkerStart')) {
-        \call_user_func([$class, 'onWorkerStart'], $worker);
+    if (method_exists($class, 'onWorkerStart')) {
+        call_user_func([$class, 'onWorkerStart'], $worker);
     }
 }
 
 /**
  * Start worker
- * @param $process_name
+ * @param $processName
  * @param $config
  * @return void
  */
-function worker_start($process_name, $config)
+function worker_start($processName, $config)
 {
     $worker = new Worker($config['listen'] ?? null, $config['context'] ?? []);
-    $property_map = [
+    $propertyMap = [
         'count',
         'user',
         'group',
@@ -444,53 +451,38 @@ function worker_start($process_name, $config)
         'transport',
         'protocol',
     ];
-    $worker->name = $process_name;
-    foreach ($property_map as $property) {
+    $worker->name = $processName;
+    foreach ($propertyMap as $property) {
         if (isset($config[$property])) {
             $worker->$property = $config[$property];
         }
     }
 
     $worker->onWorkerStart = function ($worker) use ($config) {
-        require_once \base_path() . '/support/bootstrap.php';
-
-        foreach ($config['services'] ?? [] as $server) {
-            if (!\class_exists($server['handler'])) {
-                echo "process error: class {$server['handler']} not exists\r\n";
-                continue;
-            }
-            $listen = new Worker($server['listen'] ?? null, $server['context'] ?? []);
-            if (isset($server['listen'])) {
-                echo "listen: {$server['listen']}\n";
-            }
-            $instance = Container::make($server['handler'], $server['constructor'] ?? []);
-            \worker_bind($listen, $instance);
-            $listen->listen();
-        }
-
+        require_once base_path('/support/bootstrap.php');
         if (isset($config['handler'])) {
-            if (!\class_exists($config['handler'])) {
+            if (!class_exists($config['handler'])) {
                 echo "process error: class {$config['handler']} not exists\r\n";
                 return;
             }
 
             $instance = Container::make($config['handler'], $config['constructor'] ?? []);
-            \worker_bind($worker, $instance);
+            worker_bind($worker, $instance);
         }
     };
 }
 
 /**
  * Get realpath
- * @param string $file_path
+ * @param string $filePath
  * @return string
  */
-function get_realpath(string $file_path): string
+function get_realpath(string $filePath): string
 {
-    if (\strpos($file_path, 'phar://') === 0) {
-        return $file_path;
+    if (strpos($filePath, 'phar://') === 0) {
+        return $filePath;
     } else {
-        return \realpath($file_path);
+        return realpath($filePath);
     }
 }
 
@@ -500,7 +492,7 @@ function get_realpath(string $file_path): string
  */
 function is_phar(): bool
 {
-    return \class_exists(\Phar::class, false) && Phar::running();
+    return class_exists(Phar::class, false) && Phar::running();
 }
 
 /**
@@ -510,16 +502,27 @@ function is_phar(): bool
 function cpu_count(): int
 {
     // Windows does not support the number of processes setting.
-    if (\DIRECTORY_SEPARATOR === '\\') {
+    if (DIRECTORY_SEPARATOR === '\\') {
         return 1;
     }
     $count = 4;
-    if (\is_callable('shell_exec')) {
-        if (\strtolower(PHP_OS) === 'darwin') {
-            $count = (int)\shell_exec('sysctl -n machdep.cpu.core_count');
+    if (is_callable('shell_exec')) {
+        if (strtolower(PHP_OS) === 'darwin') {
+            $count = (int)shell_exec('sysctl -n machdep.cpu.core_count');
         } else {
-            $count = (int)\shell_exec('nproc');
+            $count = (int)shell_exec('nproc');
         }
     }
     return $count > 0 ? $count : 4;
+}
+
+/**
+ * Get request parameters, if no parameter name is passed, an array of all values is returned, default values is supported
+ * @param string|null $param param's name
+ * @param mixed|null $default default value
+ * @return mixed|null
+ */
+function input(string $param = null, $default = null)
+{
+    return is_null($param) ? request()->all() : request()->input($param, $default);
 }

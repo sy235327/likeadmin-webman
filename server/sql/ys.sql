@@ -8,8 +8,11 @@ create table la_address
     parent_id    int                     not null comment '父id',
     first_letter varchar(10)  default '' not null comment '首字母',
     level        int                     not null comment '城市等级 0省 1市 2县区'
-)
-    comment '省市区表' charset = utf8;
+)charset = utf8 engine=MyISAM comment '省市区表' ;
+create index la_address_level_index
+    on la_address (level);
+create index la_address_name_index
+    on la_address (name);
 
 INSERT INTO la_address (id, code, name, parent_id, first_letter, level) VALUES (1, '110000', '北京市', 0, 'B', 0);
 INSERT INTO la_address (id, code, name, parent_id, first_letter, level) VALUES (2, '120000', '天津市', 0, 'T', 0);

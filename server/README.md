@@ -10,7 +10,18 @@ php webman fix-disable-functions
 https://gitee.com/likeadmin/likeadmin_php?_from=gitee_search
 https://www.workerman.net/doc/webman/
 https://gitee.com/MuZJun/gather-admin
-# 部署nginx配置
+# 默认后台账号密码
+    admin
+    123456
+# 启动代码
+    开发:
+    windows环境
+        ./window.bat
+    linux环境
+        php start.php start
+    生产
+        php start.php start -d
+# 生产：部署nginx配置
 后台api
 ```
 

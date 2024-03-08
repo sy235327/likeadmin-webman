@@ -6,10 +6,10 @@ High performance HTTP Service Framework for PHP based on [Workerman](https://git
 当前版本是带代码生成器
 检查禁用函数
 php webman fix-disable-functions
-# api文档
+# 参考文档
 https://gitee.com/likeadmin/likeadmin_php?_from=gitee_search
 https://www.workerman.net/doc/webman/
-
+https://gitee.com/MuZJun/gather-admin
 # 部署nginx配置
 后台api
 ```

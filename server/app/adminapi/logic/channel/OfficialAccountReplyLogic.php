@@ -18,8 +18,10 @@ use app\common\enum\OfficialAccountEnum;
 use app\common\enum\YesNoEnum;
 use app\common\logic\BaseLogic;
 use app\common\model\channel\OfficialAccountReply;
-use EasyWeChat\Factory;
-use EasyWeChat\Kernel\Messages\Text;
+use app\common\service\wechat\WeChatConfigService;
+use app\common\service\wechat\WeChatOaService;
+
+
 
 /**
  * 微信公众号回复逻辑层
@@ -32,7 +34,7 @@ class OfficialAccountReplyLogic extends BaseLogic
      * @notes 添加回复(关注/关键词/默认)
      * @param $params
      * @return bool
-     * @author 乔峰
+     * @author 段誉
      * @date 2022/3/29 10:57
      */
     public static function add($params)
@@ -59,7 +61,7 @@ class OfficialAccountReplyLogic extends BaseLogic
      * @notes 查看回复详情
      * @param $params
      * @return array
-     * @author 乔峰
+     * @author 段誉
      * @date 2022/3/29 11:00
      */
     public static function detail($params)
@@ -74,7 +76,7 @@ class OfficialAccountReplyLogic extends BaseLogic
      * @notes 编辑回复(关注/关键词/默认)
      * @param $params
      * @return bool
-     * @author 乔峰
+     * @author 段誉
      * @date 2022/3/29 11:01
      */
     public static function edit($params)
@@ -100,7 +102,7 @@ class OfficialAccountReplyLogic extends BaseLogic
     /**
      * @notes 删除回复(关注/关键词/默认)
      * @param $params
-     * @author 乔峰
+     * @author 段誉
      * @date 2022/3/29 11:01
      */
     public static function delete($params)
@@ -112,7 +114,7 @@ class OfficialAccountReplyLogic extends BaseLogic
     /**
      * @notes 更新排序
      * @param $params
-     * @author 乔峰
+     * @author 段誉
      * @date 2022/3/29 11:01
      */
     public static function sort($params)
@@ -125,7 +127,7 @@ class OfficialAccountReplyLogic extends BaseLogic
     /**
      * @notes 更新状态
      * @param $params
-     * @author 乔峰
+     * @author 段誉
      * @date 2022/3/29 11:01
      */
     public static function status($params)
@@ -135,83 +137,92 @@ class OfficialAccountReplyLogic extends BaseLogic
         $reply->save();
     }
 
+
     /**
      * @notes 微信公众号回调
+     * @return \Psr\Http\Message\ResponseInterface|void
      * @throws \EasyWeChat\Kernel\Exceptions\BadRequestException
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     * @throws \EasyWeChat\Kernel\Exceptions\RuntimeException
      * @throws \ReflectionException
-     * @author 乔峰
-     * @date 2022/3/29 11:01
+     * @throws \Throwable
+     * @author 段誉
+     * @date 2023/2/27 14:38\
      */
     public static function index()
     {
-        // 确认此次GET请求来自微信服务器，原样返回echostr参数内容，接入生效，成为开发者成功
-        if (isset($_GET['echostr'])) {
-            echo $_GET['echostr'];
-            exit;
-        }
+        $server = (new WeChatOaService())->getServer();
+        // 事件
+        $server->addMessageListener(OfficialAccountEnum::MSG_TYPE_EVENT, function ($message, \Closure $next) {
+            switch ($message['Event']) {
+                case OfficialAccountEnum::EVENT_SUBSCRIBE: // 关注事件
+                    $replyContent = OfficialAccountReply::where([
+                        'reply_type' => OfficialAccountEnum::REPLY_TYPE_FOLLOW,
+                        'status' => YesNoEnum::YES
+                    ])
+                        ->value('content');
 
-        $officialAccountSetting = (new OfficialAccountSettingLogic())->getConfig();
-        $config = [
-            'app_id' => $officialAccountSetting['app_id'],
-            'secret' => $officialAccountSetting['app_secret'],
-            'response_type' => 'array',
-        ];
-        $app = Factory::officialAccount($config);
-
-        $app->server->push(function ($message) {
-            switch ($message['MsgType']) { // 消息类型
-                case OfficialAccountEnum::MSG_TYPE_EVENT: // 事件
-                    switch ($message['Event']) {
-                        case OfficialAccountEnum::EVENT_SUBSCRIBE: // 关注事件
-                            $reply_content = OfficialAccountReply::where(['reply_type' => OfficialAccountEnum::REPLY_TYPE_FOLLOW, 'status' => YesNoEnum::YES])
-                                ->value('content');
-
-                            if (empty($reply_content)) {
-                                // 未启用关注回复 或 关注回复内容为空
-                                $reply_content = OfficialAccountReply::where(['reply_type' => OfficialAccountEnum::REPLY_TYPE_DEFAULT, 'status' => YesNoEnum::YES])
-                                    ->value('content');
-                            }
-                            if ($reply_content) {
-                                $text = new Text($reply_content);
-                                return $text;
-                            }
-                            break;
+                    if (empty($replyContent)) {
+                        // 未启用关注回复 或 关注回复内容为空
+                        $replyContent = static::getDefaultReply();
                     }
-                    break;
-
-                case OfficialAccountEnum::MSG_TYPE_TEXT: // 文本
-                    $reply_list = OfficialAccountReply::where(['reply_type' => OfficialAccountEnum::REPLY_TYPE_KEYWORD, 'status' => YesNoEnum::YES])
-                        ->order('sort asc')
-                        ->select();
-                    $reply_content = '';
-                    foreach ($reply_list as $reply) {
-                        switch ($reply['matching_type']) {
-                            case OfficialAccountEnum::MATCHING_TYPE_FULL:
-                                $reply['keyword'] === $message['Content'] && $reply_content = $reply['content'];
-                                break;
-                            case OfficialAccountEnum::MATCHING_TYPE_FUZZY:
-                                stripos($message['Content'], $reply['keyword']) !== false && $reply_content = $reply['content'];
-                                break;
-                        }
-                        if ($reply_content) {
-                            break; // 得到回复文本，中止循环
-                        }
-                    }
-                    //消息回复为空的话，找默认回复
-                    if (empty($reply_content)) {
-                        $reply_content = OfficialAccountReply::where(['reply_type' => OfficialAccountEnum::REPLY_TYPE_DEFAULT, 'status' => YesNoEnum::YES])
-                            ->value('content');
-                    }
-                    if ($reply_content) {
-                        $text = new Text($reply_content);
-                        return $text;
+                    if ($replyContent) {
+                        return $replyContent;
                     }
                     break;
             }
+            return $next($message);
         });
-        $response = $app->server->serve();
-        $response->send();
+
+        // 文本
+        $server->addMessageListener(OfficialAccountEnum::MSG_TYPE_TEXT, function ($message, \Closure $next) {
+            $replyList = OfficialAccountReply::where([
+                'reply_type' => OfficialAccountEnum::REPLY_TYPE_KEYWORD,
+                'status' => YesNoEnum::YES
+            ])
+                ->order('sort asc')
+                ->select();
+
+            $replyContent = '';
+            foreach ($replyList as $reply) {
+                switch ($reply['matching_type']) {
+                    case OfficialAccountEnum::MATCHING_TYPE_FULL:
+                        $reply['keyword'] === $message['Content'] && $replyContent = $reply['content'];
+                        break;
+                    case OfficialAccountEnum::MATCHING_TYPE_FUZZY:
+                        stripos($message['Content'], $reply['keyword']) !== false && $replyContent = $reply['content'];
+                        break;
+                }
+                if ($replyContent) {
+                    break; // 得到回复文本，中止循环
+                }
+            }
+            //消息回复为空的话，找默认回复
+            if (empty($replyContent)) {
+                $replyContent = static::getDefaultReply();
+            }
+            if ($replyContent) {
+                return $replyContent;
+            }
+            return $next($message);
+        });
+
+        return $server->serve();
+    }
+
+
+    /**
+     * @notes 默认回复信息
+     * @return mixed
+     * @author 段誉
+     * @date 2023/2/27 14:36
+     */
+    public static function getDefaultReply()
+    {
+        return OfficialAccountReply::where([
+            'reply_type' => OfficialAccountEnum::REPLY_TYPE_DEFAULT,
+            'status' => YesNoEnum::YES
+        ])
+            ->value('content');
     }
 }

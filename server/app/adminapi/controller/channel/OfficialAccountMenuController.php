@@ -27,7 +27,8 @@ class OfficialAccountMenuController extends BaseAdminController
 
     /**
      * @notes 保存菜单
-     * @author 乔峰
+     * @return \support\Response
+     * @author 段誉
      * @date 2022/3/29 10:41
      */
     public function save()
@@ -43,7 +44,8 @@ class OfficialAccountMenuController extends BaseAdminController
 
     /**
      * @notes 保存发布菜单
-     * @author 乔峰
+     * @return \support\Response
+     * @author 段誉
      * @date 2022/3/29 10:42
      */
     public function saveAndPublish()
@@ -60,7 +62,8 @@ class OfficialAccountMenuController extends BaseAdminController
 
     /**
      * @notes 查看菜单详情
-     * @author 乔峰
+     * @return \support\Response
+     * @author 段誉
      * @date 2022/3/29 10:42
      */
     public function detail()

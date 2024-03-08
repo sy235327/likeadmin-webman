@@ -11,37 +11,51 @@
 // +----------------------------------------------------------------------
 // | author: likeadminTeam
 // +----------------------------------------------------------------------
-namespace app\adminapi\controller\decorate;
+
+namespace app\adminapi\controller\setting\pay;
 
 use app\adminapi\controller\BaseAdminController;
-use app\adminapi\logic\decorate\DecorateDataLogic;
+use app\adminapi\logic\setting\pay\PayWayLogic;
 
 
 /**
- * 装修-数据
- * Class DataController
- * @package app\adminapi\controller\decorate
+ * 支付方式
+ * Class PayWayController
+ * @package app\adminapi\controller\setting\pay
  */
-class DataController extends BaseAdminController
+class PayWayController extends BaseAdminController
 {
 
-
     /**
-     * @notes 文章列表
+     * @notes 获取支付方式
      * @return \support\Response
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      * @author 段誉
-     * @date 2022/9/22 16:50
+     * @date 2023/2/23 16:27
      */
-    public function article()
+    public function getPayWay()
     {
-        $limit = $this->request->get('limit', 10);
-        $result = DecorateDataLogic::getArticleLists($limit);
-        return $this->success('获取成功', $result);
+        $result = PayWayLogic::getPayWay();
+        return $this->success('获取成功',$result);
     }
 
 
-
+    /**
+     * @notes 设置支付方式
+     * @return \support\Response
+     * @throws \Exception
+     * @author 段誉
+     * @date 2023/2/23 16:27
+     */
+    public function setPayWay()
+    {
+        $params = $this->request->post();
+        $result = (new PayWayLogic())->setPayWay($params);
+        if (true !== $result) {
+            return $this->fail($result);
+        }
+        return $this->success('操作成功',[],1, 1);
+    }
 }

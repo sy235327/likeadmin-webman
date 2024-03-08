@@ -29,7 +29,7 @@ class ArticleCateController extends BaseAdminController
 
     /**
      * @notes  查看资讯分类列表
-     * @return \think\response\Json
+     * @return \support\Response
      * @author heshihu
      * @date 2022/2/21 17:11
      */
@@ -41,7 +41,7 @@ class ArticleCateController extends BaseAdminController
 
     /**
      * @notes  添加资讯分类
-     * @return \think\response\Json
+     * @return \support\Response
      * @author heshihu
      * @date 2022/2/21 17:31
      */
@@ -55,7 +55,7 @@ class ArticleCateController extends BaseAdminController
 
     /**
      * @notes  编辑资讯分类
-     * @return \think\response\Json
+     * @return \support\Response
      * @author heshihu
      * @date 2022/2/21 17:49
      */
@@ -72,7 +72,7 @@ class ArticleCateController extends BaseAdminController
 
     /**
      * @notes  删除资讯分类
-     * @return \think\response\Json
+     * @return \support\Response
      * @author heshihu
      * @date 2022/2/21 17:52
      */
@@ -86,7 +86,7 @@ class ArticleCateController extends BaseAdminController
 
     /**
      * @notes  资讯分类详情
-     * @return \think\response\Json
+     * @return \support\Response
      * @author heshihu
      * @date 2022/2/21 17:54
      */
@@ -100,7 +100,7 @@ class ArticleCateController extends BaseAdminController
 
     /**
      * @notes  更改资讯分类状态
-     * @return \think\response\Json
+     * @return \support\Response
      * @author heshihu
      * @date 2022/2/21 10:15
      */
@@ -117,7 +117,7 @@ class ArticleCateController extends BaseAdminController
 
     /**
      * @notes 获取文章分类
-     * @return \think\response\Json
+     * @return \support\Response
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException

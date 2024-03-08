@@ -20,14 +20,15 @@ use app\adminapi\logic\channel\AppSettingLogic;
 /**
  * APP设置控制器
  * Class AppSettingController
- * @package app\adminapi\controller\settings\app
+ * @package app\adminapi\controller\setting\app
  */
 class AppSettingController extends BaseAdminController
 {
 
     /**
      * @notes 获取App设置
-     * @author 乔峰
+     * @return \support\Response
+     * @author 段誉
      * @date 2022/3/29 10:24
      */
     public function getConfig()
@@ -39,7 +40,8 @@ class AppSettingController extends BaseAdminController
 
     /**
      * @notes App设置
-     * @author 乔峰
+     * @return \support\Response
+     * @author 段誉
      * @date 2022/3/29 10:25
      */
     public function setConfig()

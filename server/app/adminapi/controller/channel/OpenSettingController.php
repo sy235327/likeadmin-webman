@@ -21,14 +21,15 @@ use app\adminapi\validate\channel\OpenSettingValidate;
 /**
  * 微信开放平台
  * Class AppSettingController
- * @package app\adminapi\controller\settings\app
+ * @package app\adminapi\controller\setting\app
  */
 class OpenSettingController extends BaseAdminController
 {
 
     /**
      * @notes 获取微信开放平台设置
-     * @author 乔峰
+     * @return \support\Response
+     * @author 段誉
      * @date 2022/3/29 11:03
      */
     public function getConfig()
@@ -40,7 +41,8 @@ class OpenSettingController extends BaseAdminController
 
     /**
      * @notes 微信开放平台设置
-     * @author 乔峰
+     * @return \support\Response
+     * @author 段誉
      * @date 2022/3/29 11:03
      */
     public function setConfig()

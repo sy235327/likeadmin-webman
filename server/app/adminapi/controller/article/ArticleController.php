@@ -29,7 +29,7 @@ class ArticleController extends BaseAdminController
 
     /**
      * @notes  查看资讯列表
-     * @return \think\response\Json
+     * @return \support\Response
      * @author heshihu
      * @date 2022/2/22 9:47
      */
@@ -40,7 +40,7 @@ class ArticleController extends BaseAdminController
 
     /**
      * @notes  添加资讯
-     * @return \think\response\Json
+     * @return \support\Response
      * @author heshihu
      * @date 2022/2/22 9:57
      */
@@ -53,7 +53,7 @@ class ArticleController extends BaseAdminController
 
     /**
      * @notes  编辑资讯
-     * @return \think\response\Json
+     * @return \support\Response
      * @author heshihu
      * @date 2022/2/22 10:12
      */
@@ -69,7 +69,7 @@ class ArticleController extends BaseAdminController
 
     /**
      * @notes  删除资讯
-     * @return \think\response\Json
+     * @return \support\Response
      * @author heshihu
      * @date 2022/2/22 10:17
      */
@@ -82,7 +82,7 @@ class ArticleController extends BaseAdminController
 
     /**
      * @notes  资讯详情
-     * @return \think\response\Json
+     * @return \support\Response
      * @author heshihu
      * @date 2022/2/22 10:15
      */
@@ -96,7 +96,7 @@ class ArticleController extends BaseAdminController
 
     /**
      * @notes  更改资讯状态
-     * @return \think\response\Json
+     * @return \support\Response
      * @author heshihu
      * @date 2022/2/22 10:18
      */

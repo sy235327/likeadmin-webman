@@ -27,6 +27,7 @@ class MnpSettingsController extends BaseAdminController
 {
     /**
      * @notes 获取小程序配置
+     * @return \support\Response
      * @author ljj
      * @date 2022/2/16 9:38 上午
      */
@@ -38,6 +39,7 @@ class MnpSettingsController extends BaseAdminController
 
     /**
      * @notes 设置小程序配置
+     * @return \support\Response
      * @author ljj
      * @date 2022/2/16 9:51 上午
      */

@@ -17,7 +17,7 @@ namespace app\adminapi\logic\channel;
 use app\common\enum\OfficialAccountEnum;
 use app\common\logic\BaseLogic;
 use app\common\service\ConfigService;
-use EasyWeChat\Factory;
+use app\common\service\wechat\WeChatOaService;
 
 /**
  * 微信公众号菜单逻辑层
@@ -30,7 +30,7 @@ class OfficialAccountMenuLogic extends BaseLogic
      * @notes 保存
      * @param $params
      * @return bool
-     * @author 乔峰
+     * @author 段誉
      * @date 2022/3/29 10:43
      */
     public static function save($params)
@@ -50,7 +50,7 @@ class OfficialAccountMenuLogic extends BaseLogic
      * @notes 一级菜单校验
      * @param $menu
      * @throws \Exception
-     * @author 乔峰
+     * @author 段誉
      * @date 2022/3/29 10:55
      */
     public static function checkMenu($menu)
@@ -86,8 +86,6 @@ class OfficialAccountMenuLogic extends BaseLogic
                 throw new \Exception('请配置子菜单');
             }
 
-            self::checkType($item);
-
             if (!empty($item['sub_button'])) {
                 self::checkSubButton($item['sub_button']);
             }
@@ -99,7 +97,7 @@ class OfficialAccountMenuLogic extends BaseLogic
      * @notes 二级菜单校验
      * @param $subButtion
      * @throws \Exception
-     * @author 乔峰
+     * @author 段誉
      * @date 2022/3/29 10:55
      */
     public static function checkSubButton($subButtion)
@@ -134,7 +132,7 @@ class OfficialAccountMenuLogic extends BaseLogic
      * @notes 菜单类型校验
      * @param $item
      * @throws \Exception
-     * @author 乔峰
+     * @author 段誉
      * @date 2022/3/29 10:55
      */
     public static function checkType($item)
@@ -172,7 +170,7 @@ class OfficialAccountMenuLogic extends BaseLogic
      * @param $params
      * @return bool
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @author 乔峰
+     * @author 段誉
      * @date 2022/3/29 10:55
      */
     public static function saveAndPublish($params)
@@ -180,18 +178,7 @@ class OfficialAccountMenuLogic extends BaseLogic
         try {
             self::checkMenu($params);
 
-            $officialAccountSetting = (new OfficialAccountSettingLogic())->getConfig();
-            if (empty($officialAccountSetting['app_id']) || empty($officialAccountSetting['app_secret'])) {
-                throw new \Exception('请先配置好微信公众号');
-            }
-
-            $app = Factory::officialAccount([
-                'app_id' => $officialAccountSetting['app_id'],
-                'secret' => $officialAccountSetting['app_secret'],
-                'response_type' => 'array',
-            ]);
-
-            $result = $app->menu->create($params);
+            $result = (new WeChatOaService())->createMenu($params);
             if ($result['errcode'] == 0) {
                 ConfigService::set('oa_setting', 'menu', $params);
                 return true;
@@ -210,7 +197,7 @@ class OfficialAccountMenuLogic extends BaseLogic
     /**
      * @notes 查看菜单详情
      * @return array|int|mixed|string|null
-     * @author 乔峰
+     * @author 段誉
      * @date 2022/3/29 10:56
      */
     public static function detail()

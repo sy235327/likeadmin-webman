@@ -27,7 +27,7 @@ class TabbarController extends BaseAdminController
 
     /**
      * @notes 底部导航详情
-     * @return \think\response\Json
+     * @return \support\Response
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
@@ -43,7 +43,7 @@ class TabbarController extends BaseAdminController
 
     /**
      * @notes 底部导航保存
-     * @return \think\response\Json
+     * @return \support\Response
      * @author 段誉
      * @date 2022/9/6 9:58
      */

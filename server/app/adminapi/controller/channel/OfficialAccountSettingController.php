@@ -27,6 +27,7 @@ class OfficialAccountSettingController extends BaseAdminController
 {
     /**
      * @notes 获取公众号配置
+     * @return \support\Response
      * @author ljj
      * @date 2022/2/16 10:09 上午
      */
@@ -38,6 +39,7 @@ class OfficialAccountSettingController extends BaseAdminController
 
     /**
      * @notes 设置公众号配置
+     * @return \support\Response
      * @author ljj
      * @date 2022/2/16 10:09 上午
      */

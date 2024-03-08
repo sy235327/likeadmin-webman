@@ -29,7 +29,7 @@ class PageController extends BaseAdminController
 
     /**
      * @notes 获取装修修页面详情
-     * @return \think\response\Json
+     * @return \support\Response
      * @author 段誉
      * @date 2022/9/14 18:43
      */
@@ -43,7 +43,7 @@ class PageController extends BaseAdminController
 
     /**
      * @notes 保存装修配置
-     * @return \think\response\Json
+     * @return \support\Response
      * @author 段誉
      * @date 2022/9/15 9:57
      */

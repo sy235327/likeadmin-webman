@@ -21,14 +21,15 @@ use app\adminapi\validate\channel\WebPageSettingValidate;
 /**
  * H5设置控制器
  * Class HFiveSettingController
- * @package app\adminapi\controller\settings\h5
+ * @package app\adminapi\controller\setting\h5
  */
 class WebPageSettingController extends BaseAdminController
 {
 
     /**
      * @notes 获取H5设置
-     * @author 乔峰
+     * @return \support\Response
+     * @author 段誉
      * @date 2022/3/29 10:36
      */
     public function getConfig()
@@ -40,7 +41,8 @@ class WebPageSettingController extends BaseAdminController
 
     /**
      * @notes H5设置
-     * @author 乔峰
+     * @return \support\Response
+     * @author 段誉
      * @date 2022/3/29 10:36
      */
     public function setConfig()

@@ -28,7 +28,7 @@ use app\common\model\auth\Admin;
  */
 class AdminController extends BaseAdminController
 {
-    public array $notNeedLogin = ['resetAdmin'];
+    public array $notNeedLogin = [];
     /**
      * @notes 查看管理员列表
      * @author 乔峰
@@ -122,22 +122,6 @@ class AdminController extends BaseAdminController
     {
         $params = (new editSelfValidate())->post()->goCheck('', ['admin_id' => $this->adminId]);
         $result = AdminLogic::editSelf($params);
-        return $this->success('操作成功', [], 1, 1);
-    }
-    /**
-     * @notes 重置密码
-     * @author 乔峰
-     * @date 2022/4/8 17:54
-     */
-    public function resetAdmin()
-    {
-        $admin = Admin::where('id',1)->find();
-        $result = AdminLogic::editSelf([
-            'admin_id'=>$admin['id'],
-            'name'=>$admin['name'],
-            'password'=>123456,
-            'avatar'=>$admin['avatar'],
-        ]);
         return $this->success('操作成功', [], 1, 1);
     }
 }

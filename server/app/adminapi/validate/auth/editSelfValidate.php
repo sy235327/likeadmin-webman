@@ -62,8 +62,9 @@ class editSelfValidate extends BaseValidate
 
         $admin = Admin::findOrEmpty($data['admin_id']);
         $passwordSalt = Config::get('project.unique_identification');
-//        if (!password_verify($data['password_old'],$admin['password'])) {
-        if ($admin['password'] !== create_password($data['password_old'], $passwordSalt)) {
+        $oldPassword = create_password($data['password_old'], $passwordSalt);
+
+        if ($admin['password'] != $oldPassword) {
             return '当前密码错误';
         }
 

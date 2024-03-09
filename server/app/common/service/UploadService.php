@@ -40,9 +40,8 @@ class UploadService
             }
 
             // 上传文件
-            $uriPath = '/'.$saveDir . '/' .  date('Ymd');
-            $saveDir = public_path().$uriPath;
-            if (!$StorageDriver->upload($saveDir)) {
+            $saveDir = $saveDir . '/' .  date('Ymd');
+            if (!$StorageDriver->upload(public_path()."/".$saveDir)) {
                 throw new Exception($StorageDriver->getError());
             }
 
@@ -58,7 +57,7 @@ class UploadService
                 'cid'         => $cid,
                 'type'        => FileEnum::IMAGE_TYPE,
                 'name'        => $fileInfo['name'],
-                'uri'         => 'http://'.request()->host().$uriPath.'/' . str_replace("\\","/", $fileName),
+                'uri'         => $saveDir.'/' . str_replace("\\","/", $fileName),
                 'source'      => $source,
                 'source_id'   => $sourceId,
                 'create_time' => time(),
@@ -111,7 +110,7 @@ class UploadService
 
             // 上传文件
             $saveDir = $saveDir . '/' .  date('Ymd');
-            if (!$StorageDriver->upload($saveDir)) {
+            if (!$StorageDriver->upload(public_path()."/".$saveDir)) {
                 throw new Exception($StorageDriver->getError());
             }
 

@@ -114,5 +114,5 @@ if (empty($data['prefix'])) {
     }
 }
 echo json_encode($data);
-echo "安装成功";
+echo "\r\n安装成功，请重新运行\r\n";
 exit();

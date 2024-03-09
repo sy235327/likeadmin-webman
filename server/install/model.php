@@ -488,7 +488,7 @@ class installModel
      */
     public function createTable($version, $post)
     {
-        $dbFile = $this->getInstallRoot() . '/db/like.sql';
+        $dbFile = $this->getInstallRoot() . '/sql/like.sql';
         //file_put_contents($dbFile, $this->initAccount($post), FILE_APPEND);
         $content = str_replace(";\r\n", ";\n", file_get_contents($dbFile));
         $tables = explode(";\n", $content);
@@ -562,7 +562,7 @@ class installModel
     public function importDemoData()
     {
         $demoDataFile = 'ys.sql';
-        $demoDataFile = $this->getInstallRoot() . '/db/' . $demoDataFile;
+        $demoDataFile = $this->getInstallRoot() . '/sql/' . $demoDataFile;
         if (!is_file($demoDataFile)) {
             echo "<br>";
             echo 'no file:' .$demoDataFile;
@@ -580,7 +580,7 @@ class installModel
         }
 
         // 移动图片资源
-        $this->cpFiles($this->getInstallRoot().'/uploads', $this->getAppRoot().'/public/uploads');
+//        $this->cpFiles($this->getInstallRoot().'/uploads', $this->getAppRoot().'/public/uploads');
 
         return true;
     }
@@ -627,7 +627,7 @@ class installModel
      */
     public function getAppRoot()
     {
-        return realpath($this->getInstallRoot() . '/../../');
+        return realpath($this->getInstallRoot() . '/');
     }
 
     /**
@@ -738,6 +738,7 @@ class installModel
 
         global $uniqueSalt;
         $uniqueSalt = $salt;
+        echo $salt." ".$post['admin_password']."\n";
 
         $password = $this->createPassword($post['admin_password'], $salt);
 
@@ -759,28 +760,8 @@ class installModel
     {
         return md5($salt . md5($pwd . $salt));
     }
-
-
-
-    /**
-     * @notes 恢复admin,mobile index文件
-     * @author 段誉
-     * @date 2021/9/16 15:51
-     */
-    public function restoreIndexLock()
+    function create_password(string $plaintext, string $salt) : string
     {
-        $this->checkIndexFile($this->getAppRoot().'/public/mobile');
-        $this->checkIndexFile($this->getAppRoot().'/public/admin');
+        return md5($salt . md5($plaintext . $salt));
     }
-
-    public function checkIndexFile($path)
-    {
-        if(file_exists($path.'/index_lock.html')) {
-            // 删除提示文件
-            unlink($path.'/index.html');
-            // 恢复原入口
-            rename($path.'/index_lock.html', $path.'/index.html');
-        }
-    }
-
 }

@@ -92,12 +92,23 @@ class YxEnv
     public function putEnv($envFilePath, array $databaseEnv)
     {
         $applyDbEnv = [
-            'DATABASE.HOSTNAME' => $databaseEnv['host'],
-            'DATABASE.DATABASE' => $databaseEnv['name'],
-            'DATABASE.USERNAME' => $databaseEnv['user'],
-            'DATABASE.PASSWORD' => $databaseEnv['password'],
-            'DATABASE.HOSTPORT' => $databaseEnv['port'],
-            'DATABASE.PREFIX' => $databaseEnv['prefix'],
+            'DB_HOST' => $databaseEnv['host'],
+            'DB_DATABASE' => $databaseEnv['name'],
+            'DB_USERNAME' => $databaseEnv['user'],
+            'DB_PASSWORD' => $databaseEnv['password'],
+            'DB_PORT' => $databaseEnv['port'],
+            'DB_PREFIX' => $databaseEnv['prefix'],
+            'REDIS_HOST' => $databaseEnv['redis_host'],
+            'REDIS_PORT' => $databaseEnv['redis_port'],
+            'REDIS_DB' => $databaseEnv['redis_db'],
+            'REDIS_PASSWORD' => $databaseEnv['redis_password'],
+            'CACHE_PREFIX' => $databaseEnv['redis_prefix'],
+            'CACHE_SESSION_PREFIX' => $databaseEnv['redis_prefix']."_session",
+            'REDIS_QUEUE_PREFIX' => $databaseEnv['redis_prefix']."_queue",
+            'REDIS_QUEUE_HOST' => $databaseEnv['redis_host'],
+            'REDIS_QUEUE_PORT' => $databaseEnv['redis_port'],
+            'REDIS_QUEUE_DB' => $databaseEnv['redis_db'],
+            'REDIS_QUEUE_PASSWORD' => $databaseEnv['redis_password'],
         ];
 
         $envLine = array_merge($this->data, $applyDbEnv);
@@ -109,7 +120,8 @@ class YxEnv
 
         foreach ($envLine as $index => $value) {
 
-            if ($index == 'PROJECT.UNIQUE_IDENTIFICATION' && !empty($uniqueSalt)) {
+            if ($index == 'UNIQUE_IDENTIFICATION' && !empty($uniqueSalt)) {
+                echo $uniqueSalt;
                 $value = $uniqueSalt;
             }
 

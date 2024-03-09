@@ -54,7 +54,7 @@ return [
         'user_avatar' => 'resource/image/admin/default_avatar.png',
         'qq_group' => 'resource/image/admin/qq_group.png', // qq群
         'customer_service' => 'resource/image/admin/customer_service.jpg', // 客服
-        'menu_admin' => '/resource/image/admin/menu_admin.png',// 首页快捷菜单-管理员
+        'menu_admin' => 'resource/image/admin/menu_admin.png',// 首页快捷菜单-管理员
         'menu_role' => 'resource/image/admin/menu_role.png', // 首页快捷菜单-角色
         'menu_dept' => 'resource/image/admin/menu_dept.png',// 首页快捷菜单-部门
         'menu_dict' => 'resource/image/admin/menu_dict.png',// 首页快捷菜单-字典

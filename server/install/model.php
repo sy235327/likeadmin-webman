@@ -760,8 +760,4 @@ class installModel
     {
         return md5($salt . md5($pwd . $salt));
     }
-    function create_password(string $plaintext, string $salt) : string
-    {
-        return md5($salt . md5($plaintext . $salt));
-    }
 }

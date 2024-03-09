@@ -45,7 +45,8 @@ class AdminLogic extends BaseLogic
     {
         Db::startTrans();
         try {
-            $password = password_hash($params['password'],PASSWORD_DEFAULT);
+//            $password = password_hash($params['password'],PASSWORD_DEFAULT);
+            $password = create_password($params['password'], Config::get('project.unique_identification'));
             $defaultAvatar = config('project.default_image.admin_avatar');
             $avatar = !empty($params['avatar']) ? FileService::setFileUrl($params['avatar']) : $defaultAvatar;
 
@@ -101,7 +102,8 @@ class AdminLogic extends BaseLogic
 
             // 密码
             if (!empty($params['password'])) {
-                $data['password'] = password_hash($params['password'],PASSWORD_DEFAULT);
+//            $data['password'] = password_hash($params['password'],PASSWORD_DEFAULT);
+                $data['password'] = create_password($params['password'], Config::get('project.unique_identification'));
             }
 
             // 禁用或更换角色后.设置token过期
@@ -253,7 +255,8 @@ class AdminLogic extends BaseLogic
         ];
 
         if (!empty($params['password'])) {
-            $data['password'] = password_hash($params['password'],PASSWORD_DEFAULT);
+//            $data['password'] = password_hash($params['password'],PASSWORD_DEFAULT);
+            $data['password'] = create_password($params['password'], Config::get('project.unique_identification'));
         }
 
         return Admin::update($data);

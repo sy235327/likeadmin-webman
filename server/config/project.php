@@ -52,8 +52,8 @@ return [
     'default_image' => [
         'admin_avatar' => 'resource/image/admin/avatar.png',
         'user_avatar' => 'resource/image/admin/default_avatar.png',
-        'qq_group' => 'resource/image/admin/qq_group.png', // qq群
-        'customer_service' => 'resource/image/admin/customer_service.jpg', // 客服
+        'git_png' => 'resource/image/admin/gitee.png', // 仓库地址
+        'customer_service' => 'resource/image/admin/customer_service.png', // 客服
         'menu_admin' => 'resource/image/admin/menu_admin.png',// 首页快捷菜单-管理员
         'menu_role' => 'resource/image/admin/menu_role.png', // 首页快捷菜单-角色
         'menu_dept' => 'resource/image/admin/menu_dept.png',// 首页快捷菜单-部门

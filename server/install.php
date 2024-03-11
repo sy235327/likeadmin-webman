@@ -19,16 +19,16 @@ echo "请输入数据库地址 default=127.0.0.1：";
 $host = readline("");
 echo "请输入数据库端口 default=3306: ";
 $port = readline("");
-echo "请输入数据库名 ...: ";
+echo "请输入数据库名 *: ";
 $db = readline("");
 
 echo "请输入数据表前缀 default=la_: ";
 $table_prefix = readline("");
 
-echo "请输入数据库账号 ...: ";
+echo "请输入数据库账号 *: ";
 $username = readline("");
 
-echo "请输入数据库密码 ...: ";
+echo "请输入数据库密码 *: ";
 $password = readline("");
 
 echo "是否清理数据库,是：on,否：off default=off: ";
@@ -46,9 +46,9 @@ echo "请输入redis密码 default='': ";
 $redis_password = readline("");
 echo "请输入redis前缀 default=cache_: ";
 $redis_prefix = readline("");
-echo "请输入管理员账号 ...: ";
+echo "请输入管理员账号 *: ";
 $admin_user = readline("");
-echo "请输入管理员密码 ...: ";
+echo "请输入管理员密码 *: ";
 $admin_password = readline("");
 
 $host = trim($host);
@@ -96,25 +96,26 @@ $canNext = true;
 if (empty($data['prefix'])) {
     $canNext = false;
     $message = '数据表前缀不能为空';
-    exit();
+    die($message."\r\n");
 } elseif ($data['name'] == '') {
     $canNext = false;
     $message = '数据库库名必填';
-    exit();
+    die($message."\r\n");
 } elseif (empty(trim($data['admin_password']))) {
     $canNext = false;
     $message = '管理员密码不能为空';
-    exit();
+    die($message."\r\n");
 }  elseif (empty(trim($data['admin_password']))) {
     $canNext = false;
     $message = '管理员密码不能为空';
-    exit();
+    die($message."\r\n");
 } else {
     // 检查 数据库信息
     $result = $modelInstall->checkConfig($data['name'], $data);
     if ($result->result == 'fail') {
         $canNext = false;
         $message = $result->error;
+        die($message."\r\n");
     }
 
     // 导入测试数据
@@ -122,7 +123,7 @@ if (empty($data['prefix'])) {
         if (!$modelInstall->importDemoData()) {
             $canNext = false;
             $message = '导入测试数据错误';
-            exit();
+            die($message."\r\n");
         }
     }
 

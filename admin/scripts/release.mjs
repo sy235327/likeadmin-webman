@@ -32,4 +32,4 @@ function copyFile(sourceDir, targetDir) {
     })
 }
 
-build()
+// build()

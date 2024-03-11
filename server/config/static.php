@@ -18,6 +18,8 @@
 return [
     'enable' => true,
     'middleware' => [     // Static file Middleware
+        // 跨域中间件
+        app\common\http\middleware\AdminAllowMiddleware::class,
         //app\middleware\StaticFile::class,
     ],
 ];

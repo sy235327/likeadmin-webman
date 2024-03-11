@@ -68,22 +68,22 @@ $redis_password = trim($redis_password);
 $redis_prefix = trim($redis_prefix);
 
 $data = [
-    'host' => $host ?? '127.0.0.1',
-    'port' => $port ?? '3306',
-    'user' => $username ?? 'root',
-    'password' => $password ?? '',
-    'name' => $db ?? 'likeadmin',
-    'admin_user' => $admin_user ?? '',
-    'admin_password' => $admin_password ?? '',
-    'admin_confirm_password' => $admin_password ?? '',
-    'prefix' => $table_prefix ?? 'la_',
-    'import_test_data' => $import_test_data ?? 'off',
-    'clear_db' => $clear_db ?? 'off',
-    'redis_host' => $redis_host ?? '127.0.0.1',
-    'redis_port' => $redis_port ?? '6379',
-    'redis_db' => $redis_db ?? 0,
-    'redis_password' => $redis_password ?? '',
-    'redis_prefix' => $redis_prefix ?? 'cache_',
+    'host' => $host ?: '127.0.0.1',
+    'port' => $port ?: '3306',
+    'user' => $username ?: 'root',
+    'password' => $password,
+    'name' => $db,
+    'admin_user' => $admin_user,
+    'admin_password' => $admin_password,
+    'admin_confirm_password' => $admin_password,
+    'prefix' => $table_prefix ?: 'la_',
+    'import_test_data' => $import_test_data ?: 'off',
+    'clear_db' => $clear_db ?: 'off',
+    'redis_host' => $redis_host ?: '127.0.0.1',
+    'redis_port' => $redis_port ?: '6379',
+    'redis_db' => $redis_db ?: 0,
+    'redis_password' => $redis_password ?: '',
+    'redis_prefix' => $redis_prefix ?: 'cache_',
 ];
 
 

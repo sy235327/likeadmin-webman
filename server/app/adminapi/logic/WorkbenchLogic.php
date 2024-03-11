@@ -183,13 +183,13 @@ class WorkbenchLogic extends BaseLogic
     {
         return [
             [
-                'image' => FileService::getFileUrl(config('project.default_image.qq_group')),
-                'title' => '官方公众号',
-                'desc' => '关注官方公众号',
+                'image' => FileService::getFileUrl(config('project.default_image.git_png')),
+                'title' => '仓库地址',
+                'desc' => '想了解更多请扫码',
             ],
             [
                 'image' => FileService::getFileUrl(config('project.default_image.customer_service')),
-                'title' => '添加企业客服微信',
+                'title' => '添加客服微信',
                 'desc' => '想了解更多请添加客服',
             ]
         ];

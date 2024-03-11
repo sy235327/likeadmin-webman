@@ -15,20 +15,20 @@ if ($modelInstall->appIsInstalled()) {
     die('可能已经安装过本系统了，请删除配置目录下面的install.lock文件再尝试');
 }
 echo "---安装脚本---\r\n";
-echo "请输入数据库地址：";
+echo "请输入数据库地址 127.0.0.1：";
 $host = readline("");
-echo "请输入数据库端口: ";
+echo "请输入数据库端口 3306: ";
 $port = readline("");
-echo "请输入数据库名: ";
+echo "请输入数据库名 likeadmin: ";
 $db = readline("");
 
-echo "请输入数据表前缀: ";
+echo "请输入数据表前缀 la_: ";
 $table_prefix = readline("");
 
-echo "请输入数据库账号: ";
+echo "请输入数据库账号 root: ";
 $username = readline("");
 
-echo "请输入数据库密码: ";
+echo "请输入数据库密码 xxx: ";
 $password = readline("");
 
 echo "是否清理数据库,是：on,否：off: ";
@@ -36,21 +36,36 @@ $clear_db = readline("");
 echo "是否导入测试数据,是：on,否：off: ";
 $import_test_data = readline("");
 
-echo "请输入redis地址: ";
+echo "请输入redis地址 127.0.0.1: ";
 $redis_host = readline("");
-echo "请输入redis端口: ";
+echo "请输入redis端口 6379: ";
 $redis_port = readline("");
-echo "请输入redis库: ";
+echo "请输入redis库 0: ";
 $redis_db = readline("");
-echo "请输入redis密码: ";
+echo "请输入redis密码 没有留空: ";
 $redis_password = readline("");
-echo "请输入redis前缀: ";
+echo "请输入redis前缀 cache_: ";
 $redis_prefix = readline("");
-echo "请输入管理员账号: ";
+echo "请输入管理员账号 admin: ";
 $admin_user = readline("");
-echo "请输入管理员密码: ";
+echo "请输入管理员密码 xxx: ";
 $admin_password = readline("");
 
+$host = trim($host);
+$port = trim($port);
+$username = trim($username);
+$password = trim($password);
+$db = trim($db);
+$admin_user = trim($admin_user);
+$admin_password = trim($admin_password);
+$table_prefix = trim($table_prefix);
+$import_test_data = trim($import_test_data);
+$clear_db = trim($clear_db);
+$redis_host = trim($redis_host);
+$redis_port = trim($redis_port);
+$redis_db = trim($redis_db);
+$redis_password = trim($redis_password);
+$redis_prefix = trim($redis_prefix);
 
 $data = [
     'host' => $host ?? '127.0.0.1',
@@ -60,15 +75,15 @@ $data = [
     'name' => $db ?? 'likeadmin',
     'admin_user' => $admin_user ?? '',
     'admin_password' => $admin_password ?? '',
-    'admin_confirm_password' => $admin_confirm_password ?? '',
-    'prefix' => $prefix ?? 'la_',
+    'admin_confirm_password' => $admin_password ?? '',
+    'prefix' => $table_prefix ?? 'la_',
     'import_test_data' => $import_test_data ?? 'off',
     'clear_db' => $clear_db ?? 'off',
     'redis_host' => $redis_host ?? '127.0.0.1',
     'redis_port' => $redis_port ?? '6379',
     'redis_db' => $redis_db ?? 0,
-    'redis_password' => $redis_password ?? '127.0.0.1',
-    'redis_prefix' => $redis_prefix ?? '127.0.0.1',
+    'redis_password' => $redis_password ?? '',
+    'redis_prefix' => $redis_prefix ?? 'cache_',
 ];
 
 

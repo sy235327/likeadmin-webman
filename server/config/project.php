@@ -5,16 +5,16 @@ return [
 
     // 官网
     'website' => [
-        'name' => getenv('project.web_name')?:'likeadmin', // 网站名称
-        'url' => getenv('project.web_url')?:'www.likeadmin.cn/', // 网站地址
+        'name' => getenv('project.web_name')?:'server_admin', // 网站名称
+        'url' => getenv('project.web_url')?:'gitee.com/suyibk/workman-likeadmin-all.git', // 网站地址
         'login_image' => 'resource/image/admin/login_image.png',
         'web_logo' => 'resource/image/admin/web_logo.jpg', // 网站logo
         'web_favicon' => 'resource/image/admin/web_favicon.ico', // 网站图标
-        'shop_name' => 'likeadmin', // 商城名称
+        'shop_name' => 'server_admin', // 商城名称
         'shop_logo' => 'resource/image/admin/shop_logo.png', // 商城图标
         'pc_logo' => 'resource/image/admin/pc_logo.png', // pc_logo
         'pc_ico' => 'resource/image/admin/web_favicon.ico', // pc_ico
-        'pc_title' => 'likeadmin', // PC网站标题
+        'pc_title' => 'server_admin', // PC网站标题
     ],
 
     // 后台登录
@@ -28,7 +28,7 @@ return [
     ],
 
     // 唯一标识，密码盐、路径加密等
-    'unique_identification' => getenv('UNIQUE_IDENTIFICATION', 'likeadmin'),
+    'unique_identification' => getenv('UNIQUE_IDENTIFICATION', 'server_admin'),
 
     // 后台管理员token（登录令牌）配置
     'admin_token' => [

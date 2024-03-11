@@ -6,11 +6,33 @@ High performance HTTP Service Framework for PHP based on [Workerman](https://git
 当前版本是带代码生成器
 检查禁用函数
 php webman fix-disable-functions
+# 安装脚本
+    window环境下运行
+        ./windows.bat
+        会检查是否安装未安装会调用安装脚本安装
+    linux环境下运行
+        php install.php
+        进行安装
 # 参考文档
-https://gitee.com/likeadmin/likeadmin_php?_from=gitee_search
-https://www.workerman.net/doc/webman/
-https://gitee.com/MuZJun/gather-admin
-# 部署nginx配置
+like: https://gitee.com/likeadmin/likeadmin_php.git
+
+like: https://www.workerman.net/doc/webman/
+
+like: https://gitee.com/MuZJun/gather-admin.git
+# 运行命令
+    开发:
+    windows环境
+        ./window.bat
+    linux环境
+        php start.php start
+    生产
+        php start.php start -d
+# 生产：部署nginx配置
+### 单域名部署前后台
+    目录接口参考
+    /server     -后台api
+    /admin      -后台打包文件放置目录
+    /pc         -pc版打包文件放置目录
 后台api
 ```
 

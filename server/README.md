@@ -14,11 +14,11 @@ php webman fix-disable-functions
         php install.php
         进行安装
 # 参考文档
-like: https://gitee.com/likeadmin/likeadmin_php?_from=gitee_search
+like: https://gitee.com/likeadmin/likeadmin_php.git
 
 like: https://www.workerman.net/doc/webman/
 
-like: https://gitee.com/MuZJun/gather-admin
+like: https://gitee.com/MuZJun/gather-admin.git
 # 运行命令
     开发:
     windows环境

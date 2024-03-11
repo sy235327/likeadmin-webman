@@ -108,8 +108,8 @@ class WorkbenchLogic extends BaseLogic
             'name' => ConfigService::get('website', 'name'),
             'based' => 'vue3.x、ElementUI、MySQL',
             'channel' => [
-                'website' => 'https://gitee.com/MuZJun/gather-admin.git',
-                'gitee' => 'https://gitee.com/MuZJun/gather-vue.git',
+                'website' => 'https://gitee.com/suyibk/workman-likeadmin-all.git',
+                'gitee' => 'https://gitee.com/suyibk/workman-likeadmin-all.git',
             ]
         ];
     }

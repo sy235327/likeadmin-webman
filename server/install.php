@@ -15,40 +15,40 @@ if ($modelInstall->appIsInstalled()) {
     die('可能已经安装过本系统了，请删除配置目录下面的install.lock文件再尝试');
 }
 echo "---安装脚本---\r\n";
-echo "请输入数据库地址 127.0.0.1：";
+echo "请输入数据库地址 default=127.0.0.1：";
 $host = readline("");
-echo "请输入数据库端口 3306: ";
+echo "请输入数据库端口 default=3306: ";
 $port = readline("");
-echo "请输入数据库名 likeadmin: ";
+echo "请输入数据库名 ...: ";
 $db = readline("");
 
-echo "请输入数据表前缀 la_: ";
+echo "请输入数据表前缀 default=la_: ";
 $table_prefix = readline("");
 
-echo "请输入数据库账号 root: ";
+echo "请输入数据库账号 ...: ";
 $username = readline("");
 
-echo "请输入数据库密码 xxx: ";
+echo "请输入数据库密码 ...: ";
 $password = readline("");
 
-echo "是否清理数据库,是：on,否：off: ";
+echo "是否清理数据库,是：on,否：off default=off: ";
 $clear_db = readline("");
-echo "是否导入测试数据,是：on,否：off: ";
+echo "是否导入测试数据,是：on,否：off: default=off";
 $import_test_data = readline("");
 
-echo "请输入redis地址 127.0.0.1: ";
+echo "请输入redis地址 default=127.0.0.1: ";
 $redis_host = readline("");
-echo "请输入redis端口 6379: ";
+echo "请输入redis端口 default=6379: ";
 $redis_port = readline("");
-echo "请输入redis库 0: ";
+echo "请输入redis库 default=0: ";
 $redis_db = readline("");
-echo "请输入redis密码 没有留空: ";
+echo "请输入redis密码 default='': ";
 $redis_password = readline("");
-echo "请输入redis前缀 cache_: ";
+echo "请输入redis前缀 default=cache_: ";
 $redis_prefix = readline("");
-echo "请输入管理员账号 admin: ";
+echo "请输入管理员账号 ...: ";
 $admin_user = readline("");
-echo "请输入管理员密码 xxx: ";
+echo "请输入管理员密码 ...: ";
 $admin_password = readline("");
 
 $host = trim($host);
@@ -70,7 +70,7 @@ $redis_prefix = trim($redis_prefix);
 $data = [
     'host' => $host ?: '127.0.0.1',
     'port' => $port ?: '3306',
-    'user' => $username ?: 'root',
+    'user' => $username,
     'password' => $password,
     'name' => $db,
     'admin_user' => $admin_user,
@@ -97,11 +97,15 @@ if (empty($data['prefix'])) {
     $canNext = false;
     $message = '数据表前缀不能为空';
     exit();
-} elseif ($data['admin_user'] == '') {
+} elseif ($data['name'] == '') {
     $canNext = false;
-    $message = '请填写管理员用户名';
+    $message = '数据库库名必填';
     exit();
 } elseif (empty(trim($data['admin_password']))) {
+    $canNext = false;
+    $message = '管理员密码不能为空';
+    exit();
+}  elseif (empty(trim($data['admin_password']))) {
     $canNext = false;
     $message = '管理员密码不能为空';
     exit();

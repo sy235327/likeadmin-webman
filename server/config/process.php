@@ -39,6 +39,7 @@ $task = [
  *     'task2'  => [
  *     'handler'  => process\Task2::class
  *     ],
+ * https://www.workerman.net/doc/webman/components/crontab.html
  */
 $crontabs = [
     'crontab'=>[

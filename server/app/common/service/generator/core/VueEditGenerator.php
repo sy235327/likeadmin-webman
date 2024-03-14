@@ -430,7 +430,7 @@ class VueEditGenerator extends BaseGenerator implements GenerateInterface
      */
     public function getModuleGenerateDir()
     {
-        $admin_url = env('GENERATOR.GENERATORURL',false);
+        $admin_url = getenv('GENERATOR.GENERATORURL',false);
         if ($admin_url){
             $dir = $admin_url . '/src/views/' . $this->getTableName() . '/';
         }else{

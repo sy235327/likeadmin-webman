@@ -43,7 +43,8 @@
     "webman/log": "^1.1",
     "taoser/webman-validate": "^1.7",
     "webman/redis-queue": "^1.3",
-    "w7corp/easywechat": "^6.8"
+    "w7corp/easywechat": "^6.8",
+    "workerman/crontab": "^1.0"
   },
   "config": {
     "preferred-install": "dist",

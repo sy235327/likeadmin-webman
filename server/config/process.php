@@ -12,13 +12,14 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
+use app\crontab\Task;
 use Workerman\Worker;
 //慢进程，nginx反向代理部分需要慢执行的路由到TASK_LISTEN的端口进程执行解决堵塞问题
 //https://www.workerman.net/doc/webman/others/task.html
 $task = [
     'name' => 'name',
     'handler' => \Webman\App::class,
-    'listen' => getenv('TASK_LISTEN'),
+    'listen' => getenv('SLOW_SERVER_LISTEN'),
     'count' => 8, // 进程数
     'user' => '',
     'group' => '',
@@ -28,6 +29,21 @@ $task = [
         'logger' => \support\Log::channel('default'), // 日志实例
         'app_path' => app_path(), // app目录位置
         'public_path' => public_path() // public目录位置
+    ]
+];
+/**
+ * crontab并不是异步的，例如一个task进程里设置了A和B两个定时器，都是每秒执行一次任务，但是A任务耗时10秒，那么B需要等待A执行完才能被执行，导致B执行会有延迟。
+ *     'task1'  => [
+ *     'handler'  => process\Task1::class
+ *     ],
+ *     'task2'  => [
+ *     'handler'  => process\Task2::class
+ *     ],
+ * https://www.workerman.net/doc/webman/components/crontab.html
+ */
+$crontabs = [
+    'crontab'=>[
+        'handler' => Task::class
     ]
 ];
 $returnData = [
@@ -56,7 +72,12 @@ $returnData = [
         ]
     ],
 ];
-if (getenv('TASK_STATUS',false)===true){
-    $returnData['task'] = $task;
+if (getenv('SLOW_PROCESS_STATUS',false)){
+    $returnData['slow_process'] = $task;
+}
+if (getenv('CRONTAB_STATUS',false)){
+    foreach ($crontabs as $crontabKey=>$crontab){
+        $returnData[$crontabKey] = $crontab;
+    }
 }
 return $returnData;

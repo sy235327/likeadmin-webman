@@ -164,7 +164,7 @@ class PcLogic extends BaseLogic
             'website' => $website,
             'version' => config('project.version'),
             'copyright' => $copyright,
-            'admin_url' => request()->host() . '/adminapi',
+            'admin_url' => request()->host() . '/admin',
             'qrcode' => [
                 'oa' => $oaQrCode,
                 'mnp' => $mnpQrCode,

@@ -510,7 +510,7 @@ if (!function_exists('findChildren')){
                     $insertData[$key] = $value;
                 }
                 $list[] = $insertData;
-                findChildren($item[$childrenKey],$item['id'],$list,$childrenKey,$idKey,$pidKey);
+                findChildren($item[$childrenKey],$item[$idKey],$list,$childrenKey,$idKey,$pidKey);
             }
             findChildren($item[$childrenKey],$targetId,$list,$childrenKey,$idKey,$pidKey);
         }

@@ -476,3 +476,43 @@ if (!function_exists('handle_file_url')) {
         return $list;
     }
 }
+if (!function_exists('formatDateStrToTime')){
+    /**
+     * 时间格式化 时间字符串 按照指定格式解析返回时间戳
+     */
+    function formatDateStrToTime($dateStr,$format){
+        $date = DateTime::createFromFormat($format,$dateStr);
+        return $date->getTimestamp();
+    }
+}
+if (!function_exists('findChildren')){
+    /**
+     * 查找树表中 本身+子项+子子项。。。得数组
+     */
+    function findChildren($data, $targetId,&$list,$childrenKey = 'children',$idKey='id',$pidKey='pid') {
+        foreach ($data as $item) {
+            if ($item[$idKey] == $targetId){
+                $insertData = [];
+                foreach ($item as $key=>$value){
+                    if ($key == $childrenKey){
+                        continue;
+                    }
+                    $insertData[$key] = $value;
+                }
+                $list[] = $insertData;
+            }
+            if ($item[$pidKey] == $targetId){
+                $insertData = [];
+                foreach ($item as $key=>$value){
+                    if ($key == $childrenKey){
+                        continue;
+                    }
+                    $insertData[$key] = $value;
+                }
+                $list[] = $insertData;
+                findChildren($item[$childrenKey],$item['id'],$list,$childrenKey,$idKey,$pidKey);
+            }
+            findChildren($item[$childrenKey],$targetId,$list,$childrenKey,$idKey,$pidKey);
+        }
+    }
+}

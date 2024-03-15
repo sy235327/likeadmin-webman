@@ -487,20 +487,10 @@ if (!function_exists('formatDateStrToTime')){
 }
 if (!function_exists('findChildren')){
     /**
-     * 查找树表中 本身+子项+子子项。。。得数组
+     * 查找树表中 子项+子子项。。。得数组
      */
-    function findChildren($data, $targetId,&$list,$childrenKey = 'children',$idKey='id',$pidKey='pid') {
+    function findChildren($data, $targetId,&$list,$childrenKey = 'children',$pidKey='pid') {
         foreach ($data as $item) {
-            if ($item[$idKey] == $targetId){
-                $insertData = [];
-                foreach ($item as $key=>$value){
-                    if ($key == $childrenKey){
-                        continue;
-                    }
-                    $insertData[$key] = $value;
-                }
-                $list[] = $insertData;
-            }
             if ($item[$pidKey] == $targetId){
                 $insertData = [];
                 foreach ($item as $key=>$value){
@@ -510,9 +500,9 @@ if (!function_exists('findChildren')){
                     $insertData[$key] = $value;
                 }
                 $list[] = $insertData;
-                findChildren($item[$childrenKey],$item['id'],$list,$childrenKey,$idKey,$pidKey);
+                findChildren($item[$childrenKey],$item['id'],$list,$childrenKey,$pidKey);
             }
-            findChildren($item[$childrenKey],$targetId,$list,$childrenKey,$idKey,$pidKey);
+            findChildren($item[$childrenKey],$targetId,$list,$childrenKey,$pidKey);
         }
     }
 }

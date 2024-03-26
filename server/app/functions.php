@@ -156,7 +156,7 @@ if (!function_exists('url')) {
     function url(string $url = '', array $vars = [], $suffix = true, $domain = false): string
     {
         $url = $suffix?$url.'.'.$suffix:$url;
-        $host = request()->host();
+        $host = getAgreementHost();
         $httpQuery = $vars?"?".http_build_query($vars):'';
         if ($domain){
             return $host.DIRECTORY_SEPARATOR.$url.$httpQuery;
@@ -514,5 +514,14 @@ if (!function_exists('findChildren')){
             }
             findChildren($item[$childrenKey],$targetId,$list,$childrenKey,$idKey,$pidKey);
         }
+    }
+}
+if (!function_exists('getAgreementHost')){
+//            proxy_set_header AGREEMENT-HOST "http://$host";
+    function getAgreementHost() {
+        if(!strstr(request()->host(), 'http://') && !strstr(request()->host(), 'https://')){
+            return request()->header('AGREEMENT-HOST',false)?:'http://'.request()->host();
+        }
+        return request()->host();
     }
 }

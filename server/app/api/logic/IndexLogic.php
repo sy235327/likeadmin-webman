@@ -138,7 +138,7 @@ class IndexLogic extends BaseLogic
             'page_status' => ConfigService::get('web_page', 'page_status', 0),
             // 自定义链接
             'page_url' => ConfigService::get('web_page', 'page_url', ''),
-            'url' => request()->host() . '/mobile'
+            'url' => getAgreementHost() . '/mobile'
         ];
 
         return [

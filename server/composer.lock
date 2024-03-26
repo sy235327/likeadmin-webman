@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f9638acbbea944964f7a699cf84815d6",
+    "content-hash": "e4aeffd0c3839804ba582f1b6aa16204",
     "packages": [
         {
             "name": "aliyuncs/oss-sdk-php",
@@ -1632,16 +1632,16 @@
         },
         {
             "name": "overtrue/socialite",
-            "version": "4.9.0",
+            "version": "4.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/overtrue/socialite.git",
-                "reference": "dcbb1eed948fe036e6de8cdf0b125f5af1bc73fb"
+                "reference": "457b48f31414dc00d3fb445d6ab9355595067afe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/overtrue/socialite/zipball/dcbb1eed948fe036e6de8cdf0b125f5af1bc73fb",
-                "reference": "dcbb1eed948fe036e6de8cdf0b125f5af1bc73fb",
+                "url": "https://api.github.com/repos/overtrue/socialite/zipball/457b48f31414dc00d3fb445d6ab9355595067afe",
+                "reference": "457b48f31414dc00d3fb445d6ab9355595067afe",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1655,8 +1655,7 @@
                 "ext-openssl": "*",
                 "guzzlehttp/guzzle": "^7.0",
                 "php": ">=8.0.2",
-                "symfony/http-foundation": "^6.0",
-                "symfony/psr-http-message-bridge": "^2.1"
+                "symfony/psr-http-message-bridge": "^2.1|^6.0"
             },
             "require-dev": {
                 "jetbrains/phpstorm-attributes": "^1.0",
@@ -1699,7 +1698,7 @@
             ],
             "support": {
                 "issues": "https://github.com/overtrue/socialite/issues",
-                "source": "https://github.com/overtrue/socialite/tree/4.9.0"
+                "source": "https://github.com/overtrue/socialite/tree/4.10.1"
             },
             "funding": [
                 {
@@ -1707,7 +1706,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-09-01T11:01:34+00:00"
+            "time": "2024-03-08T06:41:54+00:00"
         },
         {
             "name": "phpoffice/phpspreadsheet",
@@ -4559,16 +4558,16 @@
         },
         {
             "name": "tencentcloud/tencentcloud-sdk-php",
-            "version": "3.0.1094",
+            "version": "3.0.1108",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TencentCloud/tencentcloud-sdk-php.git",
-                "reference": "6cdc78c5e6e3ba10010d0d0516b451878ef3b566"
+                "reference": "f9336e6a3b7715e7ee5ea881c158c90c0c2072d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TencentCloud/tencentcloud-sdk-php/zipball/6cdc78c5e6e3ba10010d0d0516b451878ef3b566",
-                "reference": "6cdc78c5e6e3ba10010d0d0516b451878ef3b566",
+                "url": "https://api.github.com/repos/TencentCloud/tencentcloud-sdk-php/zipball/f9336e6a3b7715e7ee5ea881c158c90c0c2072d5",
+                "reference": "f9336e6a3b7715e7ee5ea881c158c90c0c2072d5",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -4609,9 +4608,9 @@
             "homepage": "https://github.com/TencentCloud/tencentcloud-sdk-php",
             "support": {
                 "issues": "https://github.com/TencentCloud/tencentcloud-sdk-php/issues",
-                "source": "https://github.com/TencentCloud/tencentcloud-sdk-php/tree/3.0.1094"
+                "source": "https://github.com/TencentCloud/tencentcloud-sdk-php/tree/3.0.1108"
             },
-            "time": "2024-03-05T20:08:01+00:00"
+            "time": "2024-03-24T20:09:08+00:00"
         },
         {
             "name": "thenorthmemory/xml",
@@ -5694,7 +5693,8 @@
     "prefer-lowest": false,
     "platform": {
         "php": ">=7.2",
-        "ext-json": "*"
+        "ext-json": "*",
+        "ext-fileinfo": "*"
     },
     "platform-dev": [],
     "plugin-api-version": "2.6.0"

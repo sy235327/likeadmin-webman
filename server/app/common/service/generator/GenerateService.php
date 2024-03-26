@@ -215,7 +215,7 @@ class GenerateService
         $vars = ['file' => $this->zipTempName];
         cache('curd_file_name' . $this->zipTempName, $this->zipTempName, 3600);
         $request = App::request();
-        return "http://".$request->host()."/adminapi/tools/generator/download?file={$this->zipTempName}";
+        return getAgreementHost()."/adminapi/tools/generator/download?file={$this->zipTempName}";
     }
 
 }

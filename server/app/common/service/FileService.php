@@ -43,7 +43,7 @@ class FileService
             if($type == 'public_path') {
                 return public_path(). $uri;
             }
-            $domain = (!strstr(request()->host(), 'http://') && !strstr(request()->host(), 'https://'))?'http://'.request()->host():request()->host();
+            $domain = getAgreementHost();
         } else {
             $storage = Cache::get('STORAGE_ENGINE');
             if (!$storage) {
@@ -67,7 +67,7 @@ class FileService
     {
         $default = ConfigService::get('storage', 'default', 'local');
         if ($default === 'local') {
-            $domain = 'http://'.request()->host();
+            $domain = getAgreementHost();
             return str_replace($domain.'/', '', $uri);
         } else {
             $storage = ConfigService::get('storage', $default);

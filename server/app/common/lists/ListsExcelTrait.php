@@ -92,7 +92,7 @@ trait ListsExcelTrait
         }
         $writer->save($src . $this->fileName);
         //设置本地excel缓存并返回下载地址
-        return 'http://'.request()->host().'/adminapi/download/export?file='.$exportCache->setFile($this->fileName);
+        return getAgreementHost().'/adminapi/download/export?file='.$exportCache->setFile($this->fileName);
     }
     /**
      * @notes 获取导出信息

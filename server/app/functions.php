@@ -156,7 +156,7 @@ if (!function_exists('url')) {
     function url(string $url = '', array $vars = [], $suffix = true, $domain = false): string
     {
         $url = $suffix?$url.'.'.$suffix:$url;
-        $host = request()->host();
+        $host = getAgreementHost();
         $httpQuery = $vars?"?".http_build_query($vars):'';
         if ($domain){
             return $host.DIRECTORY_SEPARATOR.$url.$httpQuery;
@@ -474,5 +474,59 @@ if (!function_exists('handle_file_url')) {
             }
         }
         return $list;
+    }
+}
+if (!function_exists('formatDateStrToTime')){
+    /**
+     * 时间格式化 时间字符串 按照指定格式解析返回时间戳
+     */
+    function formatDateStrToTime($dateStr,$format){
+        $date = DateTime::createFromFormat($format,$dateStr);
+        return $date->getTimestamp();
+    }
+}
+if (!function_exists('findChildren')){
+    /**
+     * 查找树表中 本身+子项+子子项。。。得数组
+     */
+    function findChildren($data, $targetId,&$list,$childrenKey = 'children',$idKey='id',$pidKey='pid') {
+        foreach ($data as $item) {
+            if ($item[$idKey] == $targetId){
+                $insertData = [];
+                foreach ($item as $key=>$value){
+                    if ($key == $childrenKey){
+                        continue;
+                    }
+                    $insertData[$key] = $value;
+                }
+                $list[] = $insertData;
+            }
+            if ($item[$pidKey] == $targetId){
+                $insertData = [];
+                foreach ($item as $key=>$value){
+                    if ($key == $childrenKey){
+                        continue;
+                    }
+                    $insertData[$key] = $value;
+                }
+                $list[] = $insertData;
+                findChildren($item[$childrenKey],$item[$idKey],$list,$childrenKey,$idKey,$pidKey);
+            }
+            findChildren($item[$childrenKey],$targetId,$list,$childrenKey,$idKey,$pidKey);
+        }
+    }
+}
+if (!function_exists('getAgreementHost')){
+    /**
+     * proxy_set_header Scheme $scheme;
+     * 获取单域名配置上的协议拼接域名
+     * 如果是后台有单独域名部署那么直接从 host 请求头上拿域名
+     * @return array|string|null
+     */
+    function getAgreementHost() {
+        if(!strstr(request()->host(), 'http://') && !strstr(request()->host(), 'https://')){
+            return request()->header('Scheme','http')."://".request()->host();
+        }
+        return request()->host();
     }
 }

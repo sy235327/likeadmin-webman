@@ -517,10 +517,15 @@ if (!function_exists('findChildren')){
     }
 }
 if (!function_exists('getAgreementHost')){
-//            proxy_set_header AGREEMENT-HOST "http://$host";
+    /**
+     * proxy_set_header Scheme $scheme;
+     * 获取单域名配置上的协议拼接域名
+     * 如果是后台有单独域名部署那么直接从 host 请求头上拿域名
+     * @return array|string|null
+     */
     function getAgreementHost() {
         if(!strstr(request()->host(), 'http://') && !strstr(request()->host(), 'https://')){
-            return request()->header('AGREEMENT-HOST',false)?:'http://'.request()->host();
+            return request()->header('Scheme','http')."://".request()->host();
         }
         return request()->host();
     }

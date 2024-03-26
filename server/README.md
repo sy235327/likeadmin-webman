@@ -42,7 +42,7 @@ like: https://gitee.com/MuZJun/gather-admin.git
     {
     proxy_pass http://ip:端口/adminapi/;
     proxy_set_header Host $host;
-    proxy_set_header AGREEMENT-HOST "http://$host";
+    proxy_set_header AGREEMENT-HOST "$http_x_forwarded_proto://$host";
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header REMOTE-HOST $remote_addr;
@@ -76,7 +76,7 @@ like: https://gitee.com/MuZJun/gather-admin.git
     {
     proxy_pass http://ip:端口/api/;
     proxy_set_header Host $host;
-    proxy_set_header AGREEMENT-HOST "http://$host";
+    proxy_set_header AGREEMENT-HOST "$http_x_forwarded_proto://$host";
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header REMOTE-HOST $remote_addr;
@@ -109,7 +109,7 @@ like: https://gitee.com/MuZJun/gather-admin.git
     {
         proxy_pass http://ip:端口/resource/;
         proxy_set_header Host $host;
-        proxy_set_header AGREEMENT-HOST "http://$host";
+        proxy_set_header AGREEMENT-HOST "$http_x_forwarded_proto://$host";
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header REMOTE-HOST $remote_addr;

@@ -24,16 +24,18 @@
     "source": "https://github.com/walkor/webman"
   },
   "require": {
-    "php": ">=7.2",
-    "workerman/webman-framework": "^1.4.7",
-    "monolog/monolog": "^2.0",
-    "webman/think-orm": "^1.0",
-    "vlucas/phpdotenv": "^5.4",
-    "psr/container": "^1.1.1",
-    "webman/think-cache": "^1.0",
+    "php": ">=8.2",
+    "workerman/workerman": "v5.0.0-beta.5",
+    "revolt/event-loop": "^1.0",
+    "workerman/webman-framework": "^1.5.16",
+    "monolog/monolog": "^2.9.2",
+    "webman/think-orm": "^1.1.1",
+    "vlucas/phpdotenv": "^5.5",
+    "psr/container": "^1.1.2",
+    "webman/think-cache": "^1.0.2",
     "ext-json": "*",
-    "phpoffice/phpspreadsheet": "^1.19",
-    "aliyuncs/oss-sdk-php": "^2.6",
+    "phpoffice/phpspreadsheet": "^1.29.0",
+    "aliyuncs/oss-sdk-php": "^2.7.1",
     "tencentcloud/tencentcloud-sdk-php": "^3.0",
     "webman/console": "v1.2.35",
     "qiniu/php-sdk": "7.4",
@@ -45,7 +47,8 @@
     "webman/redis-queue": "^1.3",
     "w7corp/easywechat": "^6.8",
     "workerman/crontab": "^1.0",
-    "ext-fileinfo": "*"
+    "ext-fileinfo": "*",
+    "workerman/redis": "^2.0"
   },
   "config": {
     "preferred-install": "dist",

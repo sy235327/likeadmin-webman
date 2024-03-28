@@ -12,6 +12,8 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
+use Workerman\Events\Revolt;
+
 return [
     // 监听的协议 ip 及端口 （可选）
     'listen' => getenv('SERVER_LISTEN'),
@@ -34,7 +36,7 @@ return [
     //链接不够和进程占用过久考虑从下方案选择 优先第一个方案
     //1.链接不够和进程占用过久 慢链接方案 https://www.workerman.net/doc/webman/others/task.html https://www.workerman.net/q/9067
     //2.连接池解决方案 新建一个进程专门负责sql查询，sql操作丢给该进程查询和返回 https://www.workerman.net/q/391
-    'event_loop' => '',
+    'event_loop' => Revolt::class,
     'stop_timeout' => 2,
     'pid_file' => runtime_path() . '/webman.pid',
     'status_file' => runtime_path() . '/webman.status',

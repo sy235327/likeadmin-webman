@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2f97926491e58dda78a909934965c328",
+    "content-hash": "0d357cb06692bd031b10eba6d3b42cf0",
     "packages": [
         {
             "name": "aliyuncs/oss-sdk-php",
@@ -5638,16 +5638,16 @@
         },
         {
             "name": "workerman/workerman",
-            "version": "v5.0.0-beta.5",
+            "version": "v5.0.0-beta.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/walkor/workerman.git",
-                "reference": "977822c29ab8ad60c109fbb4b6326fde287e2a38"
+                "reference": "b1f8c5a58640f17fe6acb59081e488a9b4f5e896"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/walkor/workerman/zipball/977822c29ab8ad60c109fbb4b6326fde287e2a38",
-                "reference": "977822c29ab8ad60c109fbb4b6326fde287e2a38",
+                "url": "https://api.github.com/repos/walkor/workerman/zipball/b1f8c5a58640f17fe6acb59081e488a9b4f5e896",
+                "reference": "b1f8c5a58640f17fe6acb59081e488a9b4f5e896",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -5664,8 +5664,10 @@
                 "ext-swow": "<v1.0.0"
             },
             "require-dev": {
+                "guzzlehttp/guzzle": "^7.0",
                 "mockery/mockery": "2.0.x-dev",
-                "pestphp/pest": "2.x-dev"
+                "pestphp/pest": "2.x-dev",
+                "phpstan/phpstan": "1.11.x-dev"
             },
             "suggest": {
                 "ext-event": "For better performance. "
@@ -5692,7 +5694,9 @@
             "homepage": "https://www.workerman.net",
             "keywords": [
                 "asynchronous",
-                "event-loop"
+                "event-loop",
+                "framework",
+                "http"
             ],
             "support": {
                 "email": "walkor@workerman.net",
@@ -5711,7 +5715,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2023-04-28T14:17:11+00:00"
+            "time": "2023-07-27T07:34:23+00:00"
         }
     ],
     "packages-dev": [],

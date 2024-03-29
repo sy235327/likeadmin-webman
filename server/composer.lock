@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0d357cb06692bd031b10eba6d3b42cf0",
+    "content-hash": "16dde752eb9bd44ab80694ec409bccbc",
     "packages": [
         {
             "name": "aliyuncs/oss-sdk-php",
@@ -4579,16 +4579,16 @@
         },
         {
             "name": "tencentcloud/tencentcloud-sdk-php",
-            "version": "3.0.1111",
+            "version": "3.0.1112",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TencentCloud/tencentcloud-sdk-php.git",
-                "reference": "e702db4fbd1770a3bff8e9fd94175f99451f3348"
+                "reference": "91d68989ed639324086b0b81e3cfb1b604c47de6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TencentCloud/tencentcloud-sdk-php/zipball/e702db4fbd1770a3bff8e9fd94175f99451f3348",
-                "reference": "e702db4fbd1770a3bff8e9fd94175f99451f3348",
+                "url": "https://api.github.com/repos/TencentCloud/tencentcloud-sdk-php/zipball/91d68989ed639324086b0b81e3cfb1b604c47de6",
+                "reference": "91d68989ed639324086b0b81e3cfb1b604c47de6",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -4629,9 +4629,9 @@
             "homepage": "https://github.com/TencentCloud/tencentcloud-sdk-php",
             "support": {
                 "issues": "https://github.com/TencentCloud/tencentcloud-sdk-php/issues",
-                "source": "https://github.com/TencentCloud/tencentcloud-sdk-php/tree/3.0.1111"
+                "source": "https://github.com/TencentCloud/tencentcloud-sdk-php/tree/3.0.1112"
             },
-            "time": "2024-03-28T08:21:14+00:00"
+            "time": "2024-03-28T20:07:57+00:00"
         },
         {
             "name": "thenorthmemory/xml",
@@ -5729,8 +5729,9 @@
     "platform": {
         "php": ">=8.2",
         "ext-json": "*",
-        "ext-fileinfo": "*"
+        "ext-fileinfo": "*",
+        "ext-simplexml": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.3.0"
 }

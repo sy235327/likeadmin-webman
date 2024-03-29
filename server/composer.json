@@ -48,7 +48,8 @@
     "w7corp/easywechat": "^6.8",
     "workerman/crontab": "^1.0",
     "ext-fileinfo": "*",
-    "workerman/redis": "^2.0"
+    "workerman/redis": "^2.0",
+    "ext-simplexml": "*"
   },
   "config": {
     "preferred-install": "dist",

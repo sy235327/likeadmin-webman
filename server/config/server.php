@@ -13,6 +13,7 @@
  */
 
 use Workerman\Events\Revolt;
+use Workerman\Events\Swow;
 
 return [
     // 监听的协议 ip 及端口 （可选）

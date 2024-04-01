@@ -49,7 +49,11 @@
     "workerman/crontab": "^1.0",
     "ext-fileinfo": "*",
     "workerman/redis": "^2.0",
-    "ext-simplexml": "*"
+    "ext-simplexml": "*",
+    "alibabacloud/client": "^1.5",
+    "rmccue/requests": "^2.0",
+    "ext-bcmath": "*",
+    "ext-curl": "*"
   },
   "config": {
     "preferred-install": "dist",

@@ -36,6 +36,8 @@ return [
     //链接不够和进程占用过久考虑从下方案选择 优先第一个方案
     //1.链接不够和进程占用过久 慢链接方案 https://www.workerman.net/doc/webman/others/task.html https://www.workerman.net/q/9067
     //2.连接池解决方案 新建一个进程专门负责sql查询，sql操作丢给该进程查询和返回 https://www.workerman.net/q/391
+    //Workerman\Events\Revolt; Workerman\Events\Select; 它同时轮询数千个文件描述符的 IO 活动时(通常限制为 1024 个文件描述符的固定大小)  原生 PHP 在这方面的功能极限
+    //所以linux上建议还是开启event扩展 使用 Workerman\Events\Event
     'event_loop' => Revolt::class,
     'stop_timeout' => 2,
     'pid_file' => runtime_path() . '/webman.pid',

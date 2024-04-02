@@ -50,7 +50,7 @@ class UserController extends BaseAdminController
 
     /**
      * @notes 调整用户余额
-     * @return \think\response\Json
+     * @return \support\Response
      * @author bingo
      * @date 2023/2/23 14:33
      */

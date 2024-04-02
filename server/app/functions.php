@@ -444,7 +444,7 @@ if (!function_exists('download_file')) {
         if (!file_exists($saveDir)) {
             mkdir($saveDir, 0775, true);
         }
-        $fileSrc = $saveDir . $fileName;
+        $fileSrc = public_path()."/".$saveDir . $fileName;
         file_exists($fileSrc) && unlink($fileSrc);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -459,7 +459,7 @@ if (!function_exists('download_file')) {
             unlink($fileSrc);
             return '';
         }
-        return $fileSrc;
+        return $saveDir . $fileName;
     }
 }
 

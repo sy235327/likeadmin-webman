@@ -145,7 +145,7 @@ class WechatUserService
         $userSn = User::createUserSn();
         $this->user->sn = $userSn;
         $this->user->account = 'u' . $userSn;
-        $this->user->nickname = "用户" . $userSn;
+        $this->user->nickname = $this->nickname;
         $this->user->avatar = $avatar;
         $this->user->channel = $this->terminal;
         $this->user->is_new_user = YesNoEnum::YES;
@@ -189,6 +189,7 @@ class WechatUserService
             $userAuth->openid = $this->openid;
             $userAuth->unionid = $this->unionid;
             $userAuth->terminal = $this->terminal;
+            $userAuth->nickname = $this->nickname;
             $userAuth->save();
         }
     }

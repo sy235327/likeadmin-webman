@@ -2,12 +2,12 @@ import request from "@/utils/request"
 
 // 获取支付方式
 export function getPayWay() {
-    return request.get({ url: "/setting/pay/pay_way/getPayWay" })
+    return request.get({ url: "/setting/pay/payWay/getPayWay" })
 }
 
 // 设置支付方式
 export function setPayWay(params: any) {
-    return request.post({ url: "/setting/pay/pay_way/setPayWay", params })
+    return request.post({ url: "/setting/pay/payWay/setPayWay", params })
 }
 
 // 获取支付方式

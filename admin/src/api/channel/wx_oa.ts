@@ -25,7 +25,7 @@ export interface Menu {
  * @description 获取菜单
  */
 export function getOaMenu() {
-    return request.get({ url: "/channel.official_account_menu/detail" })
+    return request.get({ url: "/channel/officialAccountMenu/detail" })
 }
 
 /**
@@ -34,7 +34,7 @@ export function getOaMenu() {
  * @description 菜单保存
  */
 export function setOaMenuSave(params: Menu | any) {
-    return request.post({ url: "/channel.official_account_menu/save", params })
+    return request.post({ url: "/channel/officialAccountMenu/save", params })
 }
 
 /**
@@ -43,7 +43,7 @@ export function setOaMenuSave(params: Menu | any) {
  * @description 菜单发布
  */
 export function setOaMenuPublish(params: Menu | any) {
-    return request.post({ url: "/channel.official_account_menu/saveAndPublish", params })
+    return request.post({ url: "/channel/officialAccountMenu/saveAndPublish", params })
 }
 
 /**
@@ -52,7 +52,7 @@ export function setOaMenuPublish(params: Menu | any) {
  * @description 获取回复列表
  */
 export function getOaReplyList(params: { reply_type: string }) {
-    return request.get({ url: "/channel.official_account_reply/lists", params })
+    return request.get({ url: "/channel/officialAccountReply/lists", params })
 }
 
 /**
@@ -61,7 +61,7 @@ export function getOaReplyList(params: { reply_type: string }) {
  * @description 回复列表删除
  */
 export function oaReplyDel(params: { id: number }) {
-    return request.post({ url: "/channel.official_account_reply/delete", params })
+    return request.post({ url: "/channel/officialAccountReply/delete", params })
 }
 
 /**
@@ -70,7 +70,7 @@ export function oaReplyDel(params: { id: number }) {
  * @description 回复状态修改
  */
 export function changeOaReplyStatus(params: { id: number }) {
-    return request.post({ url: "/channel.official_account_reply/status", params })
+    return request.post({ url: "/channel/officialAccountReply/status", params })
 }
 
 export interface Reply {
@@ -89,7 +89,7 @@ export interface Reply {
  * @description 回复添加
  */
 export function oaReplyAdd(params: Reply) {
-    return request.post({ url: "/channel.official_account_reply/add", params })
+    return request.post({ url: "/channel/officialAccountReply/add", params })
 }
 
 /**
@@ -97,7 +97,7 @@ export function oaReplyAdd(params: Reply) {
  * @description 回复编辑
  */
 export function oaReplyEdit(params: Reply) {
-    return request.post({ url: "/channel.official_account_reply/edit", params })
+    return request.post({ url: "/channel/officialAccountReply/edit", params })
 }
 
 /**
@@ -106,5 +106,5 @@ export function oaReplyEdit(params: Reply) {
  * @description 获取回复详情
  */
 export function getOaReplyDetail(params: { id: number }) {
-    return request.get({ url: "/channel.official_account_reply/detail", params })
+    return request.get({ url: "/channel/officialAccountReply/detail", params })
 }

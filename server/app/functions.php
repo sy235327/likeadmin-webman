@@ -524,6 +524,10 @@ if (!function_exists('getAgreementHost')){
      * @return array|string|null
      */
     function getAgreementHost() {
+        //兼容脚本环境使用
+        if (!request()){
+            return getenv('SERVER_LISTEN','http://127.0.0.1');
+        }
         if(!strstr(request()->host(), 'http://') && !strstr(request()->host(), 'https://')){
             return request()->header('Scheme','http')."://".request()->host();
         }

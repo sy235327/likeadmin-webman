@@ -604,13 +604,14 @@ if (!function_exists('requestJsonPost')){
         return $json;
     }
 }
-if (!function_exists('requestGet')){
-    function requestGet(string $url,mixed $data,string|null &$error,$result_json_format = true,array $addHeaders = []):bool|array|string|null{
+if (!function_exists('requestGet')) {
+    function requestGet(string $url, mixed $data, string|null &$error, $result_json_format = true, array $addHeaders = []): bool|array|string|null
+    {
         $params = $data;
-        if (is_array($data)){
+        if (is_array($data)) {
             $params = http_build_query($data);
         }
-        $req_url = $url.'?'.$params;
+        $req_url = $url . '?' . $params;
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
         curl_setopt($curl, CURLOPT_URL, $req_url);
@@ -630,13 +631,14 @@ if (!function_exists('requestGet')){
             return false;
         }
         curl_close($curl); // 关闭CURL会话
-        if (!$result_json_format){
+        if (!$result_json_format) {
             return $result;
         }
-        $json = json_decode($result,true);
-        if (!$json){
+        $json = json_decode($result, true);
+        if (!$json) {
             $error = "json 格式化失败";//捕抓异常
             return false;
         }
         return $json;
     }
+}

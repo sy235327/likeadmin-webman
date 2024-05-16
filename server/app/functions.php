@@ -534,3 +534,109 @@ if (!function_exists('getAgreementHost')){
         return request()->host();
     }
 }
+if (!function_exists('requestFormPost')){
+    function requestFormPost(string $url,mixed $data,string|null &$error,$result_json_format = true,array $addHeaders = []): bool|array|string|null {
+        $headers = array('Content-Type: application/x-www-form-urlencoded');
+        $headers = array_merge($headers,$addHeaders);
+        $curl = curl_init(); // 启动一个CURL会话
+        curl_setopt($curl, CURLOPT_URL, $url); // 要访问的地址
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); // 对认证证书来源的检查
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false); // 从证书中检查SSL加密算法是否存在
+        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true); // 使用自动跳转
+        curl_setopt($curl, CURLOPT_AUTOREFERER, true); // 自动设置Referer
+        curl_setopt($curl, CURLOPT_POST, true); // 发送一个常规的Post请求
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data)); // Post提交的数据包
+        curl_setopt($curl, CURLOPT_TIMEOUT, 60); // 设置超时限制防止死循环
+        curl_setopt($curl, CURLOPT_HEADER, false); // 显示返回的Header区域内容
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // 获取的信息以文件流的形式返回
+        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+        $result = curl_exec($curl); // 执行操作
+        if (curl_errno($curl)) {
+            $error = curl_error($curl);//捕抓异常
+            return false;
+        }
+        curl_close($curl); // 关闭CURL会话
+        if (!$result_json_format){
+            return $result;
+        }
+        $json = json_decode($result,true);
+        if (!$json){
+            $error = "json 格式化失败";//捕抓异常
+            return false;
+        }
+        return $json;
+    }
+}
+if (!function_exists('requestJsonPost')){
+    function requestJsonPost(string $url,mixed $data,string|null &$error,$result_json_format = true,array $addHeaders = []): bool|array|string|null {
+        $data_json = $data?:'';
+        if (is_array($data)){
+            $data_json = json_encode($data); // 将数据编码为JSON
+        }
+        $headers = array('Content-Type: application/json', 'Content-Length: ' . strlen($data_json));
+        $headers = array_merge($headers,$addHeaders);
+        $curl = curl_init(); // 初始化cURL会话
+        curl_setopt($curl, CURLOPT_URL, $url); // 要访问的地址
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); // 对认证证书来源的检查
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false); // 从证书中检查SSL加密算法是否存在
+        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true); // 使用自动跳转
+        curl_setopt($curl, CURLOPT_AUTOREFERER, true); // 自动设置Referer
+        curl_setopt($curl, CURLOPT_POST, true); // 设置cURL选项，进行POST请求
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data_json); // 设置cURL选项，POST发送的数据
+        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers); // 设置HTTP头部信息
+        curl_setopt($curl, CURLOPT_TIMEOUT, 60); // 设置超时限制防止死循环
+        curl_setopt($curl, CURLOPT_HEADER, false); // 显示返回的Header区域内容
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // 获取的信息以文件流的形式返回
+        $result = curl_exec($curl); // 执行操作
+        if (curl_errno($curl)) {
+            $error = curl_error($curl);//捕抓异常
+            return false;
+        }
+        curl_close($curl); // 关闭CURL会话
+        if (!$result_json_format){
+            return $result;
+        }
+        $json = json_decode($result,true);
+        if (!$json){
+            $error = "json 格式化失败";//捕抓异常
+            return false;
+        }
+        return $json;
+    }
+}
+if (!function_exists('requestGet')){
+    function requestGet(string $url,mixed $data,string|null &$error,$result_json_format = true,array $addHeaders = []):bool|array|string|null{
+        $params = $data;
+        if (is_array($data)){
+            $params = http_build_query($data);
+        }
+        $req_url = $url.'?'.$params;
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
+        curl_setopt($curl, CURLOPT_URL, $req_url);
+        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true); // 使用自动跳转
+        curl_setopt($curl, CURLOPT_AUTOREFERER, true); // 自动设置Referer
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); //获取的信息以文件流的形式返回
+        curl_setopt($curl, CURLOPT_HEADER, false);//设置不要返回头
+        curl_setopt($curl, CURLOPT_TIMEOUT, 60); // 设置超时限制防止死循环
+        curl_setopt($curl, CURLOPT_HEADER, false); // 显示返回的Header区域内容
+        curl_setopt($curl, CURLOPT_HTTPHEADER, $addHeaders); // 设置HTTP头部信息
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); // 对认证证书来源的检查
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false); // 从证书中检查SSL加密算法是否存在
+
+        $result = curl_exec($curl); // 执行操作
+        if (curl_errno($curl)) {
+            $error = curl_error($curl);//捕抓异常
+            return false;
+        }
+        curl_close($curl); // 关闭CURL会话
+        if (!$result_json_format){
+            return $result;
+        }
+        $json = json_decode($result,true);
+        if (!$json){
+            $error = "json 格式化失败";//捕抓异常
+            return false;
+        }
+        return $json;
+    }

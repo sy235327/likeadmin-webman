@@ -41,8 +41,14 @@ class UploadService
 
             // 上传文件
             $saveDir = $saveDir . '/' .  date('Ymd');
-            if (!$StorageDriver->upload(public_path()."/".$saveDir)) {
-                throw new Exception($StorageDriver->getError());
+            if ($config['default']=='local'){
+                if (!$StorageDriver->upload(public_path()."/".$saveDir)) {
+                    throw new Exception($StorageDriver->getError());
+                }
+            }else{
+                if (!$StorageDriver->upload($saveDir)) {
+                    throw new Exception($StorageDriver->getError());
+                }
             }
 
             // 3、处理文件名称
@@ -110,8 +116,14 @@ class UploadService
 
             // 上传文件
             $saveDir = $saveDir . '/' .  date('Ymd');
-            if (!$StorageDriver->upload(public_path()."/".$saveDir)) {
-                throw new Exception($StorageDriver->getError());
+            if ($config['default']=='local'){
+                if (!$StorageDriver->upload(public_path()."/".$saveDir)) {
+                    throw new Exception($StorageDriver->getError());
+                }
+            }else{
+                if (!$StorageDriver->upload($saveDir)) {
+                    throw new Exception($StorageDriver->getError());
+                }
             }
 
             // 3、处理文件名称

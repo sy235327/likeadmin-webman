@@ -643,22 +643,19 @@ if (!function_exists('requestGet')) {
     }
 }
 
-if (!function_exists('sortArrByManyField')) {
+
+if (!function_exists('sortArrByColumnsList')) {
     /**
-     * 多维数组指定多个字段排序
+     * 多字段排序数组参数
      * @param array $array 排序的数组
-     * @param string $column1 排序字段
-     * @param string $sort_type1 排序规则
-     * @param string $column2 排序字段
-     * @param string $sort_type2 排序规则
-     * ...
-     * @return array
+     * @param array $columns [column=>sort_type,column=>sort_type]
      */
-    function sortArrByManyField(): array
+    function sortArrByColumnsList(array $array,array $columns): array
     {
-        $args = func_get_args();
-        if (empty($args)) {
-            return [];
+        $args = [$array];
+        foreach ($columns as $column=>$sortType){
+            $args[] = $column;
+            $args[] = $sortType;
         }
         $arr = array_shift($args);
         if (!is_array($arr)) {
@@ -674,36 +671,53 @@ if (!function_exists('sortArrByManyField')) {
             }
         }
         $args[] = &$arr;//引用值
-        call_user_func_array('array_multisort', $args);
+        array_multisort(...$args);
         return array_pop($args);
     }
 }
-
-if (!function_exists('sortArrByColumnsList')) {
+if (!function_exists('mapListUnique')) {
     /**
-     * 多字段排序数组参数
-     * @param array $array 排序的数组
-     * @param array $columns [column=>sort_type,column=>sort_type]
+     * 数组去重
+     * @param array $arr 去重的数组
+     * @param $isAssociativeArray bool 是否为索引数组
      * @return array
      */
-    function sortArrByColumnsList(array $array,array $columns): array
-    {
-        $args = [$array];
-        foreach ($columns as $column=>$sortType){
-            $args[] = $column;
-            $args[] = $sortType;
-        }
-        return call_user_func_array('sortArrByManyField',$args);
-    }
-}
-if (!function_exists('mapListUnique')) {
-    function mapListUnique(array $arr): array
+    function mapListUnique(array $arr,bool $isAssociativeArray = false): array
     {
         //格式化字符数组去重
         $uniqueStrList = array_unique(
-            array_map("serialize", $arr)
+            array_map(
+                function($val){
+                    return serialize($val);
+                },
+                $arr
+            )
         );
         //重新格式化回来
-        return array_map("unserialize",$uniqueStrList);
+        $dictList = array_map(
+            function($val){
+                return unserialize($val);
+            },
+            $uniqueStrList
+        );
+        if (!$isAssociativeArray){
+            return $dictList;
+        }
+        //索引数组重新构建索引
+        return lackNumberKeyMapToList($dictList);
+    }
+}
+if (!function_exists('lackNumberKeyMapToList')) {
+    /**
+     * 将关联数组重新构建索引
+     * @param array $arr
+     * @return array
+     */
+    function lackNumberKeyMapToList(array $arr):array{
+        $list = [];
+        foreach ($arr as $item){
+            $list[] = $item;
+        }
+        return $list;
     }
 }

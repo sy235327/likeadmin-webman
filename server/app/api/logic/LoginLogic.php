@@ -94,7 +94,7 @@ class LoginLogic extends BaseLogic
 
             //更新登录信息
             $user->login_time = time();
-            $user->login_ip = request()->getRemoteIp();
+            $user->login_ip = getRealIP();
             $user->save();
 
             //设置token
@@ -257,7 +257,7 @@ class LoginLogic extends BaseLogic
 
         $time = time();
         $user->login_time = $time;
-        $user->login_ip = request()->getRemoteIp();
+        $user->login_ip = getRealIP();
         $user->update_time = $time;
         $user->save();
     }

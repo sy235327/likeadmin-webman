@@ -534,6 +534,31 @@ if (!function_exists('getAgreementHost')){
         return request()->host();
     }
 }
+
+if (!function_exists('getRealIP')){
+    /**
+     * 获取客户端真实IP
+     * nginx/apache将客户端真实ip通过http header传递进来，例如nginx配置中location里的加上proxy_set_header X-Real-IP $remote_addr;
+     * 如果不是则默认$_SERVER['REMOTE_ADDR']
+     */
+    function getRealIP(): string {
+        //兼容脚本环境使用
+        if (!request()){
+            return '127.0.0.1';
+        }
+        $real_ip = request()->header('HTTP_X_REAL_IP',false);
+        if (!$real_ip){
+            $real_ip = request()->getRemoteIp();
+        }
+        if (!$real_ip){
+            $real_ip = request()->getLocalIp();
+        }
+        if (!$real_ip){
+            $real_ip = '127.0.0.1';
+        }
+        return $real_ip;
+    }
+}
 if (!function_exists('requestFormPost')){
     function requestFormPost(string $url,mixed $data,string|null &$error,$result_json_format = true,array $addHeaders = []): bool|array|string|null {
         $headers = array('Content-Type: application/x-www-form-urlencoded');
@@ -640,5 +665,84 @@ if (!function_exists('requestGet')) {
             return false;
         }
         return $json;
+    }
+}
+
+
+if (!function_exists('sortArrByColumnsList')) {
+    /**
+     * 多字段排序数组参数
+     * @param array $array 排序的数组
+     * @param array $columns [column=>sort_type,column=>sort_type]
+     */
+    function sortArrByColumnsList(array $array,array $columns): array
+    {
+        $args = [$array];
+        foreach ($columns as $column=>$sortType){
+            $args[] = $column;
+            $args[] = $sortType;
+        }
+        $arr = array_shift($args);
+        if (!is_array($arr)) {
+            return [];
+        }
+        foreach ($args as $key => $field) {
+            if (is_string($field)) {
+                $temp = array();
+                foreach ($arr as $index => $val) {
+                    $temp[$index] = $val[$field];
+                }
+                $args[$key] = $temp;
+            }
+        }
+        $args[] = &$arr;//引用值
+        array_multisort(...$args);
+        return array_pop($args);
+    }
+}
+if (!function_exists('mapListUnique')) {
+    /**
+     * 数组去重
+     * @param array $arr 去重的数组
+     * @param $isAssociativeArray bool 是否为索引数组
+     * @return array
+     */
+    function mapListUnique(array $arr,bool $isAssociativeArray = false): array
+    {
+        //格式化字符数组去重
+        $uniqueStrList = array_unique(
+            array_map(
+                function($val){
+                    return serialize($val);
+                },
+                $arr
+            )
+        );
+        //重新格式化回来
+        $dictList = array_map(
+            function($val){
+                return unserialize($val);
+            },
+            $uniqueStrList
+        );
+        if (!$isAssociativeArray){
+            return $dictList;
+        }
+        //索引数组重新构建索引
+        return lackNumberKeyMapToList($dictList);
+    }
+}
+if (!function_exists('lackNumberKeyMapToList')) {
+    /**
+     * 将关联数组重新构建索引
+     * @param array $arr
+     * @return array
+     */
+    function lackNumberKeyMapToList(array $arr):array{
+        $list = [];
+        foreach ($arr as $item){
+            $list[] = $item;
+        }
+        return $list;
     }
 }

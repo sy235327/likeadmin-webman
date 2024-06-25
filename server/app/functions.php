@@ -534,6 +534,31 @@ if (!function_exists('getAgreementHost')){
         return request()->host();
     }
 }
+
+if (!function_exists('getRealIP')){
+    /**
+     * 获取客户端真实IP
+     * nginx/apache将客户端真实ip通过http header传递进来，例如nginx配置中location里的加上proxy_set_header X-Real-IP $remote_addr;
+     * 如果不是则默认$_SERVER['REMOTE_ADDR']
+     */
+    function getRealIP(): string {
+        //兼容脚本环境使用
+        if (!request()){
+            return '127.0.0.1';
+        }
+        $real_ip = request()->header('HTTP_X_REAL_IP',false);
+        if (!$real_ip){
+            $real_ip = request()->getRemoteIp();
+        }
+        if (!$real_ip){
+            $real_ip = request()->getLocalIp();
+        }
+        if (!$real_ip){
+            $real_ip = '127.0.0.1';
+        }
+        return $real_ip;
+    }
+}
 if (!function_exists('requestFormPost')){
     function requestFormPost(string $url,mixed $data,string|null &$error,$result_json_format = true,array $addHeaders = []): bool|array|string|null {
         $headers = array('Content-Type: application/x-www-form-urlencoded');

@@ -31,7 +31,7 @@ class UserAccountSafeCache extends BaseCache
     public function __construct()
     {
         parent::__construct();
-        $ip = request()->getRemoteIp();
+        $ip = getRealIP();
         $this->key = $this->tagName . $ip;
     }
 

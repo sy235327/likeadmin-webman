@@ -244,7 +244,7 @@ class WeChatPayService extends BasePayService
             ],
             'attach' => $from,
             'scene_info' => [
-                'payer_client_ip' => request()->getRemoteIp(),
+                'payer_client_ip' => getRealIP(),
                 'h5_info' => [
                     'type' => 'Wap',
                 ]
@@ -253,7 +253,7 @@ class WeChatPayService extends BasePayService
         $result = $response->toArray(false);
         $this->checkResultFail($result);
 
-        $domain = request()->domain();
+        $domain = getAgreementHost();
         if (!empty(getenv('project.test_web_domain')) && getenv('APP_DEBUG')) {
             $domain = getenv('project.test_web_domain');
         }

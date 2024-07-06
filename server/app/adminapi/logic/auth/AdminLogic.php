@@ -194,7 +194,7 @@ class AdminLogic extends BaseLogic
     public static function expireToken($token): bool
     {
         $adminSession = AdminSession::where('token', '=', $token)
-            ->with('adminapi')
+            ->with('admin')
             ->find();
 
         if (empty($adminSession)) {

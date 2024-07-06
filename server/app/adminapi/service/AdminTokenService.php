@@ -94,7 +94,7 @@ class AdminTokenService
     public static function expireToken($token)
     {
         $adminSession = AdminSession::where('token', '=', $token)
-            ->with('adminapi')
+            ->with('admin')
             ->findOrEmpty();
 
         if ($adminSession->isEmpty()) {

@@ -44,7 +44,7 @@ class LoginLogic extends BaseLogic
 
         //用户表登录信息更新
         $admin->login_time = $time;
-        $admin->login_ip = request()->getLocalIp();
+        $admin->login_ip = getRealIP();
         $admin->save();
 
         //设置token

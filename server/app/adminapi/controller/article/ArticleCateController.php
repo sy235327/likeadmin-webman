@@ -26,7 +26,13 @@ use app\adminapi\validate\article\ArticleCateValidate;
  */
 class ArticleCateController extends BaseAdminController
 {
+    private ArticleCateValidate $validateObj;
 
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->validateObj = new ArticleCateValidate();
+    }
     /**
      * @notes  查看资讯分类列表
      * @return \support\Response
@@ -47,7 +53,7 @@ class ArticleCateController extends BaseAdminController
      */
     public function add()
     {
-        $params = (new ArticleCateValidate())->post()->goCheck('add');
+        $params = $this->validateObj->post()->goCheck('add');
         ArticleCateLogic::add($params);
         return $this->success('添加成功', [], 1, 1);
     }
@@ -61,7 +67,7 @@ class ArticleCateController extends BaseAdminController
      */
     public function edit()
     {
-        $params = (new ArticleCateValidate())->post()->goCheck('edit');
+        $params = $this->validateObj->post()->goCheck('edit');
         $result = ArticleCateLogic::edit($params);
         if (true === $result) {
             return $this->success('编辑成功', [], 1, 1);
@@ -78,7 +84,7 @@ class ArticleCateController extends BaseAdminController
      */
     public function delete()
     {
-        $params = (new ArticleCateValidate())->post()->goCheck('delete');
+        $params = $this->validateObj->post()->goCheck('delete');
         ArticleCateLogic::delete($params);
         return $this->success('删除成功', [], 1, 1);
     }
@@ -92,7 +98,7 @@ class ArticleCateController extends BaseAdminController
      */
     public function detail()
     {
-        $params = (new ArticleCateValidate())->goCheck('detail');
+        $params = $this->validateObj->goCheck('detail');
         $result = ArticleCateLogic::detail($params);
         return $this->data($result);
     }
@@ -106,7 +112,7 @@ class ArticleCateController extends BaseAdminController
      */
     public function updateStatus()
     {
-        $params = (new ArticleCateValidate())->post()->goCheck('status');
+        $params = $this->validateObj->post()->goCheck('status');
         $result = ArticleCateLogic::updateStatus($params);
         if (true === $result) {
             return $this->success('修改成功', [], 1, 1);

@@ -27,7 +27,13 @@ use app\adminapi\validate\dept\JobsValidate;
  */
 class JobsController extends BaseAdminController
 {
+    private JobsValidate $validateObj;
 
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->validateObj = new JobsValidate();
+    }
     /**
      * @notes 岗位列表
      * @author 乔峰
@@ -46,7 +52,7 @@ class JobsController extends BaseAdminController
      */
     public function add()
     {
-        $params = (new JobsValidate())->post()->goCheck('add');
+        $params = $this->validateObj->post()->goCheck('add');
         JobsLogic::add($params);
         return $this->success('添加成功', [], 1, 1);
     }
@@ -59,7 +65,7 @@ class JobsController extends BaseAdminController
      */
     public function edit()
     {
-        $params = (new JobsValidate())->post()->goCheck('edit');
+        $params = $this->validateObj->post()->goCheck('edit');
         $result = JobsLogic::edit($params);
         if (true === $result) {
             return $this->success('编辑成功', [], 1, 1);
@@ -75,7 +81,7 @@ class JobsController extends BaseAdminController
      */
     public function delete()
     {
-        $params = (new JobsValidate())->post()->goCheck('delete');
+        $params = $this->validateObj->post()->goCheck('delete');
         JobsLogic::delete($params);
         return $this->success('删除成功', [], 1, 1);
     }
@@ -88,7 +94,7 @@ class JobsController extends BaseAdminController
      */
     public function detail()
     {
-        $params = (new JobsValidate())->goCheck('detail');
+        $params = $this->validateObj->goCheck('detail');
         $result = JobsLogic::detail($params);
         return $this->data($result);
     }

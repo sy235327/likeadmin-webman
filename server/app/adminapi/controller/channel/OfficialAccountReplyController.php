@@ -28,7 +28,13 @@ class OfficialAccountReplyController extends BaseAdminController
 {
 
     public array $notNeedLogin = ['index'];
+    private OfficialAccountReplyValidate $validateObj;
 
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->validateObj = new OfficialAccountReplyValidate();
+    }
 
     /**
      * @notes 查看回复列表(关注/关键词/默认)
@@ -50,7 +56,7 @@ class OfficialAccountReplyController extends BaseAdminController
      */
     public function add()
     {
-        $params = (new OfficialAccountReplyValidate())->post()->goCheck('add');
+        $params = $this->validateObj->post()->goCheck('add');
         $result = OfficialAccountReplyLogic::add($params);
         if ($result) {
             return $this->success('操作成功', [], 1, 1);
@@ -67,7 +73,7 @@ class OfficialAccountReplyController extends BaseAdminController
      */
     public function detail()
     {
-        $params = (new OfficialAccountReplyValidate())->goCheck('detail');
+        $params = $this->validateObj->goCheck('detail');
         $result = OfficialAccountReplyLogic::detail($params);
         return $this->data($result);
     }
@@ -81,7 +87,7 @@ class OfficialAccountReplyController extends BaseAdminController
      */
     public function edit()
     {
-        $params = (new OfficialAccountReplyValidate())->post()->goCheck('edit');
+        $params = $this->validateObj->post()->goCheck('edit');
         $result = OfficialAccountReplyLogic::edit($params);
         if ($result) {
             return $this->success('操作成功', [], 1, 1);
@@ -98,7 +104,7 @@ class OfficialAccountReplyController extends BaseAdminController
      */
     public function delete()
     {
-        $params = (new OfficialAccountReplyValidate())->post()->goCheck('delete');
+        $params = $this->validateObj->post()->goCheck('delete');
         OfficialAccountReplyLogic::delete($params);
         return $this->success('操作成功', [], 1, 1);
     }
@@ -112,7 +118,7 @@ class OfficialAccountReplyController extends BaseAdminController
      */
     public function sort()
     {
-        $params = (new OfficialAccountReplyValidate())->post()->goCheck('sort');
+        $params = $this->validateObj->post()->goCheck('sort');
         OfficialAccountReplyLogic::sort($params);
         return $this->success('操作成功', [], 1, 1);
     }
@@ -126,7 +132,7 @@ class OfficialAccountReplyController extends BaseAdminController
      */
     public function status()
     {
-        $params = (new OfficialAccountReplyValidate())->post()->goCheck('status');
+        $params = $this->validateObj->post()->goCheck('status');
         OfficialAccountReplyLogic::status($params);
         return $this->success('操作成功', [], 1, 1);
     }

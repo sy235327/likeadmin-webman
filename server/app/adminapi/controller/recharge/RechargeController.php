@@ -26,7 +26,13 @@ use app\adminapi\validate\recharge\RechargeRefundValidate;
  */
 class RechargeController extends BaseAdminController
 {
+    private RechargeRefundValidate $validateObj;
 
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->validateObj = new RechargeRefundValidate();
+    }
     /**
      * @notes 获取充值设置
      * @return \support\Response
@@ -77,7 +83,7 @@ class RechargeController extends BaseAdminController
      */
     public function refund()
     {
-        $params = (new RechargeRefundValidate())->post()->goCheck('refund');
+        $params = $this->validateObj->post()->goCheck('refund');
         $result = RechargeLogic::refund($params, $this->adminId);
         list($flag, $msg) = $result;
         if(false === $flag) {
@@ -95,7 +101,7 @@ class RechargeController extends BaseAdminController
      */
     public function refundAgain()
     {
-        $params = (new RechargeRefundValidate())->post()->goCheck('again');
+        $params = $this->validateObj->post()->goCheck('again');
         $result = RechargeLogic::refundAgain($params, $this->adminId);
         list($flag, $msg) = $result;
         if(false === $flag) {

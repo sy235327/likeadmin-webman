@@ -26,6 +26,13 @@ use app\adminapi\validate\crontab\CrontabValidate;
  */
 class CrontabController extends BaseAdminController
 {
+    private CrontabValidate $validateObj;
+
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->validateObj = new CrontabValidate();
+    }
     /**
      * @notes 定时任务列表
      * @author 乔峰
@@ -44,7 +51,7 @@ class CrontabController extends BaseAdminController
      */
     public function add()
     {
-        $params = (new CrontabValidate())->post()->goCheck('add');
+        $params = $this->validateObj->post()->goCheck('add');
         $result = CrontabLogic::add($params);
         if($result) {
             return $this->success('添加成功', [], 1, 1);
@@ -60,7 +67,7 @@ class CrontabController extends BaseAdminController
      */
     public function detail()
     {
-        $params = (new CrontabValidate())->goCheck('detail');
+        $params = $this->validateObj->goCheck('detail');
         $result = CrontabLogic::detail($params);
         return $this->data($result);
     }
@@ -73,7 +80,7 @@ class CrontabController extends BaseAdminController
      */
     public function edit()
     {
-        $params = (new CrontabValidate())->post()->goCheck('edit');
+        $params = $this->validateObj->post()->goCheck('edit');
         $result = CrontabLogic::edit($params);
         if($result) {
             return $this->success('编辑成功', [], 1, 1);
@@ -89,7 +96,7 @@ class CrontabController extends BaseAdminController
      */
     public function delete()
     {
-        $params = (new CrontabValidate())->post()->goCheck('delete');
+        $params = $this->validateObj->post()->goCheck('delete');
         $result = CrontabLogic::delete($params);
         if($result) {
             return $this->success('删除成功', [], 1, 1);
@@ -105,7 +112,7 @@ class CrontabController extends BaseAdminController
      */
     public function operate()
     {
-        $params = (new CrontabValidate())->post()->goCheck('operate');
+        $params = $this->validateObj->post()->goCheck('operate');
         $result = CrontabLogic::operate($params);
         if($result) {
             return $this->success('操作成功', [], 1, 1);
@@ -121,7 +128,7 @@ class CrontabController extends BaseAdminController
      */
     public function expression()
     {
-        $params = (new CrontabValidate())->goCheck('expression');
+        $params = $this->validateObj->goCheck('expression');
         $result = CrontabLogic::expression($params);
         return $this->data($result);
     }

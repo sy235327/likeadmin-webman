@@ -25,7 +25,13 @@ use app\adminapi\validate\notice\SmsConfigValidate;
  */
 class SmsConfigController extends BaseAdminController
 {
+    private SmsConfigValidate $validateObj;
 
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->validateObj = new SmsConfigValidate();
+    }
     /**
      * @notes 获取短信配置
      * @author 乔峰
@@ -45,7 +51,7 @@ class SmsConfigController extends BaseAdminController
      */
     public function setConfig()
     {
-        $params = (new SmsConfigValidate())->post()->goCheck('setConfig');
+        $params = $this->validateObj->post()->goCheck('setConfig');
         SmsConfigLogic::setConfig($params);
         return $this->success('操作成功',[],1,1);
     }
@@ -58,7 +64,7 @@ class SmsConfigController extends BaseAdminController
      */
     public function detail()
     {
-        $params = (new SmsConfigValidate())->goCheck('detail');
+        $params = $this->validateObj->goCheck('detail');
         $result = SmsConfigLogic::detail($params);
         return $this->data($result);
     }

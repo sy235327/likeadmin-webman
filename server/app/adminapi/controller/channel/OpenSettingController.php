@@ -25,7 +25,13 @@ use app\adminapi\validate\channel\OpenSettingValidate;
  */
 class OpenSettingController extends BaseAdminController
 {
+    private OpenSettingValidate $validateObj;
 
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->validateObj = new OpenSettingValidate();
+    }
     /**
      * @notes 获取微信开放平台设置
      * @return \support\Response
@@ -47,7 +53,7 @@ class OpenSettingController extends BaseAdminController
      */
     public function setConfig()
     {
-        $params = (new OpenSettingValidate())->post()->goCheck();
+        $params = $this->validateObj->post()->goCheck();
         OpenSettingLogic::setConfig($params);
         return $this->success('操作成功', [], 1, 1);
     }

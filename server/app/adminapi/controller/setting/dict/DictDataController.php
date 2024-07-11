@@ -27,7 +27,13 @@ use app\adminapi\validate\dict\DictDataValidate;
  */
 class DictDataController extends BaseAdminController
 {
+    private DictDataValidate $validateObj;
 
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->validateObj = new DictDataValidate();
+    }
     /**
      * @notes 获取字典数据列表
      * @author 乔峰
@@ -46,7 +52,7 @@ class DictDataController extends BaseAdminController
      */
     public function add()
     {
-        $params = (new DictDataValidate())->post()->goCheck('add');
+        $params = $this->validateObj->post()->goCheck('add');
         DictDataLogic::save($params);
         return $this->success('添加成功', [], 1, 1);
     }
@@ -59,7 +65,7 @@ class DictDataController extends BaseAdminController
      */
     public function edit()
     {
-        $params = (new DictDataValidate())->post()->goCheck('edit');
+        $params = $this->validateObj->post()->goCheck('edit');
         DictDataLogic::save($params);
         return $this->success('编辑成功', [], 1, 1);
     }
@@ -72,7 +78,7 @@ class DictDataController extends BaseAdminController
      */
     public function delete()
     {
-        $params = (new DictDataValidate())->post()->goCheck('id');
+        $params = $this->validateObj->post()->goCheck('id');
         DictDataLogic::delete($params);
         return $this->success('删除成功', [], 1, 1);
     }
@@ -85,7 +91,7 @@ class DictDataController extends BaseAdminController
      */
     public function detail()
     {
-        $params = (new DictDataValidate())->goCheck('id');
+        $params = $this->validateObj->goCheck('id');
         $result = DictDataLogic::detail($params);
         return $this->data($result);
     }

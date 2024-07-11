@@ -26,6 +26,13 @@ use app\adminapi\validate\notice\NoticeValidate;
  */
 class NoticeController extends BaseAdminController
 {
+    private NoticeValidate $validateObj;
+
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->validateObj = new NoticeValidate();
+    }
     /**
      * @notes 查看通知设置列表
      * @author 乔峰
@@ -44,7 +51,7 @@ class NoticeController extends BaseAdminController
      */
     public function detail()
     {
-        $params = (new NoticeValidate())->goCheck('detail');
+        $params = $this->validateObj->goCheck('detail');
         $result = NoticeLogic::detail($params);
         return $this->data($result);
     }

@@ -21,7 +21,13 @@ class GeneratorController extends BaseAdminController
 
     public array $notNeedLogin = ['download'];
 
+    private GenerateTableValidate $validateObj;
 
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->validateObj = new GenerateTableValidate();
+    }
     /**
      * @notes 获取数据库中所有数据表信息
      * @return
@@ -54,7 +60,7 @@ class GeneratorController extends BaseAdminController
      */
     public function selectTable()
     {
-        $params = (new GenerateTableValidate())->post()->goCheck('select');
+        $params = $this->validateObj->post()->goCheck('select');
         $result = GeneratorLogic::selectTable($params, $this->adminId);
         if (true === $result) {
             return $this->success('操作成功', [], 1, 1);
@@ -71,7 +77,7 @@ class GeneratorController extends BaseAdminController
      */
     public function generate()
     {
-        $params = (new GenerateTableValidate())->post()->goCheck('id');
+        $params = $this->validateObj->post()->goCheck('id');
         $result = GeneratorLogic::generate($params);
         if (false === $result) {
             return $this->fail(GeneratorLogic::getError());
@@ -87,7 +93,7 @@ class GeneratorController extends BaseAdminController
      */
     public function download()
     {
-        $params = (new GenerateTableValidate())->goCheck('download');
+        $params = $this->validateObj->goCheck('download');
         $result = GeneratorLogic::download($params['file']);
         if (false === $result) {
             return $this->fail(GeneratorLogic::getError() ?: '下载失败');
@@ -104,7 +110,7 @@ class GeneratorController extends BaseAdminController
      */
     public function preview()
     {
-        $params = (new GenerateTableValidate())->post()->goCheck('id');
+        $params = $this->validateObj->post()->goCheck('id');
         $result = GeneratorLogic::preview($params);
         if (false === $result) {
             return $this->fail(GeneratorLogic::getError());
@@ -121,7 +127,7 @@ class GeneratorController extends BaseAdminController
      */
     public function syncColumn()
     {
-        $params = (new GenerateTableValidate())->post()->goCheck('id');
+        $params = $this->validateObj->post()->goCheck('id');
         $result = GeneratorLogic::syncColumn($params);
         if (true === $result) {
             return $this->success('操作成功', [], 1, 1);
@@ -155,7 +161,7 @@ class GeneratorController extends BaseAdminController
      */
     public function detail()
     {
-        $params = (new GenerateTableValidate())->goCheck('id');
+        $params = $this->validateObj->goCheck('id');
         $result = GeneratorLogic::getTableDetail($params);
         return $this->success('', $result);
     }
@@ -169,7 +175,7 @@ class GeneratorController extends BaseAdminController
      */
     public function delete()
     {
-        $params = (new GenerateTableValidate())->post()->goCheck('id');
+        $params = $this->validateObj->post()->goCheck('id');
         $result = GeneratorLogic::deleteTable($params);
         if (true === $result) {
             return $this->success('操作成功', [], 1, 1);

@@ -28,6 +28,13 @@ use app\common\model\auth\Admin;
  */
 class AdminController extends BaseAdminController
 {
+    private AdminValidate $validateObj;
+
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->validateObj = new AdminValidate();
+    }
     public array $notNeedLogin = [];
     /**
      * @notes 查看管理员列表
@@ -47,7 +54,7 @@ class AdminController extends BaseAdminController
      */
     public function add()
     {
-        $params = (new AdminValidate())->post()->goCheck('add');
+        $params = $this->validateObj->post()->goCheck('add');
         $result = AdminLogic::add($params);
         if (true === $result) {
             return $this->success('操作成功', [], 1, 1);
@@ -63,7 +70,7 @@ class AdminController extends BaseAdminController
      */
     public function edit()
     {
-        $params = (new AdminValidate())->post()->goCheck('edit');
+        $params = $this->validateObj->post()->goCheck('edit');
         $result = AdminLogic::edit($params);
         if (true === $result) {
             return $this->success('操作成功', [], 1, 1);
@@ -79,7 +86,7 @@ class AdminController extends BaseAdminController
      */
     public function delete()
     {
-        $params = (new AdminValidate())->post()->goCheck('delete');
+        $params = $this->validateObj->post()->goCheck('delete');
         $result = AdminLogic::delete($params);
         if (true === $result) {
             return $this->success('操作成功', [], 1, 1);
@@ -95,7 +102,7 @@ class AdminController extends BaseAdminController
      */
     public function detail()
     {
-        $params = (new AdminValidate())->goCheck('detail');
+        $params = $this->validateObj->goCheck('detail');
         $result = AdminLogic::detail($params);
         return $this->data($result);
     }

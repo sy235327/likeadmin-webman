@@ -15,7 +15,7 @@ class AdminAccountSafeCache extends BaseCache
     public function __construct()
     {
         parent::__construct();
-        $ip = \request()->getLocalIp();
+        $ip = getRealIP();
         $this->key = $this->tagName . $ip;
     }
 

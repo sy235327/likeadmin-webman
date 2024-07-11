@@ -26,7 +26,13 @@ use app\adminapi\validate\decorate\DecoratePageValidate;
  */
 class PageController extends BaseAdminController
 {
+    private DecoratePageValidate $validateObj;
 
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->validateObj = new DecoratePageValidate();
+    }
     /**
      * @notes 获取装修修页面详情
      * @return \support\Response
@@ -49,7 +55,7 @@ class PageController extends BaseAdminController
      */
     public function save()
     {
-        $params = (new DecoratePageValidate())->post()->goCheck();
+        $params = $this->validateObj->post()->goCheck();
         $result = DecoratePageLogic::save($params);
         if (false === $result) {
             return $this->fail(DecoratePageLogic::getError());

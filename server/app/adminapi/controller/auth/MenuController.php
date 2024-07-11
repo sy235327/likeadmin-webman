@@ -28,7 +28,13 @@ use app\adminapi\validate\auth\MenuValidate;
  */
 class MenuController extends BaseAdminController
 {
+    private MenuValidate $validateObj;
 
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->validateObj = new MenuValidate();
+    }
     /**
      * @notes 获取菜单路由
      * @author 乔峰
@@ -59,7 +65,7 @@ class MenuController extends BaseAdminController
      */
     public function detail()
     {
-        $params = (new MenuValidate())->goCheck('detail');
+        $params = $this->validateObj->goCheck('detail');
         return $this->data(MenuLogic::detail($params));
     }
 
@@ -71,7 +77,7 @@ class MenuController extends BaseAdminController
      */
     public function add()
     {
-        $params = (new MenuValidate())->post()->goCheck('add');
+        $params = $this->validateObj->post()->goCheck('add');
         MenuLogic::add($params);
         return $this->success('操作成功', [], 1, 1);
     }
@@ -84,7 +90,7 @@ class MenuController extends BaseAdminController
      */
     public function edit()
     {
-        $params = (new MenuValidate())->post()->goCheck('edit');
+        $params = $this->validateObj->post()->goCheck('edit');
         MenuLogic::edit($params);
         return $this->success('操作成功', [], 1, 1);
     }
@@ -97,7 +103,7 @@ class MenuController extends BaseAdminController
      */
     public function delete()
     {
-        $params = (new MenuValidate())->post()->goCheck('delete');
+        $params = $this->validateObj->post()->goCheck('delete');
         MenuLogic::delete($params);
         return $this->success('操作成功', [], 1, 1);
     }
@@ -110,7 +116,7 @@ class MenuController extends BaseAdminController
      */
     public function updateStatus()
     {
-        $params = (new MenuValidate())->post()->goCheck('status');
+        $params = $this->validateObj->post()->goCheck('status');
         MenuLogic::updateStatus($params);
         return $this->success('操作成功', [], 1, 1);
     }

@@ -15,15 +15,6 @@ use app\common\lists\ListsExcelInterface;
  */
 class {UPPER_CAMEL_NAME}Lists extends {EXTENDS_LISTS} implements ListsSearchInterface,ListsExcelInterface
 {
-
-    /**
-     * 设置别名
-     * @return {UPPER_CAMEL_NAME}
-     */
-    public function getModel(){
-        return {UPPER_CAMEL_NAME}::whereRaw('1=1');
-    }
-
     /**
      * @notes 设置搜索条件
      * @return \string[][]
@@ -37,6 +28,13 @@ class {UPPER_CAMEL_NAME}Lists extends {EXTENDS_LISTS} implements ListsSearchInte
         ];
     }
 
+    /**
+     * 设置别名
+     * @return {UPPER_CAMEL_NAME}
+     */
+    public function getModel(){
+        return {UPPER_CAMEL_NAME}::whereRaw('1=1');
+    }
 
     /**
      * @notes 获取{NOTES}列表

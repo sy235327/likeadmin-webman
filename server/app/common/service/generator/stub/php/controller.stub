@@ -14,8 +14,12 @@
  */
 class {UPPER_CAMEL_NAME}Controller extends {EXTENDS_CONTROLLER}
 {
-
-
+    private {UPPER_CAMEL_NAME}Validate $validateObj;
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->validateObj = new {UPPER_CAMEL_NAME}Validate();
+    }
     /**
      * @notes 获取{NOTES}列表
      * @return \support\Response
@@ -36,7 +40,7 @@ class {UPPER_CAMEL_NAME}Controller extends {EXTENDS_CONTROLLER}
      */
     public function add()
     {
-        $params = (new {UPPER_CAMEL_NAME}Validate())->post()->goCheck('add');
+        $params = $this->validateObj->post()->goCheck('add');
         $result = {UPPER_CAMEL_NAME}Logic::add($params);
         if (true === $result) {
             return $this->success('添加成功', [], 1, 1);
@@ -53,7 +57,7 @@ class {UPPER_CAMEL_NAME}Controller extends {EXTENDS_CONTROLLER}
      */
     public function edit()
     {
-        $params = (new {UPPER_CAMEL_NAME}Validate())->post()->goCheck('edit');
+        $params = $this->validateObj->post()->goCheck('edit');
         $result = {UPPER_CAMEL_NAME}Logic::edit($params);
         if (true === $result) {
             return $this->success('编辑成功', [], 1, 1);
@@ -70,7 +74,7 @@ class {UPPER_CAMEL_NAME}Controller extends {EXTENDS_CONTROLLER}
      */
     public function delete()
     {
-        $params = (new {UPPER_CAMEL_NAME}Validate())->post()->goCheck('delete');
+        $params = $this->validateObj->post()->goCheck('delete');
         {UPPER_CAMEL_NAME}Logic::delete($params);
         return $this->success('删除成功', [], 1, 1);
     }
@@ -84,7 +88,7 @@ class {UPPER_CAMEL_NAME}Controller extends {EXTENDS_CONTROLLER}
      */
     public function detail()
     {
-        $params = (new {UPPER_CAMEL_NAME}Validate())->goCheck('detail');
+        $params = $this->validateObj->goCheck('detail');
         $result = {UPPER_CAMEL_NAME}Logic::detail($params);
         return $this->data($result);
     }

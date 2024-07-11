@@ -26,6 +26,13 @@ use app\adminapi\validate\setting\TransactionSettingsValidate;
  */
 class TransactionSettingsController extends BaseAdminController
 {
+    private TransactionSettingsValidate $validateObj;
+
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->validateObj = new TransactionSettingsValidate();
+    }
     /**
      * @notes 获取交易设置
      * @author ljj
@@ -44,7 +51,7 @@ class TransactionSettingsController extends BaseAdminController
      */
     public function setConfig()
     {
-        $params = (new TransactionSettingsValidate())->post()->goCheck('setConfig');
+        $params = $this->validateObj->post()->goCheck('setConfig');
         TransactionSettingsLogic::setConfig($params);
         return $this->success('操作成功',[],1,1);
     }

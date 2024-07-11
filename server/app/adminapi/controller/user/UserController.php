@@ -12,6 +12,13 @@ use app\adminapi\validate\user\UserValidate;
 
 class UserController extends BaseAdminController
 {
+    private UserValidate $validateObj;
+
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->validateObj = new UserValidate();
+    }
     /**
      * @notes 用户列表
      * @author 乔峰
@@ -30,7 +37,7 @@ class UserController extends BaseAdminController
      */
     public function detail()
     {
-        $params = (new UserValidate())->goCheck('detail');
+        $params = $this->validateObj->goCheck('detail');
         $detail = UserLogic::detail($params['id']);
         return $this->success('', $detail);
     }
@@ -43,7 +50,7 @@ class UserController extends BaseAdminController
      */
     public function edit()
     {
-        $params = (new UserValidate())->post()->goCheck('setInfo');
+        $params = $this->validateObj->post()->goCheck('setInfo');
         UserLogic::setUserInfo($params);
         return $this->success('操作成功', [], 1, 1);
     }

@@ -26,7 +26,13 @@ use app\adminapi\validate\article\ArticleValidate;
  */
 class ArticleController extends BaseAdminController
 {
+    private ArticleValidate $validateObj;
 
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->validateObj = new ArticleValidate();
+    }
     /**
      * @notes  查看资讯列表
      * @return \support\Response
@@ -46,7 +52,7 @@ class ArticleController extends BaseAdminController
      */
     public function add()
     {
-        $params = (new ArticleValidate())->post()->goCheck('add');
+        $params = $this->validateObj->post()->goCheck('add');
         ArticleLogic::add($params);
         return $this->success('添加成功', [], 1, 1);
     }
@@ -59,7 +65,7 @@ class ArticleController extends BaseAdminController
      */
     public function edit()
     {
-        $params = (new ArticleValidate())->post()->goCheck('edit');
+        $params = $this->validateObj->post()->goCheck('edit');
         $result = ArticleLogic::edit($params);
         if (true === $result) {
             return $this->success('编辑成功', [], 1, 1);
@@ -75,7 +81,7 @@ class ArticleController extends BaseAdminController
      */
     public function delete()
     {
-        $params = (new ArticleValidate())->post()->goCheck('delete');
+        $params = $this->validateObj->post()->goCheck('delete');
         ArticleLogic::delete($params);
         return $this->success('删除成功', [], 1, 1);
     }
@@ -88,7 +94,7 @@ class ArticleController extends BaseAdminController
      */
     public function detail()
     {
-        $params = (new ArticleValidate())->goCheck('detail');
+        $params = $this->validateObj->goCheck('detail');
         $result = ArticleLogic::detail($params);
         return $this->data($result);
     }
@@ -102,7 +108,7 @@ class ArticleController extends BaseAdminController
      */
     public function updateStatus()
     {
-        $params = (new ArticleValidate())->post()->goCheck('status');
+        $params = $this->validateObj->post()->goCheck('status');
         $result = ArticleLogic::updateStatus($params);
         if (true === $result) {
             return $this->success('修改成功', [], 1, 1);

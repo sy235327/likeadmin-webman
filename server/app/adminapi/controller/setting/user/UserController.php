@@ -27,7 +27,13 @@ use app\adminapi\{
  */
 class UserController extends BaseAdminController
 {
+    private UserConfigValidate $validateObj;
 
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->validateObj = new UserConfigValidate();
+    }
     /**
      * @notes 获取用户设置
      * @author 乔峰
@@ -47,7 +53,7 @@ class UserController extends BaseAdminController
      */
     public function setConfig()
     {
-        $params = (new UserConfigValidate())->post()->goCheck('user');
+        $params = $this->validateObj->post()->goCheck('user');
         (new UserLogic())->setConfig($params);
         return $this->success('操作成功', [], 1, 1);
     }
@@ -72,7 +78,7 @@ class UserController extends BaseAdminController
      */
     public function setRegisterConfig()
     {
-        $params = (new UserConfigValidate())->post()->goCheck('register');
+        $params = $this->validateObj->post()->goCheck('register');
         (new UserLogic())->setRegisterConfig($params);
         return $this->success('操作成功', [], 1, 1);
     }

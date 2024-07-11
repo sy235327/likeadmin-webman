@@ -28,7 +28,13 @@ use app\adminapi\validate\setting\PayConfigValidate;
 class PayConfigController extends BaseAdminController
 {
 
+    private PayConfigValidate $validateObj;
 
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->validateObj = new PayConfigValidate();
+    }
     /**
      * @notes 设置支付配置
      * @return \support\Response
@@ -37,7 +43,7 @@ class PayConfigController extends BaseAdminController
      */
     public function setConfig()
     {
-        $params = (new PayConfigValidate())->post()->goCheck();
+        $params = $this->validateObj->post()->goCheck();
         PayConfigLogic::setConfig($params);
         return $this->success('设置成功', [], 1, 1);
     }
@@ -51,7 +57,7 @@ class PayConfigController extends BaseAdminController
      */
     public function getConfig()
     {
-        $id = (new PayConfigValidate())->goCheck('get');
+        $id = $this->validateObj->goCheck('get');
         $result = PayConfigLogic::getConfig($id);
         return $this->success('获取成功', $result);
     }

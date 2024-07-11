@@ -25,7 +25,13 @@ use app\adminapi\validate\setting\WebSettingValidate;
  */
 class WebSettingController extends BaseAdminController
 {
+    private WebSettingValidate $validateObj;
 
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->validateObj = new WebSettingValidate();
+    }
     /**
      * @notes 获取网站信息
      * @author 乔峰
@@ -45,7 +51,7 @@ class WebSettingController extends BaseAdminController
      */
     public function setWebsite()
     {
-        $params = (new WebSettingValidate())->post()->goCheck('website');
+        $params = $this->validateObj->post()->goCheck('website');
         WebSettingLogic::setWebsiteInfo($params);
         return $this->success('设置成功', [], 1, 1);
     }

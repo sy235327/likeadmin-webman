@@ -25,6 +25,13 @@ use app\adminapi\validate\channel\OfficialAccountSettingValidate;
  */
 class OfficialAccountSettingController extends BaseAdminController
 {
+    private OfficialAccountSettingValidate $validateObj;
+
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->validateObj = new OfficialAccountSettingValidate();
+    }
     /**
      * @notes 获取公众号配置
      * @return \support\Response
@@ -45,7 +52,7 @@ class OfficialAccountSettingController extends BaseAdminController
      */
     public function setConfig()
     {
-        $params = (new OfficialAccountSettingValidate())->post()->goCheck();
+        $params = $this->validateObj->post()->goCheck();
         (new OfficialAccountSettingLogic())->setConfig($params);
         return $this->success('操作成功',[],1,1);
     }

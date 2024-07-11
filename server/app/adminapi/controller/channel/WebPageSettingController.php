@@ -25,7 +25,13 @@ use app\adminapi\validate\channel\WebPageSettingValidate;
  */
 class WebPageSettingController extends BaseAdminController
 {
+    private WebPageSettingValidate $validateObj;
 
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->validateObj = new WebPageSettingValidate();
+    }
     /**
      * @notes 获取H5设置
      * @return \support\Response
@@ -47,7 +53,7 @@ class WebPageSettingController extends BaseAdminController
      */
     public function setConfig()
     {
-        $params = (new WebPageSettingValidate())->post()->goCheck();
+        $params = $this->validateObj->post()->goCheck();
         WebPageSettingLogic::setConfig($params);
         return $this->success('操作成功', [], 1, 1);
     }

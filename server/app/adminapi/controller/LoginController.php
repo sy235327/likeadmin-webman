@@ -26,7 +26,13 @@ use think\facade\Cache;
 class LoginController extends BaseAdminController
 {
     public array $notNeedLogin = ['account'];
+    private LoginValidate $validateObj;
 
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->validateObj = new LoginValidate();
+    }
     /**
      * @notes 账号登录
      * @date 2021/6/30 17:01
@@ -37,7 +43,7 @@ class LoginController extends BaseAdminController
      */
     public function account()
     {
-        $params = (new LoginValidate())->post()->goCheck();
+        $params = $this->validateObj->post()->goCheck();
         return $this->data((new LoginLogic())->login($params));
     }
 

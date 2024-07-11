@@ -28,7 +28,13 @@ use app\adminapi\{
  */
 class RoleController extends BaseAdminController
 {
+    private RoleValidate $validateObj;
 
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->validateObj = new RoleValidate();
+    }
     /**
      * @notes 查看角色列表
      * @author 乔峰
@@ -47,7 +53,7 @@ class RoleController extends BaseAdminController
      */
     public function add()
     {
-        $params = (new RoleValidate())->post()->goCheck('add');
+        $params = $this->validateObj->post()->goCheck('add');
         $res = RoleLogic::add($params);
         if (true === $res) {
             return $this->success('添加成功', [], 1, 1);
@@ -63,7 +69,7 @@ class RoleController extends BaseAdminController
      */
     public function edit()
     {
-        $params = (new RoleValidate())->post()->goCheck('edit');
+        $params = $this->validateObj->post()->goCheck('edit');
         $res = RoleLogic::edit($params);
         if (true === $res) {
             return $this->success('编辑成功', [], 1, 1);
@@ -79,7 +85,7 @@ class RoleController extends BaseAdminController
      */
     public function delete()
     {
-        $params = (new RoleValidate())->post()->goCheck('del');
+        $params = $this->validateObj->post()->goCheck('del');
         RoleLogic::delete($params['id']);
         return $this->success('删除成功', [], 1, 1);
     }
@@ -95,7 +101,7 @@ class RoleController extends BaseAdminController
      */
     public function detail()
     {
-        $params = (new RoleValidate())->goCheck('detail');
+        $params = $this->validateObj->goCheck('detail');
         $detail = RoleLogic::detail($params['id']);
         return $this->data($detail);
     }

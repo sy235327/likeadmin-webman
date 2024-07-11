@@ -10,6 +10,13 @@ use app\adminapi\validate\setting\StorageValidate;
 
 class StorageController extends BaseAdminController
 {
+    private StorageValidate $validateObj;
+
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->validateObj = new StorageValidate();
+    }
     /**
      * @notes 获取存储引擎列表
      * @author 乔峰
@@ -28,7 +35,7 @@ class StorageController extends BaseAdminController
      */
     public function detail()
     {
-        $param = (new StorageValidate())->get()->goCheck('detail');
+        $param = $this->validateObj->get()->goCheck('detail');
         return $this->success('获取成功', StorageLogic::detail($param));
     }
 
@@ -40,7 +47,7 @@ class StorageController extends BaseAdminController
      */
     public function setup()
     {
-        $params = (new StorageValidate())->post()->goCheck('setup');
+        $params = $this->validateObj->post()->goCheck('setup');
         $result = StorageLogic::setup($params);
         if (true === $result) {
             return $this->success('配置成功', [], 1, 1);
@@ -56,7 +63,7 @@ class StorageController extends BaseAdminController
      */
     public function change()
     {
-        $params = (new StorageValidate())->post()->goCheck('change');
+        $params = $this->validateObj->post()->goCheck('change');
         StorageLogic::change($params);
         return $this->success('切换成功', [], 1, 1);
     }

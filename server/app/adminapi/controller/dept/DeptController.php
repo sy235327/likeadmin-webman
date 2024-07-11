@@ -25,7 +25,13 @@ use app\adminapi\validate\dept\DeptValidate;
  */
 class DeptController extends BaseAdminController
 {
+    private DeptValidate $validateObj;
 
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->validateObj = new DeptValidate();
+    }
     /**
      * @notes 部门列表
      * @author 乔峰
@@ -61,7 +67,7 @@ class DeptController extends BaseAdminController
      */
     public function add()
     {
-        $params = (new DeptValidate())->post()->goCheck('add');
+        $params = $this->validateObj->post()->goCheck('add');
         DeptLogic::add($params);
         return $this->success('添加成功', [], 1, 1);
     }
@@ -74,7 +80,7 @@ class DeptController extends BaseAdminController
      */
     public function edit()
     {
-        $params = (new DeptValidate())->post()->goCheck('edit');
+        $params = $this->validateObj->post()->goCheck('edit');
         $result = DeptLogic::edit($params);
         if (true === $result) {
             return $this->success('编辑成功', [], 1, 1);
@@ -90,7 +96,7 @@ class DeptController extends BaseAdminController
      */
     public function delete()
     {
-        $params = (new DeptValidate())->post()->goCheck('delete');
+        $params = $this->validateObj->post()->goCheck('delete');
         DeptLogic::delete($params);
         return $this->success('删除成功', [], 1, 1);
     }
@@ -103,7 +109,7 @@ class DeptController extends BaseAdminController
      */
     public function detail()
     {
-        $params = (new DeptValidate())->goCheck('detail');
+        $params = $this->validateObj->goCheck('detail');
         $result = DeptLogic::detail($params);
         return $this->data($result);
     }

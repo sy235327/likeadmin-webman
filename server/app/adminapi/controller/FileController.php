@@ -11,7 +11,13 @@ use app\adminapi\validate\FileValidate;
 
 class FileController extends BaseAdminController
 {
+    private FileValidate $validateObj;
 
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->validateObj = new FileValidate();
+    }
     /**
      * @notes 文件列表
      * @author 乔峰
@@ -30,7 +36,7 @@ class FileController extends BaseAdminController
      */
     public function move()
     {
-        $params = (new FileValidate())->post()->goCheck('move');
+        $params = $this->validateObj->post()->goCheck('move');
         FileLogic::move($params);
         return $this->success('移动成功', [], 1, 1);
     }
@@ -43,7 +49,7 @@ class FileController extends BaseAdminController
      */
     public function rename()
     {
-        $params = (new FileValidate())->post()->goCheck('rename');
+        $params = $this->validateObj->post()->goCheck('rename');
         FileLogic::rename($params);
         return $this->success('重命名成功', [], 1, 1);
     }
@@ -56,7 +62,7 @@ class FileController extends BaseAdminController
      */
     public function delete()
     {
-        $params = (new FileValidate())->post()->goCheck('delete');
+        $params = $this->validateObj->post()->goCheck('delete');
         FileLogic::delete($params);
         return $this->success('删除成功', [], 1, 1);
     }
@@ -80,7 +86,7 @@ class FileController extends BaseAdminController
      */
     public function addCate()
     {
-        $params = (new FileValidate())->post()->goCheck('addCate');
+        $params = $this->validateObj->post()->goCheck('addCate');
         FileLogic::addCate($params);
         return $this->success('添加成功', [], 1, 1);
     }
@@ -93,7 +99,7 @@ class FileController extends BaseAdminController
      */
     public function editCate()
     {
-        $params = (new FileValidate())->post()->goCheck('editCate');
+        $params = $this->validateObj->post()->goCheck('editCate');
         FileLogic::editCate($params);
         return $this->success('编辑成功', [], 1, 1);
     }
@@ -106,7 +112,7 @@ class FileController extends BaseAdminController
      */
     public function delCate()
     {
-        $params = (new FileValidate())->post()->goCheck('id');
+        $params = $this->validateObj->post()->goCheck('id');
         FileLogic::delCate($params);
         return $this->success('删除成功', [], 1, 1);
     }

@@ -22,12 +22,24 @@
                         <el-button type="primary">一次最多上传2张</el-button>
                     </upload>
                 </div>
+                <div class="m-4">
+                    <analysisXlsx @success="onSuccess" @error="onError" :show-progress="false">
+                        <el-button type="primary">上传并解析xlsx</el-button>
+                    </analysisXlsx>
+                </div>
+                <div class="m-4">
+                    <el-button type='primary' @click='createXlsx'>
+                        生成xlsx
+                    </el-button>
+                </div>
             </div>
         </el-card>
     </div>
 </template>
 <script lang="ts" setup>
 import Upload from "@/components/upload/index.vue"
+import analysisXlsx from "@/components/analysis-xlsx/index.vue"
+import { toSheet } from "@/utils/util"
 const onChange = (file: any) => {
     console.log("上传文件的状态发生改变", file)
 }
@@ -38,5 +50,16 @@ const onSuccess = (file: any) => {
 
 const onError = (file: any) => {
     console.log("上传文件失败", file)
+}
+const createXlsx = () => {
+    toSheet(
+        [
+            { title1: 5, title2: 6, title3: 7 },
+            { title1: 4, title2: 6, title3: 2 },
+            { title1: 3, title2: 6, title3: 2 }
+        ],
+        { header: ["title1", "title2", "title3"] },
+        "测试"
+    )
 }
 </script>

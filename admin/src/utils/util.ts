@@ -1,5 +1,6 @@
 import { isObject } from "@vue/shared"
 import { cloneDeep } from "lodash"
+import { writeFile as xlsxWriteFile, utils as xlsxUtils } from "xlsx"
 
 /**
  * @description 添加单位
@@ -153,4 +154,21 @@ export const getNonDuplicateID = (length = 8) => {
     let idStr = Date.now().toString(36)
     idStr += Math.random().toString(36).substring(3, length)
     return idStr
+}
+
+/**
+ *[
+ *             { A: 5, B: 6, C: 7 },
+ *             { A: 6, B: 7, C: 8 },
+ *             { A: 7, B: 8, C: 9 }
+ *         ]
+ * @param rows
+ * @param otherJson { skipHeader: true, origin: { r: 1, c: 4 }, header: ["A", "B", "C"] }
+ * @param fileName
+ */
+export const toSheet = async (rows: any, otherJson: any, fileName: string) => {
+    const wb = xlsxUtils.book_new()
+    const ws = xlsxUtils.json_to_sheet(rows, otherJson)
+    xlsxUtils.book_append_sheet(wb, ws, "Sheet1")
+    xlsxWriteFile(wb, fileName + ".xlsx")
 }

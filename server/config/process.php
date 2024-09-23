@@ -17,10 +17,10 @@ use Workerman\Worker;
 //慢进程，nginx反向代理部分需要慢执行的路由到TASK_LISTEN的端口进程执行解决堵塞问题
 //https://www.workerman.net/doc/webman/others/task.html
 $task = [
-    'name' => 'name',
+    'name' => 'SLOW_SERVER_LISTEN',
     'handler' => \Webman\App::class,
     'listen' => getenv('SLOW_SERVER_LISTEN'),
-    'count' => 8, // 进程数
+    'count' => cpu_count() * 4, // 进程数
     'user' => '',
     'group' => '',
     'reusePort' => true,
@@ -72,12 +72,32 @@ $returnData = [
         ]
     ],
 ];
+//慢业务接口
 if (getenv('SLOW_PROCESS_STATUS',false)){
     $returnData['slow_process'] = $task;
 }
+//定时任务
 if (getenv('CRONTAB_STATUS',false)){
     foreach ($crontabs as $crontabKey=>$crontab){
         $returnData[$crontabKey] = $crontab;
     }
+}
+//SSE text/event-stream 响应
+//https://www.workerman.net/q/10107
+if (getenv('SSE_STATUS',false)){
+    $returnData['event-source'] = [
+        'name' => 'SSE_SERVER_LISTEN',
+        'listen' => getenv('SSE_SERVER_LISTEN'),
+        'handler' => \process\EventSource::class,
+    ];
+}
+//http-chunk 推送
+//https://www.workerman.net/q/10071
+if (getenv('CHUNK_STATUS',false)){
+    $returnData['http-chunk'] = [
+        'name' => 'CHUNK_SERVER_LISTEN',
+        'listen' => getenv('CHUNK_SERVER_LISTEN'),
+        'handler' => \process\HttpChunk::class,
+    ];
 }
 return $returnData;

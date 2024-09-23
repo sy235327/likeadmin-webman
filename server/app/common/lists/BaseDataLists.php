@@ -38,6 +38,8 @@ abstract class BaseDataLists implements ListsInterface
     protected $sortOrder = [];
 
     public $export;
+    public $is_export_max=2000;
+    public $is_export_batch=false;
 
     public function __construct()
     {
@@ -169,7 +171,17 @@ abstract class BaseDataLists implements ListsInterface
             }
 
             $count = $this->count();
-
+            //判断改list导出数据是否超标超标需要分批导出
+            $this->is_export_batch = false;
+            if ($count>$this->is_export_max){
+                $this->is_export_batch = true;
+                $this->pageType == 1;
+                $this->pageStart = $this->request->get('page_start', $this->pageStart);
+                $this->pageEnd = $this->request->get('page_end', $this->is_export_max);
+                //改变查询数量参数（例：第2页到，第5页的数据，查询->page(2,(5-2+1)*25)
+                $this->limitOffset = ($this->pageStart - 1) * $this->pageSize;
+                $this->limitLength = ($this->pageEnd - $this->pageStart + 1) * $this->pageSize;
+            }
             //判断导出范围是否有数据
             if ($count == 0 || ceil($count / $this->pageSize) < $this->pageStart) {
                 $msg = $this->pageType ? '第' . $this->pageStart . '页到第' . $this->pageEnd . '页没有数据，无法导出' : '没有数据,无法导出';

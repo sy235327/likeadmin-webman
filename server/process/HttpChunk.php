@@ -19,7 +19,6 @@ class HttpChunk
         $total_count = 10;
         $connection->send(new Response(200, array('Transfer-Encoding' => 'chunked'), "共{$total_count}段数据<br>"));
         $timer_id = Timer::add(2, function () use ($connection, &$timer_id, $total_count){
-            echo "timer";
             static $count = 0;
             // 连接关闭的时候要将定时器删除，避免定时器不断累积导致内存泄漏
             if ($connection->getStatus() !== TcpConnection::STATUS_ESTABLISHED) {
@@ -34,6 +33,5 @@ class HttpChunk
             // 发送chunk数据
             $connection->send(new Chunk("第{$count}段数据<br>"));
         });
-        echo "test";
     }
 }

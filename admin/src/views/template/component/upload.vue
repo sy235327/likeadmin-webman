@@ -24,13 +24,11 @@
                 </div>
                 <div class="m-4">
                     <analysisXlsx @success="onSuccess" @error="onError" :show-progress="false">
-                        <el-button type="primary">上传并解析xlsx</el-button>
+                        <el-button type="primary">前端并解析xlsx生成json</el-button>
                     </analysisXlsx>
                 </div>
                 <div class="m-4">
-                    <el-button type='primary' @click='createXlsx'>
-                        生成xlsx
-                    </el-button>
+                    <el-button type="primary" @click="createXlsx"> 前端根据json生成xlsx </el-button>
                 </div>
             </div>
         </el-card>

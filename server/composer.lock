@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cf8f89570dccfbc6dd2318615d73a8e3",
+    "content-hash": "9990ac85f6986310748549109a28f92b",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
@@ -2703,6 +2703,84 @@
                 "source": "https://github.com/ralouphie/getallheaders/tree/develop"
             },
             "time": "2019-03-08T08:55:37+00:00"
+        },
+        {
+            "name": "revolt/event-loop",
+            "version": "v1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/revoltphp/event-loop.git",
+                "reference": "25de49af7223ba039f64da4ae9a28ec2d10d0254"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/revoltphp/event-loop/zipball/25de49af7223ba039f64da4ae9a28ec2d10d0254",
+                "reference": "25de49af7223ba039f64da4ae9a28ec2d10d0254",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "ext-json": "*",
+                "jetbrains/phpstorm-stubs": "^2019.3",
+                "phpunit/phpunit": "^9",
+                "psalm/phar": "^5.15"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Revolt\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aaron Piotrowski",
+                    "email": "aaron@trowski.com"
+                },
+                {
+                    "name": "Cees-Jan Kiewiet",
+                    "email": "ceesjank@gmail.com"
+                },
+                {
+                    "name": "Christian Lück",
+                    "email": "christian@clue.engineering"
+                },
+                {
+                    "name": "Niklas Keller",
+                    "email": "me@kelunik.com"
+                }
+            ],
+            "description": "Rock-solid event loop for concurrent PHP applications.",
+            "keywords": [
+                "async",
+                "asynchronous",
+                "concurrency",
+                "event",
+                "event-loop",
+                "non-blocking",
+                "scheduler"
+            ],
+            "support": {
+                "issues": "https://github.com/revoltphp/event-loop/issues",
+                "source": "https://github.com/revoltphp/event-loop/tree/v1.0.6"
+            },
+            "time": "2023-11-30T05:34:44+00:00"
         },
         {
             "name": "rmccue/requests",
@@ -5938,16 +6016,16 @@
         },
         {
             "name": "workerman/workerman",
-            "version": "v4.1.15",
+            "version": "v5.0.0-beta.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/walkor/workerman.git",
-                "reference": "afc8242fc769ab7cf22eb4ac22b97cb59d465e4e"
+                "reference": "b1f8c5a58640f17fe6acb59081e488a9b4f5e896"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/walkor/workerman/zipball/afc8242fc769ab7cf22eb4ac22b97cb59d465e4e",
-                "reference": "afc8242fc769ab7cf22eb4ac22b97cb59d465e4e",
+                "url": "https://api.github.com/repos/walkor/workerman/zipball/b1f8c5a58640f17fe6acb59081e488a9b4f5e896",
+                "reference": "b1f8c5a58640f17fe6acb59081e488a9b4f5e896",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -5957,7 +6035,17 @@
                 ]
             },
             "require": {
-                "php": ">=7.0"
+                "ext-json": "*",
+                "php": ">=8.1"
+            },
+            "conflict": {
+                "ext-swow": "<v1.0.0"
+            },
+            "require-dev": {
+                "guzzlehttp/guzzle": "^7.0",
+                "mockery/mockery": "2.0.x-dev",
+                "pestphp/pest": "2.x-dev",
+                "phpstan/phpstan": "1.11.x-dev"
             },
             "suggest": {
                 "ext-event": "For better performance. "
@@ -5965,7 +6053,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Workerman\\": "./"
+                    "Workerman\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -5976,22 +6064,24 @@
                 {
                     "name": "walkor",
                     "email": "walkor@workerman.net",
-                    "homepage": "http://www.workerman.net",
+                    "homepage": "https://www.workerman.net",
                     "role": "Developer"
                 }
             ],
             "description": "An asynchronous event driven PHP framework for easily building fast, scalable network applications.",
-            "homepage": "http://www.workerman.net",
+            "homepage": "https://www.workerman.net",
             "keywords": [
                 "asynchronous",
-                "event-loop"
+                "event-loop",
+                "framework",
+                "http"
             ],
             "support": {
                 "email": "walkor@workerman.net",
-                "forum": "http://wenda.workerman.net/",
+                "forum": "https://www.workerman.net/questions",
                 "issues": "https://github.com/walkor/workerman/issues",
                 "source": "https://github.com/walkor/workerman",
-                "wiki": "http://doc.workerman.net/"
+                "wiki": "https://www.workerman.net/doc/workerman/"
             },
             "funding": [
                 {
@@ -6003,19 +6093,22 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2024-02-19T02:10:39+00:00"
+            "time": "2023-07-27T07:34:23+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "workerman/workerman": 10
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=8.0",
+        "php": ">=8.2",
         "ext-json": "*",
-        "ext-openssl": "*",
+        "ext-fileinfo": "*",
+        "ext-simplexml": "*",
         "ext-bcmath": "*",
         "ext-curl": "*"
     },

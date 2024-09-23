@@ -559,6 +559,7 @@ if (!function_exists('getRealIP')){
         return $real_ip;
     }
 }
+
 if (!function_exists('requestFormPost')){
     function requestFormPost(string $url,mixed $data,string|null &$error,$result_json_format = true,array $addHeaders = []): bool|array|string|null {
         $headers = array('Content-Type: application/x-www-form-urlencoded');

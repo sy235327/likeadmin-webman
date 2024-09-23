@@ -99,6 +99,7 @@ class JsonService
 
         //获取导出文件的下载链接
         if ($lists->export == ExportEnum::EXPORT && $lists instanceof ListsExcelInterface) {
+            //todo 改前端导出 新加判定是否需要调用分批导出
             $exportDownloadUrl = $lists->createExcel($lists->setExcelFields(), $lists->lists());
             return self::success('', ['url' => $exportDownloadUrl], 2);
         }

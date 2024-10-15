@@ -747,3 +747,67 @@ if (!function_exists('lackNumberKeyMapToList')) {
         return $list;
     }
 }
+
+if (!function_exists('time_to_date')) {
+
+    function time_to_date($time,$format = "Y-m-d H:i:s"): string {
+        if (!$time || $time <= 0){
+            return '';
+        }
+        $time = date($format,$time);
+        return $time;
+    }
+}
+if (!function_exists('date_to_time')) {
+
+    function date_to_time($date): bool|int {
+        return strtotime($date);
+    }
+}
+
+if (!function_exists('find_missing_elements')) {
+
+    // 比较两个整数数组，找出第一个数组中缺少的元素
+    function find_missing_elements($array1, $array2): array {
+        $missingElements = array_diff($array2, $array1);
+        return array_values($missingElements);
+    }
+}
+
+if (!function_exists('mapListByKeyGetList')){
+    /**
+     * 字典数组转list
+     */
+    function mapListByKeyGetList(array|object $originData,$key): array {
+        $list = [];
+        foreach($originData as $item){
+            if (isset($item[$key])){
+                $list[] = $item[$key];
+            }
+        }
+        return $list;
+    }
+}
+if (!function_exists('listToMapByItemKey')){
+    /**
+     * list数组按照指定key转map
+     * map的value根据isMapList决定value是数组接收还是list[index]的值
+     */
+    function listToMapByItemKey(array|object $list,mixed $itemKey,bool $isMapList=true,mixed $defaultVal=[]):mixed{
+        if (!is_array($list)){
+            return $defaultVal;
+        }
+        $map = [];
+        foreach($list as $item){
+            if (isset($item[$itemKey])){
+                $key = $item[$itemKey];
+                if($isMapList){
+                    $map[$key][] = $item;
+                }else{
+                    $map[$key] = $item;
+                }
+            }
+        }
+        return ($map&&count(array_keys($map))>0)?$map:$defaultVal;
+    }
+}

@@ -16,11 +16,23 @@ use Webman\Session\FileSessionHandler;
 use Webman\Session\RedisSessionHandler;
 use Webman\Session\RedisClusterSessionHandler;
 
+$type = "file";
+$sessionHandler = FileSessionHandler::class;
+switch (getenv('SESSION_DRIVER')) {
+    case 'redis':
+        $type = 'redis';
+        $sessionHandler = RedisSessionHandler::class;
+        break;
+    case 'redis_cluster':
+        $type = 'redis_cluster';
+        $sessionHandler = RedisClusterSessionHandler::class;
+        break;
+}
 return [
 
-    'type' => getenv('SESSION_DRIVER'), // or redis or redis_cluster
+    'type' => $type, // file or redis or redis_cluster
 
-    'handler' => FileSessionHandler::class,
+    'handler' => $sessionHandler,
 
     'config' => [
         'file' => [
@@ -40,7 +52,7 @@ return [
             'host' => ['127.0.0.1:7000', '127.0.0.1:7001', '127.0.0.1:7001'],
             'timeout' => 2,
             'auth' => '',
-            'prefix' => 'redis_session_',
+            'prefix' => getenv('CACHE_SESSION_PREFIX'),
         ]
     ],
 

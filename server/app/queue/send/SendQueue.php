@@ -9,14 +9,18 @@ use Webman\RedisQueue\Redis;
  */
 class SendQueue
 {
+    //日志队列key
     public static string $QUEUE_LOG_PUSH = 'queue-send-mail';
+
+    //导入表格队列key
+    public static string $QUEUE_TABLE_PUSH = 'queue-table-import';
     /**
      * 异步插入队列
      * @param $queue_name string 队列名
      * @param $data mixed 数据，可以直接传数组，无需序列化 例如：['to' => 'tom@gmail.com', 'content' => 'hello']
      * @param $delay int 0 是否投递延迟消息 延迟多少秒
      */
-    public function queueAsync(string $queue_name,$data,int $delay = 0)
+    public function queueAsync(string $queue_name, mixed $data, int $delay = 0): void
     {
         if ($delay === null){
             // 投递消息
@@ -33,7 +37,7 @@ class SendQueue
      * @param $delay int 0 是否投递延迟消息 延迟多少秒
      * @return boolean 是否成功
      */
-    public function queueSync(string $queue_name,$data,int $delay = 0)
+    public function queueSync(string $queue_name, mixed $data, int $delay = 0): bool
     {
         if ($delay === null){
             // 投递消息

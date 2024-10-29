@@ -5,25 +5,25 @@ namespace app\queue\redis;
 use app\queue\send\SendQueue;
 use Webman\RedisQueue\Consumer;
 
-class MySendMail implements Consumer
+class LogClient implements Consumer
 {
     /**
      * 队列和配置初始化
      */
     public function __construct() {
-        $this->connection = getenv('REDIS_QUEUE_CONNECTION');
+        $this->connection = getenv('REDIS_QUEUE_CONNECTION','');
         $this->queue = SendQueue::$QUEUE_LOG_PUSH;
     }
 
     // 要消费的队列名
-    public $queue = '';
+    public string $queue = '';
 
     // 连接名，对应 plugin/webman/redis-queue/redis.php 里的连接`
-    public $connection = '';
+    public string $connection = '';
 
 
     // 消费
-    public function consume($data)
+    public function consume($data): void
     {
         // 无需反序列化
         var_export($data);
@@ -41,7 +41,7 @@ class MySendMail implements Consumer
         'error' => '错误信息' // 错误信息
     ]
     */
-    public function onConsumeFailure(\Throwable $e, $package)
+    public function onConsumeFailure(\Throwable $e, $package): void
     {
         echo "consume failure\n";
         echo $e->getMessage() . "\n";

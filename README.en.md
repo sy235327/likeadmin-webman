@@ -156,7 +156,21 @@ pc
         try_files $uri $uri/ /pc/index.html;
     }
 ```
+v5 - Serialization Warning Issue Note: As of PHP 8.1.0, classes that implement the Serializable interface will have a deprecation warning if they do not implement both the __serialize() and __unserialize() methods.
 
+Opis\\Closure\\SerializableClosure implements the Serializable interface, which is deprecated. Implement __serialize() and __unserialize() instead (or in addition, if support for old PHP versions is necessary)
+vendor/opis/closure/src/SerializableClosure.php
+```
+添加以下代码：
+public function __serialize()
+{
+return $this->serialize();
+}
+public function __unserialize($data)
+{
+$this->unserialize($data);
+}
+```
 
 # Manual (文档)
 

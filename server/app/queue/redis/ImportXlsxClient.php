@@ -45,42 +45,54 @@ class ImportXlsxClient implements Consumer
     {
         // 无需反序列化
         var_export($data);
+        //表格文件所在目录
         $filePath = $data['file_src'];
-        $get_config_key = $data['get_config_key'];
+        //用户id
         $adminId = $data['admin_id'];
+        $get_config_key = $data['get_config_key'];
         if (!$get_config_key){
             $get_config_key = 'def_import_template';
         }
+        //头配置对应key
         $config_key = 'import_handler_keys.'.$get_config_key;
+        //表格头所在行
         $head_index = 0;
         if (isset($data['head_index'])){
             $head_index = $data['head_index'];
         }
+        //最多处理表格数据量
         $max_row = 5000;
         if (isset($data['handler_max_index'])){
             $max_row = $data['handler_max_index'];
         }
+        //表格头配置示例:
+        //[
+        //    "姓名"=>"name",
+        //    "电话号码"=>"mobile",
+        //    "年月(格式:年/月)"=>'wages_year_month',
+        //    "时间(格式:年/月/日)"=>"payday"
+        //]
         $excel_keys_config = config($config_key,[]);
         try{
             // 指令输出
             print("----开始执行----\r\n");
             // 实例化对象
-            if (strstr($filePath, '.xlsx')) {
+            if (str_contains($filePath, '.xlsx')) {
                 // 对应文件类型为 .xlsx
                 $PHPReader = new Xlsx();
-            } elseif (strstr($filePath, '.xls')) {
+            } elseif (str_contains($filePath, '.xls')) {
                 // 对应文件类型为 .xls
                 $PHPReader = new Xls();
-            } elseif (strstr($filePath, '.csv')) {
+            } elseif (str_contains($filePath, '.csv')) {
                 $PHPReader = new Csv();
             } else {
                 // 文件类型无法识别
                 print("文件类型无法处理\r\n");
                 return;
             }
-            /**  Create a new Instance of our Read Filter, passing in the limits on which rows we want to read  **/
+            // 构建读取过滤器
             $chunkFilter = new ChunkReadFilter($head_index,1);
-            /**  Tell the Reader that we want to use the new Read Filter that we've just Instantiated  **/
+            // 设置读取过滤器 实现分片读取
             $PHPReader->setReadFilter($chunkFilter);
             // 载入Excel文件
             $PHPExcel = $PHPReader->load(public_path() . $filePath);
@@ -90,6 +102,7 @@ class ImportXlsxClient implements Consumer
             $arr = $sheet->toArray();
             // 解析
             $data = [];
+            //数据长度
             $length = count($arr);
 
             if ($length < 1) {
@@ -98,6 +111,7 @@ class ImportXlsxClient implements Consumer
             }
             //获取key值
             $keys_list = [];
+            //是否常规配置方式处理的key,其他归属other_info
             $isSaveKeys = [];
             for ($keys_index = 0; $keys_index < count($arr[0]); $keys_index++) {
                 $rowTitle = $arr[0][$keys_index];
@@ -123,13 +137,18 @@ class ImportXlsxClient implements Consumer
                 }
             }
 
-            /**  Define how many rows we want for each "chunk"  **/
-            $chunkSize = 100;
+            //表格分批处理数据量
+            $chunkSize = 200;
+            //数据库每多少条保存执行操作
             $chunkSaveNumber = 500;
+            //导入缓存数组
             $save_list = [];
-            $saveOkNumber = 0;
+            //导入时间
             $importTime = time();
-            $startRow = 0;
+            //处理条数
+            $handlerNumber = 0;
+            //保存条数
+            $saveOkNumber = 0;
             /**  Loop to read our worksheet in "chunk size" blocks  **/
             for ($startRow = $head_index+1; $startRow <= $max_row; $startRow += $chunkSize) {
                 /**  Create a new Instance of our Read Filter, passing in the limits on which rows we want to read  **/
@@ -143,10 +162,10 @@ class ImportXlsxClient implements Consumer
                 // 获取Excel数据
                 $arr = $sheet->toArray();
                 $length = count($arr);
-
                 if ($length < 1) {
                     break;
                 }
+                $handlerNumber += $length;
                 for ($i = 1; $i < $length; $i++) {
                     $other_item = [];
                     $save_item = $this->getInitItem($startRow,$adminId,$importTime);
@@ -162,7 +181,7 @@ class ImportXlsxClient implements Consumer
                                     }
                                 }
                                 if (in_array($item['key'],$isSaveKeys)){
-                                    switch ($this->getKeyType($item['key'])){
+                                    switch ($this->getKeyType($item)){
                                         case 1:
                                             if ($val){
                                                 $val = $val."-01";
@@ -204,19 +223,19 @@ class ImportXlsxClient implements Consumer
             }
             $this->handlerBatchSaveList($save_list);
             //更新插入数量
-            $this->handlerEndCallback($startRow,$saveOkNumber,$data);
+            $this->handlerEndCallback($handlerNumber,$saveOkNumber,$data);
             print("----执行结束----\r\n");
         }catch (\Exception $e){
             print("----执行错误----\r\n");
         }
     }
-    public function getKeyType($key): int
+    public function getKeyType($key_item): int
     {
-        if (in_array($key,['year_month','month'])){
-            return 1;
-        }
-        if (in_array($key,['date','year_month_day'])){
+        if (str_contains($key_item['name'],'年/月/日')){
             return 2;
+        }
+        if (str_contains($key_item['name'],'年/月')){
+            return 1;
         }
         return 3;
     }
@@ -239,12 +258,12 @@ class ImportXlsxClient implements Consumer
 
     /**
      * 结束回调
-     * @param $startRow int 执行row数量
+     * @param $handlerNumber int 执行row数量
      * @param $saveOkNumber int 保存数量
      * @param mixed $data 队列参数
      * @return void
      */
-    public function handlerEndCallback(int $startRow, int $saveOkNumber, mixed $data){
+    public function handlerEndCallback(int $handlerNumber, int $saveOkNumber, mixed $data){
 
     }
     // 消费失败回调

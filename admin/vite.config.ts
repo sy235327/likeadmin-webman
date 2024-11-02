@@ -23,13 +23,12 @@ export default defineConfig({
             resolvers: [ElementPlusResolver()],
             dts: 'typings/auto-imports.d.ts',
             eslintrc: {
-                filepath: 'typings/.eslintrc-auto-import.json',
                 enabled: true
             }
         }),
         Components({
-            dts: 'typings/components.d.ts',
             directoryAsNamespace: true,
+            dts: 'typings/components.d.ts',
             resolvers: [ElementPlusResolver()]
         }),
         createStyleImportPlugin({

@@ -13,6 +13,6 @@ app.use(install)
 app.mount('#app')
 
 console.log(
-    `%cLikeadmin-PHP v${config.version}`,
+    `%c${config.version}`,
     'background: #4A5DFF; color: white; font-size: 10px; padding: 4px 8px; border-radius: 4px;'
 )

@@ -21,11 +21,14 @@ export default defineConfig({
         AutoImport({
             imports: ['vue', 'vue-router'],
             resolvers: [ElementPlusResolver()],
+            dts: 'typings/auto-imports.d.ts',
             eslintrc: {
+                filepath: 'typings/.eslintrc-auto-import.json',
                 enabled: true
             }
         }),
         Components({
+            dts: 'typings/components.d.ts',
             directoryAsNamespace: true,
             resolvers: [ElementPlusResolver()]
         }),

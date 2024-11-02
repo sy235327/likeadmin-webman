@@ -1,5 +1,7 @@
 import { isObject } from '@vue/shared'
 import { cloneDeep } from 'lodash'
+import { writeFile as xlsxWriteFile, utils as xlsxUtils } from "xlsx"
+import feedback from "@/utils/feedback"
 
 /**
  * @description 添加单位
@@ -159,4 +161,45 @@ export const getNonDuplicateID = (length = 8) => {
     let idStr = Date.now().toString(36)
     idStr += Math.random().toString(36).substring(3, length)
     return idStr
+}
+
+/**
+ *[
+ *             { A: 5, B: 6, C: 7 },
+ *             { A: 6, B: 7, C: 8 },
+ *             { A: 7, B: 8, C: 9 }
+ *         ]
+ * @param rows
+ * @param otherJson { skipHeader: true, origin: { r: 1, c: 4 }, header: ["A", "B", "C"] }
+ * @param fileName
+ */
+export const toSheet = async (rows: any, otherJson: any, fileName: string) => {
+    const wb = xlsxUtils.book_new()
+    const ws = xlsxUtils.json_to_sheet(rows, otherJson)
+    xlsxUtils.book_append_sheet(wb, ws, "Sheet1")
+    xlsxWriteFile(wb, fileName + ".xlsx")
+}
+/**
+ * 前端生成表格
+ * @param func ((params):Promise<any>=>{}) 请求接口需要返回
+ * {
+ *     rows:[{'姓名':'张三'},{'姓名':'王五'}],
+ *     headers:['姓名'],
+ *     file_name:'文件名',
+ * }
+ * @param otherObj {} 接口追加参数
+ */
+export const toSheetByFunc = async (func: any, otherObj: any) => {
+    feedback.loading("正在导出中...")
+    try {
+        const res = await func({
+            export: 2,
+            ...otherObj
+        })
+        if (res) {
+            await toSheet(res.rows, { header: res.headers }, res.file_name)
+        }
+    } finally {
+        feedback.closeLoading()
+    }
 }

@@ -1,14 +1,16 @@
-import { merge } from "lodash"
-import configs from "@/config"
-import { Axios } from "./axios"
-import { ContentTypeEnum, RequestCodeEnum, RequestMethodsEnum } from "@/enums/requestEnums"
-import type { AxiosHooks } from "./type"
-import { clearAuthInfo, getToken } from "../auth"
-import feedback from "../feedback"
-import NProgress from "nprogress"
-import { AxiosError, type AxiosRequestConfig } from "axios"
-import router from "@/router"
-import { PageEnum } from "@/enums/pageEnum"
+import { AxiosError, type AxiosRequestConfig } from 'axios'
+import { merge } from 'lodash'
+import NProgress from 'nprogress'
+
+import configs from '@/config'
+import { PageEnum } from '@/enums/pageEnum'
+import { ContentTypeEnum, RequestCodeEnum, RequestMethodsEnum } from '@/enums/requestEnums'
+import router from '@/router'
+
+import { clearAuthInfo, getToken } from '../auth'
+import feedback from '../feedback'
+import { Axios } from './axios'
+import type { AxiosHooks } from './type'
 
 // 处理axios的钩子函数
 const axiosHooks: AxiosHooks = {
@@ -24,7 +26,11 @@ const axiosHooks: AxiosHooks = {
             headers.token = token
         }
         // POST请求下如果无data，则将params视为data
-        if (isParamsToData && !Reflect.has(config, "data") && config.method?.toUpperCase() === RequestMethodsEnum.POST) {
+        if (
+            isParamsToData &&
+            !Reflect.has(config, 'data') &&
+            config.method?.toUpperCase() === RequestMethodsEnum.POST
+        ) {
             config.data = params
             config.params = {}
         }
@@ -85,7 +91,7 @@ const defaultOptions: AxiosRequestConfig = {
     // 基础接口地址
     baseURL: configs.baseUrl,
     //请求头
-    headers: { "Content-Type": ContentTypeEnum.JSON, version: configs.version },
+    headers: { 'Content-Type': ContentTypeEnum.JSON, version: configs.version },
     // 处理 axios的钩子函数
     axiosHooks: axiosHooks,
     // 每个接口可以单独配置

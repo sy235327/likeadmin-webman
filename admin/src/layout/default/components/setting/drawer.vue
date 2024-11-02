@@ -1,12 +1,27 @@
 <template>
     <div class="setting-drawer">
-        <el-drawer v-model="showSetting" append-to-body direction="rtl" size="250px" title="主题设置">
+        <el-drawer
+            v-model="showSetting"
+            append-to-body
+            direction="rtl"
+            size="250px"
+            title="主题设置"
+        >
             <div class="setting-item mb-5">
                 <span class="text-tx-secondary">风格设置</span>
                 <div class="flex mt-4 cursor-pointer">
-                    <div class="mr-4 flex relative text-primary" v-for="item in sideThemeList" :key="item.type" @click="sideTheme = item.type">
+                    <div
+                        class="mr-4 flex relative text-primary"
+                        v-for="item in sideThemeList"
+                        :key="item.type"
+                        @click="sideTheme = item.type"
+                    >
                         <img :src="item.image" width="52" height="36" />
-                        <icon v-if="sideTheme == item.type" class="icon-select" name="el-icon-Select" />
+                        <icon
+                            v-if="sideTheme == item.type"
+                            class="icon-select"
+                            name="el-icon-Select"
+                        />
                     </div>
                 </div>
             </div>
@@ -25,13 +40,21 @@
             <div class="setting-item mb-5 flex justify-between items-center">
                 <span class="text-tx-secondary">开启多页签栏</span>
                 <div>
-                    <el-switch v-model="openMultipleTabs" :active-value="true" :inactive-value="false" />
+                    <el-switch
+                        v-model="openMultipleTabs"
+                        :active-value="true"
+                        :inactive-value="false"
+                    />
                 </div>
             </div>
             <div class="setting-item mb-5 flex justify-between items-center">
                 <span class="text-tx-secondary">只展开一个一级菜单</span>
                 <div>
-                    <el-switch v-model="isUniqueOpened" :active-value="true" :inactive-value="false" />
+                    <el-switch
+                        v-model="isUniqueOpened"
+                        :active-value="true"
+                        :inactive-value="false"
+                    />
                 </div>
             </div>
             <div class="setting-item mb-5 flex justify-between items-center">
@@ -60,20 +83,21 @@
 </template>
 
 <script setup lang="ts">
-import useSettingStore from "@/stores/modules/setting"
-import { useDark, useToggle } from "@vueuse/core"
-import theme_light from "@/assets/images/theme_white.png"
-import theme_dark from "@/assets/images/theme_black.png"
+import { useDark, useToggle } from '@vueuse/core'
+
+import theme_dark from '@/assets/images/theme_black.png'
+import theme_light from '@/assets/images/theme_white.png'
+import useSettingStore from '@/stores/modules/setting'
 
 const settingStore = useSettingStore()
-const predefineColors = ref(["#409EFF", "#28C76F", "#EA5455", "#FF9F43", "#01CFE8", "#4A5DFF"])
+const predefineColors = ref(['#409EFF', '#28C76F', '#EA5455', '#FF9F43', '#01CFE8', '#4A5DFF'])
 const sideThemeList = [
     {
-        type: "dark",
+        type: 'dark',
         image: theme_dark
     },
     {
-        type: "light",
+        type: 'light',
         image: theme_light
     }
 ]
@@ -84,7 +108,7 @@ const sideTheme = computed({
     },
     set(value) {
         settingStore.setSetting({
-            key: "sideTheme",
+            key: 'sideTheme',
             value
         })
     }
@@ -96,7 +120,7 @@ const openMultipleTabs = computed({
     },
     set(value) {
         settingStore.setSetting({
-            key: "openMultipleTabs",
+            key: 'openMultipleTabs',
             value
         })
     }
@@ -108,7 +132,7 @@ const isUniqueOpened = computed({
     },
     set(value) {
         settingStore.setSetting({
-            key: "isUniqueOpened",
+            key: 'isUniqueOpened',
             value
         })
     }
@@ -120,7 +144,7 @@ const sideWidth = computed({
     },
     set(value) {
         settingStore.setSetting({
-            key: "sideWidth",
+            key: 'sideWidth',
             value
         })
     }
@@ -131,7 +155,7 @@ const showSetting = computed({
     },
     set(value) {
         settingStore.setSetting({
-            key: "showDrawer",
+            key: 'showDrawer',
             value
         })
     }
@@ -142,7 +166,7 @@ const theme = computed({
     },
     set(value) {
         settingStore.setSetting({
-            key: "theme",
+            key: 'theme',
             value
         })
         themeChange()
@@ -155,7 +179,7 @@ const showLogo = computed({
     },
     set(value) {
         settingStore.setSetting({
-            key: "showLogo",
+            key: 'showLogo',
             value
         })
     }
@@ -167,7 +191,7 @@ const showCrumb = computed({
     },
     set(value) {
         settingStore.setSetting({
-            key: "showCrumb",
+            key: 'showCrumb',
             value
         })
     }

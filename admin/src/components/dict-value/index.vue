@@ -1,7 +1,7 @@
 <template>
     <div>
         <template v-for="(item, index) in getOptions" :key="index">
-            <span>{{ index != 0 ? "、" : "" }}{{ item[config.label] }}</span>
+            <span>{{ index != 0 ? '、' : '' }}{{ item[config.label] }}</span>
         </template>
     </div>
 </template>
@@ -15,15 +15,15 @@ const props = withDefaults(
     {
         options: () => [],
         config: () => ({
-            label: "name",
-            value: "value"
+            label: 'name',
+            value: 'value'
         })
     }
 )
 
 const values = computed(() => {
-    if (props.value !== null && typeof props.value !== "undefined") {
-        return Array.isArray(props.value) ? props.value : String(props.value).split(",")
+    if (props.value !== null && typeof props.value !== 'undefined') {
+        return Array.isArray(props.value) ? props.value : String(props.value).split(',')
     } else {
         return []
     }

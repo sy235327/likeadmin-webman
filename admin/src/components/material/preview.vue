@@ -1,7 +1,12 @@
 <template>
     <div v-show="modelValue">
         <div v-if="type == 'image'">
-            <el-image-viewer v-if="previewLists.length" :url-list="previewLists" hide-on-click-modal @close="handleClose" />
+            <el-image-viewer
+                v-if="previewLists.length"
+                :url-list="previewLists"
+                hide-on-click-modal
+                @close="handleClose"
+            />
         </div>
         <div v-if="type == 'video'">
             <el-dialog v-model="visible" width="740px" title="视频预览" :before-close="handleClose">
@@ -19,15 +24,15 @@ const props = defineProps({
     },
     url: {
         type: String,
-        default: ""
+        default: ''
     },
     type: {
         type: String,
-        default: "image"
+        default: 'image'
     }
 })
 const emit = defineEmits<{
-    (event: "update:modelValue", value: boolean): void
+    (event: 'update:modelValue', value: boolean): void
 }>()
 
 const playerRef = shallowRef()
@@ -38,12 +43,12 @@ const visible = computed({
     },
 
     set(value) {
-        emit("update:modelValue", value)
+        emit('update:modelValue', value)
     }
 })
 
 const handleClose = () => {
-    emit("update:modelValue", false)
+    emit('update:modelValue', false)
 }
 
 const previewLists = ref<any[]>([])

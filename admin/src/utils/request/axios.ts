@@ -1,8 +1,15 @@
-import { RequestMethodsEnum } from "@/enums/requestEnums"
-import axios, { AxiosError, type AxiosInstance, type AxiosRequestConfig, type AxiosResponse } from "axios"
-import { isFunction, merge, cloneDeep } from "lodash"
-import axiosCancel from "./cancel"
-import type { RequestData, RequestOptions } from "./type"
+import axios, {
+    AxiosError,
+    type AxiosInstance,
+    type AxiosRequestConfig,
+    type AxiosResponse
+} from 'axios'
+import { cloneDeep, isFunction, merge } from 'lodash'
+
+import { RequestMethodsEnum } from '@/enums/requestEnums'
+
+import axiosCancel from './cancel'
+import type { RequestData, RequestOptions } from './type'
 
 export class Axios {
     private axiosInstance: AxiosInstance
@@ -29,7 +36,12 @@ export class Axios {
         if (!this.config.axiosHooks) {
             return
         }
-        const { requestInterceptorsHook, requestInterceptorsCatchHook, responseInterceptorsHook, responseInterceptorsCatchHook } = this.config.axiosHooks
+        const {
+            requestInterceptorsHook,
+            requestInterceptorsCatchHook,
+            responseInterceptorsHook,
+            responseInterceptorsCatchHook
+        } = this.config.axiosHooks
         this.axiosInstance.interceptors.request.use(
             (config) => {
                 this.addCancelToken(config)
@@ -62,7 +74,9 @@ export class Axios {
                 }
 
                 if (err.code == AxiosError.ECONNABORTED || err.code == AxiosError.ERR_NETWORK) {
-                    return new Promise((resolve) => setTimeout(resolve, 500)).then(() => this.retryRequest(err))
+                    return new Promise((resolve) => setTimeout(resolve, 500)).then(() =>
+                        this.retryRequest(err)
+                    )
                 }
                 return Promise.reject(err)
             }
@@ -105,21 +119,30 @@ export class Axios {
     /**
      * @description get请求
      */
-    get<T = any>(config: Partial<AxiosRequestConfig>, options?: Partial<RequestOptions>): Promise<T> {
+    get<T = any>(
+        config: Partial<AxiosRequestConfig>,
+        options?: Partial<RequestOptions>
+    ): Promise<T> {
         return this.request({ ...config, method: RequestMethodsEnum.GET }, options)
     }
 
     /**
      * @description post请求
      */
-    post<T = any>(config: Partial<AxiosRequestConfig>, options?: Partial<RequestOptions>): Promise<T> {
+    post<T = any>(
+        config: Partial<AxiosRequestConfig>,
+        options?: Partial<RequestOptions>
+    ): Promise<T> {
         return this.request({ ...config, method: RequestMethodsEnum.POST }, options)
     }
 
     /**
      * @description 请求函数
      */
-    request<T = any>(config: Partial<AxiosRequestConfig>, options?: Partial<RequestOptions>): Promise<any> {
+    request<T = any>(
+        config: Partial<AxiosRequestConfig>,
+        options?: Partial<RequestOptions>
+    ): Promise<any> {
         const opt: RequestOptions = merge({}, this.options, options)
         const axioxConfig: AxiosRequestConfig = {
             ...cloneDeep(config),

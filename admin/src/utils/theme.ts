@@ -1,23 +1,24 @@
-import colors from "css-color-function"
+import colors from 'css-color-function'
+
 const lightConfig = {
-    "dark-2": "shade(20%)",
-    "light-3": "tint(30%)",
-    "light-5": "tint(50%)",
-    "light-7": "tint(70%)",
-    "light-8": "tint(80%)",
-    "light-9": "tint(90%)"
+    'dark-2': 'shade(20%)',
+    'light-3': 'tint(30%)',
+    'light-5': 'tint(50%)',
+    'light-7': 'tint(70%)',
+    'light-8': 'tint(80%)',
+    'light-9': 'tint(90%)'
 }
 
 const darkConfig = {
-    "light-3": "shade(20%)",
-    "light-5": "shade(30%)",
-    "light-7": "shade(50%)",
-    "light-8": "shade(60%)",
-    "light-9": "shade(70%)",
-    "dark-2": "tint(20%)"
+    'light-3': 'shade(20%)',
+    'light-5': 'shade(30%)',
+    'light-7': 'shade(50%)',
+    'light-8': 'shade(60%)',
+    'light-9': 'shade(70%)',
+    'dark-2': 'tint(20%)'
 }
 
-const themeId = "theme-vars"
+const themeId = 'theme-vars'
 
 /**
  * @author Jason
@@ -25,7 +26,7 @@ const themeId = "theme-vars"
  * 可选值有primary、success、warning、danger、error、info
  */
 
-export const generateVars = (color: string, type = "primary", isDark = false) => {
+export const generateVars = (color: string, type = 'primary', isDark = false) => {
     const colos = {
         [`--el-color-${type}`]: color
     }
@@ -59,16 +60,16 @@ export const setTheme = (options: Record<string, string>, isDark = false) => {
     let theme = Object.keys(varsMap).reduce((prev, key) => {
         const color = colors.convert(varsMap[key])
         return `${prev}${key}:${color};`
-    }, "")
+    }, '')
     theme = `:root{${theme}}`
     let style = document.getElementById(themeId)
     if (style) {
         style.innerHTML = theme
         return
     }
-    style = document.createElement("style")
-    style.setAttribute("type", "text/css")
-    style.setAttribute("id", themeId)
+    style = document.createElement('style')
+    style.setAttribute('type', 'text/css')
+    style.setAttribute('id', themeId)
     style.innerHTML = theme
     document.head.append(style)
 }

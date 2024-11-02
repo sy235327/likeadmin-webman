@@ -1,4 +1,4 @@
-import type { RouteLocationNormalizedLoaded } from "vue-router"
+import type { RouteLocationNormalizedLoaded } from 'vue-router'
 
 export function useWatchRoute(callback: (route: RouteLocationNormalizedLoaded) => void) {
     const route = useRoute()

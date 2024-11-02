@@ -7,12 +7,12 @@
                 </template>
                 <div>
                     <div class="flex leading-9">
-                        <div class="w-20">当前版本</div>
-                        <span> {{ workbenchData.version.version }}</span>
+                        <div class="w-20">平台名称</div>
+                        <span> {{ workbenchData.version.name }}</span>
                     </div>
                     <div class="flex leading-9">
-                        <div class="w-20">基于框架</div>
-                        <span> {{ workbenchData.version.based }}</span>
+                        <div class="w-20">当前版本</div>
+                        <span> {{ workbenchData.version.version }}</span>
                     </div>
                     <div class="flex leading-9">
                         <div class="w-20">获取渠道</div>
@@ -20,7 +20,11 @@
                             <a :href="workbenchData.version.channel.website" target="_blank">
                                 <el-button type="success" size="small">官网</el-button>
                             </a>
-                            <a class="ml-3" :href="workbenchData.version.channel.gitee" target="_blank">
+                            <a
+                                class="ml-3"
+                                :href="workbenchData.version.channel.gitee"
+                                target="_blank"
+                            >
                                 <el-button type="danger" size="small">Gitee</el-button>
                             </a>
                         </div>
@@ -31,30 +35,40 @@
                 <template #header>
                     <div>
                         <span class="card-title">今日数据</span>
-                        <span class="text-tx-secondary text-xs ml-4"> 更新时间：{{ workbenchData.today.time }} </span>
+                        <span class="text-tx-secondary text-xs ml-4">
+                            更新时间：{{ workbenchData.today.time }}
+                        </span>
                     </div>
                 </template>
 
                 <div class="flex flex-wrap">
                     <div class="w-1/2 md:w-1/4">
-                        <div class="leading-10">访问量(人)</div>
-                        <div class="text-6xl">{{ workbenchData.today.today_visitor }}</div>
-                        <div class="text-tx-secondary text-xs">总访问量：{{ workbenchData.today.total_visitor }}</div>
-                    </div>
-                    <div class="w-1/2 md:w-1/4">
-                        <div class="leading-10">销售额(元)</div>
+                        <div class="leading-10">销售额</div>
                         <div class="text-6xl">{{ workbenchData.today.today_sales }}</div>
-                        <div class="text-tx-secondary text-xs">总销售额：{{ workbenchData.today.total_sales }}</div>
+                        <div class="text-tx-secondary text-xs">
+                            总：{{ workbenchData.today.total_sales }}
+                        </div>
                     </div>
                     <div class="w-1/2 md:w-1/4">
-                        <div class="leading-10">订单量(笔)</div>
+                        <div class="leading-10">成交订单</div>
                         <div class="text-6xl">{{ workbenchData.today.order_num }}</div>
-                        <div class="text-tx-secondary text-xs">总订单量：{{ workbenchData.today.order_sum }}</div>
+                        <div class="text-tx-secondary text-xs">
+                            总：{{ workbenchData.today.order_sum }}
+                        </div>
                     </div>
                     <div class="w-1/2 md:w-1/4">
                         <div class="leading-10">新增用户</div>
                         <div class="text-6xl">{{ workbenchData.today.today_new_user }}</div>
-                        <div class="text-tx-secondary text-xs">总访用户：{{ workbenchData.today.total_new_user }}</div>
+                        <div class="text-tx-secondary text-xs">
+                            总：{{ workbenchData.today.total_new_user }}
+                        </div>
+                    </div>
+                    <div class="w-1/2 md:w-1/4">
+                        <div class="leading-10">新增访问量</div>
+                        <div class="text-6xl">{{ workbenchData.today.today_visitor }}</div>
+                        <div class="text-tx-secondary text-xs">
+                            总：{{ workbenchData.today.total_visitor }}
+                        </div>
                     </div>
                 </div>
             </el-card>
@@ -65,7 +79,11 @@
                     <span>常用功能</span>
                 </template>
                 <div class="flex flex-wrap">
-                    <div v-for="item in workbenchData.menu" class="md:w-[12.5%] w-1/4 flex flex-col items-center" :key="item">
+                    <div
+                        v-for="item in workbenchData.menu"
+                        class="md:w-[12.5%] w-1/4 flex flex-col items-center"
+                        :key="item"
+                    >
                         <router-link :to="item.url" class="mb-3 flex flex-col items-center">
                             <image-contain width="40px" height="40px" :src="item?.image" />
                             <div class="mt-2">{{ item.name }}</div>
@@ -74,34 +92,29 @@
                 </div>
             </el-card>
         </div>
-        <div class="md:flex">
-            <el-card class="flex-1 !border-none md:mr-4 mb-4" shadow="never">
+        <div class="lg:flex gap-4">
+            <el-card class="!border-none mb-4 lg:mb-0 w-full lg:w-2/3" shadow="never">
                 <template #header>
                     <span>访问量趋势图</span>
                 </template>
                 <div>
-                    <v-charts style="height: 350px" :option="workbenchData.visitorOption" :autoresize="true" />
+                    <v-charts
+                        style="height: 350px"
+                        :option="workbenchData.visitorOption"
+                        :autoresize="true"
+                    />
                 </div>
             </el-card>
-            <el-card class="!border-none mb-4" shadow="never">
+            <el-card class="!border-none w-full lg:w-1/3" shadow="never">
                 <template #header>
-                    <span>服务支持</span>
+                    <span>销售额趋势图</span>
                 </template>
                 <div>
-                    <div v-for="(item, index) in workbenchData.support" :key="index">
-                        <div
-                            class="flex items-center pb-10 pt-10"
-                            :class="{
-                                'border-b border-br': index == 0
-                            }"
-                        >
-                            <image-contain :width="120" :height="120" class="flex-none" :src="item.image" />
-                            <div class="ml-2">
-                                <div>{{ item.title }}</div>
-                                <div class="text-tx-regular text-xs mt-4">{{ item.desc }}</div>
-                            </div>
-                        </div>
-                    </div>
+                    <v-charts
+                        style="height: 350px"
+                        :option="workbenchData.saleOption"
+                        :autoresize="true"
+                    />
                 </div>
             </el-card>
         </div>
@@ -109,17 +122,18 @@
 </template>
 
 <script lang="ts" setup name="workbench">
-import { getWorkbench } from "@/api/app"
-import vCharts from "vue-echarts"
+import vCharts from 'vue-echarts'
+
+import { getWorkbench } from '@/api/app'
 // 表单数据
 const workbenchData: any = reactive({
     version: {
-        version: "", // 版本号
-        website: "", // 官网
-        based: "",
+        version: '', // 版本号
+        website: '', // 官网
+        based: '',
         channel: {
-            gitee: "",
-            website: ""
+            gitee: '',
+            website: ''
         }
     },
     support: [],
@@ -130,28 +144,98 @@ const workbenchData: any = reactive({
 
     visitorOption: {
         xAxis: {
-            type: "category",
-            data: [0]
+            type: 'category',
+            data: []
         },
         yAxis: {
-            type: "value"
+            type: 'value'
         },
         legend: {
-            data: ["访问量"]
+            data: ['访问量']
         },
         itemStyle: {
             // 点的颜色。
-            color: "red"
+            color: 'red'
         },
         tooltip: {
-            trigger: "axis"
+            trigger: 'axis'
         },
         series: [
             {
-                name: "访问量",
-                data: [0],
-                type: "line",
-                smooth: true
+                name: '访问量',
+                data: [],
+                type: 'line',
+                smooth: true,
+                lineStyle: {
+                    color: '#4A5DFF',
+                    width: 2
+                },
+                areaStyle: {
+                    color: {
+                        type: 'linear',
+                        x: 0,
+                        y: 0,
+                        x2: 0,
+                        y2: 1,
+                        colorStops: [
+                            {
+                                offset: 0,
+                                color: '#4A5DFF'
+                            },
+                            {
+                                offset: 1,
+                                color: '#5777ff'
+                            }
+                        ]
+                    },
+                    opacity: 0.1
+                }
+            }
+        ]
+    },
+
+    saleOption: {
+        xAxis: {
+            type: 'category',
+            data: []
+        },
+        yAxis: {
+            type: 'value',
+            name: '单位（万）'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        series: [
+            {
+                data: [],
+                type: 'bar',
+                showBackground: true,
+                backgroundStyle: {
+                    color: 'rgba(180, 180, 180, 0.2)',
+                    borderRadius: [10, 10, 0, 0]
+                },
+                barWidth: '40%',
+                itemStyle: {
+                    borderRadius: [10, 10, 0, 0],
+                    color: {
+                        type: 'linear',
+                        x: 0,
+                        y: 0,
+                        x2: 0,
+                        y2: 1,
+                        colorStops: [
+                            {
+                                offset: 0,
+                                color: '#4A5DFF'
+                            },
+                            {
+                                offset: 1,
+                                color: '#5777ff'
+                            }
+                        ]
+                    }
+                }
             }
         ]
     }
@@ -170,6 +254,8 @@ const getData = () => {
             // 清空echarts 数据
             workbenchData.visitorOption.xAxis.data = []
             workbenchData.visitorOption.series[0].data = []
+            workbenchData.saleOption.xAxis.data = []
+            workbenchData.saleOption.series[0].data = []
 
             // 写入从后台拿来的数据
             res.visitor.date.reverse().forEach((item: any) => {
@@ -178,9 +264,39 @@ const getData = () => {
             res.visitor.list[0].data.forEach((item: any) => {
                 workbenchData.visitorOption.series[0].data.push(item)
             })
+            res.sale.date.reverse().forEach((item: any) => {
+                workbenchData.saleOption.xAxis.data.push(item)
+            })
+            res.sale.list[0].data.forEach((item: any) => {
+                if (item <= 50) {
+                    item = {
+                        value: item,
+                        itemStyle: {
+                            color: {
+                                type: 'linear',
+                                x: 0,
+                                y: 0,
+                                x2: 0,
+                                y2: 1,
+                                colorStops: [
+                                    {
+                                        offset: 0,
+                                        color: '#ff8729'
+                                    },
+                                    {
+                                        offset: 1,
+                                        color: '#ff8729'
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+                workbenchData.saleOption.series[0].data.push(item)
+            })
         })
         .catch((err: any) => {
-            console.log("err", err)
+            console.log('err', err)
         })
 }
 

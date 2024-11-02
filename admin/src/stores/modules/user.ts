@@ -1,11 +1,13 @@
-import { defineStore } from "pinia"
-import cache from "@/utils/cache"
-import type { RouteRecordRaw } from "vue-router"
-import { getUserInfo, login, logout } from "@/api/user"
-import router, { filterAsyncRoutes } from "@/router"
-import { TOKEN_KEY } from "@/enums/cacheEnums"
-import { PageEnum } from "@/enums/pageEnum"
-import { clearAuthInfo, getToken } from "@/utils/auth"
+import { defineStore } from 'pinia'
+import type { RouteRecordRaw } from 'vue-router'
+
+import { getUserInfo, login, logout } from '@/api/user'
+import { TOKEN_KEY } from '@/enums/cacheEnums'
+import { PageEnum } from '@/enums/pageEnum'
+import router, { filterAsyncRoutes } from '@/router'
+import { clearAuthInfo, getToken } from '@/utils/auth'
+import cache from '@/utils/cache'
+
 export interface UserState {
     token: string
     userInfo: Record<string, any>
@@ -14,9 +16,9 @@ export interface UserState {
 }
 
 const useUserStore = defineStore({
-    id: "user",
+    id: 'user',
     state: (): UserState => ({
-        token: getToken() || "",
+        token: getToken() || '',
         // 用户信息
         userInfo: {},
         // 路由
@@ -27,7 +29,7 @@ const useUserStore = defineStore({
     getters: {},
     actions: {
         resetState() {
-            this.token = ""
+            this.token = ''
             this.userInfo = {}
             this.perms = []
         },
@@ -52,7 +54,7 @@ const useUserStore = defineStore({
             return new Promise((resolve, reject) => {
                 logout()
                     .then(async (data) => {
-                        this.token = ""
+                        this.token = ''
                         await router.push(PageEnum.LOGIN)
                         clearAuthInfo()
                         resolve(data)

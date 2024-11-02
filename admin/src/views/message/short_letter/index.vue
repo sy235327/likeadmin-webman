@@ -11,7 +11,14 @@
                 </el-table-column>
                 <el-table-column label="操作" min-width="120" fixed="right">
                     <template #default="{ row }">
-                        <el-button v-perms="['notice.sms_config/setConfig']" type="primary" link @click="handleSet(row.type)"> 设置 </el-button>
+                        <el-button
+                            v-perms="['notice.sms_config/setConfig']"
+                            type="primary"
+                            link
+                            @click="handleSet(row.type)"
+                        >
+                            设置
+                        </el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -20,8 +27,10 @@
     </div>
 </template>
 <script lang="ts" setup name="shortLetter">
-import { smsLists } from "@/api/message"
-import EditPopup from "./edit.vue"
+import { smsLists } from '@/api/message'
+
+import EditPopup from './edit.vue'
+
 const editRef = shallowRef<InstanceType<typeof EditPopup>>()
 
 // 列表数据

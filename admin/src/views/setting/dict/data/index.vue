@@ -5,11 +5,21 @@
             <el-form ref="formRef" class="mb-[-16px]" :model="queryParams" inline>
                 <el-form-item label="字典名称">
                     <el-select class="w-[280px]" v-model="queryParams.type_id" @change="getLists">
-                        <el-option v-for="item in optionsData.dict_type" :label="item.name" :value="item.id" :key="item.id" />
+                        <el-option
+                            v-for="item in optionsData.dict_type"
+                            :label="item.name"
+                            :value="item.id"
+                            :key="item.id"
+                        />
                     </el-select>
                 </el-form-item>
                 <el-form-item label="数据名称">
-                    <el-input class="w-[280px]" v-model="queryParams.name" clearable @keyup.enter="resetPage" />
+                    <el-input
+                        class="w-[280px]"
+                        v-model="queryParams.name"
+                        clearable
+                        @keyup.enter="resetPage"
+                    />
                 </el-form-item>
                 <el-form-item label="数据状态">
                     <el-select class="w-[280px]" v-model="queryParams.status">
@@ -26,13 +36,22 @@
         </el-card>
         <el-card class="!border-none mt-4" shadow="never">
             <div>
-                <el-button v-perms="['setting.dict.dict_data/add']" type="primary" @click="handleAdd">
+                <el-button
+                    v-perms="['setting.dict.dict_data/add']"
+                    type="primary"
+                    @click="handleAdd"
+                >
                     <template #icon>
                         <icon name="el-icon-Plus" />
                     </template>
                     添加数据
                 </el-button>
-                <el-button v-perms="['setting.dict.dict_data/delete']" :disabled="!selectData.length" type="danger" @click="handleDelete(selectData)">
+                <el-button
+                    v-perms="['setting.dict.dict_data/delete']"
+                    :disabled="!selectData.length"
+                    type="danger"
+                    @click="handleDelete(selectData)"
+                >
                     <template #icon>
                         <icon name="el-icon-Delete" />
                     </template>
@@ -41,7 +60,11 @@
             </div>
             <div class="mt-4" v-loading="pager.loading">
                 <div>
-                    <el-table :data="pager.lists" size="large" @selection-change="handleSelectionChange">
+                    <el-table
+                        :data="pager.lists"
+                        size="large"
+                        @selection-change="handleSelectionChange"
+                    >
                         <el-table-column type="selection" width="55" />
                         <el-table-column label="ID" prop="id" />
                         <el-table-column label="数据名称" prop="name" min-width="120" />
@@ -52,12 +75,31 @@
                                 <el-tag v-else type="danger">停用</el-tag>
                             </template>
                         </el-table-column>
-                        <el-table-column label="备注" prop="remark" min-width="120" show-tooltip-when-overflow />
+                        <el-table-column
+                            label="备注"
+                            prop="remark"
+                            min-width="120"
+                            show-tooltip-when-overflow
+                        />
                         <el-table-column label="排序" prop="sort" />
                         <el-table-column label="操作" width="120" fixed="right">
                             <template #default="{ row }">
-                                <el-button v-perms="['setting.dict.dict_data/edit']" link type="primary" @click="handleEdit(row)"> 编辑 </el-button>
-                                <el-button v-perms="['setting.dict.dict_data/delete']" link type="danger" @click="handleDelete(row.id)"> 删除 </el-button>
+                                <el-button
+                                    v-perms="['setting.dict.dict_data/edit']"
+                                    link
+                                    type="primary"
+                                    @click="handleEdit(row)"
+                                >
+                                    编辑
+                                </el-button>
+                                <el-button
+                                    v-perms="['setting.dict.dict_data/delete']"
+                                    link
+                                    type="danger"
+                                    @click="handleDelete(row.id)"
+                                >
+                                    删除
+                                </el-button>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -72,20 +114,21 @@
 </template>
 
 <script lang="ts" setup name="dictData">
-import { dictDataDelete, dictDataLists, dictTypeLists } from "@/api/setting/dict"
+import { dictDataDelete, dictDataLists, dictTypeLists } from '@/api/setting/dict'
+import { usePaging } from '@/hooks/usePaging'
+import feedback from '@/utils/feedback'
 
-import { usePaging } from "@/hooks/usePaging"
-import feedback from "@/utils/feedback"
-import EditPopup from "./edit.vue"
+import EditPopup from './edit.vue'
+
 const { query } = useRoute()
 const showEdit = ref(false)
 const editRef = shallowRef<InstanceType<typeof EditPopup>>()
 
 const queryParams = reactive({
-    type: "",
+    type: '',
     type_id: Number(query.id),
-    name: "",
-    status: ""
+    name: '',
+    status: ''
 })
 
 const optionsData = reactive<{
@@ -113,18 +156,18 @@ const handleAdd = async () => {
         type_value: type?.type,
         type_id: type.id
     })
-    editRef.value?.open("add")
+    editRef.value?.open('add')
 }
 
 const handleEdit = async (data: any) => {
     showEdit.value = true
     await nextTick()
-    editRef.value?.open("edit")
+    editRef.value?.open('edit')
     editRef.value?.setFormData(data)
 }
 
 const handleDelete = async (id: any[] | number) => {
-    await feedback.confirm("确定要删除？")
+    await feedback.confirm('确定要删除？')
     await dictDataDelete({ id })
     getLists()
 }

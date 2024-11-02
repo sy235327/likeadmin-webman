@@ -1,7 +1,21 @@
 <template>
     <div class="edit-popup">
-        <popup ref="popupRef" title="分配权限" :async="true" width="550px" @confirm="handleSubmit" @close="handleClose">
-            <el-form class="ls-form" ref="formRef" :rules="rules" :model="formData" label-width="60px" v-loading="loading">
+        <popup
+            ref="popupRef"
+            title="分配权限"
+            :async="true"
+            width="550px"
+            @confirm="handleSubmit"
+            @close="handleClose"
+        >
+            <el-form
+                class="ls-form"
+                ref="formRef"
+                :rules="rules"
+                :model="formData"
+                label-width="60px"
+                v-loading="loading"
+            >
                 <el-scrollbar class="h-[400px] sm:h-[600px]">
                     <el-form-item label="权限" prop="menu_id">
                         <div>
@@ -30,12 +44,14 @@
     </div>
 </template>
 <script lang="ts" setup>
-import type { CheckboxValueType, ElTree, FormInstance } from "element-plus"
-import { roleEdit } from "@/api/perms/role"
-import Popup from "@/components/popup/index.vue"
-import { treeToArray } from "@/utils/util"
-import { menuAll } from "@/api/perms/menu"
-const emit = defineEmits(["success", "close"])
+import type { CheckboxValueType, ElTree, FormInstance } from 'element-plus'
+
+import { menuAll } from '@/api/perms/menu'
+import { roleEdit } from '@/api/perms/role'
+import Popup from '@/components/popup/index.vue'
+import { treeToArray } from '@/utils/util'
+
+const emit = defineEmits(['success', 'close'])
 const treeRef = shallowRef<InstanceType<typeof ElTree>>()
 const formRef = shallowRef<FormInstance>()
 const popupRef = shallowRef<InstanceType<typeof Popup>>()
@@ -45,9 +61,9 @@ const loading = ref(false)
 const menuArray = ref<any[]>([])
 const menuTree = ref<any[]>([])
 const formData = reactive({
-    id: "",
-    name: "",
-    desc: "",
+    id: '',
+    name: '',
+    desc: '',
     sort: 0,
     menu_id: [] as any[]
 })
@@ -56,8 +72,8 @@ const rules = {
     name: [
         {
             required: true,
-            message: "请输入名称",
-            trigger: ["blur"]
+            message: '请输入名称',
+            trigger: ['blur']
         }
     ]
 }
@@ -111,11 +127,11 @@ const handleSubmit = async () => {
     formData.menu_id = getDeptAllCheckedKeys()!
     await roleEdit(formData)
     popupRef.value?.close()
-    emit("success")
+    emit('success')
 }
 
 const handleClose = () => {
-    emit("close")
+    emit('close')
 }
 
 const open = () => {

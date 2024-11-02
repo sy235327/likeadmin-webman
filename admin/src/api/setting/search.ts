@@ -1,11 +1,11 @@
-import request from "@/utils/request"
+import request from '@/utils/request'
 
 /**
  * @return { Promise }
  * @description 获取热门搜索数据
  */
 export function getSearch() {
-    return request.get({ url: "/setting/hotSearch/getConfig" })
+    return request.get({ url: '/setting/hotSearch/getConfig' })
 }
 
 export interface List {
@@ -23,5 +23,5 @@ export interface Search {
  * @description 设置热门搜索
  */
 export function setSearch(params: Search) {
-    return request.post({ url: "/setting/hotSearch/setConfig", params })
+    return request.post({ url: '/setting/hotSearch/setConfig', params })
 }

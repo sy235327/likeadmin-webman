@@ -19,7 +19,12 @@
                 row-key="id"
                 :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
             >
-                <el-table-column label="菜单名称" prop="name" min-width="150" show-overflow-tooltip />
+                <el-table-column
+                    label="菜单名称"
+                    prop="name"
+                    min-width="150"
+                    show-overflow-tooltip
+                />
                 <el-table-column label="类型" prop="type" min-width="80">
                     <template #default="{ row }">
                         <div v-if="row.type == MenuEnum.CATALOGUE">目录</div>
@@ -34,7 +39,12 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column label="权限标识" prop="perms" min-width="150" show-overflow-tooltip />
+                <el-table-column
+                    label="权限标识"
+                    prop="perms"
+                    min-width="150"
+                    show-overflow-tooltip
+                />
                 <el-table-column label="状态" prop="is_disable" min-width="100">
                     <template #default="{ row }">
                         <el-tag v-if="row.is_disable == 0">正常</el-tag>
@@ -42,12 +52,38 @@
                     </template>
                 </el-table-column>
                 <el-table-column label="排序" prop="sort" min-width="100" />
-                <el-table-column label="更新时间" prop="update_time" min-width="180"></el-table-column>
+                <el-table-column
+                    label="更新时间"
+                    prop="update_time"
+                    min-width="180"
+                ></el-table-column>
                 <el-table-column label="操作" width="160" fixed="right">
                     <template #default="{ row }">
-                        <el-button v-if="row.type !== MenuEnum.BUTTON" v-perms="['auth.menu/add']" type="primary" link @click="handleAdd(row.id)"> 新增 </el-button>
-                        <el-button v-perms="['auth.menu/edit']" type="primary" link @click="handleEdit(row)"> 编辑 </el-button>
-                        <el-button v-perms="['auth.menu/delete']" type="danger" link @click="handleDelete(row.id)"> 删除 </el-button>
+                        <el-button
+                            v-if="row.type !== MenuEnum.BUTTON"
+                            v-perms="['auth.menu/add']"
+                            type="primary"
+                            link
+                            @click="handleAdd(row.id)"
+                        >
+                            新增
+                        </el-button>
+                        <el-button
+                            v-perms="['auth.menu/edit']"
+                            type="primary"
+                            link
+                            @click="handleEdit(row)"
+                        >
+                            编辑
+                        </el-button>
+                        <el-button
+                            v-perms="['auth.menu/delete']"
+                            type="danger"
+                            link
+                            @click="handleDelete(row.id)"
+                        >
+                            删除
+                        </el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -55,13 +91,16 @@
         <edit-popup v-if="showEdit" ref="editRef" @success="getLists" @close="showEdit = false" />
     </div>
 </template>
-<script lang="ts" setup name="menu">
-import { menuDelete, menuLists } from "@/api/perms/menu"
-import type { ElTable } from "element-plus"
-import { usePaging } from "@/hooks/usePaging"
-import { MenuEnum } from "@/enums/appEnums"
-import EditPopup from "./edit.vue"
-import feedback from "@/utils/feedback"
+<script lang="ts" setup name="permission-menu">
+import type { ElTable } from 'element-plus'
+
+import { menuDelete, menuLists } from '@/api/perms/menu'
+import { MenuEnum } from '@/enums/appEnums'
+import { usePaging } from '@/hooks/usePaging'
+import feedback from '@/utils/feedback'
+
+import EditPopup from './edit.vue'
+
 const tableRef = shallowRef<InstanceType<typeof ElTable>>()
 const editRef = shallowRef<InstanceType<typeof EditPopup>>()
 let isExpand = false
@@ -81,18 +120,18 @@ const handleAdd = async (id?: number) => {
             pid: id
         })
     }
-    editRef.value?.open("add")
+    editRef.value?.open('add')
 }
 
 const handleEdit = async (data: any) => {
     showEdit.value = true
     await nextTick()
-    editRef.value?.open("edit")
+    editRef.value?.open('edit')
     editRef.value?.getDetail(data)
 }
 
 const handleDelete = async (id: number) => {
-    await feedback.confirm("确定要删除？")
+    await feedback.confirm('确定要删除？')
     await menuDelete({ id })
     getLists()
 }

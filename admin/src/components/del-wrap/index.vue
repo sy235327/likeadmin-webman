@@ -15,10 +15,10 @@ export default defineComponent({
             default: true
         }
     },
-    emits: ["close"],
+    emits: ['close'],
     setup(props, { emit }) {
         const handleClose = () => {
-            emit("close")
+            emit('close')
         }
         return {
             handleClose

@@ -5,14 +5,17 @@
                 <div class="error-code">{{ code }}</div>
             </slot>
             <div class="text-lg text-tx-secondary mt-7 mb-7">{{ title }}</div>
-            <el-button v-if="showBtn" type="primary" @click="router.go(-1)"> {{ second }} 秒后返回上一页 </el-button>
+            <el-button v-if="showBtn" type="primary" @click="router.go(-1)">
+                {{ second }} 秒后返回上一页
+            </el-button>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { onUnmounted, ref } from "vue"
-import { useRouter } from "vue-router"
+import { onUnmounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
+
 const props = defineProps({
     code: String,
     title: String,

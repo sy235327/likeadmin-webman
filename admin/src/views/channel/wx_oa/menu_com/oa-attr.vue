@@ -1,11 +1,18 @@
 <script lang="ts" setup>
-import { useMenuOa } from "./useMenuOa"
-import oaMenuForm from "./oa-menu-form.vue"
-import oaMenuFormEdit from "./oa-menu-form-edit.vue"
+import oaMenuForm from './oa-menu-form.vue'
+import oaMenuFormEdit from './oa-menu-form-edit.vue'
+import { useMenuOa } from './useMenuOa'
 
 const menuRef = shallowRef()
 
-const { menuList, menuIndex, handleAddSubMenu, handleEditSubMenu, handleDelMenu, handleDelSubMenu } = useMenuOa(menuRef)
+const {
+    menuList,
+    menuIndex,
+    handleAddSubMenu,
+    handleEditSubMenu,
+    handleDelMenu,
+    handleDelSubMenu
+} = useMenuOa(menuRef)
 </script>
 
 <template>
@@ -29,10 +36,19 @@ const { menuList, menuIndex, handleAddSubMenu, handleEditSubMenu, handleDelMenu,
                         <div class="flex-1">
                             <!-- 编辑子菜单 -->
                             <ul>
-                                <li class="flex" v-for="(subItem, subIndex) in attrItem.sub_button" :key="subIndex" style="padding: 8px">
+                                <li
+                                    class="flex"
+                                    v-for="(subItem, subIndex) in attrItem.sub_button"
+                                    :key="subIndex"
+                                    style="padding: 8px"
+                                >
                                     <span class="mr-auto">{{ subItem.name }}</span>
                                     <!-- 编辑子菜单 -->
-                                    <oa-menu-form-edit modular="edit" :subItem="subItem" @edit="handleEditSubMenu($event, subIndex)">
+                                    <oa-menu-form-edit
+                                        modular="edit"
+                                        :subItem="subItem"
+                                        @edit="handleEditSubMenu($event, subIndex)"
+                                    >
                                         <el-button link>
                                             <el-icon><EditPen /></el-icon>
                                         </el-button>
@@ -52,7 +68,13 @@ const { menuList, menuIndex, handleAddSubMenu, handleEditSubMenu, handleDelMenu,
 
                             <!-- 新增子菜单 -->
                             <oa-menu-form-edit modular="add" @add="handleAddSubMenu">
-                                <el-button type="primary" link :disabled="attrItem.sub_button.length >= 5"> 添加子菜单({{ attrItem.sub_button.length }}/5) </el-button>
+                                <el-button
+                                    type="primary"
+                                    link
+                                    :disabled="attrItem.sub_button.length >= 5"
+                                >
+                                    添加子菜单({{ attrItem.sub_button.length }}/5)
+                                </el-button>
                             </oa-menu-form-edit>
                         </div>
                     </oa-menu-form>

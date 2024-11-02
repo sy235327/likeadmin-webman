@@ -1,5 +1,7 @@
 FROM php:8.2-cli-alpine
-
+# 设置环境变量，避免交互式安装提示
+ENV DEBIAN_FRONTEND=noninteractive
+RUN sed -i "s/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g" /etc/apk/repositories
 # 安装系统依赖
 RUN apk add --no-cache \
     linux-headers \
@@ -16,6 +18,14 @@ RUN apk add --no-cache \
     gcc \
     make \
     g++
+
+RUN apk update \
+    && apk add \
+       curl openssl openssh openntpd \
+       ca-certificates libressl-dev \
+       libzip-dev zlib-dev libjpeg-turbo-dev libpng-dev libxml2-dev \
+       make g++ gcc libc-dev pkgconf file libtool autoconf automake \
+       libevent-dev
 
 # 安装 PHP 扩展
 RUN docker-php-ext-install \
@@ -34,16 +44,18 @@ RUN docker-php-ext-install \
     shmop \
     sysvmsg \
     sysvsem \
-    sysvshm
+    sysvshm \
+    fileinfo
 
 # 安装额外的 PECL 扩展
-RUN pecl install redis igbinary mcrypt \
-    && docker-php-ext-enable redis igbinary mcrypt
+RUN pecl install redis igbinary mcrypt event \
+    && docker-php-ext-enable redis igbinary mcrypt event
 
 # 设置指定的 disable_functions
 RUN echo "disable_functions = passthru,system,chroot,chgrp,chown,popen,ini_alter,ini_restore,dl,openlog,syslog,readlink,symlink,popepassthru,imap_open,apache_setenv" > /usr/local/etc/php/php.ini
 
-
+# event需要比sockets后加载 https://www.yangdx.com/2022/08/219.html
+RUN mv /usr/local/etc/php/conf.d/docker-php-ext-event.ini /usr/local/etc/php/conf.d/docker-php-ext-z-event.ini
 # 安装 Composer
 COPY --from=composer:2.5.8 /usr/bin/composer /usr/bin/composer
 

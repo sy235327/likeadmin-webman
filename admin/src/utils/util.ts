@@ -1,7 +1,8 @@
 import { isObject } from '@vue/shared'
 import { cloneDeep } from 'lodash'
-import { writeFile as xlsxWriteFile, utils as xlsxUtils } from "xlsx"
-import feedback from "@/utils/feedback"
+import { utils as xlsxUtils, writeFile as xlsxWriteFile } from 'xlsx'
+
+import feedback from '@/utils/feedback'
 
 /**
  * @description 添加单位
@@ -176,8 +177,8 @@ export const getNonDuplicateID = (length = 8) => {
 export const toSheet = async (rows: any, otherJson: any, fileName: string) => {
     const wb = xlsxUtils.book_new()
     const ws = xlsxUtils.json_to_sheet(rows, otherJson)
-    xlsxUtils.book_append_sheet(wb, ws, "Sheet1")
-    xlsxWriteFile(wb, fileName + ".xlsx")
+    xlsxUtils.book_append_sheet(wb, ws, 'Sheet1')
+    xlsxWriteFile(wb, fileName + '.xlsx')
 }
 /**
  * 前端生成表格
@@ -190,7 +191,7 @@ export const toSheet = async (rows: any, otherJson: any, fileName: string) => {
  * @param otherObj {} 接口追加参数
  */
 export const toSheetByFunc = async (func: any, otherObj: any) => {
-    feedback.loading("正在导出中...")
+    feedback.loading('正在导出中...')
     try {
         const res = await func({
             export: 2,

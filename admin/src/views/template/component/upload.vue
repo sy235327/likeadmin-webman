@@ -58,8 +58,8 @@
     </div>
 </template>
 <script lang="ts" setup>
-import Upload from '@/components/upload/index.vue'
 import analysisXlsx from '@/components/analysis-xlsx/index.vue'
+import Upload from '@/components/upload/index.vue'
 import { toSheet } from '@/utils/util'
 const onChange = (file: any) => {
     console.log('上传文件的状态发生改变', file)

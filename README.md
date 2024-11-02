@@ -155,6 +155,7 @@ pc端页面伪静态
 v5版本-序列化警告问题 注意：从 PHP 8.1.0 起，实现 Serializable 接口的类如果没有同时实现 __serialize()、__unserialize() 方法，将产生弃用警告。
 
 Opis\\Closure\\SerializableClosure implements the Serializable interface, which is deprecated. Implement __serialize() and __unserialize() instead (or in addition, if support for old PHP versions is necessary)
+
 vendor/opis/closure/src/SerializableClosure.php
 ```
 添加以下代码：

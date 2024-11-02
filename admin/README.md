@@ -44,3 +44,26 @@ npm run build
 ```sh
 npm run lint
 ```
+
+### Docker 使用说明
+
+构建镜像：
+```bash
+# 构建指定版本
+docker build -t admin-vue:1.0.0 .
+
+# 构建并同时标记为 latest
+docker build -t admin-vue:1.0.0 -t admin-vue:latest .
+
+# 仅构建 latest 版本
+docker build -t admin-vue:latest .
+```
+
+运行容器：
+```bash
+# 运行指定版本
+docker run -d -p 80:8001 admin-vue:1.0.0
+
+# 运行最新版本
+docker run -d -p 80:8001 admin-vue:latest
+```

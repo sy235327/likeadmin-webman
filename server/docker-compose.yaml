@@ -1,0 +1,23 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: server
+    ports:
+      - "8789:8789"
+      - "8790:8790"
+      - "8791:8791"
+      - "8792:8792"
+    environment:
+      - TIMEZONE=Asia/Shanghai
+    volumes:
+      - ./.env:/app/.env
+      - ./runtime:/app/runtime
+      - ./php-logs:/usr/local/var/log/php
+    networks:
+      - webman-network
+
+networks:
+  webman-network:
+    driver: bridge 

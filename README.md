@@ -167,6 +167,40 @@ public function __unserialize($data)
 $this->unserialize($data);
 }
 ```
+
+## Docker 部署
+
+
+### 前置要求
+
+- Docker
+- Docker Compose
+
+### 部署步骤
+
+1. 确保你已经配置好 `server/.env` 文件
+
+2. 在项目根目录下运行：
+```bash
+# 构建并启动服务
+docker-compose up -d
+
+# 查看服务状态
+docker-compose ps
+
+# 查看服务日志
+docker-compose logs -f server
+
+# 停止服务
+docker-compose down
+
+# 重启服务
+docker-compose restart
+
+# 重新构建并启动服务
+docker-compose up -d --build
+```
+
 # Manual (文档)
 
 https://www.workerman.net/doc/webman

@@ -41,20 +41,21 @@ abstract class Server
         if (empty($this->file)) {
             throw new Exception('未找到上传文件的信息');
         }
-        $this->file->extension = pathinfo($this->file->getUploadName(), PATHINFO_EXTENSION);
+
+        $extension = pathinfo($this->file->getUploadName(), PATHINFO_EXTENSION);
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
-        $this->file->getMime = finfo_file($finfo, $this->file->getPathname());
+        $getMime = finfo_file($finfo, $this->file->getPathname());
         // 校验上传文件后缀
         $limit = array_merge(config('project.file_image'), config('project.file_video'));
-        if (!in_array(strtolower($this->file->extension), $limit)) {
-            throw new Exception('不允许上传' . $this->file->extension . '后缀文件');
+        if (!in_array(strtolower($extension), $limit)) {
+            throw new Exception('不允许上传' . $extension . '后缀文件');
         }
 
         // 文件信息
         $this->fileInfo = [
-            'ext'      => $this->file->extension,
+            'ext'      => $extension,
             'size'     => $this->file->getSize(),
-            'mime'     => $this->file->getMime,
+            'mime'     => $getMime,
             'name'     => $this->file->getUploadName(),
             'realPath' => $this->file->getRealPath(),
         ];
@@ -110,6 +111,12 @@ abstract class Server
      * @return mixed
      */
     abstract public function getFileName();
+
+    /**
+     * 构建文件上传凭证
+     * @return mixed
+     */
+    abstract public function getUploadToken($name,$src,$size);
 
     /**
      * 返回文件信息

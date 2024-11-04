@@ -113,4 +113,9 @@ class Qcloud extends Server
         return $this->fileName;
     }
 
+    public function getUploadToken($name,$src,$size)
+    {
+        // TODO: Implement getUploadToken() method.
+        return "";
+    }
 }

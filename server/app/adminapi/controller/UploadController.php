@@ -30,8 +30,9 @@ class UploadController extends BaseAdminController
      * @notes 上传图片
      * @author 乔峰
      * @date 2021/12/29 16:27
+     * @return \support\Response
      */
-    public function image()
+    public function image(): \support\Response
     {
         $cid = $this->request->post('cid', 0);
         $uploadObj = (new UploadService());
@@ -46,8 +47,9 @@ class UploadController extends BaseAdminController
      * @notes 上传视频
      * @author 乔峰
      * @date 2021/12/29 16:27
+     * @return \support\Response
      */
-    public function video()
+    public function video(): \support\Response
     {
         $cid = $this->request->post('cid', 0);
         $uploadObj = (new UploadService());

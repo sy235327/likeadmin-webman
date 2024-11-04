@@ -29,9 +29,9 @@ class UploadController extends BaseApiController
 
     /**
      * @notes 上传图片
-     * @return \support\Response
      * @author 段誉
      * @date 2022/9/20 18:11
+     * @return \support\Response
      */
     public function image(): \support\Response
     {

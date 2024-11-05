@@ -12,9 +12,7 @@ services:
     environment:
       - TIMEZONE=Asia/Shanghai
     volumes:
-      - ./.env:/app/.env
-      - ./runtime:/app/runtime
-      - ./php-logs:/usr/local/var/log/php
+      - ./:/app
     networks:
       - webman-network
 

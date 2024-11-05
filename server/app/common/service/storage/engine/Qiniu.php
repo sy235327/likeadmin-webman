@@ -133,4 +133,12 @@ class Qiniu extends Server
     {
         return $this->fileName;
     }
+
+
+    public function getUploadToken($name,$src,$size)
+    {
+        $dummyAuth = new Auth($this->config['access_key'], $this->config['secret_key']);
+        //size 单位byte
+        return $dummyAuth->uploadToken($this->config['bucket'], $src.'/'.$name, 3600, array('fsizeLimit'=>$size));
+    }
 }

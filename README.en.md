@@ -206,6 +206,16 @@ public function __unserialize($data)
 $this->unserialize($data);
 }
 ```
+Qiniu Cloud PHP>8.1 code is rigorously checked for issues
+https://www.xunruicms.com/wenda/65127.html
+
+Creation of dynamic property Qiniu\Config::$zone is deprecated
+
+vendor/qiniu/php-sdk/src/Qiniu/Config.php
+```
+Add the following code：
+public $zone;
+```
 # link
 [![歪比巴卜/likeadmin-webman（PHP版）](https://gitee.com/suyibk/workman-likeadmin-all/widgets/widget_card.svg?colors=ffffff,1e252b,323d47,455059,d7deea,99a0ae)](https://gitee.com/suyibk/workman-likeadmin-all)
 

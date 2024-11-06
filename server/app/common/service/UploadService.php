@@ -73,7 +73,7 @@ class UploadService extends BaseService
             }
 
             // 上传文件
-            return $this->upload($saveDir,$config,$StorageDriver,$fileInfo,$cid,$source,$sourceId,$fileName);
+            return $this->upload($saveDir,$config,$StorageDriver,$fileInfo,$cid,$source,$sourceId,$fileName,FileEnum::IMAGE_TYPE);
         } catch (Exception $e) {
             $this->setError($e->getMessage());
             return false;
@@ -111,13 +111,13 @@ class UploadService extends BaseService
             }
 
             // 上传文件
-            return $this->upload($saveDir,$config,$StorageDriver,$fileInfo,$cid,$source,$sourceId,$fileName);
+            return $this->upload($saveDir,$config,$StorageDriver,$fileInfo,$cid,$source,$sourceId,$fileName,FileEnum::VIDEO_TYPE);
         } catch (Exception $e) {
             $this->setError($e->getMessage());
             return false;
         }
     }
-    private function upload($saveDir,$config,$StorageDriver,$fileInfo,$cid,$source,$sourceId,$fileName): bool|array
+    private function upload($saveDir,$config,$StorageDriver,$fileInfo,$cid,$source,$sourceId,$fileName,$file_type): bool|array
     {
         // 上传文件
         $saveDir = $saveDir . '/' .  date('Ymd');
@@ -143,7 +143,7 @@ class UploadService extends BaseService
         // 4、写入数据库中
         $file = File::create([
             'cid'         => $cid,
-            'type'        => FileEnum::VIDEO_TYPE,
+            'type'        => $file_type,
             'name'        => $fileInfo['name'],
             'uri'         => $saveDir . '/' . str_replace("\\","/", $fileName),
             'source'      => $source,

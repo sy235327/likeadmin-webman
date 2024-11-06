@@ -28,6 +28,40 @@ like: https://gitee.com/MuZJun/gather-admin.git
 
     Production:
         php start.php start -d
+
+## Docker Deployment
+
+
+### Prerequisites
+
+- Docker
+- Docker Compose
+
+### Deployment Steps
+
+1. Ensure that you have configured the server/.env file.
+
+2. Run the following commands in the project root directory:
+```bash
+# Build and start the services  
+docker-compose up -d
+
+# Check the status of the services  
+docker-compose ps
+
+# View the service logs  
+docker-compose logs -f server
+
+# Stop the services 
+docker-compose down
+
+# Restart the services  
+docker-compose restart
+
+# Rebuild and start the services  
+docker-compose up -d --build
+```
+
 # Production: Deploying Nginx Configuration
 ### Single-domain deployment for frontend and backend
 Directory structure reference:
@@ -156,54 +190,9 @@ pc
         try_files $uri $uri/ /pc/index.html;
     }
 ```
-v5 - Serialization Warning Issue Note: As of PHP 8.1.0, classes that implement the Serializable interface will have a deprecation warning if they do not implement both the __serialize() and __unserialize() methods.
+# link
+[![歪比巴卜/likeadmin-webman（PHP版）](https://gitee.com/suyibk/workman-likeadmin-all/widgets/widget_card.svg?colors=ffffff,1e252b,323d47,455059,d7deea,99a0ae)](https://gitee.com/suyibk/workman-likeadmin-all)
 
-Opis\\Closure\\SerializableClosure implements the Serializable interface, which is deprecated. Implement __serialize() and __unserialize() instead (or in addition, if support for old PHP versions is necessary)
-
-vendor/opis/closure/src/SerializableClosure.php
-```
-添加以下代码：
-public function __serialize()
-{
-return $this->serialize();
-}
-public function __unserialize($data)
-{
-$this->unserialize($data);
-}
-```
-## Docker Deployment
-
-
-### Prerequisites
-
-- Docker
-- Docker Compose
-
-### Deployment Steps
-
-1. Ensure that you have configured the server/.env file.
-
-2. Run the following commands in the project root directory:
-```bash
-# Build and start the services  
-docker-compose up -d
-
-# Check the status of the services  
-docker-compose ps
-
-# View the service logs  
-docker-compose logs -f server
-
-# Stop the services 
-docker-compose down
-
-# Restart the services  
-docker-compose restart
-
-# Rebuild and start the services  
-docker-compose up -d --build
-```
 # Manual (文档)
 
 https://www.workerman.net/doc/webman

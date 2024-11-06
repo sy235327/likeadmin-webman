@@ -73,6 +73,8 @@ RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-interaction --optimize-auto
 
 # 替换 SerializableClosure.php 文件
 RUN cp ext/opis/closure/SerializableClosure.php vendor/opis/closure/src/SerializableClosure.php
+# 替换七牛云的Config.php文件
+RUN cp ext/qiniu/php-sdk/src/Qiniu/Config.php vendor/qiniu/php-sdk/src/Qiniu/Config.php
 
 # 创建安装锁文件
 RUN touch config/install.lock

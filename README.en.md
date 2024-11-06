@@ -190,32 +190,6 @@ pc
         try_files $uri $uri/ /pc/index.html;
     }
 ```
-v5 - Serialization Warning Issue Note: As of PHP 8.1.0, classes that implement the Serializable interface will have a deprecation warning if they do not implement both the __serialize() and __unserialize() methods.
-
-Opis\\Closure\\SerializableClosure implements the Serializable interface, which is deprecated. Implement __serialize() and __unserialize() instead (or in addition, if support for old PHP versions is necessary)
-
-vendor/opis/closure/src/SerializableClosure.php
-```
-添加以下代码：
-public function __serialize()
-{
-return $this->serialize();
-}
-public function __unserialize($data)
-{
-$this->unserialize($data);
-}
-```
-Qiniu Cloud PHP>8.1 code is rigorously checked for issues
-https://www.xunruicms.com/wenda/65127.html
-
-Creation of dynamic property Qiniu\Config::$zone is deprecated
-
-vendor/qiniu/php-sdk/src/Qiniu/Config.php
-```
-Add the following code：
-public $zone;
-```
 # link
 [![歪比巴卜/likeadmin-webman（PHP版）](https://gitee.com/suyibk/workman-likeadmin-all/widgets/widget_card.svg?colors=ffffff,1e252b,323d47,455059,d7deea,99a0ae)](https://gitee.com/suyibk/workman-likeadmin-all)
 

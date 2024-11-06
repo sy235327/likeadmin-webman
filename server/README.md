@@ -185,32 +185,6 @@ pc端页面伪静态
         try_files $uri $uri/ /pc/index.html;
     }
 ```
-v5版本-序列化警告问题 注意：从 PHP 8.1.0 起，实现 Serializable 接口的类如果没有同时实现 __serialize()、__unserialize() 方法，将产生弃用警告。
-
-Opis\\Closure\\SerializableClosure implements the Serializable interface, which is deprecated. Implement __serialize() and __unserialize() instead (or in addition, if support for old PHP versions is necessary)
-
-vendor/opis/closure/src/SerializableClosure.php
-```
-添加以下代码：
-public function __serialize()
-{
-return $this->serialize();
-}
-public function __unserialize($data)
-{
-$this->unserialize($data);
-}
-```
-Qiniu云 PHP>8.1 代码严格检查问题
-https://www.xunruicms.com/wenda/65127.html
-
-Creation of dynamic property Qiniu\Config::$zone is deprecated
-
-vendor/qiniu/php-sdk/src/Qiniu/Config.php
-```
-添加以下代码：
-public $zone;
-```
 # link
 [![歪比巴卜/likeadmin-webman（PHP版）](https://gitee.com/suyibk/workman-likeadmin-all/widgets/widget_card.svg?colors=ffffff,1e252b,323d47,455059,d7deea,99a0ae)](https://gitee.com/suyibk/workman-likeadmin-all)
 

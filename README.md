@@ -27,6 +27,39 @@ like: https://gitee.com/MuZJun/gather-admin.git
         php start.php start
     生产
         php start.php start -d
+
+## Docker 部署 server
+
+
+### 前置要求
+
+- Docker
+- Docker Compose
+
+### 部署步骤
+
+1. 确保你已经配置好 `server/.env` 文件
+
+2. 在项目根目录下运行：
+```bash
+# 构建并启动服务
+docker-compose up -d
+
+# 查看服务状态
+docker-compose ps
+
+# 查看服务日志
+docker-compose logs -f server
+
+# 停止服务
+docker-compose down
+
+# 重启服务
+docker-compose restart
+
+# 重新构建并启动服务
+docker-compose up -d --build
+```
 # 生产：部署nginx配置
 ### 单域名部署前后台
     目录接口参考
@@ -168,39 +201,8 @@ public function __unserialize($data)
 $this->unserialize($data);
 }
 ```
-
-## Docker 部署
-
-
-### 前置要求
-
-- Docker
-- Docker Compose
-
-### 部署步骤
-
-1. 确保你已经配置好 `server/.env` 文件
-
-2. 在项目根目录下运行：
-```bash
-# 构建并启动服务
-docker-compose up -d
-
-# 查看服务状态
-docker-compose ps
-
-# 查看服务日志
-docker-compose logs -f server
-
-# 停止服务
-docker-compose down
-
-# 重启服务
-docker-compose restart
-
-# 重新构建并启动服务
-docker-compose up -d --build
-```
+# link
+[![歪比巴卜/likeadmin-webman（PHP版）](https://gitee.com/suyibk/workman-likeadmin-all/widgets/widget_card.svg?colors=ffffff,1e252b,323d47,455059,d7deea,99a0ae)](https://gitee.com/suyibk/workman-likeadmin-all)
 
 # Manual (文档)
 

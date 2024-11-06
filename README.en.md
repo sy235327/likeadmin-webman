@@ -28,6 +28,40 @@ like: https://gitee.com/MuZJun/gather-admin.git
 
     Production:
         php start.php start -d
+
+## Docker Deployment
+
+
+### Prerequisites
+
+- Docker
+- Docker Compose
+
+### Deployment Steps
+
+1. Ensure that you have configured the server/.env file.
+
+2. Run the following commands in the project root directory:
+```bash
+# Build and start the services  
+docker-compose up -d
+
+# Check the status of the services  
+docker-compose ps
+
+# View the service logs  
+docker-compose logs -f server
+
+# Stop the services 
+docker-compose down
+
+# Restart the services  
+docker-compose restart
+
+# Rebuild and start the services  
+docker-compose up -d --build
+```
+
 # Production: Deploying Nginx Configuration
 ### Single-domain deployment for frontend and backend
 Directory structure reference:
@@ -162,7 +196,7 @@ Opis\\Closure\\SerializableClosure implements the Serializable interface, which 
 
 vendor/opis/closure/src/SerializableClosure.php
 ```
-insert code：
+添加以下代码：
 public function __serialize()
 {
 return $this->serialize();
@@ -172,38 +206,8 @@ public function __unserialize($data)
 $this->unserialize($data);
 }
 ```
-## Docker Deployment
-
-
-### Prerequisites
-
-- Docker
-- Docker Compose
-
-### Deployment Steps
-
-1. Ensure that you have configured the server/.env file.
-
-2. Run the following commands in the project root directory:
-```bash
-# Build and start the services  
-docker-compose up -d
-
-# Check the status of the services  
-docker-compose ps
-
-# View the service logs  
-docker-compose logs -f server
-
-# Stop the services 
-docker-compose down
-
-# Restart the services  
-docker-compose restart
-
-# Rebuild and start the services  
-docker-compose up -d --build
-```
+# link
+[![歪比巴卜/likeadmin-webman（PHP版）](https://gitee.com/suyibk/workman-likeadmin-all/widgets/widget_card.svg?colors=ffffff,1e252b,323d47,455059,d7deea,99a0ae)](https://gitee.com/suyibk/workman-likeadmin-all)
 
 # Manual (文档)
 

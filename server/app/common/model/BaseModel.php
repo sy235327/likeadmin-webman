@@ -10,8 +10,9 @@ use think\db\Query;
 use think\Model;
 
 /**
- * calss BaseModel
- * Class Model
+ * Class BaseModel 基础模型
+ *
+ * Class Model 框架基础模型
  * @package think
  * @mixin Query
  * @method void onAfterRead(Model $model) static after_read事件定义
@@ -57,7 +58,7 @@ use think\Model;
  * @method \think\model\Collection select(mixed $data = null) static 查询多个记录
  * @method Model withAttr(array $name, \Closure $closure) 动态定义获取器
  *
- * Class DbManager
+ * Class DbManager 数据库管理类
  * @package think
  * @mixin BaseQuery
  * @mixin Query

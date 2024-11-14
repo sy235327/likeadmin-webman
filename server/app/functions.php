@@ -823,16 +823,24 @@ if (!function_exists('checkPasswordStrength')){
         }
         $specialChars = '@#$%^&*';
         // 检查是否包含大写字母
-        if (!preg_match('/[A-Z]/', $password)
-            && !preg_match('/[a-z]/', $password)
-            && !preg_match('/[' . preg_quote($specialChars, '/') . ']/', $password)) {
-            $error = "密码必须包含至少一个字母或者特殊字符。";
+        if (!preg_match('/[A-Z]/', $password)) {
+            $error = "密码必须包含至少一个大写字母。";
+            return false;
+        }
+        // 检查是否包含小写字母
+        if (!preg_match('/[a-z]/', $password)) {
+            $error = "密码必须包含至少一个小写字母。";
             return false;
         }
 
         // 检查是否包含数字
         if (!preg_match('/[0-9]/', $password)) {
             $error = '密码必须包含至少一个数字。';
+            return false;
+        }
+        // 特殊字符
+        if (!preg_match('/[' . preg_quote($specialChars, '/') . ']/', $password)) {
+            $error = '密码必须包含至少一个特殊字符。';
             return false;
         }
 
@@ -846,7 +854,7 @@ if (!function_exists('checkPasswordStrength')){
         // 校验是否包含连续字符或重复字符
         $lowercasePassword = strtolower($password);
         if (preg_match('/([a-z]){3,}/', $lowercasePassword) || preg_match('/(d){3,}/', $password)) {
-            $error = '密码过于简单';
+            $error = '密码过于简单：重复字符>3或者连续字符>3';
             return false;
         }
 

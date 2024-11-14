@@ -811,3 +811,45 @@ if (!function_exists('listToMapByItemKey')){
         return ($map&&count(array_keys($map))>0)?$map:$defaultVal;
     }
 }
+
+
+if (!function_exists('checkPasswordStrength')){
+    function checkPasswordStrength(string $password, string|null &$error): bool
+    {
+        // 校验密码长度
+        if (strlen($password) < 8) {
+            $error = '密码长度不能少于8位';
+            return false;
+        }
+        $specialChars = '@#$%^&*';
+        // 检查是否包含大写字母
+        if (!preg_match('/[A-Z]/', $password)
+            && !preg_match('/[a-z]/', $password)
+            && !preg_match('/[' . preg_quote($specialChars, '/') . ']/', $password)) {
+            $error = "密码必须包含至少一个字母或者特殊字符。";
+            return false;
+        }
+
+        // 检查是否包含数字
+        if (!preg_match('/[0-9]/', $password)) {
+            $error = '密码必须包含至少一个数字。';
+            return false;
+        }
+
+        // 校验是否包含常见密码
+        $commonPasswords = ['123456', 'password', 'qwerty'];
+        if (in_array($password, $commonPasswords)) {
+            $error = '密码过于简单';
+            return false;
+        }
+
+        // 校验是否包含连续字符或重复字符
+        $lowercasePassword = strtolower($password);
+        if (preg_match('/([a-z]){3,}/', $lowercasePassword) || preg_match('/(d){3,}/', $password)) {
+            $error = '密码过于简单';
+            return false;
+        }
+
+        return true;
+    }
+}

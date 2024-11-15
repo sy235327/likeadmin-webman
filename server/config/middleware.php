@@ -14,22 +14,24 @@
  */
 
 return [
-    'adminapi'=>[
+    ''=>[
         // 跨域中间件
-        app\common\http\middleware\AdminAllowMiddleware::class,
+        app\common\http\middleware\AllowMiddleware::class,
+    ],
+    'adminapi'=>[
         // 初始化
         app\adminapi\middleware\InitMiddleware::class,
         // 登录验证
         app\adminapi\middleware\LoginMiddleware::class,
         // 权限认证
         app\adminapi\middleware\AuthMiddleware::class,
+        app\common\http\middleware\EndMiddleware::class,
     ],
     'api'=>[
-        // 跨域中间件
-        app\common\http\middleware\AdminAllowMiddleware::class,
         // 初始化
-        \app\api\middleware\InitMiddleware::class,
+        app\api\middleware\InitMiddleware::class,
         // 登录验证
-        \app\api\middleware\LoginMiddleware::class,
+        app\api\middleware\LoginMiddleware::class,
+        app\common\http\middleware\EndMiddleware::class,
     ]
 ];

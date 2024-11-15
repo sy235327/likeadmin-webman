@@ -2,6 +2,7 @@
 
 namespace app\common\service\storage\engine;
 
+use ArrayObject;
 use OSS\OssClient;
 use OSS\Core\OssException;
 
@@ -113,7 +114,38 @@ class Aliyun extends Server
 
     public function getUploadToken($name,$src,$size)
     {
+        try {
+            $ossClient = new OssClient(
+                $this->config['access_key'],
+                $this->config['access_key'],
+                $this->config['domain'],
+                true
+            );    // 设置上传凭证的有效时间，单位是秒，默认是3600秒
+            $timeout = 3600;
+            // 获取上传凭证
+            $response = $ossClient->signUrl($this->config['bucket'], "objectKey", $timeout);
+            // 输出上传凭证
+            if (!$response){
+                $this->error = '获取上传凭证失败';
+                return false;
+            }
+        } catch (OssException $e) {
+            $this->error = $e->getMessage();
+            return false;
+        }
         // TODO: Implement getUploadToken() method.
-        return "";
+        $params = new ArrayObject();
+        $headers = new ArrayObject();
+        $headers['Content-Type'] = 'multipart/form-data';
+        $req_url = '';
+        return [
+            'upload_token'=>'',
+            'save_dir'=>$src,
+            'upload_file_name'=>$name,
+            'upload_file_size'=>$size,
+            'params'=>$params,
+            'headers'=>$headers,
+            'req_url'=>$req_url,
+        ];
     }
 }

@@ -80,14 +80,12 @@ class BaseLikeAdminController extends BaseController
      * @author 乔峰
      * @date 2021/12/27 14:21
      */
-    public function isNotNeedLogin() : bool
+    public function isNotNeedLogin($action) : bool
     {
         $notNeedLogin = $this->notNeedLogin;
         if (empty($notNeedLogin)) {
             return false;
         }
-        $action = $this->request->action;
-
         if (!in_array(trim($action), $notNeedLogin)) {
             return false;
         }

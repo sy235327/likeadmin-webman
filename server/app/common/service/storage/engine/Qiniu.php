@@ -2,6 +2,7 @@
 
 namespace app\common\service\storage\engine;
 
+use ArrayObject;
 use Exception;
 use Qiniu\Auth;
 use Qiniu\Storage\UploadManager;
@@ -139,6 +140,18 @@ class Qiniu extends Server
     {
         $dummyAuth = new Auth($this->config['access_key'], $this->config['secret_key']);
         //size 单位byte
-        return $dummyAuth->uploadToken($this->config['bucket'], $src.'/'.$name, 3600, array('fsizeLimit'=>$size));
+        $token = $dummyAuth->uploadToken($this->config['bucket'], $src.'/'.$name, 3600, array('fsizeLimit'=>$size));
+        $params = new ArrayObject();
+        $headers = new ArrayObject();
+        $req_url = '';
+        return [
+            'upload_token'=>$token,
+            'save_dir'=>$src,
+            'upload_file_name'=>$name,
+            'upload_file_size'=>$size,
+            'params'=>$params,
+            'headers'=>$headers,
+            'req_url'=>$req_url,
+        ];
     }
 }

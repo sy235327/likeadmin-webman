@@ -16,7 +16,6 @@ namespace app\api\controller;
 
 
 use app\api\logic\IndexLogic;
-use think\response\Json;
 
 
 /**
@@ -40,7 +39,7 @@ class IndexController extends BaseApiController
      * @author 段誉
      * @date 2022/9/21 19:15
      */
-    public function index()
+    public function index(): \support\Response
     {
         $result = IndexLogic::getIndexData();
         return $this->data($result);
@@ -56,7 +55,7 @@ class IndexController extends BaseApiController
      * @author 段誉
      * @date 2022/9/21 19:41
      */
-    public function config()
+    public function config(): \support\Response
     {
         $result = IndexLogic::getConfigData();
         return $this->data($result);
@@ -69,7 +68,7 @@ class IndexController extends BaseApiController
      * @author 段誉
      * @date 2022/9/20 20:00
      */
-    public function policy()
+    public function policy(): \support\Response
     {
         $type = $this->request->get('type', '');
         $result = IndexLogic::getPolicyByType($type);
@@ -83,7 +82,7 @@ class IndexController extends BaseApiController
      * @author 段誉
      * @date 2022/9/21 18:37
      */
-    public function decorate()
+    public function decorate(): \support\Response
     {
         $id = $this->request->get('id');
         $result = IndexLogic::getDecorate($id);

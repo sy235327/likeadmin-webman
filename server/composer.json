@@ -32,7 +32,8 @@
   "require": {
     "php": ">=8.2",
     "opis/closure": "master-dev",
-    "workerman/workerman": ">=v5.0.0-beta.7",
+    "workerman/workerman": "v5.0.0-rc.2",
+    "workerman/http-client": "^2.2.8",
     "revolt/event-loop": "^1.0",
     "workerman/webman-framework": "^1.5.16",
     "monolog/monolog": "^2.9.2",

@@ -6,6 +6,7 @@
 use app\common\service\FileService;
 use support\Container;
 use think\facade\Cache;
+use Workerman\Protocols\Http\Chunk;
 
 if (!function_exists('download')) {
     /**
@@ -675,7 +676,189 @@ if (!function_exists('requestGet')) {
         return $json;
     }
 }
-
+if (!function_exists('requestGetAsync')) {
+    /**
+     * @param string $url
+     * @param mixed $data
+     * @param callable|null $success_call function($response, $endFunc)
+     * @param callable|null $error_call function($exception, $endFunc)
+     * @param bool $is_auto_end
+     * @param bool $result_json_format
+     * @param array $addHeaders
+     * @return \support\Response|true
+     * @throws Throwable
+     */
+    function requestGetAsync(string $url, mixed $data, callable|null $success_call, callable|null $error_call,bool $is_auto_end = true, bool $result_json_format = true, array $addHeaders = []): \support\Response|true
+    {
+        $params = $data;
+        if (is_array($data)) {
+            $params = http_build_query($data);
+        }
+        $req_url = $url . '?' . $params;
+        $connection = request()->connection;
+        $headers = [];
+        foreach ($addHeaders as $val) {
+            $header = explode(': ', $val);
+            $headers[$header[0]] = $header[1];
+        }
+        $http = new \Workerman\Http\Client([
+            'headers' => $headers,
+            'timeout'=>60
+        ]);
+        $isEnd = false;
+        $endFunc = function ($endResponse = "") use ($connection,$isEnd) {
+            if (!$connection||$isEnd) {
+                return;
+            }
+            if ($endResponse){
+                $connection->send(new Chunk($endResponse));
+            }
+            $connection->send(new Chunk('')); // 发送空的的chunk代表response结束
+            $isEnd = true;
+        };
+        $http->get($req_url, function ($response) use ($endFunc, $success_call, $result_json_format, $is_auto_end) {
+            if ($result_json_format) {
+                $response = json_decode($response->body(), true);
+            }
+            if ($success_call !== null) {
+                $success_call($response, $endFunc);
+            }
+            $endFunc();
+        }, function ($exception) use ($error_call, $endFunc) {
+            $error_call($exception, $endFunc);
+            $endFunc();
+        });
+        if ($is_auto_end) {
+            return response()->withHeaders([
+                "Transfer-Encoding" => "chunked",
+            ]);
+        }
+        return true;
+    }
+}
+if (!function_exists('requestJsonPostAsync')) {
+    /**
+     * @param string $url
+     * @param mixed $data
+     * @param callable|null $success_call function($response, $endFunc)
+     * @param callable|null $error_call function($exception, $endFunc)
+     * @param bool $is_auto_end
+     * @param bool $result_json_format
+     * @param array $addHeaders
+     * @return \support\Response|true
+     * @throws Throwable
+     */
+    function requestJsonPostAsync(string $url, mixed $data, callable|null $success_call, callable|null $error_call,bool $is_auto_end = true, bool $result_json_format = true, array $addHeaders = []): \support\Response|true
+    {
+        $data_json = $data?:'';
+        if (is_array($data)){
+            $data_json = json_encode($data); // 将数据编码为JSON
+        }
+        $connection = request()->connection;
+        $headers = [
+            'Content-Type'=>'application/json',
+            'Content-Length: '=>strlen($data_json),
+            'timeout'=>60
+        ];
+        foreach ($addHeaders as $val) {
+            $header = explode(': ', $val);
+            $headers[$header[0]] = $header[1];
+        }
+        $http = new \Workerman\Http\Client([
+            'headers' => $headers,
+        ]);
+        $isEnd = false;
+        $endFunc = function ($endResponse = "") use ($connection,$isEnd) {
+            if (!$connection||$isEnd) {
+                return;
+            }
+            if ($endResponse){
+                $connection->send(new Chunk($endResponse));
+            }
+            $connection->send(new Chunk('')); // 发送空的的chunk代表response结束
+            $isEnd = true;
+        };
+        $http->post($url,$data_json, function ($response) use ($endFunc, $success_call, $result_json_format, $is_auto_end) {
+            if ($result_json_format) {
+                $response = json_decode($response->body(), true);
+            }
+            if ($success_call !== null) {
+                $success_call($response, $endFunc);
+            }
+            $endFunc();
+        }, function ($exception) use ($error_call, $endFunc) {
+            $error_call($exception, $endFunc);
+            $endFunc();
+        });
+        if ($is_auto_end) {
+            return response()->withHeaders([
+                "Transfer-Encoding" => "chunked",
+            ]);
+        }
+        return true;
+    }
+}
+if (!function_exists('requestFormPostAsync')) {
+    /**
+     * @param string $url
+     * @param mixed $data
+     * @param callable|null $success_call function($response, $endFunc)
+     * @param callable|null $error_call function($exception, $endFunc)
+     * @param bool $is_auto_end
+     * @param bool $result_json_format
+     * @param array $addHeaders
+     * @return \support\Response|true
+     * @throws Throwable
+     */
+    function requestFormPostAsync(string $url, mixed $data, callable|null $success_call, callable|null $error_call,bool $is_auto_end = true, bool $result_json_format = true, array $addHeaders = []): \support\Response|true
+    {
+        $data_json = $data?:'';
+        if (is_array($data)){
+            $data_json = http_build_query($data); // 将数据编码为JSON
+        }
+        $connection = request()->connection;
+        $headers = [
+            'Content-Type'=>'application/x-www-form-urlencoded',
+            'timeout'=>60
+        ];
+        foreach ($addHeaders as $val) {
+            $header = explode(': ', $val);
+            $headers[$header[0]] = $header[1];
+        }
+        $http = new \Workerman\Http\Client([
+            'headers' => $headers,
+        ]);
+        $isEnd = false;
+        $endFunc = function ($endResponse = "") use ($connection,$isEnd) {
+            if (!$connection||$isEnd) {
+                return;
+            }
+            if ($endResponse){
+                $connection->send(new Chunk($endResponse));
+            }
+            $connection->send(new Chunk('')); // 发送空的的chunk代表response结束
+            $isEnd = true;
+        };
+        $http->post($url,$data_json, function ($response) use ($endFunc, $success_call, $result_json_format, $is_auto_end) {
+            if ($result_json_format) {
+                $response = json_decode($response->body(), true);
+            }
+            if ($success_call !== null) {
+                $success_call($response, $endFunc);
+            }
+            $endFunc();
+        }, function ($exception) use ($error_call, $endFunc) {
+            $error_call($exception, $endFunc);
+            $endFunc();
+        });
+        if ($is_auto_end) {
+            return response()->withHeaders([
+                "Transfer-Encoding" => "chunked",
+            ]);
+        }
+        return true;
+    }
+}
 
 if (!function_exists('sortArrByColumnsList')) {
     /**

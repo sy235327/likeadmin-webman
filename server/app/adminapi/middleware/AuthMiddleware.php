@@ -16,7 +16,7 @@ class AuthMiddleware implements MiddlewareInterface
     public function process(Request $request, callable $handler): Response
     {
         //不登录访问，无需权限验证
-        if ($request->controllerObject->isNotNeedLogin()) {
+        if ($request->controllerObject->isNotNeedLogin($request->action)) {
             return $handler($request);
         }
 

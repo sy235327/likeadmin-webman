@@ -12,7 +12,9 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
+use Workerman\Events\Event;
 use Workerman\Events\Revolt;
+use Workerman\Events\Select;
 
 return [
     // 监听的协议 ip 及端口 （可选）
@@ -23,7 +25,7 @@ return [
     'context' => [],
     'name' => 'webman',
     // 进程数 （可选，默认1）
-    'count' => cpu_count() * 4,
+    'count' => 1,
     // 进程运行用户 （可选，默认当前用户）
     'user' => '',
     // 进程运行用户组 （可选，默认当前用户组）
@@ -37,7 +39,7 @@ return [
     //Workerman\Events\Select; 它同时轮询数千个文件描述符的 IO 活动时(通常限制为 1024 个文件描述符的固定大小)  原生 PHP 在这方面的功能极限
     //Workerman\Events\Revolt; 如果您在严格的本地程序中使用该包以实现非阻塞并发，或者您不需要在服务器应用程序中处理超过几百个并发客户端，则php原生实现的Workerman\Events\Revolt应该足够了
     //Workerman\Events\Event;  (需要开启event扩展)为了实现横向扩展到高容量的性能，我们需要目前仅在扩展中发现的更高级功能,如果您希望在事件循环支持的套接字服务器中为 10,000 个并发客户端提供服务，则应使用基于 PHP 扩展的事件循环实现之一
-    'event_loop' => Revolt::class,
+    'event_loop' => Select::class,
     'stop_timeout' => 2,
     'pid_file' => runtime_path() . '/webman.pid',
     'status_file' => runtime_path() . '/webman.status',

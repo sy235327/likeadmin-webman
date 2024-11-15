@@ -24,6 +24,8 @@ class BaseApiController extends BaseLikeAdminController
     public function initialize()
     {
         parent::initialize();
+        $this->userId = 0;
+        $this->userInfo = [];
         if (isset($this->request->userInfo) && $this->request->userInfo) {
             $this->userInfo = $this->request->userInfo;
             $this->userId = $this->request->userInfo['user_id'];

@@ -16,6 +16,7 @@ declare (strict_types=1);
 
 namespace app\common\http\middleware;
 
+use app\adminapi\listener\OperationLog;
 use Webman\Http\Request;
 use Webman\Http\Response;
 use Webman\MiddlewareInterface;
@@ -47,7 +48,9 @@ class AllowMiddleware implements MiddlewareInterface
             'Access-Control-Allow-Methods' => $request->header('access-control-request-method', '*'),
             'Access-Control-Allow-Headers' => $request->header('access-control-request-headers', '*'),
         ]);
-
+        try{
+            OperationLog::handle($response);
+        }catch (\Exception $e){}
         return $response;
     }
 

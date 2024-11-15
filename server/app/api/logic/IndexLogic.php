@@ -40,7 +40,7 @@ class IndexLogic extends BaseLogic
      * @author 段誉
      * @date 2022/9/21 19:15
      */
-    public static function getIndexData()
+    public static function getIndexData(): array
     {
         // 装修配置
         $decoratePage = DecoratePage::findOrEmpty(1);
@@ -72,7 +72,7 @@ class IndexLogic extends BaseLogic
      * @author 段誉
      * @date 2022/9/20 20:00
      */
-    public static function getPolicyByType(string $type)
+    public static function getPolicyByType(string $type): array
     {
         return [
             'title' => ConfigService::get('agreement', $type . '_title', ''),
@@ -88,7 +88,7 @@ class IndexLogic extends BaseLogic
      * @author 段誉
      * @date 2022/9/21 18:37
      */
-    public static function getDecorate($id)
+    public static function getDecorate($id): array
     {
         return DecoratePage::field(['type', 'name', 'data'])
             ->findOrEmpty($id)->toArray();
@@ -104,7 +104,7 @@ class IndexLogic extends BaseLogic
      * @author 段誉
      * @date 2022/9/21 19:38
      */
-    public static function getConfigData()
+    public static function getConfigData(): array
     {
         // 底部导航
         $tabbar = DecorateTabbar::getTabbarLists();

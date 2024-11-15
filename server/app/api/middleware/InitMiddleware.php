@@ -24,6 +24,7 @@ use Psr\Container\NotFoundExceptionInterface;
 use ReflectionClass;
 use think\exception\ClassNotFoundException;
 use Webman\App;
+use Webman\Container;
 use Webman\Http\Request;
 use Webman\Http\Response;
 use Webman\MiddlewareInterface;
@@ -44,8 +45,7 @@ class InitMiddleware implements MiddlewareInterface
     {
         //获取控制器
         try {
-            $plugin = $request->plugin ?: '';
-            $controllerClass = App::container($plugin)->get($request->controller);
+            $controllerClass = make($request->controller);
             if (($controllerClass instanceof BaseApiController) === false) {
                 throw new ControllerExtendException($request->controller, '404');
             }

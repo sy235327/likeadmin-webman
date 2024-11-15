@@ -26,7 +26,22 @@ return [
                     'class' => Monolog\Formatter\LineFormatter::class,
                     'constructor' => [null, 'Y-m-d H:i:s', true],
                 ],
+            ],
+            /**
+             * 输出到控制台
+             */
+            [
+                'class' => Monolog\Handler\StreamHandler::class,
+                'constructor' => [
+                    'php://stdout',
+                    Monolog\Logger::DEBUG,
+                ],
+                'formatter' => [
+                    'class' => Monolog\Formatter\LineFormatter::class,
+                    'constructor' => [null, 'Y-m-d H:i:s', true],
+                ],
             ]
+
         ],
     ],
 ];

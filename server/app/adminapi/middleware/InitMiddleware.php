@@ -29,8 +29,7 @@ class InitMiddleware implements MiddlewareInterface
         //获取控制器
         try {
             //使用容器中的控制器对象
-            $plugin = $request->plugin ?: '';
-            $controllerClass = App::container($plugin)->get($request->controller);
+            $controllerClass = make($request->controller);
             if (($controllerClass instanceof BaseAdminController) === false) {
                 throw new ControllerExtendException($request->controller, '404');
             }

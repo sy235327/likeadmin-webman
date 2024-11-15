@@ -2,6 +2,8 @@
 
 namespace app\common\service\storage\engine;
 
+use ArrayObject;
+
 /**
  * 本地文件驱动
  * Class Local
@@ -61,6 +63,17 @@ class Local extends Server
     public function getUploadToken($name,$src,$size)
     {
         // TODO: Implement getUploadToken() method.
-        return "";
+        $params = new ArrayObject();
+        $headers = new ArrayObject();
+        $req_url = '';
+        return [
+            'upload_token'=>'',
+            'save_dir'=>$src,
+            'upload_file_name'=>$name,
+            'upload_file_size'=>$size,
+            'params'=>$params,
+            'headers'=>$headers,
+            'req_url'=>$req_url,
+        ];
     }
 }

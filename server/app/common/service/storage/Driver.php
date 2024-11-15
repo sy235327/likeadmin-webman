@@ -32,7 +32,7 @@ class Driver
      * @param $name
      * @param $src
      * @param $size
-     * @return string
+     * @return array
      */
     public function getUploadToken($name,$src,$size){
         return $this->engine->getUploadToken($name,$src,$size);

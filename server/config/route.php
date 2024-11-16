@@ -29,6 +29,7 @@ Route::fallback(function(Request $request){
         'Access-Control-Allow-Origin' => $request->header('origin', '*'),
         'Access-Control-Allow-Methods' => $request->header('access-control-request-method', '*'),
         'Access-Control-Allow-Headers' => $request->header('access-control-request-headers', '*'),
+        'Access-Control-Expose-Headers'=>'*'
     ]);
     return $response;
 });

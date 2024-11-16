@@ -32,7 +32,7 @@ abstract class BaseController
 
     /**
      * 构造方法
-     * app.controller_reuse 配置为true 那么每次请求都会调用构造方法
+     * app.controller_reuse 配置为true 那么每次请求都会调用构造方法,否则进程只会调用一次该构造函数
      * @access public
      */
     public function __construct()

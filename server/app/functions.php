@@ -676,7 +676,6 @@ if (!function_exists('requestGet')) {
     }
 }
 
-
 if (!function_exists('sortArrByColumnsList')) {
     /**
      * 多字段排序数组参数

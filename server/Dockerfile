@@ -1,4 +1,4 @@
-FROM php:8.2-cli-alpine
+FROM php:8.0-cli-alpine
 # 设置环境变量，避免交互式安装提示
 ENV DEBIAN_FRONTEND=noninteractive
 RUN sed -i "s/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g" /etc/apk/repositories

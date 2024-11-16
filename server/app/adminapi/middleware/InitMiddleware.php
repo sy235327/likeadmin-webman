@@ -6,10 +6,8 @@ namespace app\adminapi\middleware;
 
 use app\adminapi\controller\BaseAdminController;
 use app\common\exception\ControllerExtendException;
-use ReflectionClass;
 use think\exception\ClassNotFoundException;
 use app\common\exception\HttpException;
-use Webman\App;
 use Webman\Http\Request;
 use Webman\Http\Response;
 use Webman\MiddlewareInterface;
@@ -31,14 +29,11 @@ class InitMiddleware implements MiddlewareInterface
             //使用容器中的控制器对象
             $controllerClass = make($request->controller);
             if (($controllerClass instanceof BaseAdminController) === false) {
-                throw new ControllerExtendException($request->controller, '404');
+                throw new ControllerExtendException($request->controller, BaseAdminController::class);
             }
-            //创建控制器对象
-            $request->controllerObject = $controllerClass;
+            $controllerClass->setAdmin(0,[]);
         } catch (ClassNotFoundException $e) {
-            throw new HttpException('controller not exists:' . $e->getClass(),404);
-        } catch (\ReflectionException $e) {
-            throw new HttpException('controller init exists:' . $e->getMessage(),404);
+            throw new HttpException($e->getMessage().' controller not exists:' . $e->getClass(),404);
         }
         return $handler($request);
     }

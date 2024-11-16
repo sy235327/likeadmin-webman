@@ -23,8 +23,11 @@ class OperationLog
      */
     public static function handle(Request $request, Response $response): bool
     {
+        $controllerObject = make($request->controller);
+        [$adminId,$adminInfo] = $controllerObject->getAdmin();
+
         //需要登录的接口，无效访问时不记录
-        if (!$request->controllerObject||!$request->controllerObject->isNotNeedLogin($request->action) && empty($request->adminInfo)) {
+        if (!$controllerObject||!$controllerObject->isNotNeedLogin($request->action) && empty($adminInfo)) {
             return false;
         }
         $pathLower = strtolower($request->path());
@@ -36,7 +39,7 @@ class OperationLog
         //获取操作注解
         $notes = '无法获取操作名称，请给控制器方法注释';
         try {
-            $re = new ReflectionClass($request->controllerObject);
+            $re = new ReflectionClass($controllerObject);
             $doc = $re->getMethod($request->action)->getDocComment();
             if (empty($doc)) {
                 throw new Exception('请给控制器方法注释');
@@ -44,7 +47,11 @@ class OperationLog
             preg_match('/\s(\w+)/u', $re->getMethod($request->action)->getDocComment(), $values);
             $notes = $values[0];
         } catch (Exception $e) {
-            Log::error($request->path()." 无法获取操作名称，请给控制器方法注释");
+            Log::error("日志记录错误",[
+                'path'=>$request->path(),
+                'title'=>"无法获取操作名称，请给控制器方法注释",
+                'msg'=>$e->getMessage(),
+            ]);
         }
 
         $params = $request->all();
@@ -64,10 +71,10 @@ class OperationLog
         }
         //记录日志
         $systemLog = new \app\common\model\OperationLog();
-        $systemLog->admin_id = $request->adminInfo['admin_id'] ?? 0;
-        $systemLog->admin_name = $request->adminInfo['name'] ?? '';
+        $systemLog->admin_id = $adminInfo['admin_id'] ?? 0;
+        $systemLog->admin_name = $adminInfo['name'] ?? '';
         $systemLog->action = $notes;
-        $systemLog->account = $request->adminInfo['account'] ?? '';
+        $systemLog->account = $adminInfo['account'] ?? '';
         $systemLog->url = $request->path();
         $systemLog->type = $request->method();
         $systemLog->params = json_encode($params, true);
@@ -79,11 +86,13 @@ class OperationLog
             $systemLog->result = $matches[1];
         }
         $res = $systemLog->save();
-        Log::info("SystemLog id=".($systemLog->id??0).
-            ' adminId='.$systemLog->admin_id.
-            ' 请求地址:`'.$systemLog->url.'`'.
-            ' 请求参数:`'.$systemLog->params."`".
-            ' 返回结果:`'.$response->rawBody()."`");
+        Log::info("日志记录",[
+            'id'=>$systemLog->id,
+            'adminId'=>$systemLog->admin_id,
+            'url'=>$systemLog->url,
+            'params'=>$systemLog->params,
+            'result'=>$response->rawBody(),
+        ]);
         return $res;
     }
 }

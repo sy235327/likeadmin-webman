@@ -38,6 +38,13 @@ class Task
         new Crontab('50 7 * * *', function(){
             echo date('Y-m-d H:i:s')."\n";
         });
+        // 每天的2点30执行，注意这里省略了秒位
+        new Crontab('30 2 * * *', function(){
+            //todo 删除日志表日志
+            \app\common\model\OperationLog::destroy(function ($query) {
+                $query->where('create_time','<',strtotime("-15 day"));
+            },true);
+        });
 
     }
 }

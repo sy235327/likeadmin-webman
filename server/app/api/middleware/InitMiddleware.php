@@ -19,12 +19,7 @@ namespace app\api\middleware;
 use app\api\controller\BaseApiController;
 use app\common\exception\ControllerExtendException;
 use app\common\exception\HttpException;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
-use ReflectionClass;
 use think\exception\ClassNotFoundException;
-use Webman\App;
-use Webman\Container;
 use Webman\Http\Request;
 use Webman\Http\Response;
 use Webman\MiddlewareInterface;
@@ -47,14 +42,11 @@ class InitMiddleware implements MiddlewareInterface
         try {
             $controllerClass = make($request->controller);
             if (($controllerClass instanceof BaseApiController) === false) {
-                throw new ControllerExtendException($request->controller, '404');
+                throw new ControllerExtendException($request->controller, BaseApiController::class);
             }
-            //创建控制器对象
-            $request->controllerObject = $controllerClass;
+            $controllerClass->setUser(0,[]);
         } catch (ClassNotFoundException $e) {
-            throw new HttpException(404, 'controller not exists:' . $e->getClass());
-        } catch (NotFoundExceptionInterface $e) {
-            throw new HttpException(404, 'controller not exists:' . $e->getMessage());
+            throw new HttpException($e->getMessage().' controller not exists:' . $e->getClass(),404);
         }
         return $handler($request);
     }

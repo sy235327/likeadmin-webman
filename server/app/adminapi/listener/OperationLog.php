@@ -14,7 +14,8 @@ class OperationLog
 {
     /**
      * @notes 管理员操作日志
-     * @param $response
+     * @param Request $request
+     * @param Response $response
      * @return bool
      * @throws \ReflectionException
      * @author bingo

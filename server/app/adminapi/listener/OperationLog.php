@@ -23,7 +23,7 @@ class OperationLog
         $request = request();
 
         //需要登录的接口，无效访问时不记录
-        if (!$request->controllerObject->isNotNeedLogin($request->action) && empty($request->adminInfo)) {
+        if (!$request->controllerObject||!$request->controllerObject->isNotNeedLogin($request->action) && empty($request->adminInfo)) {
             return;
         }
         $pathLower = strtolower($request->path());

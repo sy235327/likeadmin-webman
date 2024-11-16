@@ -12,23 +12,35 @@
 // | author: likeadminTeam
 // +----------------------------------------------------------------------
 
-namespace app\api\controller;
+declare (strict_types=1);
 
-use app\common\controller\BaseLikeAdminController;
+namespace app\common\http\middleware;
 
-class BaseApiController extends BaseLikeAdminController
+use Webman\Http\Request;
+use Webman\Http\Response;
+use Webman\MiddlewareInterface;
+
+/**
+ * 自定义跨域中间件
+ * Class LikeAdminAllowMiddleware
+ * @package app\common\http\middleware
+ */
+class EndMiddleware implements MiddlewareInterface
 {
-    protected int $userId = 0;
-    protected array $userInfo = [];
+    /**
+     * Notes: 跨域处理
+     * Date: 2023/2/27下午3:46
+     * @param Request $request
+     * @param callable $handler
+     * @return Response
+     */
 
-    public function initialize()
+    public function process(Request $request, callable $handler): Response
     {
-        parent::initialize();
-        $this->userId = 0;
-        $this->userInfo = [];
-        if (isset($this->request->userInfo) && $this->request->userInfo) {
-            $this->userInfo = $this->request->userInfo;
-            $this->userId = $this->request->userInfo['user_id'];
-        }
+        // 如果是opitons请求则返回一个空的响应，否则继续向洋葱芯穿越，并得到一个响应
+        $request->controllerObject->initialize();
+
+        return $handler($request);
     }
+
 }

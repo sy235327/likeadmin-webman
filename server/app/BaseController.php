@@ -32,19 +32,23 @@ abstract class BaseController
 
     /**
      * 构造方法
+     * app.controller_reuse 配置为true 那么每次请求都会调用构造方法,否则进程只会调用一次该构造函数
      * @access public
      */
     public function __construct()
     {
-        $this->request = request();
 
-        // 控制器初始化
-        $this->initialize();
     }
 
+    /**
+     * 每次请求在 EndMiddleware拦截器 中进行的初始化
+     * @return void
+     */
     // 初始化
     protected function initialize()
-    {}
+    {
+        $this->request = request();
+    }
 
     /**
      * 验证数据
@@ -66,7 +70,7 @@ abstract class BaseController
                 // 支持场景
                 [$validate, $scene] = explode('.', $validate);
             }
-            $class = false !== strpos($validate, '\\') ? $validate : $this->app->parseClass('validate', $validate);
+            $class = str_contains($validate, '\\') ? $validate : $this->app->parseClass('validate', $validate);
             $v     = new $class();
             if (!empty($scene)) {
                 $v->scene($scene);

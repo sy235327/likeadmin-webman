@@ -4,8 +4,8 @@
  */
 
 use app\common\service\FileService;
+use support\Container;
 use think\facade\Cache;
-use Webman\Container;
 
 if (!function_exists('download')) {
     /**
@@ -101,23 +101,26 @@ if (!function_exists('cache')) {
         }
     }
 }
+/**
+ * IOC容器,单进程中获取唯一对象
+ */
 if (!function_exists('make')) {
-    function make(string $abstract, array $vars = [], bool $newInstance = false)
+    function make(string $abstract, array $vars = [], bool $newInstance = false): mixed
     {
-        $container = support\Container::get(Container::class);
-        if (!$newInstance){
+        $isObj = Container::has($abstract);
+        if ($isObj&&!$newInstance){
             try{
-                return $container->get($abstract);
+                return Container::get($abstract);
             }catch (\Webman\Exception\NotFoundException $e){
+                return null;
             }
         }
-        $newObj = $container->make($abstract,$vars);
-        $container->addDefinitions($newObj);
-        return $container->get($abstract);
+        return Container::make($abstract,$vars);
     }
 }
 if (!function_exists('strUcwords')){
-    function strUcwords($str){
+    function strUcwords($str): string
+    {
         $strArr = explode('_', $str);
         $str = implode(' ', $strArr);
         $str = implode('', explode(' ', ucwords($str)));
@@ -169,19 +172,22 @@ if (!function_exists('format_amount')) {
 
     /**
      * @notes 格式化金额
-     * @param $float
-     * @return int|mixed|string
+     * @param string|float|int $float 需要格式化的金额
+     * @return string $precision 小数位数
+     * @return string 格式化后的金额
      * @author 段誉
      * @date 2023/2/24 11:20
      */
-    function format_amount($float)
+    function format_amount(string|float|int $float,int $precision = 1): string
     {
-        if ($float == intval($float)) {
-            return intval($float);
-        } elseif ($float == sprintf('%.1f', $float)) {
-            return sprintf('%.1f', $float);
+        $intFloat = intval($float);
+        $float_format = sprintf('%.'.$precision.'f', $float);
+        if ($float == $intFloat) {
+            return (string) $intFloat;
+        } elseif ($float == $float_format) {
+            return $float_format;
         }
-        return $float;
+        return (string) $float;
     }
 }
 
@@ -190,13 +196,13 @@ if (!function_exists('del_target_dir')) {
 
     /**
      * @notes 删除目标目录
-     * @param $path
-     * @param $delDir
-     * @return bool|void
+     * @param string $path
+     * @param string $delDir
+     * @return bool
      * @author bingo
      * @date 2022/4/8 16:30
      */
-    function del_target_dir($path, $delDir)
+    function del_target_dir(string $path,string $delDir): bool
     {
         //没找到，不处理
         if (!file_exists($path)) {
@@ -225,6 +231,7 @@ if (!function_exists('del_target_dir')) {
             }
             return false;
         }
+        return true;
     }
 }
 
@@ -232,16 +239,16 @@ if (!function_exists('get_no_prefix_table_name')) {
 
     /**
      * @notes 获取无前缀数据表名
-     * @param $tableName
-     * @return mixed|string
+     * @param string $tableName
+     * @return string
      * @author bingo
      * @date 2022/12/12 15:23
      */
-    function get_no_prefix_table_name($tableName)
+    function get_no_prefix_table_name(string $tableName): string
     {
         $tablePrefix = getenv('DB_PREFIX');
         $prefixIndex = strpos($tableName, $tablePrefix);
-        if ($prefixIndex !== 0 || $prefixIndex === false) {
+        if ($prefixIndex !== 0) {
             return $tableName;
         }
         $tableName = substr_replace($tableName, '', 0, strlen($tablePrefix));
@@ -669,7 +676,6 @@ if (!function_exists('requestGet')) {
     }
 }
 
-
 if (!function_exists('sortArrByColumnsList')) {
     /**
      * 多字段排序数组参数
@@ -809,5 +815,55 @@ if (!function_exists('listToMapByItemKey')){
             }
         }
         return ($map&&count(array_keys($map))>0)?$map:$defaultVal;
+    }
+}
+
+
+if (!function_exists('checkPasswordStrength')){
+    function checkPasswordStrength(string $password, string|null &$error): bool
+    {
+        // 校验密码长度
+        if (strlen($password) < 8) {
+            $error = '密码长度不能少于8位';
+            return false;
+        }
+        $specialChars = '@#$%^&*';
+        // 检查是否包含大写字母
+        if (!preg_match('/[A-Z]/', $password)) {
+            $error = "密码必须包含至少一个大写字母。";
+            return false;
+        }
+        // 检查是否包含小写字母
+        if (!preg_match('/[a-z]/', $password)) {
+            $error = "密码必须包含至少一个小写字母。";
+            return false;
+        }
+
+        // 检查是否包含数字
+        if (!preg_match('/[0-9]/', $password)) {
+            $error = '密码必须包含至少一个数字。';
+            return false;
+        }
+        // 特殊字符
+        if (!preg_match('/[' . preg_quote($specialChars, '/') . ']/', $password)) {
+            $error = '密码必须包含至少一个特殊字符。';
+            return false;
+        }
+
+        // 校验是否包含常见密码
+        $commonPasswords = ['123456', 'password', 'qwerty'];
+        if (in_array($password, $commonPasswords)) {
+            $error = '密码过于简单';
+            return false;
+        }
+
+        // 校验是否包含连续字符或重复字符
+        $lowercasePassword = strtolower($password);
+        if (preg_match('/([a-z]){3,}/', $lowercasePassword) || preg_match('/(d){3,}/', $password)) {
+            $error = '密码过于简单：重复字符>3或者连续字符>3';
+            return false;
+        }
+
+        return true;
     }
 }

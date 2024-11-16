@@ -265,7 +265,7 @@ class GeneratorLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/6/23 16:28
      */
-    public static function getTableColumn($tableName)
+    public static function getTableColumn($tableName): array
     {
         $tableName = get_no_prefix_table_name($tableName);
         return Db::name($tableName)->getFields();

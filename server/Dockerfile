@@ -1,4 +1,4 @@
-FROM php:8.2-cli-alpine
+FROM php:8.0-cli-alpine
 # 设置环境变量，避免交互式安装提示
 ENV DEBIAN_FRONTEND=noninteractive
 RUN sed -i "s/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g" /etc/apk/repositories
@@ -69,12 +69,6 @@ COPY . .
 
 # 安装项目依赖
 RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-interaction --optimize-autoloader --ignore-platform-reqs
-
-
-# 替换 SerializableClosure.php 文件
-RUN cp ext/opis/closure/SerializableClosure.php vendor/opis/closure/src/SerializableClosure.php
-# 替换七牛云的Config.php文件
-RUN cp ext/qiniu/php-sdk/src/Qiniu/Config.php vendor/qiniu/php-sdk/src/Qiniu/Config.php
 
 # 创建安装锁文件
 RUN touch config/install.lock

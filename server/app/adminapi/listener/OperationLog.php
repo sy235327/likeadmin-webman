@@ -62,9 +62,6 @@ class OperationLog
         if (isset($params['export']) && $params['export'] == 2) {
             $notes .= '-数据导出';
         }
-        \app\common\model\OperationLog::destroy(function ($query) {
-            $query->where('create_time','<',strtotime("-15 day"));
-        },true);
         //记录日志
         $systemLog = new \app\common\model\OperationLog();
         $systemLog->admin_id = $request->adminInfo['admin_id'] ?? 0;

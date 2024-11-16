@@ -31,8 +31,8 @@ abstract class BaseAdminDataLists extends BaseDataLists
     public function __construct()
     {
         parent::__construct();
-        $this->adminInfo = $this->request->adminInfo;
-        $this->adminId = $this->request->adminId;
+        $controllerObject = make($this->request->controller);
+        [$this->adminId,$this->adminInfo] = $controllerObject->getAdmin();
     }
 
 

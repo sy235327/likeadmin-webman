@@ -5,6 +5,7 @@ namespace app\adminapi\listener;
 
 
 use ReflectionClass;
+use support\Log;
 use Webman\Http\Request;
 use think\Exception;
 use Webman\Http\Response;
@@ -13,28 +14,32 @@ class OperationLog
 {
     /**
      * @notes 管理员操作日志
-     * @param $response
-     * @return bool|void
+     * @param Request $request
+     * @param Response $response
+     * @return bool
      * @throws \ReflectionException
      * @author bingo
      * @date 2022/4/8 17:09
      */
-    public static function handle(Request $request, Response $response)
+    public static function handle(Request $request, Response $response): bool
     {
+        $controllerObject = make($request->controller);
+        [$adminId,$adminInfo] = $controllerObject->getAdmin();
+
         //需要登录的接口，无效访问时不记录
-        if (!$request->controllerObject||!$request->controllerObject->isNotNeedLogin($request->action) && empty($request->adminInfo)) {
-            return;
+        if (!$controllerObject||!$controllerObject->isNotNeedLogin($request->action) && empty($adminInfo)) {
+            return false;
         }
         $pathLower = strtolower($request->path());
         //不记录日志操作
         if (str_contains($pathLower,"/api/")||$pathLower === '/adminapi/setting/system/log') {
-            return;
+            return false;
         }
 
         //获取操作注解
-        $notes = '';
+        $notes = '无法获取操作名称，请给控制器方法注释';
         try {
-            $re = new ReflectionClass($request->controllerObject);
+            $re = new ReflectionClass($controllerObject);
             $doc = $re->getMethod($request->action)->getDocComment();
             if (empty($doc)) {
                 throw new Exception('请给控制器方法注释');
@@ -42,7 +47,11 @@ class OperationLog
             preg_match('/\s(\w+)/u', $re->getMethod($request->action)->getDocComment(), $values);
             $notes = $values[0];
         } catch (Exception $e) {
-            $notes = $notes ?: '无法获取操作名称，请给控制器方法注释';
+            Log::error("日志记录错误",[
+                'path'=>$request->path(),
+                'title'=>"无法获取操作名称，请给控制器方法注释",
+                'msg'=>$e->getMessage(),
+            ]);
         }
 
         $params = $request->all();
@@ -60,20 +69,30 @@ class OperationLog
         if (isset($params['export']) && $params['export'] == 2) {
             $notes .= '-数据导出';
         }
-        \app\common\model\OperationLog::destroy(function ($query) {
-            $query->where('create_time','<',strtotime("-15 day"));
-        },true);
         //记录日志
         $systemLog = new \app\common\model\OperationLog();
-        $systemLog->admin_id = $request->adminInfo['admin_id'] ?? 0;
-        $systemLog->admin_name = $request->adminInfo['name'] ?? '';
+        $systemLog->admin_id = $adminInfo['admin_id'] ?? 0;
+        $systemLog->admin_name = $adminInfo['name'] ?? '';
         $systemLog->action = $notes;
-        $systemLog->account = $request->adminInfo['account'] ?? '';
+        $systemLog->account = $adminInfo['account'] ?? '';
         $systemLog->url = $request->path();
-        $systemLog->type = $request->method() ? 'GET' : 'POST';
+        $systemLog->type = $request->method();
         $systemLog->params = json_encode($params, true);
         $systemLog->ip = getRealIP();
-        $systemLog->result = $response->rawBody();
-        return $systemLog->save();
+        $systemLog->result = 0;
+        // 正则表达式匹配指定key的值
+        preg_match('/"code":\s*"([^"]+)"/', $response->rawBody(), $matches);
+        if (isset($matches[1])) {
+            $systemLog->result = $matches[1];
+        }
+        $res = $systemLog->save();
+        Log::info("日志记录",[
+            'id'=>$systemLog->id,
+            'adminId'=>$systemLog->admin_id,
+            'url'=>$systemLog->url,
+            'params'=>$systemLog->params,
+            'result'=>$response->rawBody(),
+        ]);
+        return $res;
     }
 }

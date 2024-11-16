@@ -11,37 +11,38 @@
  * @link      http://www.workerman.net/
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
-
+$handlers = [
+    [
+        'class' => Monolog\Handler\RotatingFileHandler::class,
+        'constructor' => [
+            runtime_path() . '/logs/webman.log',
+            7, //$maxFiles
+            Monolog\Logger::DEBUG,
+        ],
+        'formatter' => [
+            'class' => Monolog\Formatter\LineFormatter::class,
+            'constructor' => [null, 'Y-m-d H:i:s', true],
+        ],
+    ]
+];
+if (getenv('APP_DEBUG',false)){
+    /**
+     * 输出到控制台
+     */
+    $handlers[] = [
+        'class' => Monolog\Handler\StreamHandler::class,
+        'constructor' => [
+            'php://stdout',
+            Monolog\Logger::DEBUG,
+        ],
+        'formatter' => [
+            'class' => Monolog\Formatter\LineFormatter::class,
+            'constructor' => [null, 'Y-m-d H:i:s', true],
+        ],
+    ];
+}
 return [
     'default' => [
-        'handlers' => [
-            [
-                'class' => Monolog\Handler\RotatingFileHandler::class,
-                'constructor' => [
-                    runtime_path() . '/logs/webman.log',
-                    7, //$maxFiles
-                    Monolog\Logger::DEBUG,
-                ],
-                'formatter' => [
-                    'class' => Monolog\Formatter\LineFormatter::class,
-                    'constructor' => [null, 'Y-m-d H:i:s', true],
-                ],
-            ],
-            /**
-             * 输出到控制台
-             */
-            [
-                'class' => Monolog\Handler\StreamHandler::class,
-                'constructor' => [
-                    'php://stdout',
-                    Monolog\Logger::DEBUG,
-                ],
-                'formatter' => [
-                    'class' => Monolog\Formatter\LineFormatter::class,
-                    'constructor' => [null, 'Y-m-d H:i:s', true],
-                ],
-            ]
-
-        ],
+        'handlers' => $handlers,
     ],
 ];

@@ -46,9 +46,12 @@ class AllowMiddleware implements MiddlewareInterface
             $response = response('');
         }else{
             $response = $handler($request);
+            //记录日志
             try{
-                $this->taskLog($request,$response);
-            }catch (\Exception|\Throwable $e){}
+                OperationLog::handle($request,$response);
+            }catch (\Exception|\Throwable $e){
+                Log::error('请求日志记录失败:'.$e->getMessage());
+            }
         }
 
         // 给响应添加跨域相关的http头
@@ -60,15 +63,5 @@ class AllowMiddleware implements MiddlewareInterface
             'Access-Control-Expose-Headers'=>'*'
         ]);
         return $response;
-    }
-    public function taskLog($request,$response): bool
-    {
-        try{
-            OperationLog::handle($request,$response);
-        }catch (\Exception $e){
-            Log::info('请求日志记录失败:'.$e->getMessage());
-            return false;
-        }
-        return true;
     }
 }

@@ -57,6 +57,9 @@ class LoginMiddleware implements  MiddlewareInterface
 
         //给request赋值，用于控制器
         $adminId = $adminInfo['admin_id'] ?? 0;
+        if (!$adminInfo){
+            $adminInfo = [];
+        }
         $controllerObject->setAdmin($adminId,$adminInfo);
         return $handler($request);
     }

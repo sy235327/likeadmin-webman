@@ -14,7 +14,7 @@ class BaseAdminController extends BaseLikeAdminController
     protected int $adminId = 0;
     protected array $adminInfo = [];
 
-    public function setAdmin($adminId,$adminInfo): void
+    public function setAdmin(int $adminId,array $adminInfo): void
     {
         $this->adminId = $adminId;
         $this->adminInfo = $adminInfo;

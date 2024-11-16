@@ -7,7 +7,7 @@ namespace app;
 use ReflectionClass;
 use taoser\exception\ValidateException;
 use taoser\Validate;
-
+use \support\Request;
 /**
  * 控制器基础类
  */
@@ -16,7 +16,7 @@ abstract class BaseController
     /**
      * Request实例
      */
-    protected \support\Request $request;
+    protected Request $request;
 
     /**
      * 是否批量验证

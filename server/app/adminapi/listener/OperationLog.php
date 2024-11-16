@@ -5,6 +5,7 @@ namespace app\adminapi\listener;
 
 
 use ReflectionClass;
+use support\Log;
 use Webman\Http\Request;
 use think\Exception;
 use Webman\Http\Response;
@@ -14,7 +15,7 @@ class OperationLog
     /**
      * @notes 管理员操作日志
      * @param $response
-     * @return bool|void
+     * @return bool
      * @throws \ReflectionException
      * @author bingo
      * @date 2022/4/8 17:09
@@ -23,12 +24,12 @@ class OperationLog
     {
         //需要登录的接口，无效访问时不记录
         if (!$request->controllerObject||!$request->controllerObject->isNotNeedLogin($request->action) && empty($request->adminInfo)) {
-            return;
+            return false;
         }
         $pathLower = strtolower($request->path());
         //不记录日志操作
         if (str_contains($pathLower,"/api/")||$pathLower === '/adminapi/setting/system/log') {
-            return;
+            return false;
         }
 
         //获取操作注解
@@ -70,10 +71,22 @@ class OperationLog
         $systemLog->action = $notes;
         $systemLog->account = $request->adminInfo['account'] ?? '';
         $systemLog->url = $request->path();
-        $systemLog->type = $request->method() ? 'GET' : 'POST';
+        $systemLog->type = $request->method();
         $systemLog->params = json_encode($params, true);
         $systemLog->ip = getRealIP();
-        $systemLog->result = $response->rawBody();
-        return $systemLog->save();
+        $result = 0;
+        // 正则表达式匹配指定key的值
+        preg_match('/"code":\s*"([^"]+)"/', $response->rawBody(), $matches);
+        if (isset($matches[1])) {
+            $result = $matches[1];
+        }
+        $systemLog->result = $result;
+        $res = $systemLog->save();
+        Log::info("SystemLog id=".$systemLog->id.
+            ' adminId='.$systemLog->admin_id.
+            ' 请求地址:`'.$systemLog->url.'`'.
+            ' 请求参数:`'.$systemLog->params."`".
+            ' 返回结果:`'.$response->rawBody()."`");
+        return $res;
     }
 }

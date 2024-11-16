@@ -130,18 +130,17 @@ function response(string $body = '', int $status = 200, array $headers = []): Re
 {
     return new Response($status, $headers, $body);
 }
-
 /**
  * Json response
  * @param $data
  * @param int $options
  * @return Response
  */
-function json($data, int $options = JSON_UNESCAPED_UNICODE): Response
+function json($data,$httpStatus, ... $options): Response
 {
-    return new Response(200, ['Content-Type' => 'application/json'], json_encode($data, $options));
+    $result = new Response($httpStatus, ['Content-Type' => 'application/json'], json_encode($data,...$options));
+    return $result;
 }
-
 /**
  * Xml response
  * @param $xml

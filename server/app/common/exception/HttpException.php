@@ -11,7 +11,8 @@ class HttpException extends \RuntimeException
 
     public function __construct($message = "", $code = 0, $header=[],Throwable $previous = null)
     {
-        $this->response = json(json_decode($message,true));
+        $header = array_merge($header,['Content-Type'=>'application/json']);
+        $this->response = response($message,$code,$header);
         parent::__construct($message, $code, $previous);
     }
 

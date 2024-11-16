@@ -46,12 +46,15 @@ class AllowMiddleware implements MiddlewareInterface
             $response = response('');
         }else{
             $response = $handler($request);
+            //创建一个纤程任务记录日志
             try{
-                $fiber = (new Fiber(function() use ($request, $response): bool{
-                    return $this->taskLog($request,$response);
+                $fiber = (new Fiber(function() use ($request, $response): void{
+                    OperationLog::handle($request,$response);
                 }));
                 $fiber->start();
-            }catch (\Exception|\Throwable $e){}
+            }catch (\Exception|\Throwable $e){
+                Log::error('请求日志记录失败:'.$e->getMessage());
+            }
         }
 
         // 给响应添加跨域相关的http头
@@ -63,15 +66,5 @@ class AllowMiddleware implements MiddlewareInterface
             'Access-Control-Expose-Headers'=>'*'
         ]);
         return $response;
-    }
-    public function taskLog($request,$response): bool
-    {
-        try{
-            OperationLog::handle($request,$response);
-        }catch (\Exception $e){
-            Log::info('请求日志记录失败:'.$e->getMessage());
-            return false;
-        }
-        return true;
     }
 }

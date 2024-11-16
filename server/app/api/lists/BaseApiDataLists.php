@@ -26,10 +26,8 @@ abstract class BaseApiDataLists extends BaseDataLists
     public function __construct()
     {
         parent::__construct();
-        if (isset($this->request->userInfo) && $this->request->userInfo) {
-            $this->userInfo = $this->request->userInfo;
-            $this->userId = $this->request->userId;
-        }
+        $controllerObject = make($this->request->controller);
+        [$this->userId,$this->userInfo] = $controllerObject->getUser();
         $this->export = $this->request->get('export', '');
     }
 

@@ -72,13 +72,12 @@ class OperationLog
         $systemLog->type = $request->method();
         $systemLog->params = json_encode($params, true);
         $systemLog->ip = getRealIP();
-        $result = 0;
+        $systemLog->result = 0;
         // 正则表达式匹配指定key的值
         preg_match('/"code":\s*"([^"]+)"/', $response->rawBody(), $matches);
         if (isset($matches[1])) {
-            $result = $matches[1];
+            $systemLog->result = $matches[1];
         }
-        $systemLog->result = $result;
         $res = $systemLog->save();
         Log::info("SystemLog id=".($systemLog->id??0).
             ' adminId='.$systemLog->admin_id.

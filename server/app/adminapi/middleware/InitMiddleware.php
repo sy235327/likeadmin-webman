@@ -36,9 +36,9 @@ class InitMiddleware implements MiddlewareInterface
             //创建控制器对象
             $request->controllerObject = $controllerClass;
         } catch (ClassNotFoundException $e) {
-            throw new HttpException(404, 'controller not exists:' . $e->getClass());
+            throw new HttpException('controller not exists:' . $e->getClass(),404);
         } catch (\ReflectionException $e) {
-            throw new HttpException(404, 'controller init exists:' . $e->getMessage());
+            throw new HttpException('controller init exists:' . $e->getMessage(),404);
         }
         return $handler($request);
     }

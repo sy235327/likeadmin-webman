@@ -60,13 +60,14 @@ class JsonService
      * @param string $msg
      * @param array $data
      * @param int $httpStatus
+     * @param int $options json 格式化
      * @author 乔峰
      * @date 2021/12/24 18:29
      */
-    private static function result(int $code, int $show, string $msg = 'OK', array $data = [], int $httpStatus = 200)
+    private static function result(int $code, int $show, string $msg = 'OK', array $data = [], int $httpStatus = 200,...$options)
     {
         $result = compact('code', 'show', 'msg', 'data');
-        return json($result, $httpStatus);
+        return json($result, $httpStatus,...$options);
     }
 
     /**

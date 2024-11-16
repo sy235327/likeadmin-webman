@@ -17,6 +17,10 @@ namespace app\adminapi\controller\dept;
 use app\adminapi\controller\BaseAdminController;
 use app\adminapi\logic\dept\DeptLogic;
 use app\adminapi\validate\dept\DeptValidate;
+use support\Response;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * 部门管理控制器
@@ -37,7 +41,7 @@ class DeptController extends BaseAdminController
      * @author 乔峰
      * @date 2022/5/25 18:07
      */
-    public function lists()
+    public function lists(): Response
     {
         $params = $this->request->get();
         $result = DeptLogic::lists($params);
@@ -47,13 +51,13 @@ class DeptController extends BaseAdminController
 
     /**
      * @notes 上级部门
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2022/5/26 18:36
      */
-    public function leaderDept()
+    public function leaderDept(): Response
     {
         $result = DeptLogic::leaderDept();
         return $this->success('',$result);
@@ -65,7 +69,7 @@ class DeptController extends BaseAdminController
      * @author 乔峰
      * @date 2022/5/25 18:40
      */
-    public function add()
+    public function add(): Response
     {
         $params = $this->validateObj->post()->goCheck('add');
         DeptLogic::add($params);
@@ -78,7 +82,7 @@ class DeptController extends BaseAdminController
      * @author 乔峰
      * @date 2022/5/25 18:41
      */
-    public function edit()
+    public function edit(): Response
     {
         $params = $this->validateObj->post()->goCheck('edit');
         $result = DeptLogic::edit($params);
@@ -94,7 +98,7 @@ class DeptController extends BaseAdminController
      * @author 乔峰
      * @date 2022/5/25 18:41
      */
-    public function delete()
+    public function delete(): Response
     {
         $params = $this->validateObj->post()->goCheck('delete');
         DeptLogic::delete($params);
@@ -107,7 +111,7 @@ class DeptController extends BaseAdminController
      * @author 乔峰
      * @date 2022/5/25 18:41
      */
-    public function detail()
+    public function detail(): Response
     {
         $params = $this->validateObj->goCheck('detail');
         $result = DeptLogic::detail($params);
@@ -117,13 +121,13 @@ class DeptController extends BaseAdminController
 
     /**
      * @notes 获取部门数据
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2022/10/13 10:28
      */
-    public function all()
+    public function all(): Response
     {
         $result = DeptLogic::getAllData();
         return $this->data($result);

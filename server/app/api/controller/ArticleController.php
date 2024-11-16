@@ -18,6 +18,7 @@ namespace app\api\controller;
 use app\api\lists\article\ArticleCollectLists;
 use app\api\lists\article\ArticleLists;
 use app\api\logic\ArticleLogic;
+use support\Response;
 
 /**
  * 文章管理
@@ -32,11 +33,11 @@ class ArticleController extends BaseApiController
 
     /**
      * @notes 文章列表
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/9/20 15:30
      */
-    public function lists()
+    public function lists(): Response
     {
         return $this->dataLists(new ArticleLists());
     }
@@ -44,11 +45,11 @@ class ArticleController extends BaseApiController
 
     /**
      * @notes 文章分类列表
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/9/20 15:30
      */
-    public function cate()
+    public function cate(): Response
     {
         return $this->data(ArticleLogic::cate());
     }
@@ -56,11 +57,11 @@ class ArticleController extends BaseApiController
 
     /**
      * @notes 收藏列表
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/9/20 16:31
      */
-    public function collect()
+    public function collect(): Response
     {
         return $this->dataLists(new ArticleCollectLists());
     }
@@ -68,11 +69,11 @@ class ArticleController extends BaseApiController
 
     /**
      * @notes 文章详情
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/9/20 17:09
      */
-    public function detail()
+    public function detail(): Response
     {
         $id = $this->request->get('id');
         $result = ArticleLogic::detail($id, $this->userId);
@@ -82,11 +83,11 @@ class ArticleController extends BaseApiController
 
     /**
      * @notes 加入收藏
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/9/20 17:01
      */
-    public function addCollect()
+    public function addCollect(): Response
     {
         $articleId = $this->request->post('id');
         ArticleLogic::addCollect($articleId, $this->userId);
@@ -96,11 +97,11 @@ class ArticleController extends BaseApiController
 
     /**
      * @notes 取消收藏
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/9/20 17:01
      */
-    public function cancelCollect()
+    public function cancelCollect(): Response
     {
         $articleId = $this->request->post('id');
         ArticleLogic::cancelCollect($articleId, $this->userId);

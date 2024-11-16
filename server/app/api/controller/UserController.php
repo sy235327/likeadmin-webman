@@ -18,6 +18,10 @@ use app\api\logic\UserLogic;
 use app\api\validate\PasswordValidate;
 use app\api\validate\SetUserInfoValidate;
 use app\api\validate\UserValidate;
+use support\Response;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * 用户控制器
@@ -31,14 +35,14 @@ class UserController extends BaseApiController
 
     /**
      * @notes 获取个人中心
-     * @return \support\Response
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @return Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2022/9/16 18:19
      */
-    public function center()
+    public function center(): Response
     {
         $data = UserLogic::center($this->userInfo);
         return $this->success('', $data);
@@ -47,11 +51,11 @@ class UserController extends BaseApiController
 
     /**
      * @notes 获取个人信息
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/9/20 19:46
      */
-    public function info()
+    public function info(): Response
     {
         $result = UserLogic::info($this->userId);
         return $this->data($result);
@@ -60,11 +64,11 @@ class UserController extends BaseApiController
 
     /**
      * @notes 重置密码
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/9/16 18:06
      */
-    public function resetPassword()
+    public function resetPassword(): Response
     {
         $params = (new PasswordValidate())->post()->goCheck('resetPassword');
         $result = UserLogic::resetPassword($params);
@@ -77,11 +81,11 @@ class UserController extends BaseApiController
 
     /**
      * @notes 修改密码
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/9/20 19:16
      */
-    public function changePassword()
+    public function changePassword(): Response
     {
         $params = (new PasswordValidate())->post()->goCheck('changePassword');
         $result = UserLogic::changePassword($params, $this->userId);
@@ -94,11 +98,11 @@ class UserController extends BaseApiController
 
     /**
      * @notes 获取小程序手机号
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/9/21 16:46
      */
-    public function getMobileByMnp()
+    public function getMobileByMnp(): Response
     {
         $params = (new UserValidate())->post()->goCheck('getMobileByMnp');
         $params['user_id'] = $this->userId;
@@ -112,11 +116,11 @@ class UserController extends BaseApiController
 
     /**
      * @notes 编辑用户信息
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/9/21 17:01
      */
-    public function setInfo()
+    public function setInfo(): Response
     {
         $params = (new SetUserInfoValidate())->post()->goCheck(null, ['id' => $this->userId]);
         $result = UserLogic::setInfo($this->userId, $params);
@@ -129,11 +133,11 @@ class UserController extends BaseApiController
 
     /**
      * @notes 绑定/变更 手机号
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/9/21 17:29
      */
-    public function bindMobile()
+    public function bindMobile(): Response
     {
         $params = (new UserValidate())->post()->goCheck('bindMobile');
         $params['user_id'] = $this->userId;

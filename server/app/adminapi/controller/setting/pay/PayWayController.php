@@ -16,6 +16,11 @@ namespace app\adminapi\controller\setting\pay;
 
 use app\adminapi\controller\BaseAdminController;
 use app\adminapi\logic\setting\pay\PayWayLogic;
+use Exception;
+use support\Response;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 
 /**
@@ -28,14 +33,14 @@ class PayWayController extends BaseAdminController
 
     /**
      * @notes 获取支付方式
-     * @return \support\Response
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @return Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2023/2/23 16:27
      */
-    public function getPayWay()
+    public function getPayWay(): Response
     {
         $result = PayWayLogic::getPayWay();
         return $this->success('获取成功',$result);
@@ -44,12 +49,12 @@ class PayWayController extends BaseAdminController
 
     /**
      * @notes 设置支付方式
-     * @return \support\Response
-     * @throws \Exception
+     * @return Response
+     * @throws Exception
      * @author 段誉
      * @date 2023/2/23 16:27
      */
-    public function setPayWay()
+    public function setPayWay(): Response
     {
         $params = $this->request->post();
         $result = (new PayWayLogic())->setPayWay($params);

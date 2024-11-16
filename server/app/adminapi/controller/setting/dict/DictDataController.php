@@ -18,6 +18,7 @@ use app\adminapi\controller\BaseAdminController;
 use app\adminapi\lists\setting\dict\DictDataLists;
 use app\adminapi\logic\setting\dict\DictDataLogic;
 use app\adminapi\validate\dict\DictDataValidate;
+use support\Response;
 
 
 /**
@@ -39,7 +40,7 @@ class DictDataController extends BaseAdminController
      * @author 乔峰
      * @date 2022/6/20 16:35
      */
-    public function lists()
+    public function lists(): Response
     {
         return $this->dataLists(new DictDataLists());
     }
@@ -50,7 +51,7 @@ class DictDataController extends BaseAdminController
      * @author 乔峰
      * @date 2022/6/20 17:13
      */
-    public function add()
+    public function add(): Response
     {
         $params = $this->validateObj->post()->goCheck('add');
         DictDataLogic::save($params);
@@ -63,7 +64,7 @@ class DictDataController extends BaseAdminController
      * @author 乔峰
      * @date 2022/6/20 17:13
      */
-    public function edit()
+    public function edit(): Response
     {
         $params = $this->validateObj->post()->goCheck('edit');
         DictDataLogic::save($params);
@@ -76,7 +77,7 @@ class DictDataController extends BaseAdminController
      * @author 乔峰
      * @date 2022/6/20 17:13
      */
-    public function delete()
+    public function delete(): Response
     {
         $params = $this->validateObj->post()->goCheck('id');
         DictDataLogic::delete($params);
@@ -89,7 +90,7 @@ class DictDataController extends BaseAdminController
      * @author 乔峰
      * @date 2022/6/20 17:14
      */
-    public function detail()
+    public function detail(): Response
     {
         $params = $this->validateObj->goCheck('id');
         $result = DictDataLogic::detail($params);

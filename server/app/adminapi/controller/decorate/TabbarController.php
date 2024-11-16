@@ -16,6 +16,10 @@ namespace app\adminapi\controller\decorate;
 
 use app\adminapi\controller\BaseAdminController;
 use app\adminapi\logic\decorate\DecorateTabbarLogic;
+use support\Response;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * 装修-底部导航
@@ -27,14 +31,14 @@ class TabbarController extends BaseAdminController
 
     /**
      * @notes 底部导航详情
-     * @return \support\Response
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @return Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2022/9/7 16:39
      */
-    public function detail()
+    public function detail(): Response
     {
         $data = DecorateTabbarLogic::detail();
         return $this->success('', $data);
@@ -43,11 +47,11 @@ class TabbarController extends BaseAdminController
 
     /**
      * @notes 底部导航保存
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/9/6 9:58
      */
-    public function save()
+    public function save(): Response
     {
         $params = $this->request->post();
         DecorateTabbarLogic::save($params);

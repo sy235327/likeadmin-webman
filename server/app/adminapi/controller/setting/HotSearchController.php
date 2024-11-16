@@ -16,6 +16,7 @@ namespace app\adminapi\controller\setting;
 
 use app\adminapi\controller\BaseAdminController;
 use app\adminapi\logic\setting\HotSearchLogic;
+use support\Response;
 
 /**
  * 热门搜索设置
@@ -30,7 +31,7 @@ class HotSearchController extends BaseAdminController
      * @author 乔峰
      * @date 2022/9/5 19:00
      */
-    public function getConfig()
+    public function getConfig(): Response
     {
         $result = HotSearchLogic::getConfig();
         return $this->data($result);
@@ -42,7 +43,7 @@ class HotSearchController extends BaseAdminController
      * @author 乔峰
      * @date 2022/9/5 19:00
      */
-    public function setConfig()
+    public function setConfig(): Response
     {
         $params = $this->request->post();
         $result = HotSearchLogic::setConfig($params);

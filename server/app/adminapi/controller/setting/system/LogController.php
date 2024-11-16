@@ -17,6 +17,7 @@ namespace app\adminapi\controller\setting\system;
 
 use app\adminapi\controller\BaseAdminController;
 use app\adminapi\lists\setting\system\LogLists;
+use support\Response;
 
 /**
  * 系统日志
@@ -30,7 +31,7 @@ class LogController extends BaseAdminController
      * @author ljj
      * @date 2021/8/3 4:25 下午
      */
-    public function lists()
+    public function lists(): Response
     {
         return $this->dataLists(new LogLists());
     }

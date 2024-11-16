@@ -39,7 +39,7 @@ use think\Model;
  * @method Query join(mixed $join, mixed $condition = null, string $type = 'INNER') static JOIN查询
  * @method Query view(mixed $join, mixed $field = null, mixed $on = null, string $type = 'INNER') static 视图查询
  * @method Query with(mixed $with) static 关联预载入
- * @method Query count(string $field) static Count统计查询
+ * @method int count(string $field) static Count统计查询
  * @method Query min(string $field) static Min统计查询
  * @method Query max(string $field) static Max统计查询
  * @method Query sum(string $field) static SUM统计查询

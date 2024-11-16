@@ -6,15 +6,16 @@ namespace app\adminapi\controller;
 
 use app\common\service\UploadService;
 use Exception;
+use support\Response;
 use Tinywan\Storage\Storage;
 
 class UploadController extends BaseAdminController
 {
     /**
      * 获取上传凭证
-     * @return \support\Response
+     * @return Response
      */
-    public function getUploadToken(): \support\Response
+    public function getUploadToken(): Response
     {
 
         $name = $this->request->post('name', '');
@@ -30,9 +31,9 @@ class UploadController extends BaseAdminController
      * @notes 上传图片
      * @author 乔峰
      * @date 2021/12/29 16:27
-     * @return \support\Response
+     * @return Response
      */
-    public function image(): \support\Response
+    public function image(): Response
     {
         $cid = $this->request->post('cid', 0);
         $uploadObj = (new UploadService());
@@ -47,9 +48,9 @@ class UploadController extends BaseAdminController
      * @notes 上传视频
      * @author 乔峰
      * @date 2021/12/29 16:27
-     * @return \support\Response
+     * @return Response
      */
-    public function video(): \support\Response
+    public function video(): Response
     {
         $cid = $this->request->post('cid', 0);
         $uploadObj = (new UploadService());

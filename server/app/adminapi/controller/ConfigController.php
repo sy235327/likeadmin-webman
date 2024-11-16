@@ -16,6 +16,10 @@ namespace app\adminapi\controller;
 
 use app\adminapi\logic\auth\AuthLogic;
 use app\adminapi\logic\ConfigLogic;
+use support\Response;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * 配置控制器
@@ -32,7 +36,7 @@ class ConfigController extends BaseAdminController
      * @author 乔峰
      * @date 2021/12/31 11:01
      */
-    public function getConfig()
+    public function getConfig(): Response
     {
         $data = ConfigLogic::getConfig();
         return $this->data($data);
@@ -41,13 +45,13 @@ class ConfigController extends BaseAdminController
 
     /**
      * @notes 根据类型获取字典数据
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2022/9/27 19:10
      */
-    public function dict()
+    public function dict(): Response
     {
         $type = $this->request->get('type', '');
         $data = ConfigLogic::getDictByType($type);

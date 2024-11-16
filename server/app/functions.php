@@ -5,7 +5,10 @@
 
 use app\common\service\FileService;
 use support\Container;
+use support\Response;
 use think\facade\Cache;
+use Webman\Exception\NotFoundException;
+use Workerman\Http\Client;
 use Workerman\Protocols\Http\Chunk;
 
 if (!function_exists('download')) {
@@ -27,7 +30,7 @@ if(!function_exists('substr_symbol_behind')){
      * @author 乔峰
      * @date 2021/12/28 18:24
      */
-    function substr_symbol_behind($str, $symbol = '.') : string
+    function substr_symbol_behind($str, string $symbol = '.') : string
     {
         $result = strripos($str, $symbol);
         if ($result === false) {
@@ -44,7 +47,7 @@ if (!function_exists('root_path')) {
      * @param string $path
      * @return string
      */
-    function root_path($path = '')
+    function root_path(string $path = '')
     {
         return base_path() . DIRECTORY_SEPARATOR;
     }
@@ -55,10 +58,9 @@ if (!function_exists('generate_path')) {
     /**
      * 获取项目根目录
      *
-     * @param string $path
      * @return string
      */
-    function generate_path()
+    function generate_path(): string
     {
         return root_path() . 'app/';
     }
@@ -68,13 +70,14 @@ if (!function_exists('generate_path')) {
 if (!function_exists('cache')) {
     /**
      * 缓存管理
-     * @param string $name    缓存名称
-     * @param mixed  $value   缓存值
-     * @param mixed  $options 缓存参数
-     * @param string $tag     缓存标签
+     * @param string|null $name 缓存名称
+     * @param mixed $value 缓存值
+     * @param mixed|null $options 缓存参数
+     * @param null $tag 缓存标签
      * @return mixed
+     * @throws \Psr\SimpleCache\InvalidArgumentException
      */
-    function cache(string $name = null, $value = '', $options = null, $tag = null)
+    function cache(string $name = null, mixed $value = '', mixed $options = null, $tag = null): mixed
     {
         if (is_null($name)) {
             return Cache::getFacadeClass();
@@ -82,7 +85,7 @@ if (!function_exists('cache')) {
 
         if ('' === $value) {
             // 获取缓存
-            return 0 === strpos($name, '?') ? Cache::has(substr($name, 1)) : Cache::get($name);
+            return str_starts_with($name, '?') ? Cache::has(substr($name, 1)) : Cache::get($name);
         } elseif (is_null($value)) {
             // 删除缓存
             return Cache::delete($name);
@@ -112,7 +115,7 @@ if (!function_exists('make')) {
         if ($isObj&&!$newInstance){
             try{
                 return Container::get($abstract);
-            }catch (\Webman\Exception\NotFoundException $e){
+            }catch (NotFoundException $e){
                 return null;
             }
         }
@@ -157,7 +160,7 @@ if (!function_exists('url')) {
      * @param bool|string $domain 域名
      * @return string
      */
-    function url(string $url = '', array $vars = [], $suffix = true, $domain = false): string
+    function url(string $url = '', array $vars = [], bool|string $suffix = true, bool|string $domain = false): string
     {
         $url = $suffix?$url.'.'.$suffix:$url;
         $host = getAgreementHost();
@@ -267,7 +270,7 @@ if (!function_exists('compare_php')) {
      */
     function compare_php(string $version): bool
     {
-        return version_compare(PHP_VERSION, $version) >= 0 ? true : false;
+        return version_compare(PHP_VERSION, $version) >= 0;
     }
 }
 if (!function_exists('check_dir_write')) {
@@ -312,15 +315,13 @@ if (!function_exists('linear_to_tree')) {
      * {"id":2,"pid":0,"name":"b","level":1},{"id":4,"pid":2,"name":"d","level":2},{"id":5,"pid":4,"name":"e","level":3},
      * {"id":6,"pid":5,"name":"f","level":4}]
      * @param array $data 线性结构数组
-     * @param string $symbol 名称前面加符号
-     * @param string $name 名称
+     * @param string $sub_key_name
      * @param string $id_name 数组id名
      * @param string $parent_id_name 数组祖先id名
-     * @param int $level 此值请勿给参数
      * @param int $parent_id 此值请勿给参数
      * @return array
      */
-    function linear_to_tree($data, $sub_key_name = 'sub', $id_name = 'id', $parent_id_name = 'pid', $parent_id = 0)
+    function linear_to_tree(array $data, string $sub_key_name = 'sub', string $id_name = 'id', string $parent_id_name = 'pid', int $parent_id = 0): array
     {
         $tree = [];
         foreach ($data as $row) {
@@ -339,7 +340,7 @@ if (!function_exists('linear_to_tree')) {
 
 if (!function_exists('createDir')) {
 
-    function createDir($path)
+    function createDir($path): bool
     {
         if (is_dir($path)) {
             return true;
@@ -377,7 +378,7 @@ if (!function_exists('generate_sn')) {
     /**
      * @notes 生成编码
      * @param $table
-     * @param $field
+     * @param string $field
      * @param string $prefix
      * @param int $randSuffixLength
      * @param array $pool
@@ -385,7 +386,7 @@ if (!function_exists('generate_sn')) {
      * @author 段誉
      * @date 2023/2/23 11:35
      */
-    function generate_sn($table, $field, $prefix = '', $randSuffixLength = 4, $pool = []) : string
+    function generate_sn($table, string $field, string $prefix = '', int $randSuffixLength = 4, array $pool = []) : string
     {
         $suffix = '';
         for ($i = 0; $i < $randSuffixLength; $i++) {
@@ -411,7 +412,7 @@ if (!function_exists('get_file_domain')) {
      * @author 段誉
      * @date 2022/9/26 10:43
      */
-    function get_file_domain($content)
+    function get_file_domain($content): array|string|null
     {
         $preg = '/(<img .*?src=")[^https|^http](.*?)(".*?>)/is';
         $fileUrl = FileService::getFileUrl();
@@ -428,7 +429,7 @@ if (!function_exists('clear_file_domain')) {
      * @author 段誉
      * @date 2022/9/26 10:43
      */
-    function clear_file_domain($content)
+    function clear_file_domain($content): array|string
     {
         $fileUrl = FileService::getFileUrl();
         return str_replace($fileUrl, '/', $content);
@@ -447,7 +448,7 @@ if (!function_exists('download_file')) {
      * @author 段誉
      * @date 2022/9/16 9:53
      */
-    function download_file($url, $saveDir, $fileName)
+    function download_file($url, $saveDir, $fileName): string
     {
         if (!file_exists($saveDir)) {
             mkdir($saveDir, 0775, true);
@@ -488,8 +489,12 @@ if (!function_exists('formatDateStrToTime')){
     /**
      * 时间格式化 时间字符串 按照指定格式解析返回时间戳
      */
-    function formatDateStrToTime($dateStr,$format){
+    function formatDateStrToTime($dateStr,$format): int|false
+    {
         $date = DateTime::createFromFormat($format,$dateStr);
+        if (!$date){
+            return false;
+        }
         return $date->getTimestamp();
     }
 }
@@ -497,7 +502,8 @@ if (!function_exists('findChildren')){
     /**
      * 查找树表中 本身+子项+子子项。。。得数组
      */
-    function findChildren($data, $targetId,&$list,$childrenKey = 'children',$idKey='id',$pidKey='pid') {
+    function findChildren($data, $targetId,&$list,$childrenKey = 'children',$idKey='id',$pidKey='pid'): void
+    {
         foreach ($data as $item) {
             if ($item[$idKey] == $targetId){
                 $insertData = [];
@@ -531,12 +537,13 @@ if (!function_exists('getAgreementHost')){
      * 如果是后台有单独域名部署那么直接从 host 请求头上拿域名
      * @return array|string|null
      */
-    function getAgreementHost() {
+    function getAgreementHost(): array|string|null
+    {
         //兼容脚本环境使用
         if (!request()){
             return getenv('SERVER_LISTEN','http://127.0.0.1');
         }
-        if(!strstr(request()->host(), 'http://') && !strstr(request()->host(), 'https://')){
+        if(!str_contains(request()->host(), 'http://') && !str_contains(request()->host(), 'https://')){
             return request()->header('Scheme','http')."://".request()->host();
         }
         return request()->host();
@@ -685,10 +692,10 @@ if (!function_exists('requestGetAsync')) {
      * @param bool $is_auto_end
      * @param bool $result_json_format
      * @param array $addHeaders
-     * @return \support\Response|true
+     * @return Response|true
      * @throws Throwable
      */
-    function requestGetAsync(string $url, mixed $data, callable|null $success_call, callable|null $error_call,bool $is_auto_end = true, bool $result_json_format = true, array $addHeaders = []): \support\Response|true
+    function requestGetAsync(string $url, mixed $data, callable|null $success_call, callable|null $error_call,bool $is_auto_end = true, bool $result_json_format = true, array $addHeaders = []): Response|true
     {
         $params = $data;
         if (is_array($data)) {
@@ -701,7 +708,7 @@ if (!function_exists('requestGetAsync')) {
             $header = explode(': ', $val);
             $headers[$header[0]] = $header[1];
         }
-        $http = new \Workerman\Http\Client([
+        $http = new Client([
             'headers' => $headers,
             'timeout'=>60
         ]);
@@ -745,10 +752,10 @@ if (!function_exists('requestJsonPostAsync')) {
      * @param bool $is_auto_end
      * @param bool $result_json_format
      * @param array $addHeaders
-     * @return \support\Response|true
+     * @return Response|true
      * @throws Throwable
      */
-    function requestJsonPostAsync(string $url, mixed $data, callable|null $success_call, callable|null $error_call,bool $is_auto_end = true, bool $result_json_format = true, array $addHeaders = []): \support\Response|true
+    function requestJsonPostAsync(string $url, mixed $data, callable|null $success_call, callable|null $error_call,bool $is_auto_end = true, bool $result_json_format = true, array $addHeaders = []): Response|true
     {
         $data_json = $data?:'';
         if (is_array($data)){
@@ -764,7 +771,7 @@ if (!function_exists('requestJsonPostAsync')) {
             $header = explode(': ', $val);
             $headers[$header[0]] = $header[1];
         }
-        $http = new \Workerman\Http\Client([
+        $http = new Client([
             'headers' => $headers,
         ]);
         $isEnd = false;
@@ -807,10 +814,10 @@ if (!function_exists('requestFormPostAsync')) {
      * @param bool $is_auto_end
      * @param bool $result_json_format
      * @param array $addHeaders
-     * @return \support\Response|true
+     * @return Response|true
      * @throws Throwable
      */
-    function requestFormPostAsync(string $url, mixed $data, callable|null $success_call, callable|null $error_call,bool $is_auto_end = true, bool $result_json_format = true, array $addHeaders = []): \support\Response|true
+    function requestFormPostAsync(string $url, mixed $data, callable|null $success_call, callable|null $error_call,bool $is_auto_end = true, bool $result_json_format = true, array $addHeaders = []): Response|true
     {
         $data_json = $data?:'';
         if (is_array($data)){
@@ -825,7 +832,7 @@ if (!function_exists('requestFormPostAsync')) {
             $header = explode(': ', $val);
             $headers[$header[0]] = $header[1];
         }
-        $http = new \Workerman\Http\Client([
+        $http = new Client([
             'headers' => $headers,
         ]);
         $isEnd = false;

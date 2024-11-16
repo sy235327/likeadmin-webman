@@ -16,6 +16,7 @@ namespace app\api\controller;
 
 use app\api\logic\WechatLogic;
 use app\api\validate\WechatValidate;
+use support\Response;
 
 
 /**
@@ -34,7 +35,7 @@ class WechatController extends BaseApiController
      * @author 段誉
      * @date 2023/3/1 11:39
      */
-    public function jsConfig()
+    public function jsConfig(): Response
     {
         $params = (new WechatValidate())->goCheck('jsConfig');
         $result = WechatLogic::jsConfig($params);

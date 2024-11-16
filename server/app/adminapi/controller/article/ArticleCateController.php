@@ -18,6 +18,10 @@ use app\adminapi\controller\BaseAdminController;
 use app\adminapi\lists\article\ArticleCateLists;
 use app\adminapi\logic\article\ArticleCateLogic;
 use app\adminapi\validate\article\ArticleCateValidate;
+use support\Response;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * 资讯分类管理控制器
@@ -35,11 +39,11 @@ class ArticleCateController extends BaseAdminController
     }
     /**
      * @notes  查看资讯分类列表
-     * @return \support\Response
+     * @return Response
      * @author heshihu
      * @date 2022/2/21 17:11
      */
-    public function lists()
+    public function lists(): Response
     {
         return $this->dataLists(new ArticleCateLists());
     }
@@ -47,11 +51,11 @@ class ArticleCateController extends BaseAdminController
 
     /**
      * @notes  添加资讯分类
-     * @return \support\Response
+     * @return Response
      * @author heshihu
      * @date 2022/2/21 17:31
      */
-    public function add()
+    public function add(): Response
     {
         $params = $this->validateObj->post()->goCheck('add');
         ArticleCateLogic::add($params);
@@ -61,11 +65,11 @@ class ArticleCateController extends BaseAdminController
 
     /**
      * @notes  编辑资讯分类
-     * @return \support\Response
+     * @return Response
      * @author heshihu
      * @date 2022/2/21 17:49
      */
-    public function edit()
+    public function edit(): Response
     {
         $params = $this->validateObj->post()->goCheck('edit');
         $result = ArticleCateLogic::edit($params);
@@ -78,11 +82,11 @@ class ArticleCateController extends BaseAdminController
 
     /**
      * @notes  删除资讯分类
-     * @return \support\Response
+     * @return Response
      * @author heshihu
      * @date 2022/2/21 17:52
      */
-    public function delete()
+    public function delete(): Response
     {
         $params = $this->validateObj->post()->goCheck('delete');
         ArticleCateLogic::delete($params);
@@ -92,11 +96,11 @@ class ArticleCateController extends BaseAdminController
 
     /**
      * @notes  资讯分类详情
-     * @return \support\Response
+     * @return Response
      * @author heshihu
      * @date 2022/2/21 17:54
      */
-    public function detail()
+    public function detail(): Response
     {
         $params = $this->validateObj->goCheck('detail');
         $result = ArticleCateLogic::detail($params);
@@ -106,11 +110,11 @@ class ArticleCateController extends BaseAdminController
 
     /**
      * @notes  更改资讯分类状态
-     * @return \support\Response
+     * @return Response
      * @author heshihu
      * @date 2022/2/21 10:15
      */
-    public function updateStatus()
+    public function updateStatus(): Response
     {
         $params = $this->validateObj->post()->goCheck('status');
         $result = ArticleCateLogic::updateStatus($params);
@@ -123,14 +127,14 @@ class ArticleCateController extends BaseAdminController
 
     /**
      * @notes 获取文章分类
-     * @return \support\Response
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @return Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2022/10/13 10:54
      */
-    public function all()
+    public function all(): Response
     {
         $result = ArticleCateLogic::getAllData();
         return $this->data($result);

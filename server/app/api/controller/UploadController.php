@@ -17,6 +17,7 @@ namespace app\api\controller;
 use app\common\enum\FileEnum;
 use app\common\service\UploadService;
 use Exception;
+use support\Response;
 use think\response\Json;
 
 
@@ -31,9 +32,9 @@ class UploadController extends BaseApiController
      * @notes 上传图片
      * @author 段誉
      * @date 2022/9/20 18:11
-     * @return \support\Response
+     * @return Response
      */
-    public function image(): \support\Response
+    public function image(): Response
     {
         $uploadObj = (new UploadService());
         $result = $uploadObj->image(0,$this->userId,FileEnum::SOURCE_USER);
@@ -45,9 +46,9 @@ class UploadController extends BaseApiController
 
     /**
      * 获取上传凭证
-     * @return \support\Response
+     * @return Response
      */
-    public function getUploadToken(): \support\Response
+    public function getUploadToken(): Response
     {
 
         $name = $this->request->post('name', '');

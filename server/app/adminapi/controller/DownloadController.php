@@ -7,6 +7,7 @@ namespace app\adminapi\controller;
 use app\common\cache\ExportCache;
 use app\common\service\JsonService;
 use think\facade\Cache;
+use Webman\Http\Response;
 
 class DownloadController extends BaseAdminController
 {
@@ -17,7 +18,7 @@ class DownloadController extends BaseAdminController
      * @author 乔峰
      * @date 2022/11/24 16:10
      */
-    public function export()
+    public function export(): \support\Response|Response
     {
         //获取文件缓存的key
         $fileKey = request()->get('file');

@@ -5,6 +5,7 @@ namespace app\adminapi\listener;
 
 
 use ReflectionClass;
+use Webman\Http\Request;
 use think\Exception;
 use Webman\Http\Response;
 
@@ -18,16 +19,15 @@ class OperationLog
      * @author bingo
      * @date 2022/4/8 17:09
      */
-    public static function handle(Response $response)
+    public static function handle(Request $request, Response $response)
     {
-        $request = request();
-
         //需要登录的接口，无效访问时不记录
-        if (!$request->controllerObject->isNotNeedLogin($request->action) && empty($request->adminInfo)) {
+        if (!$request->controllerObject||!$request->controllerObject->isNotNeedLogin($request->action) && empty($request->adminInfo)) {
             return;
         }
+        $pathLower = strtolower($request->path());
         //不记录日志操作
-        if (strtolower($request->path()) === '/adminapi/setting/system/log') {
+        if (str_contains($pathLower,"/api/")||$pathLower === '/adminapi/setting/system/log') {
             return;
         }
 

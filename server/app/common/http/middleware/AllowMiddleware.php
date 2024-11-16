@@ -17,6 +17,8 @@ declare (strict_types=1);
 namespace app\common\http\middleware;
 
 use app\adminapi\listener\OperationLog;
+use Fiber;
+use support\Log;
 use Webman\Http\Request;
 use Webman\Http\Response;
 use Webman\MiddlewareInterface;
@@ -39,7 +41,18 @@ class AllowMiddleware implements MiddlewareInterface
     public function process(Request $request, callable $handler): Response
     {
         // 如果是opitons请求则返回一个空的响应，否则继续向洋葱芯穿越，并得到一个响应
-        $response = $request->method() == 'OPTIONS' ? response('') : $handler($request);
+        $response = null;
+        if ($request->method() == 'OPTIONS'){
+            $response = response('');
+        }else{
+            $response = $handler($request);
+            try{
+                $fiber = (new Fiber(function() use ($request, $response): bool{
+                    return $this->taskLog($request,$response);
+                }));
+                $fiber->start();
+            }catch (\Exception|\Throwable $e){}
+        }
 
         // 给响应添加跨域相关的http头
         $response->withHeaders([
@@ -47,11 +60,18 @@ class AllowMiddleware implements MiddlewareInterface
             'Access-Control-Allow-Origin' => $request->header('origin', '*'),
             'Access-Control-Allow-Methods' => $request->header('access-control-request-method', '*'),
             'Access-Control-Allow-Headers' => $request->header('access-control-request-headers', '*'),
+            'Access-Control-Expose-Headers'=>'*'
         ]);
-        try{
-            OperationLog::handle($response);
-        }catch (\Exception $e){}
         return $response;
     }
-
+    public function taskLog($request,$response): bool
+    {
+        try{
+            OperationLog::handle($request,$response);
+        }catch (\Exception $e){
+            Log::info('请求日志记录失败:'.$e->getMessage());
+            return false;
+        }
+        return true;
+    }
 }

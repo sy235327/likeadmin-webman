@@ -91,7 +91,7 @@ class ArticleCateLists extends BaseAdminDataLists implements ListsSearchInterfac
         return ArticleCate::where($this->searchWhere)->count();
     }
 
-    public function extend()
+    public function extend(): array
     {
         return [];
     }

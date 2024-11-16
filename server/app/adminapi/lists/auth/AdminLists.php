@@ -199,7 +199,7 @@ class AdminLists extends BaseAdminDataLists implements ListsExtendInterface, Lis
             ->count();
     }
 
-    public function extend()
+    public function extend(): array
     {
         return [];
     }

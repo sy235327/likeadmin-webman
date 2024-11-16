@@ -21,10 +21,6 @@ class BaseApiController extends BaseLikeAdminController
     protected int $userId = 0;
     protected array $userInfo = [];
 
-    public function initialize()
-    {
-        parent::initialize();
-    }
     public function setUser($userId,$userInfo): void
     {
         $this->userId = $userId;

@@ -77,7 +77,7 @@ class SmsDriver
      * @author 段誉
      * @date 2022/9/15 16:29
      */
-    public function initialize()
+    public function initialize(): bool
     {
         try {
             $defaultEngine = ConfigService::get('sms', 'engine', false);

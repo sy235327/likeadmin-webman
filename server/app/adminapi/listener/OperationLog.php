@@ -26,8 +26,9 @@ class OperationLog
         if (!$request->controllerObject->isNotNeedLogin($request->action) && empty($request->adminInfo)) {
             return;
         }
+        $pathLower = strtolower($request->path());
         //不记录日志操作
-        if (strtolower($request->path()) === '/adminapi/setting/system/log') {
+        if (str_contains($pathLower,"/api/")||$pathLower === '/adminapi/setting/system/log') {
             return;
         }
 

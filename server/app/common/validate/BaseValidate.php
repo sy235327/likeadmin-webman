@@ -21,7 +21,7 @@ use taoser\Validate;
 
 class BaseValidate extends Validate
 {
-    public $method = 'GET';
+    public string $method = 'GET';
 
     /**
      * @notes 设置请求方式

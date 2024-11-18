@@ -11,6 +11,8 @@ use think\Model;
 
 /**
  * Class BaseModel 基础模型
+ * @property string $name 表名;
+ * @property string $deleteTime 删除时间;
  *
  * Class Model 框架基础模型
  * @package think

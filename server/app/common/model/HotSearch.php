@@ -14,7 +14,30 @@
 
 namespace app\common\model;
 
+/**
+ * 热门搜索表模型
+ * Class HotSearch
+ * @package app\common\model
+ * @property int $id 主键 主键
+ * @property string $name 关键词
+ * @property int $sort 排序号
+ * @property int $create_time 创建时间
+
+ */
 class HotSearch extends BaseModel
 {
 
+    protected $name = 'hot_search';
+
+    //设置字段信息
+    protected $schema = [
+        //主键 主键
+        'id' => 'int',
+        //关键词
+        'name' => 'string',
+        //排序号
+        'sort' => 'int',
+        //创建时间
+        'create_time' => 'int',
+    ];
 }

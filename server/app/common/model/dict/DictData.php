@@ -22,13 +22,51 @@ use think\model\concern\SoftDelete;
  * 字典数据模型
  * Class DictData
  * @package app\common\model\dict
+ * @property int $id 主键 id
+ * @property string $name 数据名称
+ * @property string $value 数据值
+ * @property int $type_id 字典类型id
+ * @property string $type_value 字典类型
+ * @property int $sort 排序值
+ * @property int $status 状态 0-停用 1-正常
+ * @property string $remark 备注
+ * @property int $create_time 创建时间
+ * @property int $update_time 修改时间
+ * @property int $delete_time 删除时间
  */
 class DictData extends BaseModel
 {
 
     use SoftDelete;
 
+    protected $name = 'dict_data';
     protected $deleteTime = 'delete_time';
+
+    //设置字段信息
+    protected $schema = [
+        //主键 id
+        'id' => 'int',
+        //数据名称
+        'name' => 'string',
+        //数据值
+        'value' => 'string',
+        //字典类型id
+        'type_id' => 'int',
+        //字典类型
+        'type_value' => 'string',
+        //排序值
+        'sort' => 'int',
+        //状态 0-停用 1-正常
+        'status' => 'int',
+        //备注
+        'remark' => 'string',
+        //创建时间
+        'create_time' => 'int',
+        //修改时间
+        'update_time' => 'int',
+        //删除时间
+        'delete_time' => 'int',
+    ];
 
 
     /**

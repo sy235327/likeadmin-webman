@@ -22,12 +22,62 @@ use think\model\concern\SoftDelete;
  * 资讯管理模型
  * Class Article
  * @package app\common\model\article;
+ * @property int $id 主键 文章id
+ * @property int $cid 文章分类
+ * @property string $title 文章标题
+ * @property string $desc 简介
+ * @property string $abstract 文章摘要
+ * @property string $image 文章图片
+ * @property string $author 作者
+ * @property string $content 文章内容
+ * @property int $click_virtual 虚拟浏览量
+ * @property int $click_actual 实际浏览量
+ * @property int $is_show 是否显示:1-是.0-否
+ * @property int $sort 排序
+ * @property int $create_time 创建时间
+ * @property int $update_time 更新时间
+ * @property int $delete_time 删除时间
  */
 class Article extends BaseModel
 {
     use SoftDelete;
 
+    protected $name = 'article';
     protected $deleteTime = 'delete_time';
+
+    //设置字段信息
+    protected $schema = [
+        //主键 文章id
+        'id' => 'int',
+        //文章分类
+        'cid' => 'int',
+        //文章标题
+        'title' => 'string',
+        //简介
+        'desc' => 'string',
+        //文章摘要
+        'abstract' => 'string',
+        //文章图片
+        'image' => 'string',
+        //作者
+        'author' => 'string',
+        //文章内容
+        'content' => 'string',
+        //虚拟浏览量
+        'click_virtual' => 'int',
+        //实际浏览量
+        'click_actual' => 'int',
+        //是否显示:1-是.0-否
+        'is_show' => 'int',
+        //排序
+        'sort' => 'int',
+        //创建时间
+        'create_time' => 'int',
+        //更新时间
+        'update_time' => 'int',
+        //删除时间
+        'delete_time' => 'int',
+    ];
 
     /**
      * @notes  获取分类名称

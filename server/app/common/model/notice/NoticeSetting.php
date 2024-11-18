@@ -19,8 +19,56 @@ use app\common\enum\DefaultEnum;
 use app\common\enum\notice\NoticeEnum;
 use app\common\model\BaseModel;
 
+/**
+ * 通知设置表模型
+ * Class NoticeSetting
+ * @package app\common\model\notice
+ * @property int $id 主键
+ * @property int $scene_id 场景id
+ * @property string $scene_name 场景名称
+ * @property string $scene_desc 场景描述
+ * @property int $recipient 接收者 1-用户 2-平台
+ * @property int $type 通知类型: 1-业务通知 2-验证码
+ * @property string $system_notice 系统通知设置
+ * @property string $sms_notice 短信通知设置
+ * @property string $oa_notice 公众号通知设置
+ * @property string $mnp_notice 小程序通知设置
+ * @property string $support 支持的发送类型 1-系统通知 2-短信通知 3-微信模板消息 4-小程序提醒
+ * @property int $update_time 更新时间
+
+ */
 class NoticeSetting extends BaseModel
 {
+    protected $name = 'notice_setting';
+
+    //设置字段信息
+    protected $schema = [
+        //主键
+        'id' => 'int',
+        //场景id
+        'scene_id' => 'int',
+        //场景名称
+        'scene_name' => 'string',
+        //场景描述
+        'scene_desc' => 'string',
+        //接收者 1-用户 2-平台
+        'recipient' => 'int',
+        //通知类型: 1-业务通知 2-验证码
+        'type' => 'int',
+        //系统通知设置
+        'system_notice' => 'string',
+        //短信通知设置
+        'sms_notice' => 'string',
+        //公众号通知设置
+        'oa_notice' => 'string',
+        //小程序通知设置
+        'mnp_notice' => 'string',
+        //支持的发送类型 1-系统通知 2-短信通知 3-微信模板消息 4-小程序提醒
+        'support' => 'string',
+        //更新时间
+        'update_time' => 'int',
+    ];
+
 
     /**
      * @notes 短信通知状态

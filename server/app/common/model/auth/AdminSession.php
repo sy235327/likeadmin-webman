@@ -16,9 +16,37 @@ namespace app\common\model\auth;
 
 use app\common\model\BaseModel;
 use think\model\relation\HasOne;
+/**
+ * 管理员会话表模型
+ * Class AdminSession
+ * @package app\common\model\auth
+ * @property int $id 主键
+ * @property int $admin_id 用户id
+ * @property int $terminal 客户端类型：1-pc管理后台 2-mobile手机管理后台
+ * @property string $token 令牌
+ * @property int $update_time 更新时间
+ * @property int $expire_time 到期时间
 
+ */
 class AdminSession extends BaseModel
 {
+    protected $name = 'admin_session';
+    //设置字段信息
+    protected $schema = [
+        //主键
+        'id' => 'int',
+        //用户id
+        'admin_id' => 'int',
+        //客户端类型：1-pc管理后台 2-mobile手机管理后台
+        'terminal' => 'int',
+        //令牌
+        'token' => 'string',
+        //更新时间
+        'update_time' => 'int',
+        //到期时间
+        'expire_time' => 'int',
+    ];
+
     /**
      * @notes 关联管理员表
      * @return HasOne

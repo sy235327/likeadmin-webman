@@ -17,12 +17,72 @@ use think\model\relation\HasOne;
  * 用户模型
  * Class User
  * @package app\common\model\user
+ * @property int $id 主键 主键
+ * @property int $sn 编号
+ * @property string $avatar 头像
+ * @property string $real_name 真实姓名
+ * @property string $nickname 用户昵称
+ * @property string $account 用户账号
+ * @property string $password 用户密码
+ * @property string $mobile 用户电话
+ * @property int $sex 用户性别: [1=男, 2=女]
+ * @property int $channel 注册渠道: [1-微信小程序 2-微信公众号 3-手机H5 4-电脑PC 5-苹果APP 6-安卓APP]
+ * @property int $is_disable 是否禁用: [0=否, 1=是]
+ * @property string $login_ip 最后登录IP
+ * @property int $login_time 最后登录时间
+ * @property int $is_new_user 是否是新注册用户: [1-是, 0-否]
+ * @property float $user_money 用户余额
+ * @property float $total_recharge_amount 累计充值
+ * @property int $create_time 创建时间
+ * @property int $update_time 更新时间
+ * @property int $delete_time 删除时间
  */
 class User extends BaseModel
 {
     use SoftDelete;
-
+    protected $name = 'user';
     protected $deleteTime = 'delete_time';
+    //设置字段信息
+    protected $schema = [
+        //主键 主键
+        'id' => 'int',
+        //编号
+        'sn' => 'int',
+        //头像
+        'avatar' => 'string',
+        //真实姓名
+        'real_name' => 'string',
+        //用户昵称
+        'nickname' => 'string',
+        //用户账号
+        'account' => 'string',
+        //用户密码
+        'password' => 'string',
+        //用户电话
+        'mobile' => 'string',
+        //用户性别: [1=男, 2=女]
+        'sex' => 'int',
+        //注册渠道: [1-微信小程序 2-微信公众号 3-手机H5 4-电脑PC 5-苹果APP 6-安卓APP]
+        'channel' => 'int',
+        //是否禁用: [0=否, 1=是]
+        'is_disable' => 'int',
+        //最后登录IP
+        'login_ip' => 'string',
+        //最后登录时间
+        'login_time' => 'int',
+        //是否是新注册用户: [1-是, 0-否]
+        'is_new_user' => 'int',
+        //用户余额
+        'user_money' => 'float',
+        //累计充值
+        'total_recharge_amount' => 'float',
+        //创建时间
+        'create_time' => 'int',
+        //更新时间
+        'update_time' => 'int',
+        //删除时间
+        'delete_time' => 'int',
+    ];
 
 
     /**

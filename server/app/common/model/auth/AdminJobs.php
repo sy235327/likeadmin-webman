@@ -16,8 +16,24 @@ namespace app\common\model\auth;
 
 use app\common\model\BaseModel;
 
+/**
+ * 岗位关联表模型
+ * Class AdminJobs
+ * @package app\common\model\auth
+ * @property int $admin_id 管理员id
+ * @property int $jobs_id 主键 岗位id
+
+ */
 class AdminJobs extends BaseModel
 {
+    protected $name = 'admin_jobs';
+    //设置字段信息
+    protected $schema = [
+        //管理员id
+        'admin_id' => 'int',
+        //主键 岗位id
+        'jobs_id' => 'int',
+    ];
     /**
      * @notes 删除用户关联岗位
      * @param $adminId

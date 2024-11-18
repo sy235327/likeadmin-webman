@@ -6,8 +6,8 @@ namespace app\common\lists;
 
 trait ListsSortTrait
 {
-    protected $orderBy;
-    protected $field;
+    protected string $orderBy;
+    protected string $field;
 
     /**
      * @notes 生成排序条件

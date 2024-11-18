@@ -4,10 +4,12 @@
 namespace app\common\lists;
 
 
+use ArrayObject;
+
 trait ListsSearchTrait
 {
-    protected $params;
-    protected $searchWhere = [];
+    protected mixed $params;
+    protected array $searchWhere = [];
 
     /**
      * @notes 搜索条件生成

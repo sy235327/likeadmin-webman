@@ -6,9 +6,10 @@ namespace app\common\lists;
 use app\common\enum\ExportEnum;
 use app\common\service\JsonService;
 use app\common\validate\ListsValidate;
-use app\Request;
+use support\Request;
 use support\Response;
 use Webman\Config;
+use ArrayObject;
 
 abstract class BaseDataLists implements ListsInterface
 {
@@ -16,31 +17,31 @@ abstract class BaseDataLists implements ListsInterface
     use ListsSortTrait;
     use ListsExcelTrait;
 
-    public $request; //请求对象
+    public Request $request; //请求对象
 
-    public $pageNo; //页码
-    public $pageSize; //每页数量
-    public $limitOffset;  //limit查询offset值
-    public $limitLength;  //limit查询数量
-    public $pageSizeMax;
-    public $pageType = 0; //默认类型：0-一般分页；1-不分页，获取最大所有数据
+    public int $pageNo; //页码
+    public int $pageSize; //每页数量
+    public int $limitOffset;  //limit查询offset值
+    public int $limitLength;  //limit查询数量
+    public int $pageSizeMax;
+    public int $pageType = 0; //默认类型：0-一般分页；1-不分页，获取最大所有数据
 
 
-    protected $orderBy;
-    protected $field;
+    protected string $orderBy;
+    protected string $field;
 
-    protected $startTime;
-    protected $endTime;
+    protected int $startTime;
+    protected int $endTime;
 
-    protected $start;
-    protected $end;
+    protected string|null $start;
+    protected string|null $end;
 
-    protected $params;
-    protected $sortOrder = [];
+    protected mixed $params;
+    protected array $sortOrder = [];
 
-    public $export;
-    public $is_export_max=2000;
-    public $is_export_batch=false;
+    public int $export;
+    public int $is_export_max=2000;
+    public bool $is_export_batch=false;
 
     public function __construct()
     {
@@ -142,7 +143,7 @@ abstract class BaseDataLists implements ListsInterface
      */
     private function initExport()
     {
-        $this->export = $this->request->get('export', '');
+        $this->export = $this->request->get('export', 0);
 
         //不做导出操作
         if ($this->export != ExportEnum::INFO && $this->export != ExportEnum::EXPORT) {

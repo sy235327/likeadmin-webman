@@ -49,11 +49,11 @@ class ListsValidate extends BaseValidate
      * @param $value
      * @param $rule
      * @param $data
-     * @return bool
+     * @return bool|string
      * @author 令狐冲
      * @date 2021/7/30 15:13
      */
-    public function pageSizeMax($value, $rule, $data)
+    public function pageSizeMax($value, $rule, $data): bool|string
     {
         $pageSizeMax = Config::get('project.lists.page_size_max');
         if ($pageSizeMax < $value) {

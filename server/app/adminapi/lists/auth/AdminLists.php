@@ -24,6 +24,9 @@ use app\common\model\auth\AdminRole;
 use app\common\model\auth\SystemRole;
 use app\common\model\dept\Dept;
 use app\common\model\dept\Jobs;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * 管理员列表
@@ -67,7 +70,7 @@ class AdminLists extends BaseAdminDataLists implements ListsExtendInterface, Lis
 
     /**
      * @notes 设置搜索条件
-     * @return \string[][]
+     * @return string[][]
      * @author 乔峰
      * @date 2021/12/29 10:07
      */
@@ -125,9 +128,9 @@ class AdminLists extends BaseAdminDataLists implements ListsExtendInterface, Lis
     /**
      * @notes 获取管理列表
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2021/12/29 10:05
      */
@@ -199,7 +202,7 @@ class AdminLists extends BaseAdminDataLists implements ListsExtendInterface, Lis
             ->count();
     }
 
-    public function extend()
+    public function extend(): array
     {
         return [];
     }

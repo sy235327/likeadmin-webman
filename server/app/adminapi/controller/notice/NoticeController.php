@@ -18,6 +18,7 @@ use app\adminapi\controller\BaseAdminController;
 use app\adminapi\lists\notice\NoticeSettingLists;
 use app\adminapi\logic\notice\NoticeLogic;
 use app\adminapi\validate\notice\NoticeValidate;
+use support\Response;
 
 /**
  * 通知控制器
@@ -38,7 +39,7 @@ class NoticeController extends BaseAdminController
      * @author 乔峰
      * @date 2022/3/29 11:18
      */
-    public function settingLists()
+    public function settingLists(): Response
     {
         return $this->dataLists(new NoticeSettingLists());
     }
@@ -49,7 +50,7 @@ class NoticeController extends BaseAdminController
      * @author 乔峰
      * @date 2022/3/29 11:18
      */
-    public function detail()
+    public function detail(): Response
     {
         $params = $this->validateObj->goCheck('detail');
         $result = NoticeLogic::detail($params);
@@ -62,7 +63,7 @@ class NoticeController extends BaseAdminController
      * @author 乔峰
      * @date 2022/3/29 11:18
      */
-    public function set()
+    public function set(): Response
     {
         $params = $this->request->post();
         $result = NoticeLogic::set($params);

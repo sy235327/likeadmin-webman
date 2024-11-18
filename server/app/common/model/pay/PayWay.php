@@ -17,11 +17,34 @@ namespace app\common\model\pay;
 
 use app\common\model\BaseModel;
 use app\common\service\FileService;
+use think\model\relation\HasOne;
+/**
+ * DevPayWay模型
+ * Class DevPayWay
+ * @package app\common\model\pay
+ * @property int $id 主键
+ * @property int $pay_config_id 支付配置ID
+ * @property int $scene 场景:1-微信小程序;2-微信公众号;3-H5;4-PC;5-APP;
+ * @property int $is_default 是否默认支付:0-否;1-是;
+ * @property int $status 状态:0-关闭;1-开启;
 
-
+ */
 class PayWay extends BaseModel
 {
     protected $name = 'dev_pay_way';
+    //设置字段信息
+    protected $schema = [
+        //主键
+        'id' => 'int',
+        //支付配置ID
+        'pay_config_id' => 'int',
+        //场景:1-微信小程序;2-微信公众号;3-H5;4-PC;5-APP;
+        'scene' => 'int',
+        //是否默认支付:0-否;1-是;
+        'is_default' => 'int',
+        //状态:0-关闭;1-开启;
+        'status' => 'int',
+    ];
 
     public function getIconAttr($value,$data)
     {
@@ -43,7 +66,7 @@ class PayWay extends BaseModel
 
     /**
      * @notes 关联支配配置模型
-     * @return \think\model\relation\HasOne
+     * @return HasOne
      * @author ljj
      * @date 2021/10/11 3:04 下午
      */

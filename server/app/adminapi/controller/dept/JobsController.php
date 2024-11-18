@@ -18,6 +18,10 @@ use app\adminapi\controller\BaseAdminController;
 use app\adminapi\lists\dept\JobsLists;
 use app\adminapi\logic\dept\JobsLogic;
 use app\adminapi\validate\dept\JobsValidate;
+use support\Response;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 
 /**
@@ -39,7 +43,7 @@ class JobsController extends BaseAdminController
      * @author 乔峰
      * @date 2022/5/26 10:00
      */
-    public function lists()
+    public function lists(): Response
     {
         return $this->dataLists(new JobsLists());
     }
@@ -50,7 +54,7 @@ class JobsController extends BaseAdminController
      * @author 乔峰
      * @date 2022/5/25 18:40
      */
-    public function add()
+    public function add(): Response
     {
         $params = $this->validateObj->post()->goCheck('add');
         JobsLogic::add($params);
@@ -63,7 +67,7 @@ class JobsController extends BaseAdminController
      * @author 乔峰
      * @date 2022/5/25 18:41
      */
-    public function edit()
+    public function edit(): Response
     {
         $params = $this->validateObj->post()->goCheck('edit');
         $result = JobsLogic::edit($params);
@@ -79,7 +83,7 @@ class JobsController extends BaseAdminController
      * @author 乔峰
      * @date 2022/5/25 18:41
      */
-    public function delete()
+    public function delete(): Response
     {
         $params = $this->validateObj->post()->goCheck('delete');
         JobsLogic::delete($params);
@@ -92,7 +96,7 @@ class JobsController extends BaseAdminController
      * @author 乔峰
      * @date 2022/5/25 18:41
      */
-    public function detail()
+    public function detail(): Response
     {
         $params = $this->validateObj->goCheck('detail');
         $result = JobsLogic::detail($params);
@@ -102,13 +106,13 @@ class JobsController extends BaseAdminController
 
     /**
      * @notes 获取岗位数据
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2022/10/13 10:31
      */
-    public function all()
+    public function all(): Response
     {
         $result = JobsLogic::getAllData();
         return $this->data($result);

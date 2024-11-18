@@ -26,6 +26,7 @@ use app\common\model\recharge\RechargeOrder;
 use app\common\model\refund\RefundRecord;
 use app\common\model\user\User;
 use app\common\service\ConfigService;
+use Exception;
 use think\facade\Db;
 
 
@@ -43,7 +44,7 @@ class RechargeLogic extends BaseLogic
      * @author 段誉
      * @date 2023/2/22 16:54
      */
-    public static function getConfig()
+    public static function getConfig(): array
     {
         $config = [
             'status' => ConfigService::get('recharge', 'status', 0),
@@ -61,7 +62,7 @@ class RechargeLogic extends BaseLogic
      * @author 段誉
      * @date 2023/2/22 16:54
      */
-    public static function setConfig($params)
+    public static function setConfig($params): bool
     {
         try {
             if (isset($params['status'])) {
@@ -71,7 +72,7 @@ class RechargeLogic extends BaseLogic
                 ConfigService::set('recharge', 'min_amount', $params['min_amount']);
             }
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }
@@ -86,7 +87,7 @@ class RechargeLogic extends BaseLogic
      * @author 段誉
      * @date 2023/3/3 11:42
      */
-    public static function refund($params, $adminId)
+    public static function refund($params, $adminId): false|array
     {
         Db::startTrans();
         try {
@@ -141,7 +142,7 @@ class RechargeLogic extends BaseLogic
 
             Db::commit();
             return [$flag, $resultMsg];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Db::rollback();
             self::$error = $e->getMessage();
             return [false, $e->getMessage()];
@@ -157,7 +158,7 @@ class RechargeLogic extends BaseLogic
      * @author 段誉
      * @date 2023/3/3 11:44
      */
-    public static function refundAgain($params, $adminId)
+    public static function refundAgain($params, $adminId): array
     {
         Db::startTrans();
         try {
@@ -176,7 +177,7 @@ class RechargeLogic extends BaseLogic
 
             Db::commit();
             return [$flag, $resultMsg];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Db::rollback();
             self::$error = $e->getMessage();
             return [false, $e->getMessage()];

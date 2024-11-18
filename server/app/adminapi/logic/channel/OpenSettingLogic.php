@@ -30,7 +30,7 @@ class OpenSettingLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/3/29 11:03
      */
-    public static function getConfig()
+    public static function getConfig(): array
     {
         $config = [
             'app_id' => ConfigService::get('open_platform', 'app_id', ''),
@@ -47,7 +47,7 @@ class OpenSettingLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/3/29 11:03
      */
-    public static function setConfig($params)
+    public static function setConfig($params): void
     {
         ConfigService::set('open_platform', 'app_id', $params['app_id'] ?? '');
         ConfigService::set('open_platform', 'app_secret', $params['app_secret'] ?? '');

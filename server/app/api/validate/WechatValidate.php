@@ -31,7 +31,7 @@ class WechatValidate extends BaseValidate
         'url.require' => '请提供url'
     ];
 
-    public function sceneJsConfig()
+    public function sceneJsConfig(): WechatValidate
     {
         return $this->only(['url']);
     }

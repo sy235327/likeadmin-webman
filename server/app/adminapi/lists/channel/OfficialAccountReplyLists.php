@@ -17,6 +17,9 @@ namespace app\adminapi\lists\channel;
 use app\adminapi\lists\BaseAdminDataLists;
 use app\common\lists\ListsSearchInterface;
 use app\common\model\channel\OfficialAccountReply;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * 微信公众号回复列表
@@ -28,7 +31,7 @@ class OfficialAccountReplyLists extends BaseAdminDataLists implements ListsSearc
 
     /**
      * @notes 设置搜索
-     * @return \string[][]
+     * @return string[][]
      * @author 乔峰
      * @date 2022/3/30 15:02
      */
@@ -43,9 +46,9 @@ class OfficialAccountReplyLists extends BaseAdminDataLists implements ListsSearc
     /**
      * @notes 回复列表
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2022/3/30 15:02
      */

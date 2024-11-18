@@ -17,6 +17,9 @@ namespace app\adminapi\lists\notice;
 use app\adminapi\lists\BaseAdminDataLists;
 use app\common\lists\ListsSearchInterface;
 use app\common\model\notice\NoticeSetting;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * 通知设置
@@ -27,7 +30,7 @@ class NoticeSettingLists extends BaseAdminDataLists implements ListsSearchInterf
 {
     /**
      * @notes 搜索条件
-     * @return \string[][]
+     * @return string[][]
      * @author ljj
      * @date 2022/2/17 2:21 下午
      */
@@ -41,9 +44,9 @@ class NoticeSettingLists extends BaseAdminDataLists implements ListsSearchInterf
     /**
      * @notes 通知设置列表
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author ljj
      * @date 2022/2/16 3:18 下午
      */

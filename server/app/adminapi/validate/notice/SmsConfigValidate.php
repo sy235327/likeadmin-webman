@@ -44,7 +44,7 @@ class SmsConfigValidate extends BaseValidate
     ];
 
 
-    protected function sceneDetail()
+    protected function sceneDetail(): SmsConfigValidate
     {
         return $this->only(['type']);
     }

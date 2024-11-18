@@ -27,12 +27,12 @@ class YesNoEnum
 
     /**
      * @notes 获取禁用状态
-     * @param bool $value
+     * @param bool|int $value
      * @return string|string[]
      * @author 令狐冲
      * @date 2021/7/8 19:02
      */
-    public static function getDisableDesc($value = true)
+    public static function getDisableDesc(bool|int $value = true): array|string
     {
         $data = [
             self::YES => '禁用',

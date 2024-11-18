@@ -16,9 +16,24 @@ namespace app\common\model\auth;
 
 use app\common\model\BaseModel;
 
+/**
+ * 角色关联表模型
+ * Class AdminRole
+ * @package app\common\model\auth
+ * @property int $admin_id 管理员id
+ * @property int $role_id 主键 角色id
+
+ */
 class AdminRole extends BaseModel
 {
-
+    protected $name = 'admin_role';
+    //设置字段信息
+    protected $schema = [
+        //管理员id
+        'admin_id' => 'int',
+        //主键 角色id
+        'role_id' => 'int',
+    ];
     /**
      * @notes 删除用户关联角色
      * @param $adminId

@@ -75,7 +75,7 @@ class MenuValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/6/29 18:26
      */
-    public function sceneAdd()
+    public function sceneAdd(): MenuValidate
     {
         return $this->remove('id', true);
     }
@@ -87,7 +87,7 @@ class MenuValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/6/29 18:27
      */
-    public function sceneDetail()
+    public function sceneDetail(): MenuValidate
     {
         return $this->only(['id']);
     }
@@ -99,7 +99,7 @@ class MenuValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/6/29 18:27
      */
-    public function sceneDelete()
+    public function sceneDelete(): MenuValidate
     {
         return $this->only(['id'])
             ->append('id', 'checkAbleDelete');
@@ -112,7 +112,7 @@ class MenuValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/7/6 17:04
      */
-    public function sceneStatus()
+    public function sceneStatus(): MenuValidate
     {
         return $this->only(['id', 'is_disable']);
     }
@@ -127,7 +127,7 @@ class MenuValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/6/29 18:24
      */
-    protected function checkUniqueName($value, $rule, $data)
+    protected function checkUniqueName($value, $rule, $data): bool|string
     {
         if ($data['type'] != 'M') {
             return true;
@@ -158,7 +158,7 @@ class MenuValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/6/30 9:40
      */
-    protected function checkAbleDelete($value, $rule, $data)
+    protected function checkAbleDelete($value, $rule, $data): bool|string
     {
         $hasChild = SystemMenu::where(['pid' => $value])->findOrEmpty();
         if (!$hasChild->isEmpty()) {
@@ -184,7 +184,7 @@ class MenuValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/6/30 9:51
      */
-    protected function checkPid($value, $rule, $data)
+    protected function checkPid($value, $rule, $data): bool|string
     {
         if (!empty($data['id']) && $data['id'] == $value) {
             return '上级菜单不能选择自己';

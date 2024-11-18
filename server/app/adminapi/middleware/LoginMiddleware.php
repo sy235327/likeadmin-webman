@@ -7,6 +7,7 @@ namespace app\adminapi\middleware;
 use app\adminapi\service\AdminTokenService;
 use app\common\cache\AdminTokenCache;
 use app\common\service\JsonService;
+use Closure;
 use Webman\Config;
 use Webman\Http\Request;
 use Webman\Http\Response;
@@ -18,7 +19,7 @@ class LoginMiddleware implements  MiddlewareInterface
     /**
      * @notes 登录验证
      * @param $request
-     * @param \Closure $next
+     * @param Closure $next
      * @author 乔峰
      * @date 2021/7/1 17:33
      */
@@ -57,6 +58,9 @@ class LoginMiddleware implements  MiddlewareInterface
 
         //给request赋值，用于控制器
         $adminId = $adminInfo['admin_id'] ?? 0;
+        if (!$adminInfo){
+            $adminInfo = [];
+        }
         $controllerObject->setAdmin($adminId,$adminInfo);
         return $handler($request);
     }

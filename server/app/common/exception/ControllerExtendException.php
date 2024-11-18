@@ -4,7 +4,9 @@
 namespace app\common\exception;
 
 
-class ControllerExtendException extends \Exception
+use Exception;
+
+class ControllerExtendException extends Exception
 {
     public function __construct(string $message, string $model = '', array $config = [])
     {

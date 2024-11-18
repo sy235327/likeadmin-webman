@@ -7,6 +7,7 @@ namespace app\adminapi\controller\setting;
 use app\adminapi\controller\BaseAdminController;
 use app\adminapi\logic\setting\StorageLogic;
 use app\adminapi\validate\setting\StorageValidate;
+use support\Response;
 
 class StorageController extends BaseAdminController
 {
@@ -22,7 +23,7 @@ class StorageController extends BaseAdminController
      * @author 乔峰
      * @date 2022/4/20 16:13
      */
-    public function lists()
+    public function lists(): Response
     {
         return $this->success('获取成功', StorageLogic::lists());
     }
@@ -33,7 +34,7 @@ class StorageController extends BaseAdminController
      * @author 乔峰
      * @date 2022/4/20 16:19
      */
-    public function detail()
+    public function detail(): Response
     {
         $param = $this->validateObj->get()->goCheck('detail');
         return $this->success('获取成功', StorageLogic::detail($param));
@@ -45,7 +46,7 @@ class StorageController extends BaseAdminController
      * @author 乔峰
      * @date 2022/4/20 16:19
      */
-    public function setup()
+    public function setup(): Response
     {
         $params = $this->validateObj->post()->goCheck('setup');
         $result = StorageLogic::setup($params);
@@ -61,7 +62,7 @@ class StorageController extends BaseAdminController
      * @author 乔峰
      * @date 2022/4/20 16:19
      */
-    public function change()
+    public function change(): Response
     {
         $params = $this->validateObj->post()->goCheck('change');
         StorageLogic::change($params);

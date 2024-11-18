@@ -34,7 +34,7 @@ class DecoratePageLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/9/14 18:41
      */
-    public static function getDetail($id)
+    public static function getDetail($id): array
     {
         return DecoratePage::findOrEmpty($id)->toArray();
     }
@@ -47,7 +47,7 @@ class DecoratePageLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/9/15 9:37
      */
-    public static function save($params)
+    public static function save($params): bool
     {
         $pageData = DecoratePage::where(['id' => $params['id']])->findOrEmpty();
         if ($pageData->isEmpty()) {

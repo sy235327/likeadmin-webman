@@ -17,6 +17,7 @@ namespace app\adminapi\controller\setting\web;
 use app\adminapi\controller\BaseAdminController;
 use app\adminapi\logic\setting\web\WebSettingLogic;
 use app\adminapi\validate\setting\WebSettingValidate;
+use support\Response;
 
 /**
  * 网站设置
@@ -32,12 +33,13 @@ class WebSettingController extends BaseAdminController
         parent::initialize();
         $this->validateObj = new WebSettingValidate();
     }
+
     /**
      * @notes 获取网站信息
      * @author 乔峰
      * @date 2021/12/28 15:44
      */
-    public function getWebsite()
+    public function getWebsite(): Response
     {
         $result = WebSettingLogic::getWebsiteInfo();
         return $this->data($result);
@@ -49,7 +51,7 @@ class WebSettingController extends BaseAdminController
      * @author 乔峰
      * @date 2021/12/28 15:45
      */
-    public function setWebsite()
+    public function setWebsite(): Response
     {
         $params = $this->validateObj->post()->goCheck('website');
         WebSettingLogic::setWebsiteInfo($params);
@@ -57,13 +59,12 @@ class WebSettingController extends BaseAdminController
     }
 
 
-
     /**
      * @notes 获取备案信息
      * @author 乔峰
      * @date 2021/12/28 16:10
      */
-    public function getCopyright()
+    public function getCopyright(): Response
     {
         $result = WebSettingLogic::getCopyright();
         return $this->data($result);
@@ -75,7 +76,7 @@ class WebSettingController extends BaseAdminController
      * @author 乔峰
      * @date 2021/12/28 16:10
      */
-    public function setCopyright()
+    public function setCopyright(): Response
     {
         $params = $this->request->post();
         $result = WebSettingLogic::setCopyright($params);
@@ -91,7 +92,7 @@ class WebSettingController extends BaseAdminController
      * @author ljj
      * @date 2022/2/15 11:00 上午
      */
-    public function setAgreement()
+    public function setAgreement(): Response
     {
         $params = $this->request->post();
         WebSettingLogic::setAgreement($params);
@@ -104,7 +105,7 @@ class WebSettingController extends BaseAdminController
      * @author ljj
      * @date 2022/2/15 11:16 上午
      */
-    public function getAgreement()
+    public function getAgreement(): Response
     {
         $result = WebSettingLogic::getAgreement();
         return $this->data($result);

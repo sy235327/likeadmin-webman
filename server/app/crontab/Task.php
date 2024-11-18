@@ -2,6 +2,7 @@
 namespace app\crontab;
 
 
+use app\common\model\OperationLog;
 use Workerman\Crontab\Crontab;
 
 class Task
@@ -41,7 +42,7 @@ class Task
         // 每天的2点30执行，注意这里省略了秒位
         new Crontab('30 2 * * *', function(){
             //todo 删除日志表日志
-            \app\common\model\OperationLog::destroy(function ($query) {
+            OperationLog::destroy(function ($query) {
                 $query->where('create_time','<',strtotime("-15 day"));
             },true);
         });

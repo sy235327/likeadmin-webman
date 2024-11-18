@@ -16,6 +16,8 @@ declare (strict_types=1);
 
 namespace app\common\http\middleware;
 
+use Closure;
+
 /**
  * 基础中间件
  * Class LikeShopMiddleware
@@ -23,7 +25,7 @@ namespace app\common\http\middleware;
  */
 class BaseMiddleware
 {
-    public function handle($request, \Closure $next)
+    public function handle($request, Closure $next)
     {
         return $next($request);
     }

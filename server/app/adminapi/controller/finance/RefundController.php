@@ -18,6 +18,10 @@ use app\adminapi\controller\BaseAdminController;
 use app\adminapi\lists\finance\RefundLogLists;
 use app\adminapi\lists\finance\RefundRecordLists;
 use app\adminapi\logic\finance\RefundLogic;
+use support\Response;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * 退款控制器
@@ -30,14 +34,14 @@ class RefundController extends BaseAdminController
 
     /**
      * @notes 退还统计
-     * @return \support\Response
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @return Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2023/3/3 12:10
      */
-    public function stat()
+    public function stat(): Response
     {
         $result = RefundLogic::stat();
         return $this->success('', $result);
@@ -46,11 +50,11 @@ class RefundController extends BaseAdminController
 
     /**
      * @notes 退款记录
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2023/3/1 9:47
      */
-    public function record()
+    public function record(): Response
     {
         return $this->dataLists(new RefundRecordLists());
     }
@@ -58,11 +62,11 @@ class RefundController extends BaseAdminController
 
     /**
      * @notes 退款日志
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2023/3/1 9:47
      */
-    public function log()
+    public function log(): Response
     {
         $recordId = $this->request->get('record_id', 0);
         $result = RefundLogic::refundLog($recordId);

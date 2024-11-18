@@ -8,6 +8,7 @@ use app\adminapi\lists\file\FileCateLists;
 use app\adminapi\lists\file\FileLists;
 use app\adminapi\logic\FileLogic;
 use app\adminapi\validate\FileValidate;
+use support\Response;
 
 class FileController extends BaseAdminController
 {
@@ -23,7 +24,7 @@ class FileController extends BaseAdminController
      * @author 乔峰
      * @date 2021/12/29 14:30
      */
-    public function lists()
+    public function lists(): Response
     {
         return $this->dataLists(new FileLists());
     }
@@ -34,7 +35,7 @@ class FileController extends BaseAdminController
      * @author 乔峰
      * @date 2021/12/29 14:30
      */
-    public function move()
+    public function move(): Response
     {
         $params = $this->validateObj->post()->goCheck('move');
         FileLogic::move($params);
@@ -47,7 +48,7 @@ class FileController extends BaseAdminController
      * @author 乔峰
      * @date 2021/12/29 14:31
      */
-    public function rename()
+    public function rename(): Response
     {
         $params = $this->validateObj->post()->goCheck('rename');
         FileLogic::rename($params);
@@ -60,7 +61,7 @@ class FileController extends BaseAdminController
      * @author 乔峰
      * @date 2021/12/29 14:31
      */
-    public function delete()
+    public function delete(): Response
     {
         $params = $this->validateObj->post()->goCheck('delete');
         FileLogic::delete($params);
@@ -73,7 +74,7 @@ class FileController extends BaseAdminController
      * @author 乔峰
      * @date 2021/12/29 14:31
      */
-    public function listCate()
+    public function listCate(): Response
     {
         return $this->dataLists(new FileCateLists());
     }
@@ -84,7 +85,7 @@ class FileController extends BaseAdminController
      * @author 乔峰
      * @date 2021/12/29 14:31
      */
-    public function addCate()
+    public function addCate(): Response
     {
         $params = $this->validateObj->post()->goCheck('addCate');
         FileLogic::addCate($params);
@@ -97,7 +98,7 @@ class FileController extends BaseAdminController
      * @author 乔峰
      * @date 2021/12/29 14:31
      */
-    public function editCate()
+    public function editCate(): Response
     {
         $params = $this->validateObj->post()->goCheck('editCate');
         FileLogic::editCate($params);
@@ -110,7 +111,7 @@ class FileController extends BaseAdminController
      * @author 乔峰
      * @date 2021/12/29 14:32
      */
-    public function delCate()
+    public function delCate(): Response
     {
         $params = $this->validateObj->post()->goCheck('id');
         FileLogic::delCate($params);

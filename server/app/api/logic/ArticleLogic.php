@@ -19,6 +19,9 @@ use app\common\logic\BaseLogic;
 use app\common\model\article\Article;
 use app\common\model\article\ArticleCate;
 use app\common\model\article\ArticleCollect;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 
 /**
@@ -37,7 +40,7 @@ class ArticleLogic extends BaseLogic
      * @author 段誉
      * @date 2022/9/20 17:09
      */
-    public static function detail($articleId, $userId)
+    public static function detail($articleId, $userId): array
     {
         // 文章详情
         $article = Article::getArticleDetailArr($articleId);
@@ -55,7 +58,7 @@ class ArticleLogic extends BaseLogic
      * @author 段誉
      * @date 2022/9/20 16:52
      */
-    public static function addCollect($articleId, $userId)
+    public static function addCollect($articleId, $userId): void
     {
         $where = ['user_id' => $userId, 'article_id' => $articleId];
         $collect = ArticleCollect::where($where)->findOrEmpty();
@@ -81,7 +84,7 @@ class ArticleLogic extends BaseLogic
      * @author 段誉
      * @date 2022/9/20 16:59
      */
-    public static function cancelCollect($articleId, $userId)
+    public static function cancelCollect($articleId, $userId): void
     {
         ArticleCollect::update(['status' => YesNoEnum::NO], [
             'user_id' => $userId,
@@ -94,13 +97,13 @@ class ArticleLogic extends BaseLogic
     /**
      * @notes 文章分类
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2022/9/23 14:11
      */
-    public static function cate()
+    public static function cate(): array
     {
         return ArticleCate::field('id,name')
             ->where('is_show', '=', 1)

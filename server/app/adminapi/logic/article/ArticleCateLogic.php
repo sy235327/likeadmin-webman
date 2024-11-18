@@ -17,6 +17,10 @@ namespace app\adminapi\logic\article;
 use app\common\enum\YesNoEnum;
 use app\common\logic\BaseLogic;
 use app\common\model\article\ArticleCate;
+use Exception;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * 资讯分类管理逻辑
@@ -33,7 +37,7 @@ class ArticleCateLogic extends BaseLogic
      * @author heshihu
      * @date 2022/2/18 10:17
      */
-    public static function add(array $params)
+    public static function add(array $params): void
     {
         ArticleCate::create([
             'name' => $params['name'],
@@ -60,7 +64,7 @@ class ArticleCateLogic extends BaseLogic
                 'sort' => $params['sort'] ?? 0
             ]);
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }
@@ -73,7 +77,7 @@ class ArticleCateLogic extends BaseLogic
      * @author heshihu
      * @date 2022/2/21 17:52
      */
-    public static function delete(array $params)
+    public static function delete(array $params): void
     {
         ArticleCate::destroy($params['id']);
     }
@@ -97,7 +101,7 @@ class ArticleCateLogic extends BaseLogic
      * @author heshihu
      * @date 2022/2/21 18:04
      */
-    public static function updateStatus(array $params)
+    public static function updateStatus(array $params): bool
     {
         ArticleCate::update([
             'id' => $params['id'],
@@ -110,13 +114,13 @@ class ArticleCateLogic extends BaseLogic
     /**
      * @notes 文章分类数据
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2022/10/13 10:53
      */
-    public static function getAllData()
+    public static function getAllData(): array
     {
         return ArticleCate::where(['is_show' => YesNoEnum::YES])
             ->order(['sort' => 'desc', 'id' => 'desc'])

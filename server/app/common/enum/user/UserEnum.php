@@ -35,12 +35,12 @@ class UserEnum
 
     /**
      * @notes 性别描述
-     * @param bool $from
+     * @param bool|int $from
      * @return string|string[]
      * @author 段誉
      * @date 2022/9/7 15:05
      */
-    public static function getSexDesc($from = true)
+    public static function getSexDesc(bool|int $from = true): array|string
     {
         $desc = [
             self::SEX_OTHER => '未知',

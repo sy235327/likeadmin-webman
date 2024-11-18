@@ -20,6 +20,10 @@ use app\adminapi\{
     validate\auth\RoleValidate,
     controller\BaseAdminController
 };
+use support\Response;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * 角色控制器
@@ -40,7 +44,7 @@ class RoleController extends BaseAdminController
      * @author 乔峰
      * @date 2021/12/29 11:49
      */
-    public function lists()
+    public function lists(): Response
     {
         return $this->dataLists(new RoleLists());
     }
@@ -51,7 +55,7 @@ class RoleController extends BaseAdminController
      * @author 乔峰
      * @date 2021/12/29 11:49
      */
-    public function add()
+    public function add(): Response
     {
         $params = $this->validateObj->post()->goCheck('add');
         $res = RoleLogic::add($params);
@@ -67,7 +71,7 @@ class RoleController extends BaseAdminController
      * @author 乔峰
      * @date 2021/12/29 14:18
      */
-    public function edit()
+    public function edit(): Response
     {
         $params = $this->validateObj->post()->goCheck('edit');
         $res = RoleLogic::edit($params);
@@ -83,7 +87,7 @@ class RoleController extends BaseAdminController
      * @author 乔峰
      * @date 2021/12/29 14:18
      */
-    public function delete()
+    public function delete(): Response
     {
         $params = $this->validateObj->post()->goCheck('del');
         RoleLogic::delete($params['id']);
@@ -93,13 +97,13 @@ class RoleController extends BaseAdminController
 
     /**
      * @notes 查看角色详情
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2021/12/29 14:18
      */
-    public function detail()
+    public function detail(): Response
     {
         $params = $this->validateObj->goCheck('detail');
         $detail = RoleLogic::detail($params['id']);
@@ -109,13 +113,13 @@ class RoleController extends BaseAdminController
 
     /**
      * @notes 获取角色数据
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2022/10/13 10:39
      */
-    public function all()
+    public function all(): Response
     {
         $result = RoleLogic::getAllData();
         return $this->data($result);

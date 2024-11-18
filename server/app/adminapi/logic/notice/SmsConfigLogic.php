@@ -31,7 +31,7 @@ class SmsConfigLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/3/29 11:37
      */
-    public static function getConfig()
+    public static function getConfig(): array
     {
         $config = [
             ConfigService::get('sms', 'ali', ['type' => 'ali', 'name' => '阿里云短信', 'status' => 1]),
@@ -44,11 +44,11 @@ class SmsConfigLogic extends BaseLogic
     /**
      * @notes 短信配置
      * @param $params
-     * @return bool|void
+     * @return bool
      * @author 乔峰
      * @date 2022/3/29 11:37
      */
-    public static function setConfig($params)
+    public static function setConfig($params): bool
     {
         $type = $params['type'];
         $params['name'] = self::getNameDesc(strtoupper($type));
@@ -69,6 +69,7 @@ class SmsConfigLogic extends BaseLogic
             ConfigService::set('sms', 'engine', strtoupper($type));
             return true;
         }
+        return true;
     }
 
 
@@ -79,7 +80,7 @@ class SmsConfigLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/3/29 11:37
      */
-    public static function detail($params)
+    public static function detail($params): mixed
     {
         $default = [];
         switch ($params['type']) {
@@ -116,7 +117,7 @@ class SmsConfigLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/3/29 11:37
      */
-    public static function getNameDesc($value)
+    public static function getNameDesc($value): string
     {
         $desc = [
             'ALI' => '阿里云短信',

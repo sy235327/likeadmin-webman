@@ -11,14 +11,10 @@ class BaseAdminController extends BaseLikeAdminController
 {
     public array $notNeedLogin = [];
 
-    protected $adminId = 0;
-    protected $adminInfo = [];
+    protected int $adminId = 0;
+    protected array $adminInfo = [];
 
-    public function initialize()
-    {
-        parent::initialize();
-    }
-    public function setAdmin($adminId,$adminInfo): void
+    public function setAdmin(int $adminId,array $adminInfo): void
     {
         $this->adminId = $adminId;
         $this->adminInfo = $adminInfo;

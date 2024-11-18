@@ -17,6 +17,7 @@ namespace app\adminapi\controller\channel;
 use app\adminapi\controller\BaseAdminController;
 use app\adminapi\logic\channel\OfficialAccountSettingLogic;
 use app\adminapi\validate\channel\OfficialAccountSettingValidate;
+use support\Response;
 
 /**
  * 公众号设置
@@ -34,11 +35,11 @@ class OfficialAccountSettingController extends BaseAdminController
     }
     /**
      * @notes 获取公众号配置
-     * @return \support\Response
+     * @return Response
      * @author ljj
      * @date 2022/2/16 10:09 上午
      */
-    public function getConfig()
+    public function getConfig(): Response
     {
         $result = (new OfficialAccountSettingLogic())->getConfig();
         return $this->data($result);
@@ -46,11 +47,11 @@ class OfficialAccountSettingController extends BaseAdminController
 
     /**
      * @notes 设置公众号配置
-     * @return \support\Response
+     * @return Response
      * @author ljj
      * @date 2022/2/16 10:09 上午
      */
-    public function setConfig()
+    public function setConfig(): Response
     {
         $params = $this->validateObj->post()->goCheck();
         (new OfficialAccountSettingLogic())->setConfig($params);

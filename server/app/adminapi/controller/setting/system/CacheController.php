@@ -16,6 +16,7 @@ namespace app\adminapi\controller\setting\system;
 
 use app\adminapi\controller\BaseAdminController;
 use app\adminapi\logic\setting\system\CacheLogic;
+use support\Response;
 
 /**
  * 系统缓存
@@ -30,7 +31,7 @@ class CacheController extends BaseAdminController
      * @author 乔峰
      * @date 2022/4/8 16:34
      */
-    public function clear()
+    public function clear(): Response
     {
          CacheLogic::clear();
          return $this->success('清除成功', [], 1, 1);

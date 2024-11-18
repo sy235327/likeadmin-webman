@@ -14,8 +14,13 @@
 
 namespace app\api\controller;
 
+use GuzzleHttp\Exception\GuzzleException;
 use app\api\validate\{LoginAccountValidate, RegisterValidate, WebScanLoginValidate, WechatLoginValidate};
 use app\api\logic\LoginLogic;
+use support\Response;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * 登录注册
@@ -30,11 +35,11 @@ class LoginController extends BaseApiController
 
     /**
      * @notes 注册账号
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/9/7 15:38
      */
-    public function register()
+    public function register(): Response
     {
         $params = (new RegisterValidate())->post()->goCheck('register');
         $result = LoginLogic::register($params);
@@ -47,11 +52,11 @@ class LoginController extends BaseApiController
 
     /**
      * @notes 账号密码/手机号密码/手机号验证码登录
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/9/16 10:42
      */
-    public function account()
+    public function account(): Response
     {
         $params = (new LoginAccountValidate())->post()->goCheck();
         $result = LoginLogic::login($params);
@@ -64,14 +69,14 @@ class LoginController extends BaseApiController
 
     /**
      * @notes 退出登录
-     * @return \support\Response
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @return Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2022/9/16 10:42
      */
-    public function logout()
+    public function logout(): Response
     {
         LoginLogic::logout($this->userInfo);
         return $this->success();
@@ -80,11 +85,11 @@ class LoginController extends BaseApiController
 
     /**
      * @notes 获取微信请求code的链接
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/9/15 18:27
      */
-    public function codeUrl()
+    public function codeUrl(): Response
     {
         $url = $this->request->get('url');
         $result = ['url' => LoginLogic::codeUrl($url)];
@@ -94,12 +99,12 @@ class LoginController extends BaseApiController
 
     /**
      * @notes 公众号登录
-     * @return \support\Response
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @return Response
+     * @throws GuzzleException
      * @author 段誉
      * @date 2022/9/20 19:48
      */
-    public function oaLogin()
+    public function oaLogin(): Response
     {
         $params = (new WechatLoginValidate())->post()->goCheck('oa');
         $res = LoginLogic::oaLogin($params);
@@ -112,11 +117,11 @@ class LoginController extends BaseApiController
 
     /**
      * @notes 小程序-登录接口
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/9/20 19:48
      */
-    public function mnpLogin()
+    public function mnpLogin(): Response
     {
         $params = (new WechatLoginValidate())->post()->goCheck('mnpLogin');
         $res = LoginLogic::mnpLogin($params);
@@ -129,11 +134,11 @@ class LoginController extends BaseApiController
 
     /**
      * @notes 小程序绑定微信
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/9/20 19:48
      */
-    public function mnpAuthBind()
+    public function mnpAuthBind(): Response
     {
         $params = (new WechatLoginValidate())->post()->goCheck("wechatAuth");
         $params['user_id'] = $this->userId;
@@ -148,12 +153,12 @@ class LoginController extends BaseApiController
 
     /**
      * @notes 公众号绑定微信
-     * @return \support\Response
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @return Response
+     * @throws GuzzleException
      * @author 段誉
      * @date 2022/9/20 19:48
      */
-    public function oaAuthBind()
+    public function oaAuthBind(): Response
     {
         $params = (new WechatLoginValidate())->post()->goCheck("wechatAuth");
         $params['user_id'] = $this->userId;
@@ -167,11 +172,11 @@ class LoginController extends BaseApiController
 
     /**
      * @notes 获取扫码地址
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/10/20 18:25
      */
-    public function getScanCode()
+    public function getScanCode(): Response
     {
         $redirectUri = $this->request->get('url');
         $result = LoginLogic::getScanCode($redirectUri);
@@ -184,11 +189,11 @@ class LoginController extends BaseApiController
 
     /**
      * @notes 网站扫码登录
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/10/21 10:28
      */
-    public function scanLogin()
+    public function scanLogin(): Response
     {
         $params = (new WebScanLoginValidate())->post()->goCheck();
         $result = LoginLogic::scanLogin($params);
@@ -201,11 +206,11 @@ class LoginController extends BaseApiController
 
     /**
      * @notes 更新用户头像昵称
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2023/2/22 11:15
      */
-    public function updateUser()
+    public function updateUser(): Response
     {
         $params = (new WechatLoginValidate())->post()->goCheck("updateUser");
         LoginLogic::updateUser($params, $this->userId);

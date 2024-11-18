@@ -17,6 +17,10 @@ namespace app\adminapi\logic\dept;
 use app\common\enum\YesNoEnum;
 use app\common\logic\BaseLogic;
 use app\common\model\dept\Jobs;
+use Exception;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 
 /**
@@ -34,7 +38,7 @@ class JobsLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/5/26 9:58
      */
-    public static function add(array $params)
+    public static function add(array $params): void
     {
         Jobs::create([
             'name' => $params['name'],
@@ -65,7 +69,7 @@ class JobsLogic extends BaseLogic
                 'remark' => $params['remark'] ?? '',
             ]);
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }
@@ -78,7 +82,7 @@ class JobsLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/5/26 9:59
      */
-    public static function delete(array $params)
+    public static function delete(array $params): void
     {
         Jobs::destroy($params['id']);
     }
@@ -100,13 +104,13 @@ class JobsLogic extends BaseLogic
     /**
      * @notes 岗位数据
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2022/10/13 10:30
      */
-    public static function getAllData()
+    public static function getAllData(): array
     {
         return Jobs::where(['status' => YesNoEnum::YES])
             ->order(['sort' => 'desc', 'id' => 'desc'])

@@ -13,7 +13,7 @@ use OSS\Core\OssException;
  */
 class Aliyun extends Server
 {
-    private $config;
+    private mixed $config;
 
     /**
      * 构造方法
@@ -28,10 +28,10 @@ class Aliyun extends Server
 
     /**
      * 执行上传
-     * @param $save_dir (保存路径)
-     * @return bool|mixed
+     * @param string $save_dir 保存路径
+     * @return bool
      */
-    public function upload($save_dir)
+    public function upload(string $save_dir): bool
     {
         try {
             $ossClient = new OssClient(
@@ -55,10 +55,10 @@ class Aliyun extends Server
      * Notes: 抓取远程资源
      * @param $url
      * @param null $key
-     * @return mixed|void
+     * @return bool
      * @author 张无忌(2021/3/2 14:36)
      */
-    public function fetch($url, $key = null)
+    public function fetch($url, $key = null): bool
     {
         try {
             $ossClient = new OssClient(
@@ -84,9 +84,9 @@ class Aliyun extends Server
     /**
      * 删除文件
      * @param $fileName
-     * @return bool|mixed
+     * @return bool
      */
-    public function delete($fileName)
+    public function delete($fileName): bool
     {
         try {
             $ossClient = new OssClient(
@@ -107,12 +107,12 @@ class Aliyun extends Server
      * 返回文件路径
      * @return mixed
      */
-    public function getFileName()
+    public function getFileName(): string
     {
         return $this->fileName;
     }
 
-    public function getUploadToken($name,$src,$size)
+    public function getUploadToken($name,$src,$size): array|false
     {
         try {
             $ossClient = new OssClient(

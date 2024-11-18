@@ -12,8 +12,8 @@ class BaseCache extends Cache
      * 缓存标签
      * @var string
      */
-    protected $tagName;
-    protected $cache;
+    protected string $tagName;
+    protected mixed $cache;
 
     public function __construct(){
         $this->tagName = get_class($this);

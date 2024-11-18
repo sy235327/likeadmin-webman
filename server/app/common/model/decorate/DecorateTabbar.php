@@ -16,15 +16,44 @@ namespace app\common\model\decorate;
 
 use app\common\model\BaseModel;
 use app\common\service\FileService;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 
 /**
  * 装修配置-底部导航
  * Class DecorateTabbar
  * @package app\common\model\decorate
+ * @property int $id 主键 主键
+ * @property string $name 导航名称
+ * @property string $selected 未选图标
+ * @property string $unselected 已选图标
+ * @property string $link 链接地址
+ * @property int $create_time 创建时间
+ * @property int $update_time 更新时间
  */
 class DecorateTabbar extends BaseModel
 {
+    protected $name = 'decorate_tabbar';
+
+    //设置字段信息
+    protected $schema = [
+        //主键 主键
+        'id' => 'int',
+        //导航名称
+        'name' => 'string',
+        //未选图标
+        'selected' => 'string',
+        //已选图标
+        'unselected' => 'string',
+        //链接地址
+        'link' => 'string',
+        //创建时间
+        'create_time' => 'int',
+        //更新时间
+        'update_time' => 'int',
+    ];
     // 设置json类型字段
     protected $json = ['link'];
 
@@ -35,9 +64,9 @@ class DecorateTabbar extends BaseModel
     /**
      * @notes 获取底部导航列表
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2022/9/23 12:07
      */

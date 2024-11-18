@@ -34,7 +34,7 @@ class StorageLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/4/20 16:14
      */
-    public static function lists()
+    public static function lists(): array
     {
 
         $default = ConfigService::get('storage', 'default', 'local');
@@ -76,7 +76,7 @@ class StorageLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/4/20 16:15
      */
-    public static function detail($param)
+    public static function detail($param): mixed
     {
 
         $default = ConfigService::get('storage', 'default', '');
@@ -134,7 +134,7 @@ class StorageLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/4/20 16:16
      */
-    public static function setup($params)
+    public static function setup($params): bool|string
     {
         if ($params['status'] == 1) { //状态为开启
             ConfigService::set('storage', 'default', $params['engine']);
@@ -189,7 +189,7 @@ class StorageLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/4/20 16:17
      */
-    public static function change($params)
+    public static function change($params): void
     {
         $default = ConfigService::get('storage', 'default', '');
         if ($default == $params['engine']) {

@@ -18,6 +18,7 @@ namespace app\adminapi\logic\setting\web;
 use app\common\logic\BaseLogic;
 use app\common\service\ConfigService;
 use app\common\service\FileService;
+use Exception;
 
 
 /**
@@ -59,7 +60,7 @@ class WebSettingLogic extends BaseLogic
      * @author 乔峰
      * @date 2021/12/28 15:43
      */
-    public static function setWebsiteInfo(array $params)
+    public static function setWebsiteInfo(array $params): void
     {
         $favicon = FileService::setFileUrl($params['web_favicon']);
         $logo = FileService::setFileUrl($params['web_logo']);
@@ -102,15 +103,15 @@ class WebSettingLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/8/8 16:33
      */
-    public static function setCopyright(array $params)
+    public static function setCopyright(array $params): bool
     {
         try {
             if (!is_array($params['config'])) {
-                throw new \Exception('参数异常');
+                throw new Exception('参数异常');
             }
             ConfigService::set('copyright', 'config', $params['config'] ?? []);
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::$error = $e->getMessage();
             return false;
         }
@@ -123,7 +124,7 @@ class WebSettingLogic extends BaseLogic
      * @author ljj
      * @date 2022/2/15 10:59 上午
      */
-    public static function setAgreement(array $params)
+    public static function setAgreement(array $params): void
     {
         $serviceContent = clear_file_domain($params['service_content'] ?? '');
         $privacyContent = clear_file_domain($params['privacy_content'] ?? '');
@@ -143,10 +144,10 @@ class WebSettingLogic extends BaseLogic
     public static function getAgreement() : array
     {
         $config = [
-            'service_title' => ConfigService::get('agreement', 'service_title'),
-            'service_content' => ConfigService::get('agreement', 'service_content'),
-            'privacy_title' => ConfigService::get('agreement', 'privacy_title'),
-            'privacy_content' => ConfigService::get('agreement', 'privacy_content'),
+            'service_title' => ConfigService::get('agreement', 'service_title',''),
+            'service_content' => ConfigService::get('agreement', 'service_content',''),
+            'privacy_title' => ConfigService::get('agreement', 'privacy_title',''),
+            'privacy_content' => ConfigService::get('agreement', 'privacy_content',''),
         ];
 
         $config['service_content'] = get_file_domain($config['service_content']);

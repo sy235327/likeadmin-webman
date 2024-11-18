@@ -61,7 +61,7 @@ class RechargeLists extends BaseAdminDataLists implements ListsSearchInterface, 
 
     /**
      * @notes 搜索条件
-     * @return \string[][]
+     * @return string[][]
      * @author 段誉
      * @date 2023/2/24 16:08
      */

@@ -16,6 +16,7 @@ namespace app\api\controller;
 use app\api\lists\recharge\RechargeLists;
 use app\api\logic\RechargeLogic;
 use app\api\validate\RechargeValidate;
+use support\Response;
 
 
 /**
@@ -28,11 +29,11 @@ class RechargeController extends BaseApiController
 
     /**
      * @notes 获取充值列表
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2023/2/23 18:55
      */
-    public function lists()
+    public function lists(): Response
     {
         return $this->dataLists(new RechargeLists());
     }
@@ -40,11 +41,11 @@ class RechargeController extends BaseApiController
 
     /**
      * @notes 充值
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2023/2/23 18:56
      */
-    public function recharge()
+    public function recharge(): Response
     {
         $params = (new RechargeValidate())->post()->goCheck('recharge', [
             'user_id' => $this->userId,
@@ -60,11 +61,11 @@ class RechargeController extends BaseApiController
 
     /**
      * @notes 充值配置
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2023/2/24 16:56
      */
-    public function config()
+    public function config(): Response
     {
         return $this->data(RechargeLogic::config($this->userId));
     }

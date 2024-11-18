@@ -17,8 +17,10 @@ declare (strict_types=1);
 namespace app\common\http\middleware;
 
 use app\adminapi\listener\OperationLog;
+use Exception;
 use Fiber;
 use support\Log;
+use Throwable;
 use Webman\Http\Request;
 use Webman\Http\Response;
 use Webman\MiddlewareInterface;

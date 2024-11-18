@@ -4,10 +4,12 @@
 namespace app\common\lists;
 
 
+use ArrayObject;
+
 trait ListsSearchTrait
 {
-    protected $params;
-    protected $searchWhere = [];
+    protected mixed $params;
+    protected array $searchWhere = [];
 
     /**
      * @notes 搜索条件生成
@@ -16,7 +18,7 @@ trait ListsSearchTrait
      * @author 令狐冲
      * @date 2021/7/7 19:36
      */
-    private function createWhere($search)
+    private function createWhere($search): array
     {
         if (empty($search)) {
             return [];

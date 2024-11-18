@@ -17,6 +17,7 @@ use app\common\enum\CrontabEnum;
 use app\common\logic\BaseLogic;
 use app\common\model\Crontab;
 use Cron\CronExpression;
+use Exception;
 
 /**
  * 定时任务逻辑层
@@ -32,7 +33,7 @@ class CrontabLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/3/29 14:41
      */
-    public static function add($params)
+    public static function add($params): bool
     {
         try {
             $params['remark'] = $params['remark'] ?? '';
@@ -42,7 +43,7 @@ class CrontabLogic extends BaseLogic
             Crontab::create($params);
 
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }
@@ -56,7 +57,7 @@ class CrontabLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/3/29 14:41
      */
-    public static function detail($params)
+    public static function detail($params): array
     {
         $field = 'id,name,type,type as type_desc,command,params,status,status as status_desc,expression,remark';
         $crontab = Crontab::field($field)->findOrEmpty($params['id']);
@@ -74,7 +75,7 @@ class CrontabLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/3/29 14:42
      */
-    public static function edit($params)
+    public static function edit($params): bool
     {
         try {
             $params['remark'] = $params['remark'] ?? '';
@@ -83,7 +84,7 @@ class CrontabLogic extends BaseLogic
             Crontab::update($params);
 
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }
@@ -97,13 +98,13 @@ class CrontabLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/3/29 14:42
      */
-    public static function delete($params)
+    public static function delete($params): bool
     {
         try {
             Crontab::destroy($params['id']);
 
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }
@@ -117,12 +118,12 @@ class CrontabLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/3/29 14:42
      */
-    public static function operate($params)
+    public static function operate($params): bool
     {
         try {
             $crontab = Crontab::findOrEmpty($params['id']);
             if ($crontab->isEmpty()) {
-                throw new \Exception('定时任务不存在');
+                throw new Exception('定时任务不存在');
             }
             switch ($params['operate']) {
                 case 'start';
@@ -135,7 +136,7 @@ class CrontabLogic extends BaseLogic
             $crontab->save();
 
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }
@@ -149,7 +150,7 @@ class CrontabLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/3/29 14:42
      */
-    public static function expression($params)
+    public static function expression($params): array|string
     {
         try {
             $cron = new CronExpression($params['expression']);
@@ -162,7 +163,7 @@ class CrontabLogic extends BaseLogic
             }
             $lists[] = ['time' => 'x', 'date' => '……'];
             return $lists;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $e->getMessage();
         }
     }

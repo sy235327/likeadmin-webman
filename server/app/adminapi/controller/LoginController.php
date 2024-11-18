@@ -16,6 +16,10 @@ namespace app\adminapi\controller;
 
 use app\adminapi\logic\LoginLogic;
 use app\adminapi\validate\LoginValidate;
+use support\Response;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\facade\Cache;
 
 /**
@@ -36,12 +40,12 @@ class LoginController extends BaseAdminController
     /**
      * @notes 账号登录
      * @date 2021/6/30 17:01
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      */
-    public function account()
+    public function account(): Response
     {
         $params = $this->validateObj->post()->goCheck();
         return $this->data((new LoginLogic())->login($params));
@@ -49,13 +53,13 @@ class LoginController extends BaseAdminController
 
     /**
      * @notes 退出登录
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2021/7/8 00:36
      */
-    public function logout()
+    public function logout(): Response
     {
         //退出登录情况特殊，只有成功的情况，也不需要token验证
         (new LoginLogic())->logout($this->adminInfo);

@@ -6,6 +6,9 @@ namespace app\adminapi\validate\user;
 
 use app\common\model\user\User;
 use app\common\validate\BaseValidate;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 class UserValidate extends BaseValidate
 {
@@ -24,11 +27,11 @@ class UserValidate extends BaseValidate
 
     /**
      * @notes 详情场景
-     * @return \app\adminapi\validate\user\UserValidate
+     * @return UserValidate
      * @author 乔峰
      * @date 2022/9/22 16:35
      */
-    public function sceneDetail()
+    public function sceneDetail(): UserValidate
     {
         return $this->only(['id']);
     }
@@ -40,13 +43,13 @@ class UserValidate extends BaseValidate
      * @param $rule
      * @param $data
      * @return bool|string
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2022/9/22 17:03
      */
-    public function checkUser($value, $rule, $data)
+    public function checkUser($value, $rule, $data): bool|string
     {
         $userIds = is_array($value) ? $value : [$value];
 
@@ -68,7 +71,7 @@ class UserValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/9/22 16:37
      */
-    public function checkField($value, $rule, $data)
+    public function checkField($value, $rule, $data): bool|string
     {
         $allowField = ['account', 'sex', 'mobile', 'real_name'];
 

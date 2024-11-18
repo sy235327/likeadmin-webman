@@ -16,6 +16,10 @@ namespace app\api\controller;
 
 
 use app\api\logic\PcLogic;
+use support\Response;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\response\Json;
 
 
@@ -32,14 +36,14 @@ class PcController extends BaseApiController
 
     /**
      * @notes 首页数据
-     * @return \support\Response
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @return Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2022/9/21 19:15
      */
-    public function index()
+    public function index(): Response
     {
         $result = PcLogic::getIndexData();
         return $this->data($result);
@@ -48,14 +52,14 @@ class PcController extends BaseApiController
 
     /**
      * @notes 全局配置
-     * @return \support\Response
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @return Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2022/9/21 19:41
      */
-    public function config()
+    public function config(): Response
     {
         $result = PcLogic::getConfigData();
         return $this->data($result);
@@ -64,14 +68,14 @@ class PcController extends BaseApiController
 
     /**
      * @notes 资讯中心
-     * @return \support\Response
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @return Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2022/10/19 16:55
      */
-    public function infoCenter()
+    public function infoCenter(): Response
     {
         $result = PcLogic::getInfoCenter();
         return $this->data($result);
@@ -80,11 +84,11 @@ class PcController extends BaseApiController
 
     /**
      * @notes 获取文章详情
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/10/20 15:18
      */
-    public function articleDetail()
+    public function articleDetail(): Response
     {
         $id = $this->request->get('id', 0);
         $source = $this->request->get('source', 'default');

@@ -53,7 +53,7 @@ class DictTypeValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/6/20 16:00
      */
-    public function sceneAdd()
+    public function sceneAdd(): DictTypeValidate
     {
         return $this->remove('id', true);
     }
@@ -65,7 +65,7 @@ class DictTypeValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/6/20 16:00
      */
-    public function sceneDetail()
+    public function sceneDetail(): DictTypeValidate
     {
         return $this->only(['id']);
     }
@@ -82,7 +82,7 @@ class DictTypeValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/6/20 16:03
      */
-    public function sceneDelete()
+    public function sceneDelete(): DictTypeValidate
     {
         return $this->only(['id'])
             ->append('id', 'checkAbleDelete');
@@ -97,7 +97,7 @@ class DictTypeValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/6/20 16:04
      */
-    protected function checkDictType($value)
+    protected function checkDictType($value): bool|string
     {
         $dictType = DictType::findOrEmpty($value);
         if ($dictType->isEmpty()) {
@@ -115,7 +115,7 @@ class DictTypeValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/6/20 16:04
      */
-    protected function checkAbleDelete($value)
+    protected function checkAbleDelete($value): bool|string
     {
         $dictData = DictData::whereIn('type_id', $value)->select();
 

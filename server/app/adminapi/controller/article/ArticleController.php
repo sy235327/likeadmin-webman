@@ -18,6 +18,7 @@ use app\adminapi\controller\BaseAdminController;
 use app\adminapi\lists\article\ArticleLists;
 use app\adminapi\logic\article\ArticleLogic;
 use app\adminapi\validate\article\ArticleValidate;
+use support\Response;
 
 /**
  * 资讯管理控制器
@@ -35,22 +36,22 @@ class ArticleController extends BaseAdminController
     }
     /**
      * @notes  查看资讯列表
-     * @return \support\Response
+     * @return Response
      * @author heshihu
      * @date 2022/2/22 9:47
      */
-    public function lists()
+    public function lists(): Response
     {
         return $this->dataLists(new ArticleLists());
     }
 
     /**
      * @notes  添加资讯
-     * @return \support\Response
+     * @return Response
      * @author heshihu
      * @date 2022/2/22 9:57
      */
-    public function add()
+    public function add(): Response
     {
         $params = $this->validateObj->post()->goCheck('add');
         ArticleLogic::add($params);
@@ -59,11 +60,11 @@ class ArticleController extends BaseAdminController
 
     /**
      * @notes  编辑资讯
-     * @return \support\Response
+     * @return Response
      * @author heshihu
      * @date 2022/2/22 10:12
      */
-    public function edit()
+    public function edit(): Response
     {
         $params = $this->validateObj->post()->goCheck('edit');
         $result = ArticleLogic::edit($params);
@@ -75,11 +76,11 @@ class ArticleController extends BaseAdminController
 
     /**
      * @notes  删除资讯
-     * @return \support\Response
+     * @return Response
      * @author heshihu
      * @date 2022/2/22 10:17
      */
-    public function delete()
+    public function delete(): Response
     {
         $params = $this->validateObj->post()->goCheck('delete');
         ArticleLogic::delete($params);
@@ -88,11 +89,11 @@ class ArticleController extends BaseAdminController
 
     /**
      * @notes  资讯详情
-     * @return \support\Response
+     * @return Response
      * @author heshihu
      * @date 2022/2/22 10:15
      */
-    public function detail()
+    public function detail(): Response
     {
         $params = $this->validateObj->goCheck('detail');
         $result = ArticleLogic::detail($params);
@@ -102,11 +103,11 @@ class ArticleController extends BaseAdminController
 
     /**
      * @notes  更改资讯状态
-     * @return \support\Response
+     * @return Response
      * @author heshihu
      * @date 2022/2/22 10:18
      */
-    public function updateStatus()
+    public function updateStatus(): Response
     {
         $params = $this->validateObj->post()->goCheck('status');
         $result = ArticleLogic::updateStatus($params);

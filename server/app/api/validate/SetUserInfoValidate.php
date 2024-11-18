@@ -46,7 +46,7 @@ class SetUserInfoValidate extends BaseValidate
      * @author 段誉
      * @date 2022/9/21 17:01
      */
-    protected function checkField($value, $rule, $data)
+    protected function checkField($value, $rule, $data): bool|string
     {
         $allowField = [
             'nickname', 'account', 'sex', 'avatar', 'real_name',

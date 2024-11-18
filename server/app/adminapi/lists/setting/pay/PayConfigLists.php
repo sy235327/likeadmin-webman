@@ -16,6 +16,9 @@ namespace app\adminapi\lists\setting\pay;
 
 use app\adminapi\lists\BaseAdminDataLists;
 use app\common\model\pay\PayConfig;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * 支付配置列表
@@ -28,9 +31,9 @@ class PayConfigLists extends BaseAdminDataLists
     /**
      * @notes 获取列表
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2023/2/23 16:15
      */

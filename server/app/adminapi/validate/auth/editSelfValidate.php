@@ -54,7 +54,7 @@ class editSelfValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/4/8 17:40
      */
-    public function checkPassword($value, $rule, $data)
+    public function checkPassword($value, $rule, $data): bool|string
     {
         if (empty($data['password_old'])) {
             return '请填写当前密码';

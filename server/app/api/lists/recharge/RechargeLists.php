@@ -17,6 +17,9 @@ namespace app\api\lists\recharge;
 use app\api\lists\BaseApiDataLists;
 use app\common\enum\PayEnum;
 use app\common\model\recharge\RechargeOrder;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 
 /**
@@ -29,9 +32,9 @@ class RechargeLists extends BaseApiDataLists
     /**
      * @notes 获取列表
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2023/2/23 18:43
      */

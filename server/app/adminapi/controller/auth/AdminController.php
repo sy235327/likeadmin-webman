@@ -20,6 +20,7 @@ use app\adminapi\validate\auth\AdminValidate;
 use app\adminapi\logic\auth\AdminLogic;
 use app\adminapi\validate\auth\editSelfValidate;
 use app\common\model\auth\Admin;
+use support\Response;
 
 /**
  * 管理员控制器
@@ -41,7 +42,7 @@ class AdminController extends BaseAdminController
      * @author 乔峰
      * @date 2021/12/29 9:55
      */
-    public function lists()
+    public function lists(): Response
     {
         return $this->dataLists(new AdminLists());
     }
@@ -52,7 +53,7 @@ class AdminController extends BaseAdminController
      * @author 乔峰
      * @date 2021/12/29 10:21
      */
-    public function add()
+    public function add(): Response
     {
         $params = $this->validateObj->post()->goCheck('add');
         $result = AdminLogic::add($params);
@@ -68,7 +69,7 @@ class AdminController extends BaseAdminController
      * @author 乔峰
      * @date 2021/12/29 11:03
      */
-    public function edit()
+    public function edit(): Response
     {
         $params = $this->validateObj->post()->goCheck('edit');
         $result = AdminLogic::edit($params);
@@ -84,7 +85,7 @@ class AdminController extends BaseAdminController
      * @author 乔峰
      * @date 2021/12/29 11:03
      */
-    public function delete()
+    public function delete(): Response
     {
         $params = $this->validateObj->post()->goCheck('delete');
         $result = AdminLogic::delete($params);
@@ -100,7 +101,7 @@ class AdminController extends BaseAdminController
      * @author 乔峰
      * @date 2021/12/29 11:07
      */
-    public function detail()
+    public function detail(): Response
     {
         $params = $this->validateObj->goCheck('detail');
         $result = AdminLogic::detail($params);
@@ -113,7 +114,7 @@ class AdminController extends BaseAdminController
      * @author 乔峰
      * @date 2021/12/31 10:53
      */
-    public function mySelf()
+    public function mySelf(): Response
     {
         $result = AdminLogic::detail(['id' => $this->adminId], 'auth');
         return $this->data($result);
@@ -125,7 +126,7 @@ class AdminController extends BaseAdminController
      * @author 乔峰
      * @date 2022/4/8 17:54
      */
-    public function editSelf()
+    public function editSelf(): Response
     {
         $params = (new editSelfValidate())->post()->goCheck('', ['admin_id' => $this->adminId]);
         $result = AdminLogic::editSelf($params);

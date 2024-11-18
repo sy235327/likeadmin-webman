@@ -5,6 +5,7 @@ namespace app\adminapi\listener;
 
 
 use ReflectionClass;
+use ReflectionException;
 use support\Log;
 use Webman\Http\Request;
 use think\Exception;
@@ -17,17 +18,20 @@ class OperationLog
      * @param Request $request
      * @param Response $response
      * @return bool
-     * @throws \ReflectionException
+     * @throws ReflectionException
      * @author bingo
      * @date 2022/4/8 17:09
      */
     public static function handle(Request $request, Response $response): bool
     {
         $controllerObject = make($request->controller);
+        if (!$controllerObject){
+            return false;
+        }
         [$adminId,$adminInfo] = $controllerObject->getAdmin();
 
         //需要登录的接口，无效访问时不记录
-        if (!$controllerObject||!$controllerObject->isNotNeedLogin($request->action) && empty($adminInfo)) {
+        if (!$controllerObject->isNotNeedLogin($request->action) && empty($adminInfo)) {
             return false;
         }
         $pathLower = strtolower($request->path());

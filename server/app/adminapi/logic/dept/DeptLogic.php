@@ -17,6 +17,10 @@ namespace app\adminapi\logic\dept;
 use app\common\enum\YesNoEnum;
 use app\common\logic\BaseLogic;
 use app\common\model\dept\Dept;
+use Exception;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 
 /**
@@ -31,13 +35,13 @@ class DeptLogic extends BaseLogic
      * @notes 部门列表
      * @param $params
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2022/5/30 15:44
      */
-    public static function lists($params)
+    public static function lists($params): array
     {
         $where = [];
         if (!empty($params['name'])) {
@@ -69,7 +73,7 @@ class DeptLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/5/30 15:44
      */
-    public static function getTree($array, $pid = 0, $level = 0)
+    public static function getTree($array, $pid = 0, $level = 0): array
     {
         $list = [];
         foreach ($array as $key => $item) {
@@ -86,13 +90,13 @@ class DeptLogic extends BaseLogic
     /**
      * @notes 上级部门
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2022/5/26 18:36
      */
-    public static function leaderDept()
+    public static function leaderDept(): array
     {
         $lists = Dept::field(['id', 'name'])->where(['status' => 1])
             ->order(['sort' => 'desc', 'id' => 'desc'])
@@ -108,7 +112,7 @@ class DeptLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/5/25 18:20
      */
-    public static function add(array $params)
+    public static function add(array $params): void
     {
         Dept::create([
             'pid' => $params['pid'],
@@ -147,7 +151,7 @@ class DeptLogic extends BaseLogic
                 'sort' => $params['sort'] ?? 0
             ]);
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }
@@ -160,7 +164,7 @@ class DeptLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/5/25 18:40
      */
-    public static function delete(array $params)
+    public static function delete(array $params): void
     {
         Dept::destroy($params['id']);
     }
@@ -182,13 +186,13 @@ class DeptLogic extends BaseLogic
     /**
      * @notes 部门数据
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2022/10/13 10:19
      */
-    public static function getAllData()
+    public static function getAllData(): array
     {
         $data = Dept::where(['status' => YesNoEnum::YES])
             ->order(['sort' => 'desc', 'id' => 'desc'])

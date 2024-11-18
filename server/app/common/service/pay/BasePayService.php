@@ -24,13 +24,13 @@ class BasePayService
      * 错误信息
      * @var string
      */
-    protected $error;
+    protected string $error;
 
     /**
      * 返回状态码
      * @var int
      */
-    protected $returnCode = 0;
+    protected int $returnCode = 0;
 
 
     /**
@@ -39,7 +39,7 @@ class BasePayService
      * @author 段誉
      * @date 2021/7/21 18:23
      */
-    public function getError()
+    public function getError(): string
     {
         if (false === self::hasError()) {
             return '系统错误';
@@ -54,7 +54,7 @@ class BasePayService
      * @author 段誉
      * @date 2021/7/21 18:20
      */
-    public function setError($error)
+    public function setError($error): void
     {
         $this->error = $error;
     }
@@ -66,7 +66,7 @@ class BasePayService
      * @author 段誉
      * @date 2021/7/21 18:32
      */
-    public function hasError()
+    public function hasError(): bool
     {
         return !empty($this->error);
     }
@@ -78,7 +78,7 @@ class BasePayService
      * @author 段誉
      * @date 2021/7/28 17:05
      */
-    public function setReturnCode($code)
+    public function setReturnCode($code): void
     {
         $this->returnCode = $code;
     }
@@ -90,7 +90,7 @@ class BasePayService
      * @author 段誉
      * @date 2021/7/28 15:14
      */
-    public function getReturnCode()
+    public function getReturnCode(): int
     {
         return $this->returnCode;
     }

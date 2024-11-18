@@ -63,6 +63,9 @@ class LoginMiddleware implements MiddlewareInterface
 
         //给request赋值，用于控制器
         $userId = $userInfo['user_id'] ?? 0;
+        if (!$userInfo){
+            $userInfo = [];
+        }
         $controllerObject->setUser($userId,$userInfo);
 
         return $handler($request);

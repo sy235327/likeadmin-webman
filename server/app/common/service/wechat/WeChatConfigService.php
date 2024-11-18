@@ -32,7 +32,7 @@ class WeChatConfigService
      * @author 段誉
      * @date 2022/9/6 19:49
      */
-    public static function getMnpConfig()
+    public static function getMnpConfig(): array
     {
         return [
             'app_id' => ConfigService::get('mnp_setting', 'app_id'),
@@ -52,7 +52,7 @@ class WeChatConfigService
      * @author 段誉
      * @date 2022/9/6 19:49
      */
-    public static function getOaConfig()
+    public static function getOaConfig(): array
     {
         return [
             'app_id' => ConfigService::get('oa_setting', 'app_id'),
@@ -73,7 +73,7 @@ class WeChatConfigService
      * @author 段誉
      * @date 2022/10/20 15:51
      */
-    public static function getOpConfig()
+    public static function getOpConfig(): array
     {
         return [
             'app_id' => ConfigService::get('open_platform', 'app_id'),
@@ -154,7 +154,7 @@ class WeChatConfigService
      * @author 段誉
      * @date 2023/2/27 15:48
      */
-    public static function setCert($path, $cert)
+    public static function setCert($path, $cert): void
     {
         $fopenPath = fopen($path, 'w');
         fwrite($fopenPath, $cert);

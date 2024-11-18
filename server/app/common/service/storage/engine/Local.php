@@ -18,10 +18,10 @@ class Local extends Server
 
     /**
      * 上传
-     * @param $save_dir (保存路径)
+     * @param $save_dir string
      * @return bool
      */
-    public function upload($save_dir)
+    public function upload(string $save_dir): bool
     {
         // 验证文件并上传
         $info = $this->file->move($save_dir.'/'.$this->fileName);
@@ -32,14 +32,17 @@ class Local extends Server
         return true;
     }
 
-    public function fetch($url, $key=null) {}
+    public function fetch($url, $key=null): bool
+    {
+        return true;
+    }
 
     /**
      * 删除文件
      * @param $fileName
-     * @return bool|mixed
+     * @return bool
      */
-    public function delete($fileName)
+    public function delete($fileName): bool
     {
         $check = strpos($fileName, '/');
         if ($check !== false && $check == 0) {
@@ -52,15 +55,15 @@ class Local extends Server
 
     /**
      * 返回文件路径
-     * @return mixed
+     * @return string
      */
-    public function getFileName()
+    public function getFileName(): string
     {
         return $this->fileName;
     }
 
 
-    public function getUploadToken($name,$src,$size)
+    public function getUploadToken($name,$src,$size): array
     {
         // TODO: Implement getUploadToken() method.
         $params = new ArrayObject();

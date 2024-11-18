@@ -56,7 +56,7 @@ class MenuLogic extends BaseLogic
 
         $menu = SystemMenu::where($where)
             ->order(['sort' => 'desc', 'id' => 'asc'])
-            ->select();
+            ->select()->toArray();
 
         return linear_to_tree($menu, 'children');
     }

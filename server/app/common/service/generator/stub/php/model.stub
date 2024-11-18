@@ -13,12 +13,13 @@ use think\model\relation\HasOne;
  * {CLASS_COMMENT}
  * Class {UPPER_CAMEL_NAME}
  * @package app\common\model{PACKAGE_NAME}
+{TABLE_COLUMNS_PROPERTY}
  */
 class {UPPER_CAMEL_NAME} extends BaseModel
 {
     {DELETE_USE}
     protected $name = '{TABLE_NAME}';
     {DELETE_TIME}
-
+{TABLE_COLUMNS}
     {RELATION_MODEL}
 }

@@ -62,7 +62,7 @@ class GeneratorLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/6/20 10:44
      */
-    public static function selectTable($params, $adminId)
+    public static function selectTable($params, $adminId): bool
     {
         Db::startTrans();
         try {
@@ -91,7 +91,7 @@ class GeneratorLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/6/20 10:44
      */
-    public static function editTable($params)
+    public static function editTable($params): bool
     {
         Db::startTrans();
         try {
@@ -147,7 +147,7 @@ class GeneratorLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/6/16 9:30
      */
-    public static function deleteTable($params)
+    public static function deleteTable($params): bool
     {
         Db::startTrans();
         try {
@@ -170,7 +170,7 @@ class GeneratorLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/6/23 16:28
      */
-    public static function syncColumn($params)
+    public static function syncColumn($params): bool
     {
         Db::startTrans();
         try {
@@ -200,7 +200,7 @@ class GeneratorLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/6/24 9:43
      */
-    public static function generate($params)
+    public static function generate($params): array|false
     {
         try {
             // 获取数据表信息
@@ -243,7 +243,7 @@ class GeneratorLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/6/23 16:27
      */
-    public static function preview($params)
+    public static function preview($params): false
     {
         try {
             // 获取数据表信息
@@ -282,7 +282,7 @@ class GeneratorLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/6/23 16:28
      */
-    public static function initTable($tableData, $adminId)
+    public static function initTable($tableData, $adminId): GenerateTable|Model
     {
         return GenerateTable::create([
             'table_name' => $tableData['name'],
@@ -318,7 +318,7 @@ class GeneratorLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/6/23 16:28
      */
-    public static function initTableColumn($column, $tableId)
+    public static function initTableColumn($column, $tableId): void
     {
         $defaultColumn = ['id', 'create_time', 'update_time', 'delete_time'];
 
@@ -358,7 +358,7 @@ class GeneratorLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/6/24 9:51
      */
-    public static function download(string $fileName)
+    public static function download(string $fileName): false|string
     {
         $cacheFileName = cache('curd_file_name' . $fileName);
         if (empty($cacheFileName)) {
@@ -415,7 +415,7 @@ class GeneratorLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/12/13 18:23
      */
-    public static function formatConfigByTableData($options)
+    public static function formatConfigByTableData($options): array
     {
         // 菜单配置
         $menuConfig = $options['menu'] ?? [];
@@ -464,7 +464,7 @@ class GeneratorLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/12/14 11:04
      */
-    public static function getAllModels($module = 'common')
+    public static function getAllModels($module = 'common'): array
     {
         if(empty($module)) {
             return [];

@@ -82,7 +82,7 @@ class JobsLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/5/26 9:59
      */
-    public static function delete(array $params)
+    public static function delete(array $params): void
     {
         Jobs::destroy($params['id']);
     }
@@ -110,7 +110,7 @@ class JobsLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/10/13 10:30
      */
-    public static function getAllData()
+    public static function getAllData(): array
     {
         return Jobs::where(['status' => YesNoEnum::YES])
             ->order(['sort' => 'desc', 'id' => 'desc'])

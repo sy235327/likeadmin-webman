@@ -44,7 +44,7 @@ class RechargeLogic extends BaseLogic
      * @author 段誉
      * @date 2023/2/22 16:54
      */
-    public static function getConfig()
+    public static function getConfig(): array
     {
         $config = [
             'status' => ConfigService::get('recharge', 'status', 0),
@@ -62,7 +62,7 @@ class RechargeLogic extends BaseLogic
      * @author 段誉
      * @date 2023/2/22 16:54
      */
-    public static function setConfig($params)
+    public static function setConfig($params): bool
     {
         try {
             if (isset($params['status'])) {
@@ -87,7 +87,7 @@ class RechargeLogic extends BaseLogic
      * @author 段誉
      * @date 2023/3/3 11:42
      */
-    public static function refund($params, $adminId)
+    public static function refund($params, $adminId): false|array
     {
         Db::startTrans();
         try {
@@ -158,7 +158,7 @@ class RechargeLogic extends BaseLogic
      * @author 段誉
      * @date 2023/3/3 11:44
      */
-    public static function refundAgain($params, $adminId)
+    public static function refundAgain($params, $adminId): array
     {
         Db::startTrans();
         try {

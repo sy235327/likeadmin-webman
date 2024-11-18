@@ -87,7 +87,7 @@ class ArticleLogic extends BaseLogic
      * @author heshihu
      * @date 2022/2/22 10:17
      */
-    public static function delete(array $params)
+    public static function delete(array $params): void
     {
         Article::destroy($params['id']);
     }
@@ -111,7 +111,7 @@ class ArticleLogic extends BaseLogic
      * @author heshihu
      * @date 2022/2/22 10:18
      */
-    public static function updateStatus(array $params)
+    public static function updateStatus(array $params): bool
     {
         Article::update([
             'id' => $params['id'],

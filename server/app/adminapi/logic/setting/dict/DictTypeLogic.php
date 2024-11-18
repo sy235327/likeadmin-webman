@@ -56,7 +56,7 @@ class DictTypeLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/6/20 16:10
      */
-    public static function edit(array $params)
+    public static function edit(array $params): void
     {
          DictType::update([
             'id' => $params['id'],
@@ -77,7 +77,7 @@ class DictTypeLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/6/20 16:23
      */
-    public static function delete(array $params)
+    public static function delete(array $params): void
     {
         DictType::destroy($params['id']);
     }
@@ -105,7 +105,7 @@ class DictTypeLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/10/13 10:44
      */
-    public static function getAllData()
+    public static function getAllData(): array
     {
         return DictType::where(['status' => YesNoEnum::YES])
             ->order(['id' => 'desc'])

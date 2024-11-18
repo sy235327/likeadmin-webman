@@ -41,7 +41,7 @@ class DeptLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/5/30 15:44
      */
-    public static function lists($params)
+    public static function lists($params): array
     {
         $where = [];
         if (!empty($params['name'])) {
@@ -73,7 +73,7 @@ class DeptLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/5/30 15:44
      */
-    public static function getTree($array, $pid = 0, $level = 0)
+    public static function getTree($array, $pid = 0, $level = 0): array
     {
         $list = [];
         foreach ($array as $key => $item) {
@@ -96,7 +96,7 @@ class DeptLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/5/26 18:36
      */
-    public static function leaderDept()
+    public static function leaderDept(): array
     {
         $lists = Dept::field(['id', 'name'])->where(['status' => 1])
             ->order(['sort' => 'desc', 'id' => 'desc'])
@@ -164,7 +164,7 @@ class DeptLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/5/25 18:40
      */
-    public static function delete(array $params)
+    public static function delete(array $params): void
     {
         Dept::destroy($params['id']);
     }
@@ -192,7 +192,7 @@ class DeptLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/10/13 10:19
      */
-    public static function getAllData()
+    public static function getAllData(): array
     {
         $data = Dept::where(['status' => YesNoEnum::YES])
             ->order(['sort' => 'desc', 'id' => 'desc'])

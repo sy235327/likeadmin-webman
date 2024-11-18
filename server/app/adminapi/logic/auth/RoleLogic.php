@@ -126,7 +126,7 @@ class RoleLogic extends BaseLogic
      * @author 乔峰
      * @date 2021/12/29 14:16
      */
-    public static function delete(int $id)
+    public static function delete(int $id): bool
     {
         SystemRole::destroy(['id' => $id]);
         (new AdminAuthCache())->deleteTag();
@@ -163,7 +163,7 @@ class RoleLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/10/13 10:39
      */
-    public static function getAllData()
+    public static function getAllData(): array
     {
         return SystemRole::order(['sort' => 'desc', 'id' => 'desc'])
             ->select()

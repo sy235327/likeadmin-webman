@@ -60,7 +60,7 @@ class WebSettingLogic extends BaseLogic
      * @author 乔峰
      * @date 2021/12/28 15:43
      */
-    public static function setWebsiteInfo(array $params)
+    public static function setWebsiteInfo(array $params): void
     {
         $favicon = FileService::setFileUrl($params['web_favicon']);
         $logo = FileService::setFileUrl($params['web_logo']);
@@ -103,7 +103,7 @@ class WebSettingLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/8/8 16:33
      */
-    public static function setCopyright(array $params)
+    public static function setCopyright(array $params): bool
     {
         try {
             if (!is_array($params['config'])) {
@@ -124,7 +124,7 @@ class WebSettingLogic extends BaseLogic
      * @author ljj
      * @date 2022/2/15 10:59 上午
      */
-    public static function setAgreement(array $params)
+    public static function setAgreement(array $params): void
     {
         $serviceContent = clear_file_domain($params['service_content'] ?? '');
         $privacyContent = clear_file_domain($params['privacy_content'] ?? '');

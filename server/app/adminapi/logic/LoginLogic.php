@@ -40,7 +40,7 @@ class LoginLogic extends BaseLogic
      * @author 乔峰
      * @date 2021/6/30 17:00
      */
-    public function login($params)
+    public function login($params): mixed
     {
         $time = time();
         $admin = Admin::where('account', '=', $params['account'])->find();
@@ -75,7 +75,7 @@ class LoginLogic extends BaseLogic
      * @author 乔峰
      * @date 2021/7/5 14:34
      */
-    public function logout($adminInfo)
+    public function logout($adminInfo): bool
     {
         //token不存在，不注销
         if (!isset($adminInfo['token'])) {

@@ -52,7 +52,7 @@ class AuthLogic
      * @author 乔峰
      * @date 2022/7/1 16:10
      */
-    public static function getBtnAuthByRoleId($admin)
+    public static function getBtnAuthByRoleId($admin): mixed
     {
         if ($admin['root']) {
             return ['*'];

@@ -29,7 +29,7 @@ class WebPageSettingLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/3/29 10:34
      */
-    public static function getConfig()
+    public static function getConfig(): array
     {
         $config = [
             // 渠道状态 0-关闭 1-开启
@@ -51,7 +51,7 @@ class WebPageSettingLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/3/29 10:34
      */
-    public static function setConfig($params)
+    public static function setConfig($params): void
     {
         ConfigService::set('web_page', 'status', $params['status']);
         ConfigService::set('web_page', 'page_status', $params['page_status']);

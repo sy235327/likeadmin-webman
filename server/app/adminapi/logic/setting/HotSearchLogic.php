@@ -35,7 +35,7 @@ class HotSearchLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/9/5 18:48
      */
-    public static function getConfig()
+    public static function getConfig(): array
     {
         return [
             // 功能状态 0-关闭 1-开启
@@ -53,7 +53,7 @@ class HotSearchLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/9/5 18:58
      */
-    public static function setConfig($params)
+    public static function setConfig($params): bool
     {
         try {
             if (!empty($params['data'])) {

@@ -41,7 +41,7 @@ class RefundLogic extends BaseLogic
      * @author 段誉
      * @date 2023/3/3 12:09
      */
-    public static function stat()
+    public static function stat(): array
     {
         $records = RefundRecord::select()->toArray();
 
@@ -84,7 +84,7 @@ class RefundLogic extends BaseLogic
      * @author 段誉
      * @date 2023/3/3 14:25
      */
-    public static function refundLog($recordId)
+    public static function refundLog($recordId): array
     {
         return (new RefundLog())
             ->order(['id' => 'desc'])

@@ -60,7 +60,7 @@ class UserLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/9/22 16:38
      */
-    public static function setUserInfo(array $params)
+    public static function setUserInfo(array $params): User
     {
         return User::update([
             'id' => $params['id'],
@@ -76,7 +76,7 @@ class UserLogic extends BaseLogic
      * @author bingo
      * @date 2023/2/23 14:25
      */
-    public static function adjustUserMoney(array $params)
+    public static function adjustUserMoney(array $params): bool|string
     {
         Db::startTrans();
         try {

@@ -45,7 +45,7 @@ class MenuLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/7/1 10:50
      */
-    public static function getMenuByAdminId($adminId)
+    public static function getMenuByAdminId($adminId): array
     {
         $admin = Admin::findOrEmpty($adminId);
 
@@ -100,7 +100,7 @@ class MenuLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/6/30 10:07
      */
-    public static function edit(array $params)
+    public static function edit(array $params): SystemMenu
     {
         return SystemMenu::update([
             'id' => $params['id'],
@@ -128,7 +128,7 @@ class MenuLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/6/30 9:54
      */
-    public static function detail($params)
+    public static function detail($params): array
     {
         return SystemMenu::findOrEmpty($params['id'])->toArray();
     }
@@ -140,7 +140,7 @@ class MenuLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/6/30 9:47
      */
-    public static function delete($params)
+    public static function delete($params): void
     {
         // 删除菜单
         SystemMenu::destroy($params['id']);
@@ -152,11 +152,11 @@ class MenuLogic extends BaseLogic
     /**
      * @notes 更新状态
      * @param array $params
-     * @return SystemMenu
+     * @return int
      * @author 乔峰
      * @date 2022/7/6 17:02
      */
-    public static function updateStatus(array $params)
+    public static function updateStatus(array $params): int
     {
         return SystemMenu::update([
             'id' => $params['id'],
@@ -174,7 +174,7 @@ class MenuLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/10/13 11:03
      */
-    public static function getAllData()
+    public static function getAllData(): array
     {
         $data = SystemMenu::where(['is_disable' => YesNoEnum::NO])
             ->field('id,pid,name')

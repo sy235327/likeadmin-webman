@@ -35,7 +35,7 @@ class OfficialAccountMenuLogic extends BaseLogic
      * @author 段誉
      * @date 2022/3/29 10:43
      */
-    public static function save($params)
+    public static function save($params): bool
     {
         try {
             self::checkMenu($params);
@@ -55,7 +55,7 @@ class OfficialAccountMenuLogic extends BaseLogic
      * @author 段誉
      * @date 2022/3/29 10:55
      */
-    public static function checkMenu($menu)
+    public static function checkMenu($menu): void
     {
         if (empty($menu) || !is_array($menu)) {
             throw new Exception('请设置正确格式菜单');
@@ -102,7 +102,7 @@ class OfficialAccountMenuLogic extends BaseLogic
      * @author 段誉
      * @date 2022/3/29 10:55
      */
-    public static function checkSubButton($subButtion)
+    public static function checkSubButton($subButtion): void
     {
         if (!is_array($subButtion)) {
             throw new Exception('二级菜单须为数组格式');
@@ -137,7 +137,7 @@ class OfficialAccountMenuLogic extends BaseLogic
      * @author 段誉
      * @date 2022/3/29 10:55
      */
-    public static function checkType($item)
+    public static function checkType($item): void
     {
         switch ($item['type']) {
             // 关键字
@@ -175,7 +175,7 @@ class OfficialAccountMenuLogic extends BaseLogic
      * @author 段誉
      * @date 2022/3/29 10:55
      */
-    public static function saveAndPublish($params)
+    public static function saveAndPublish($params): bool
     {
         try {
             self::checkMenu($params);
@@ -202,7 +202,7 @@ class OfficialAccountMenuLogic extends BaseLogic
      * @author 段誉
      * @date 2022/3/29 10:56
      */
-    public static function detail()
+    public static function detail(): mixed
     {
         $data = ConfigService::get('oa_setting', 'menu', []);
 

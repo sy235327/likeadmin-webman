@@ -77,7 +77,7 @@ class ArticleCateLogic extends BaseLogic
      * @author heshihu
      * @date 2022/2/21 17:52
      */
-    public static function delete(array $params)
+    public static function delete(array $params): void
     {
         ArticleCate::destroy($params['id']);
     }
@@ -101,7 +101,7 @@ class ArticleCateLogic extends BaseLogic
      * @author heshihu
      * @date 2022/2/21 18:04
      */
-    public static function updateStatus(array $params)
+    public static function updateStatus(array $params): bool
     {
         ArticleCate::update([
             'id' => $params['id'],
@@ -120,7 +120,7 @@ class ArticleCateLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/10/13 10:53
      */
-    public static function getAllData()
+    public static function getAllData(): array
     {
         return ArticleCate::where(['is_show' => YesNoEnum::YES])
             ->order(['sort' => 'desc', 'id' => 'desc'])

@@ -245,11 +245,11 @@ class AdminLogic extends BaseLogic
     /**
      * @notes 编辑超级管理员
      * @param $params
-     * @return Admin
+     * @return int
      * @author 乔峰
      * @date 2022/4/8 17:54
      */
-    public static function editSelf($params)
+    public static function editSelf($params): int
     {
         $data = [
             'id' => $params['admin_id'],
@@ -273,7 +273,7 @@ class AdminLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/11/25 14:23
      */
-    public static function insertRole($adminId, $roleIds)
+    public static function insertRole($adminId, $roleIds): void
     {
         if (!empty($roleIds)) {
             // 角色
@@ -297,7 +297,7 @@ class AdminLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/11/25 14:22
      */
-    public static function insertDept($adminId, $deptIds)
+    public static function insertDept($adminId, $deptIds): void
     {
         // 部门
         if (!empty($deptIds)) {
@@ -321,7 +321,7 @@ class AdminLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/11/25 14:22
      */
-    public static function insertJobs($adminId, $jobsIds)
+    public static function insertJobs($adminId, $jobsIds): void
     {
         // 岗位
         if (!empty($jobsIds)) {

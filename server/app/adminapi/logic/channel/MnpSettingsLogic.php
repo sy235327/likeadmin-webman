@@ -31,7 +31,7 @@ class MnpSettingsLogic extends BaseLogic
      * @author ljj
      * @date 2022/2/16 9:38 上午
      */
-    public function getConfig()
+    public function getConfig(): array
     {
         $domainName = str_replace(['http://','https://'],'',getAgreementHost());
         $qrCode = ConfigService::get('mnp_setting', 'qr_code', '');
@@ -59,7 +59,7 @@ class MnpSettingsLogic extends BaseLogic
      * @author ljj
      * @date 2022/2/16 9:51 上午
      */
-    public function setConfig($params)
+    public function setConfig($params): void
     {
         $qrCode = isset($params['qr_code']) ? FileService::setFileUrl($params['qr_code']) : '';
 

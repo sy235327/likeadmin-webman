@@ -33,7 +33,7 @@ class CrontabLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/3/29 14:41
      */
-    public static function add($params)
+    public static function add($params): bool
     {
         try {
             $params['remark'] = $params['remark'] ?? '';
@@ -57,7 +57,7 @@ class CrontabLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/3/29 14:41
      */
-    public static function detail($params)
+    public static function detail($params): array
     {
         $field = 'id,name,type,type as type_desc,command,params,status,status as status_desc,expression,remark';
         $crontab = Crontab::field($field)->findOrEmpty($params['id']);
@@ -75,7 +75,7 @@ class CrontabLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/3/29 14:42
      */
-    public static function edit($params)
+    public static function edit($params): bool
     {
         try {
             $params['remark'] = $params['remark'] ?? '';
@@ -98,7 +98,7 @@ class CrontabLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/3/29 14:42
      */
-    public static function delete($params)
+    public static function delete($params): bool
     {
         try {
             Crontab::destroy($params['id']);
@@ -118,7 +118,7 @@ class CrontabLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/3/29 14:42
      */
-    public static function operate($params)
+    public static function operate($params): bool
     {
         try {
             $crontab = Crontab::findOrEmpty($params['id']);
@@ -150,7 +150,7 @@ class CrontabLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/3/29 14:42
      */
-    public static function expression($params)
+    public static function expression($params): array|string
     {
         try {
             $cron = new CronExpression($params['expression']);

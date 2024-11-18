@@ -66,7 +66,7 @@ class ConfigLogic
      * @author 乔峰
      * @date 2022/9/27 19:09
      */
-    public static function getDictByType($type)
+    public static function getDictByType($type): array
     {
         if (!is_string($type)) {
             return [];

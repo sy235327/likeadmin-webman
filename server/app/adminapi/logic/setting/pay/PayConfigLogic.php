@@ -40,7 +40,7 @@ class PayConfigLogic extends BaseLogic
      * @author 段誉
      * @date 2023/2/23 16:16
      */
-    public static function setConfig($params)
+    public static function setConfig($params): bool
     {
         $payConfig = PayConfig::find($params['id']);
 
@@ -84,7 +84,7 @@ class PayConfigLogic extends BaseLogic
      * @author 段誉
      * @date 2023/2/23 16:16
      */
-    public static function getConfig($params)
+    public static function getConfig($params): array
     {
         $payConfig = PayConfig::find($params['id'])->toArray();
         $payConfig['domain'] = request()->domain();

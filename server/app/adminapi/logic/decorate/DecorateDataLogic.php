@@ -38,7 +38,7 @@ class DecorateDataLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/9/22 16:49
      */
-    public static function getArticleLists($limit)
+    public static function getArticleLists($limit): array
     {
         $field = 'id,title,desc,abstract,image,author,content,
         click_virtual,click_actual,create_time';

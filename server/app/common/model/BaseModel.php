@@ -72,16 +72,16 @@ use think\Paginator;
  * @method Query table(string $table) static 指定数据表（含前缀）
  * @method Query name(string $name) static 指定数据表（不含前缀）
  * @method Query withAttr(string $name, callable $callback = null) static 使用获取器获取数据
- * @method integer insert(array $data, boolean $replace = false, boolean $getLastInsID = false, string $sequence = null) static 插入一条记录
- * @method integer insertGetId(array $data, boolean $replace = false, string $sequence = null) static 插入一条记录并返回自增ID
- * @method integer insertAll(array $dataSet) static 插入多条记录
- * @method integer update(array $data) static 更新记录
- * @method integer delete(mixed $data = null) static 删除记录
- * @method boolean chunk(integer $count, callable $callback, string $column = null) static 分块获取数据
+ * @method int insert(array $data, boolean $replace = false, boolean $getLastInsID = false, string $sequence = null) static 插入一条记录
+ * @method int insertGetId(array $data, boolean $replace = false, string $sequence = null) static 插入一条记录并返回自增ID
+ * @method int insertAll(array $dataSet) static 插入多条记录
+ * @method int update(array $data) static 更新记录
+ * @method int delete(mixed $data = null) static 删除记录
+ * @method boolean chunk(int $count, callable $callback, string $column = null) static 分块获取数据
  * @method Generator cursor(mixed $data = null) static 使用游标查找记录
  * @method mixed query(string $sql, array $bind = [], boolean $master = false, bool $pdo = false) static SQL查询
- * @method integer execute(string $sql, array $bind = [], boolean $fetch = false, boolean $getLastInsID = false, string $sequence = null) static SQL执行
- * @method Paginator paginate(integer $listRows = 15, mixed $simple = null, array $config = []) static 分页查询
+ * @method int execute(string $sql, array $bind = [], boolean $fetch = false, boolean $getLastInsID = false, string $sequence = null) static SQL执行
+ * @method Paginator paginate(int $listRows = 15, mixed $simple = null, array $config = []) static 分页查询
  * @method mixed transaction(callable $callback) static 执行数据库事务
  * @method void startTrans() static 启动事务
  * @method void commit() static 用于非自动提交状态下面的查询提交

@@ -43,7 +43,7 @@ class PayWayLogic extends BaseLogic
      * @author 段誉
      * @date 2023/2/23 16:25
      */
-    public static function getPayWay()
+    public static function getPayWay(): array
     {
         $payWay = PayWay::select()->append(['pay_way_name'])
             ->toArray();
@@ -74,7 +74,7 @@ class PayWayLogic extends BaseLogic
      * @author 段誉
      * @date 2023/2/23 16:26
      */
-    public static function setPayWay($params)
+    public static function setPayWay($params): bool|string
     {
         $payWay = new PayWay;
         $data = [];

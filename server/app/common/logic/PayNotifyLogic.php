@@ -6,6 +6,7 @@ use app\common\enum\PayEnum;
 use app\common\enum\user\AccountLogEnum;
 use app\common\model\recharge\RechargeOrder;
 use app\common\model\user\User;
+use Exception;
 use think\facade\Db;
 use support\Log;
 
@@ -24,7 +25,7 @@ class PayNotifyLogic extends BaseLogic
             self::$action($orderSn, $extra);
             Db::commit();
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Db::rollback();
             Log::info(implode('-', [
                 __CLASS__,

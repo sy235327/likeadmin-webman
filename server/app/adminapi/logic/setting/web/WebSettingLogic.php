@@ -18,6 +18,7 @@ namespace app\adminapi\logic\setting\web;
 use app\common\logic\BaseLogic;
 use app\common\service\ConfigService;
 use app\common\service\FileService;
+use Exception;
 
 
 /**
@@ -106,11 +107,11 @@ class WebSettingLogic extends BaseLogic
     {
         try {
             if (!is_array($params['config'])) {
-                throw new \Exception('参数异常');
+                throw new Exception('参数异常');
             }
             ConfigService::set('copyright', 'config', $params['config'] ?? []);
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::$error = $e->getMessage();
             return false;
         }

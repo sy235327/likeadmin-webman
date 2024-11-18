@@ -24,6 +24,10 @@ use app\common\model\auth\AdminRole;
 use app\common\model\auth\AdminSession;
 use app\common\cache\AdminTokenCache;
 use app\common\service\FileService;
+use Exception;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\facade\Db;
 use Webman\Config;
 
@@ -68,7 +72,7 @@ class AdminLogic extends BaseLogic
 
             Db::commit();
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Db::rollback();
             self::setError($e->getMessage());
             return false;
@@ -134,7 +138,7 @@ class AdminLogic extends BaseLogic
 
             Db::commit();
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Db::rollback();
             self::setError($e->getMessage());
             return false;
@@ -155,7 +159,7 @@ class AdminLogic extends BaseLogic
         try {
             $admin = Admin::findOrEmpty($params['id']);
             if ($admin->root == YesNoEnum::YES) {
-                throw new \Exception("超级管理员不允许被删除");
+                throw new Exception("超级管理员不允许被删除");
             }
             Admin::destroy($params['id']);
 
@@ -173,7 +177,7 @@ class AdminLogic extends BaseLogic
 
             Db::commit();
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Db::rollback();
             self::setError($e->getMessage());
             return false;
@@ -185,9 +189,9 @@ class AdminLogic extends BaseLogic
      * @notes 过期token
      * @param $token
      * @return bool
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2021/12/29 10:46
      */
@@ -264,7 +268,7 @@ class AdminLogic extends BaseLogic
      * @notes 新增角色
      * @param $adminId
      * @param $roleIds
-     * @throws \Exception
+     * @throws Exception
      * @author 乔峰
      * @date 2022/11/25 14:23
      */
@@ -288,7 +292,7 @@ class AdminLogic extends BaseLogic
      * @notes 新增部门
      * @param $adminId
      * @param $deptIds
-     * @throws \Exception
+     * @throws Exception
      * @author 乔峰
      * @date 2022/11/25 14:22
      */
@@ -312,7 +316,7 @@ class AdminLogic extends BaseLogic
      * @notes 新增岗位
      * @param $adminId
      * @param $jobsIds
-     * @throws \Exception
+     * @throws Exception
      * @author 乔峰
      * @date 2022/11/25 14:22
      */

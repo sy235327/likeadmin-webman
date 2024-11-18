@@ -17,6 +17,9 @@ namespace app\adminapi\lists\auth;
 use app\adminapi\lists\BaseAdminDataLists;
 use app\common\model\auth\AdminRole;
 use app\common\model\auth\SystemRole;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * 角色列表
@@ -54,9 +57,9 @@ class RoleLists extends BaseAdminDataLists
     /**
      * @notes 角色列表
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author cjhao
      * @date 2021/8/25 18:00
      */

@@ -20,7 +20,14 @@ use app\common\logic\BaseLogic;
 use app\common\model\channel\OfficialAccountReply;
 use app\common\service\wechat\WeChatConfigService;
 use app\common\service\wechat\WeChatOaService;
-
+use Closure;
+use EasyWeChat\Kernel\Exceptions\BadRequestException;
+use EasyWeChat\Kernel\Exceptions\InvalidArgumentException;
+use EasyWeChat\Kernel\Exceptions\RuntimeException;
+use Exception;
+use Psr\Http\Message\ResponseInterface;
+use ReflectionException;
+use Throwable;
 
 
 /**
@@ -42,7 +49,7 @@ class OfficialAccountReplyLogic extends BaseLogic
         try {
             // 关键字回复排序值须大于0
             if ($params['reply_type'] == OfficialAccountEnum::REPLY_TYPE_KEYWORD && $params['sort'] <= 0) {
-                throw new \Exception('排序值须大于0');
+                throw new Exception('排序值须大于0');
             }
             if ($params['reply_type'] != OfficialAccountEnum::REPLY_TYPE_KEYWORD && $params['status']) {
                 // 非关键词回复只能有一条记录处于启用状态，所以将该回复类型下的已有记录置为禁用状态
@@ -50,7 +57,7 @@ class OfficialAccountReplyLogic extends BaseLogic
             }
             OfficialAccountReply::create($params);
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }
@@ -84,7 +91,7 @@ class OfficialAccountReplyLogic extends BaseLogic
         try {
             // 关键字回复排序值须大于0
             if ($params['reply_type'] == OfficialAccountEnum::REPLY_TYPE_KEYWORD && $params['sort'] <= 0) {
-                throw new \Exception('排序值须大于0');
+                throw new Exception('排序值须大于0');
             }
             if ($params['reply_type'] != OfficialAccountEnum::REPLY_TYPE_KEYWORD && $params['status']) {
                 // 非关键词回复只能有一条记录处于启用状态，所以将该回复类型下的已有记录置为禁用状态
@@ -92,7 +99,7 @@ class OfficialAccountReplyLogic extends BaseLogic
             }
             OfficialAccountReply::update($params);
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }
@@ -140,12 +147,12 @@ class OfficialAccountReplyLogic extends BaseLogic
 
     /**
      * @notes 微信公众号回调
-     * @return \Psr\Http\Message\ResponseInterface|void
-     * @throws \EasyWeChat\Kernel\Exceptions\BadRequestException
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
-     * @throws \EasyWeChat\Kernel\Exceptions\RuntimeException
-     * @throws \ReflectionException
-     * @throws \Throwable
+     * @return ResponseInterface|void
+     * @throws BadRequestException
+     * @throws InvalidArgumentException
+     * @throws RuntimeException
+     * @throws ReflectionException
+     * @throws Throwable
      * @author 段誉
      * @date 2023/2/27 14:38\
      */
@@ -153,7 +160,7 @@ class OfficialAccountReplyLogic extends BaseLogic
     {
         $server = (new WeChatOaService())->getServer();
         // 事件
-        $server->addMessageListener(OfficialAccountEnum::MSG_TYPE_EVENT, function ($message, \Closure $next) {
+        $server->addMessageListener(OfficialAccountEnum::MSG_TYPE_EVENT, function ($message, Closure $next) {
             switch ($message['Event']) {
                 case OfficialAccountEnum::EVENT_SUBSCRIBE: // 关注事件
                     $replyContent = OfficialAccountReply::where([
@@ -175,7 +182,7 @@ class OfficialAccountReplyLogic extends BaseLogic
         });
 
         // 文本
-        $server->addMessageListener(OfficialAccountEnum::MSG_TYPE_TEXT, function ($message, \Closure $next) {
+        $server->addMessageListener(OfficialAccountEnum::MSG_TYPE_TEXT, function ($message, Closure $next) {
             $replyList = OfficialAccountReply::where([
                 'reply_type' => OfficialAccountEnum::REPLY_TYPE_KEYWORD,
                 'status' => YesNoEnum::YES

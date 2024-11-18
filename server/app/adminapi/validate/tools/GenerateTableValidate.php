@@ -82,7 +82,7 @@ class GenerateTableValidate extends BaseValidate
             if (!isset($item['name']) || !isset($item['comment'])) {
                 return '参数缺失';
             }
-            $exist = \think\facade\Db::query("SHOW TABLES LIKE'" . $item['name'] . "'");
+            $exist = Db::query("SHOW TABLES LIKE'" . $item['name'] . "'");
             if (empty($exist)) {
                 return '当前数据库不存在' . $item['name'] . '表';
             }

@@ -196,7 +196,7 @@ class NoticeEnum
      * @notes 获取公众号模板消息示例
      * @param $sceneId
      * @param false $flag
-     * @return array|string[]|\string[][]
+     * @return array|string[]|string[][]
      * @author 段誉
      * @date 2022/3/29 11:33
      */
@@ -236,7 +236,7 @@ class NoticeEnum
      * @notes 提示
      * @param $type
      * @param $sceneId
-     * @return array|string|string[]|\string[][]
+     * @return array|string|string[]|string[][]
      * @author 段誉
      * @date 2022/3/29 11:33
      */

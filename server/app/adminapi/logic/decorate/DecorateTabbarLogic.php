@@ -17,6 +17,10 @@ use app\common\logic\BaseLogic;
 use app\common\model\decorate\DecorateTabbar;
 use app\common\service\ConfigService;
 use app\common\service\FileService;
+use Exception;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 
 /**
@@ -30,9 +34,9 @@ class DecorateTabbarLogic extends BaseLogic
     /**
      * @notes 获取底部导航详情
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2022/9/7 16:58
      */
@@ -48,7 +52,7 @@ class DecorateTabbarLogic extends BaseLogic
      * @notes 底部导航保存
      * @param $params
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      * @author 乔峰
      * @date 2022/9/7 17:19
      */

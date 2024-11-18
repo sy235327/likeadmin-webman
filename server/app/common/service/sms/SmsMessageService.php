@@ -35,6 +35,8 @@ use app\common\logic\NoticeLogic;
 use app\common\model\notice\NoticeSetting;
 use app\common\model\notice\SmsLog;
 use app\common\service\ConfigService;
+use Exception;
+use think\Model;
 
 /**
  * 短信服务
@@ -59,7 +61,7 @@ class SmsMessageService
             // 发送短信
             $smsDriver = new SmsDriver();
             if(!is_null($smsDriver->getError())) {
-                throw new \Exception($smsDriver->getError());
+                throw new Exception($smsDriver->getError());
             }
 
             $result =  $smsDriver->send($params['params']['mobile'], [
@@ -69,13 +71,13 @@ class SmsMessageService
             if ($result === false) {
                 // 发送失败更新短信记录
                 $this->updateSmsLog($this->smsLog['id'], SmsEnum::SEND_FAIL, $smsDriver->getError());
-                throw new \Exception($smsDriver->getError());
+                throw new Exception($smsDriver->getError());
             }
             // 发送成功更新短信记录
             $this->updateSmsLog($this->smsLog['id'], SmsEnum::SEND_SUCCESS, $result);
             return true;
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -103,7 +105,7 @@ class SmsMessageService
      * @notes 添加短信记录
      * @param $params
      * @param $content
-     * @return SmsLog|\think\Model
+     * @return SmsLog|Model
      * @author 段誉
      * @date 2022/9/15 16:24
      */

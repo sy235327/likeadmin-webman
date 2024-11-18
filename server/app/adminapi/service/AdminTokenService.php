@@ -6,6 +6,9 @@ namespace app\adminapi\service;
 
 use app\common\cache\AdminTokenCache;
 use app\common\model\auth\AdminSession;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use Webman\Config;
 
 class AdminTokenService
@@ -16,9 +19,9 @@ class AdminTokenService
      * @param $terminal //多终端名称
      * @param $multipointLogin //是否支持多处登录
      * @return false|mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2021/7/2 20:25
      */
@@ -61,9 +64,9 @@ class AdminTokenService
      * @notes 延长token过期时间
      * @param $token
      * @return array|false|mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2021/7/5 14:25
      */
@@ -85,9 +88,9 @@ class AdminTokenService
      * @notes 设置token为过期
      * @param $token
      * @return bool
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2021/7/5 14:31
      */

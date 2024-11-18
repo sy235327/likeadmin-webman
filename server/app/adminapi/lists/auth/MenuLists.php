@@ -16,6 +16,9 @@ namespace app\adminapi\lists\auth;
 
 use app\adminapi\lists\BaseAdminDataLists;
 use app\common\model\auth\SystemMenu;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 
 /**
@@ -29,9 +32,9 @@ class MenuLists extends BaseAdminDataLists
     /**
      * @notes 获取菜单列表
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2022/6/29 16:41
      */

@@ -16,6 +16,11 @@ namespace app\api\logic;
 
 use app\common\cache\WebScanLoginCache;
 use app\common\logic\BaseLogic;
+use Exception;
+use GuzzleHttp\Exception\GuzzleException;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\facade\Db;
 use app\api\service\{UserTokenService, WechatUserService};
 use app\common\enum\{LoginEnum, user\UserTerminalEnum, YesNoEnum};
@@ -63,7 +68,7 @@ class LoginLogic extends BaseLogic
             ]);
 
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }
@@ -89,7 +94,7 @@ class LoginLogic extends BaseLogic
 
             $user = User::where($where)->findOrEmpty();
             if ($user->isEmpty()) {
-                throw new \Exception('用户不存在');
+                throw new Exception('用户不存在');
             }
 
             //更新登录信息
@@ -111,7 +116,7 @@ class LoginLogic extends BaseLogic
                 'avatar' => $avatar,
                 'token' => $userInfo['token'],
             ];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }
@@ -122,9 +127,9 @@ class LoginLogic extends BaseLogic
      * @notes 退出登录
      * @param $userInfo
      * @return bool
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2022/9/16 17:56
      */
@@ -157,7 +162,7 @@ class LoginLogic extends BaseLogic
      * @notes 公众号登录
      * @param array $params
      * @return array|false
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      * @author 段誉
      * @date 2022/9/20 19:47
      */
@@ -176,7 +181,7 @@ class LoginLogic extends BaseLogic
             Db::commit();
             return $userInfo;
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Db::rollback();
             self::$error = $e->getMessage();
             return false;
@@ -205,7 +210,7 @@ class LoginLogic extends BaseLogic
             }
 
             return $userInfo;
-        } catch (\Exception  $e) {
+        } catch (Exception  $e) {
             self::$error = $e->getMessage();
             return false;
         }
@@ -233,7 +238,7 @@ class LoginLogic extends BaseLogic
 
             Db::commit();
             return $userInfo;
-        } catch (\Exception  $e) {
+        } catch (Exception  $e) {
             Db::rollback();
             self::$error = $e->getMessage();
             return false;
@@ -244,7 +249,7 @@ class LoginLogic extends BaseLogic
     /**
      * @notes 更新登录信息
      * @param $userId
-     * @throws \Exception
+     * @throws Exception
      * @author 段誉
      * @date 2022/9/20 19:46
      */
@@ -252,7 +257,7 @@ class LoginLogic extends BaseLogic
     {
         $user = User::findOrEmpty($userId);
         if ($user->isEmpty()) {
-            throw new \Exception('用户不存在');
+            throw new Exception('用户不存在');
         }
 
         $time = time();
@@ -280,7 +285,7 @@ class LoginLogic extends BaseLogic
 
             return self::createAuth($response);
 
-        } catch (\Exception  $e) {
+        } catch (Exception  $e) {
             self::$error = $e->getMessage();
             return false;
         }
@@ -291,7 +296,7 @@ class LoginLogic extends BaseLogic
      * @notes 公众号端绑定微信
      * @param array $params
      * @return bool
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      * @author 段誉
      * @date 2022/9/16 10:43
      */
@@ -305,7 +310,7 @@ class LoginLogic extends BaseLogic
 
             return self::createAuth($response);
 
-        } catch (\Exception  $e) {
+        } catch (Exception  $e) {
             self::$error = $e->getMessage();
             return false;
         }
@@ -316,7 +321,7 @@ class LoginLogic extends BaseLogic
      * @notes 生成授权记录
      * @param $response
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      * @author 段誉
      * @date 2022/9/16 10:43
      */
@@ -325,7 +330,7 @@ class LoginLogic extends BaseLogic
         //先检查openid是否有记录
         $isAuth = UserAuth::where('openid', '=', $response['openid'])->findOrEmpty();
         if (!$isAuth->isEmpty()) {
-            throw new \Exception('该微信已被绑定');
+            throw new Exception('该微信已被绑定');
         }
 
         if (isset($response['unionid']) && !empty($response['unionid'])) {
@@ -333,7 +338,7 @@ class LoginLogic extends BaseLogic
             $userAuth = UserAuth::where(['unionid' => $response['unionid']])
                 ->findOrEmpty();
             if (!$userAuth->isEmpty() && $userAuth->user_id != $response['user_id']) {
-                throw new \Exception('该微信已被绑定');
+                throw new Exception('该微信已被绑定');
             }
         }
 
@@ -369,7 +374,7 @@ class LoginLogic extends BaseLogic
             $url = WeChatRequestService::getScanCodeUrl($appId, $redirectUri, $state);
             return ['url' => $url];
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::$error = $e->getMessage();
             return false;
         }
@@ -391,7 +396,7 @@ class LoginLogic extends BaseLogic
             $userAuth = WeChatRequestService::getUserAuthByCode($params['code']);
 
             if (empty($userAuth['openid']) || empty($userAuth['access_token'])) {
-                throw new \Exception('获取用户授权信息失败');
+                throw new Exception('获取用户授权信息失败');
             }
 
             // 获取微信用户信息
@@ -407,7 +412,7 @@ class LoginLogic extends BaseLogic
             Db::commit();
             return $userInfo;
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Db::rollback();
             self::$error = $e->getMessage();
             return false;

@@ -9,6 +9,8 @@ use app\common\model\pay\PayWay;
 use app\common\model\recharge\RechargeOrder;
 use app\common\model\user\User;
 use app\common\service\pay\WeChatPayService;
+use Exception;
+use think\Model;
 
 
 /**
@@ -37,7 +39,7 @@ class PaymentLogic extends BaseLogic
             }
 
             if (empty($order)) {
-                throw new \Exception('待支付订单不存在');
+                throw new Exception('待支付订单不存在');
             }
 
             //获取支付场景
@@ -71,7 +73,7 @@ class PaymentLogic extends BaseLogic
                 'order_amount' => $order['order_amount'],
             ];
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }
@@ -107,7 +109,7 @@ class PaymentLogic extends BaseLogic
             }
 
             if (empty($order)) {
-                throw new \Exception('订单不存在');
+                throw new Exception('订单不存在');
             }
 
             return [
@@ -115,7 +117,7 @@ class PaymentLogic extends BaseLogic
                 'pay_way' => $order['pay_way'],
                 'order' => $orderInfo
             ];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }
@@ -125,7 +127,7 @@ class PaymentLogic extends BaseLogic
     /**
      * @notes 获取预支付订单信息
      * @param $params
-     * @return RechargeOrder|array|false|\think\Model
+     * @return RechargeOrder|array|false|Model
      * @author bingo
      * @date 2023/2/27 15:19
      */
@@ -136,16 +138,16 @@ class PaymentLogic extends BaseLogic
                 case 'recharge':
                     $order = RechargeOrder::findOrEmpty($params['order_id']);
                     if ($order->isEmpty()) {
-                        throw new \Exception('充值订单不存在');
+                        throw new Exception('充值订单不存在');
                     }
                     break;
             }
 
             if ($order['pay_status'] == PayEnum::ISPAID) {
-                throw new \Exception('订单已支付');
+                throw new Exception('订单已支付');
             }
             return $order;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::$error = $e->getMessage();
             return false;
         }

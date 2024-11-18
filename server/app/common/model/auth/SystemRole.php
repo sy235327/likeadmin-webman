@@ -16,6 +16,7 @@ namespace app\common\model\auth;
 
 use app\common\model\BaseModel;
 use think\model\concern\SoftDelete;
+use think\model\relation\HasMany;
 
 /**
  * 角色模型
@@ -32,7 +33,7 @@ class SystemRole extends BaseModel
 
     /**
      * @notes 角色与菜单关联关系
-     * @return \think\model\relation\HasMany
+     * @return HasMany
      * @author 乔峰
      * @date 2022/7/6 11:16
      */

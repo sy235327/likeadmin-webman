@@ -17,6 +17,9 @@ namespace app\api\service;
 
 use app\common\cache\UserTokenCache;
 use app\common\model\user\UserSession;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use Webman\Config;
 
 class UserTokenService
@@ -27,9 +30,9 @@ class UserTokenService
      * @param $userId
      * @param $terminal
      * @return array|false|mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2022/9/16 10:10
      */
@@ -69,9 +72,9 @@ class UserTokenService
      * @notes 延长token过期时间
      * @param $token
      * @return array|false|mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2022/9/16 10:10
      */
@@ -92,9 +95,9 @@ class UserTokenService
      * @notes 设置token为过期
      * @param $token
      * @return bool
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2022/9/16 10:10
      */

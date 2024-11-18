@@ -13,6 +13,7 @@
 // +----------------------------------------------------------------------
 namespace app\common\service\sms\engine;
 
+use Exception;
 use TencentCloud\Sms\V20190711\SmsClient;
 use TencentCloud\Sms\V20190711\Models\SendSmsRequest;
 use TencentCloud\Common\Exception\TencentCloudSDKException;
@@ -128,9 +129,9 @@ class TencentSms
                 return $resp;
             } else {
                 $message = $res['SendStatusSet'][0]['Message'] ?? json_encode($resp);
-                throw new \Exception('腾讯云短信错误：' . $message);
+                throw new Exception('腾讯云短信错误：' . $message);
             }
-        } catch(\Exception $e) {
+        } catch(Exception $e) {
             $this->error = $e->getMessage();
             return false;
         }

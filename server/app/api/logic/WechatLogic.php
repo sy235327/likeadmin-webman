@@ -17,6 +17,7 @@ namespace app\api\logic;
 use app\common\logic\BaseLogic;
 use app\common\service\wechat\WeChatOaService;
 use EasyWeChat\Kernel\Exceptions\Exception;
+use Psr\SimpleCache\InvalidArgumentException;
 
 /**
  * 微信
@@ -30,7 +31,7 @@ class WechatLogic extends BaseLogic
      * @notes 微信JSSDK授权接口
      * @param $params
      * @return false|mixed[]
-     * @throws \Psr\SimpleCache\InvalidArgumentException
+     * @throws InvalidArgumentException
      * @author 段誉
      * @date 2023/3/1 11:49
      */

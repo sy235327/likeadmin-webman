@@ -5,6 +5,7 @@ namespace app\common\model\tools;
 
 
 use app\common\model\BaseModel;
+use think\model\relation\BelongsTo;
 
 
 /**
@@ -17,7 +18,7 @@ class GenerateColumn extends BaseModel
 
     /**
      * @notes 关联table表
-     * @return \think\model\relation\BelongsTo
+     * @return BelongsTo
      * @author bingo
      * @date 2022/6/15 18:59
      */

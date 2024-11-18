@@ -21,6 +21,10 @@ use app\common\logic\BaseLogic;
 use app\common\model\pay\PayConfig;
 use app\common\model\pay\PayWay;
 use app\common\service\FileService;
+use Exception;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * 支付方式
@@ -33,9 +37,9 @@ class PayWayLogic extends BaseLogic
     /**
      * @notes 获取支付方式
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2023/2/23 16:25
      */
@@ -66,7 +70,7 @@ class PayWayLogic extends BaseLogic
      * @notes 设置支付方式
      * @param $params
      * @return bool|string
-     * @throws \Exception
+     * @throws Exception
      * @author 段誉
      * @date 2023/2/23 16:26
      */

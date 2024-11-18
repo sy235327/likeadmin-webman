@@ -9,6 +9,9 @@ use app\common\enum\AdminTerminalEnum;
 use app\common\model\auth\Admin;
 use app\common\service\ConfigService;
 use app\common\validate\BaseValidate;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use Webman\Config;
 
 class LoginValidate extends BaseValidate
@@ -30,9 +33,9 @@ class LoginValidate extends BaseValidate
      * @param $other
      * @param $data
      * @return bool|string
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2021/7/2 14:00
      */

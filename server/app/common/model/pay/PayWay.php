@@ -17,6 +17,7 @@ namespace app\common\model\pay;
 
 use app\common\model\BaseModel;
 use app\common\service\FileService;
+use think\model\relation\HasOne;
 
 
 class PayWay extends BaseModel
@@ -43,7 +44,7 @@ class PayWay extends BaseModel
 
     /**
      * @notes 关联支配配置模型
-     * @return \think\model\relation\HasOne
+     * @return HasOne
      * @author ljj
      * @date 2021/10/11 3:04 下午
      */

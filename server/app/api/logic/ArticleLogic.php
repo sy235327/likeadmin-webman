@@ -19,6 +19,9 @@ use app\common\logic\BaseLogic;
 use app\common\model\article\Article;
 use app\common\model\article\ArticleCate;
 use app\common\model\article\ArticleCollect;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 
 /**
@@ -94,9 +97,9 @@ class ArticleLogic extends BaseLogic
     /**
      * @notes 文章分类
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2022/9/23 14:11
      */

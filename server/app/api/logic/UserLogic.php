@@ -23,6 +23,11 @@ use app\common\{enum\notice\NoticeEnum,
     model\user\UserAuth,
     service\sms\SmsDriver,
     service\wechat\WeChatMnpService};
+use Exception;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use Webman\Config;
 
 /**
@@ -37,9 +42,9 @@ class UserLogic extends BaseLogic
      * @notes 个人中心
      * @param array $userInfo
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2022/9/16 18:04
      */
@@ -95,7 +100,7 @@ class UserLogic extends BaseLogic
                     'id' => $userId,
                     $params['field'] => $params['value']]
             );
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::$error = $e->getMessage();
             return false;
         }
@@ -133,7 +138,7 @@ class UserLogic extends BaseLogic
             // 校验验证码
             $smsDriver = new SmsDriver();
             if (!$smsDriver->verify($params['mobile'], $params['code'], NoticeEnum::FIND_LOGIN_PASSWORD_CAPTCHA)) {
-                throw new \Exception('验证码错误');
+                throw new Exception('验证码错误');
             }
 
             // 重置密码
@@ -146,7 +151,7 @@ class UserLogic extends BaseLogic
             ]);
 
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }
@@ -166,7 +171,7 @@ class UserLogic extends BaseLogic
         try {
             $user = User::findOrEmpty($userId);
             if ($user->isEmpty()) {
-                throw new \Exception('用户不存在');
+                throw new Exception('用户不存在');
             }
 
             // 密码盐
@@ -174,11 +179,11 @@ class UserLogic extends BaseLogic
 
             if (!empty($user['password'])) {
                 if (empty($params['old_password'])) {
-                    throw new \Exception('请填写旧密码');
+                    throw new Exception('请填写旧密码');
                 }
                 $oldPassword = create_password($params['old_password'], $passwordSalt);
                 if ($oldPassword != $user['password']) {
-                    throw new \Exception('原密码不正确');
+                    throw new Exception('原密码不正确');
                 }
             }
 
@@ -188,7 +193,7 @@ class UserLogic extends BaseLogic
             $user->save();
 
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }
@@ -199,7 +204,7 @@ class UserLogic extends BaseLogic
      * @notes 获取小程序手机号
      * @param array $params
      * @return bool
-     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      * @author 段誉
      * @date 2023/2/27 11:49
      */
@@ -209,7 +214,7 @@ class UserLogic extends BaseLogic
             $response = (new WeChatMnpService())->getUserPhoneNumber($params['code']);
             $phoneNumber = $response['phone_info']['purePhoneNumber'] ?? '';
             if (empty($phoneNumber)) {
-                throw new \Exception('获取手机号码失败');
+                throw new Exception('获取手机号码失败');
             }
 
             $user = User::where([
@@ -218,7 +223,7 @@ class UserLogic extends BaseLogic
             ])->findOrEmpty();
 
             if (!$user->isEmpty()) {
-                throw new \Exception('手机号已被其他账号绑定');
+                throw new Exception('手机号已被其他账号绑定');
             }
 
             // 绑定手机号
@@ -228,7 +233,7 @@ class UserLogic extends BaseLogic
             ]);
 
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }
@@ -263,12 +268,12 @@ class UserLogic extends BaseLogic
             // 校验短信
             $checkSmsCode = (new SmsDriver())->verify($params['mobile'], $params['code'], $sceneId);
             if (!$checkSmsCode) {
-                throw new \Exception('验证码错误');
+                throw new Exception('验证码错误');
             }
 
             $user = User::where($where)->findOrEmpty();
             if (!$user->isEmpty()) {
-                throw new \Exception('该手机号已被使用');
+                throw new Exception('该手机号已被使用');
             }
 
             User::update([
@@ -277,7 +282,7 @@ class UserLogic extends BaseLogic
             ]);
 
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }

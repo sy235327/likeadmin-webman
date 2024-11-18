@@ -14,6 +14,7 @@
 namespace app\common\service\sms\engine;
 
 use AlibabaCloud\Client\AlibabaCloud;
+use Exception;
 
 /**
  * 阿里云短信
@@ -126,8 +127,8 @@ class AliSms
                 return $res;
             }
             $message = $res['Message'] ?? $res;
-            throw new \Exception('阿里云短信错误：' . $message);
-        } catch(\Exception $e) {
+            throw new Exception('阿里云短信错误：' . $message);
+        } catch(Exception $e) {
             $this->error = $e->getMessage();
             return false;
         }

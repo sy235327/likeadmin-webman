@@ -7,6 +7,7 @@ use app\common\enum\ExportEnum;
 use app\common\service\JsonService;
 use app\common\validate\ListsValidate;
 use app\Request;
+use support\Response;
 use Webman\Config;
 
 abstract class BaseDataLists implements ListsInterface
@@ -135,7 +136,7 @@ abstract class BaseDataLists implements ListsInterface
 
     /**
      * @notes 导出初始化
-     * @return false|\support\Response
+     * @return false|Response
      * @author 令狐冲
      * @date 2021/7/31 01:15
      */

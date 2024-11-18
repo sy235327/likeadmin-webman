@@ -18,6 +18,9 @@ namespace app\adminapi\validate\setting;
 use app\common\enum\PayEnum;
 use app\common\model\pay\PayConfig;
 use app\common\validate\BaseValidate;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 
 class PayConfigValidate extends BaseValidate
@@ -52,9 +55,9 @@ class PayConfigValidate extends BaseValidate
      * @param $rule
      * @param $data
      * @return bool|string
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2023/2/23 16:19
      */

@@ -33,7 +33,7 @@ class RefundRecordLists extends BaseAdminDataLists implements ListsSearchInterfa
 
     /**
      * @notes 查询条件
-     * @return \string[][]
+     * @return string[][]
      * @author 段誉
      * @date 2023/3/1 9:51
      */

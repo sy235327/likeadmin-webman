@@ -23,6 +23,9 @@ use app\common\enum\RefundEnum;
 use app\common\model\refund\RefundLog;
 use app\common\model\refund\RefundRecord;
 use app\common\service\pay\WeChatPayService;
+use EasyWeChat\Kernel\Exceptions\InvalidArgumentException;
+use EasyWeChat\Kernel\Exceptions\InvalidConfigException;
+use Exception;
 
 
 /**
@@ -43,7 +46,7 @@ class RefundLogic extends BaseLogic
      * @param $refundAmount
      * @param $handleId
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      * @author bingo
      * @date 2023/2/28 17:24
      */
@@ -63,12 +66,12 @@ class RefundLogic extends BaseLogic
                     self::wechatPayRefund($order, $refundAmount);
                     break;
                 default:
-                    throw new \Exception('支付方式异常');
+                    throw new Exception('支付方式异常');
             }
 
             // 此处true并不表示退款成功，仅表示退款请求成功，具体成功与否由定时任务查询或通过退款回调得知
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // 退款请求失败,标记退款记录及日志为失败.在退款记录处重新退款
             self::$error = $e->getMessage();
             self::refundFailHandle($refundRecordId, $e->getMessage());
@@ -80,14 +83,14 @@ class RefundLogic extends BaseLogic
     /**
      * @notes 退款前校验
      * @param $refundAmount
-     * @throws \Exception
+     * @throws Exception
      * @author bingo
      * @date 2023/2/28 16:27
      */
     public static function refundBeforeCheck($refundAmount)
     {
         if ($refundAmount <= 0) {
-            throw new \Exception('订单金额异常');
+            throw new Exception('订单金额异常');
         }
     }
 
@@ -96,8 +99,8 @@ class RefundLogic extends BaseLogic
      * @notes 微信支付退款
      * @param $order
      * @param $refundAmount
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     * @throws InvalidArgumentException
+     * @throws InvalidConfigException
      * @author bingo
      * @date 2023/2/28 17:19
      */

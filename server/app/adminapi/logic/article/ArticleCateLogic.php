@@ -17,6 +17,10 @@ namespace app\adminapi\logic\article;
 use app\common\enum\YesNoEnum;
 use app\common\logic\BaseLogic;
 use app\common\model\article\ArticleCate;
+use Exception;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * 资讯分类管理逻辑
@@ -60,7 +64,7 @@ class ArticleCateLogic extends BaseLogic
                 'sort' => $params['sort'] ?? 0
             ]);
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }
@@ -110,9 +114,9 @@ class ArticleCateLogic extends BaseLogic
     /**
      * @notes 文章分类数据
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2022/10/13 10:53
      */

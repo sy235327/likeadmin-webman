@@ -17,6 +17,10 @@ namespace app\adminapi\logic\dept;
 use app\common\enum\YesNoEnum;
 use app\common\logic\BaseLogic;
 use app\common\model\dept\Dept;
+use Exception;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 
 /**
@@ -31,9 +35,9 @@ class DeptLogic extends BaseLogic
      * @notes 部门列表
      * @param $params
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2022/5/30 15:44
      */
@@ -86,9 +90,9 @@ class DeptLogic extends BaseLogic
     /**
      * @notes 上级部门
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2022/5/26 18:36
      */
@@ -147,7 +151,7 @@ class DeptLogic extends BaseLogic
                 'sort' => $params['sort'] ?? 0
             ]);
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }
@@ -182,9 +186,9 @@ class DeptLogic extends BaseLogic
     /**
      * @notes 部门数据
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2022/10/13 10:19
      */

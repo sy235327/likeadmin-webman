@@ -18,6 +18,9 @@ namespace app\api\logic;
 use app\common\logic\BaseLogic;
 use app\common\model\HotSearch;
 use app\common\service\ConfigService;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * 搜索逻辑
@@ -30,9 +33,9 @@ class SearchLogic extends BaseLogic
     /**
      * @notes 热搜列表
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2022/9/23 14:34
      */

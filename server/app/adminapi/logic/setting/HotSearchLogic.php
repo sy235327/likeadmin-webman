@@ -18,6 +18,7 @@ use app\common\logic\BaseLogic;
 use app\common\model\HotSearch;
 use app\common\service\ConfigService;
 use app\common\service\FileService;
+use Exception;
 
 
 /**
@@ -65,7 +66,7 @@ class HotSearchLogic extends BaseLogic
             ConfigService::set('hot_search', 'status', $status);
 
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::$error = $e->getMessage();
             return false;
         }

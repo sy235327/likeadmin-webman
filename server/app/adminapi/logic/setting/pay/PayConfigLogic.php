@@ -18,6 +18,9 @@ namespace app\adminapi\logic\setting\pay;
 use app\common\enum\PayEnum;
 use app\common\logic\BaseLogic;
 use app\common\model\pay\PayConfig;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * 支付配置
@@ -31,9 +34,9 @@ class PayConfigLogic extends BaseLogic
      * @notes 设置配置
      * @param $params
      * @return bool
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2023/2/23 16:16
      */
@@ -75,9 +78,9 @@ class PayConfigLogic extends BaseLogic
      * @notes 获取配置
      * @param $params
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2023/2/23 16:16
      */

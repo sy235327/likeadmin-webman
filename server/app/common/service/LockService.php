@@ -109,7 +109,7 @@ class LockService extends BaseService
      */
     protected function set(string $name, mixed $value, array $expire = ['nx']): bool
     {
-        $key   = "lock_".getenv('CACHE_PREFIX','') . $name;;
+        $key   = "lock_".getenv('CACHE_PREFIX','') . $name;
         $value = is_scalar($value) ? $value : 'think_serialize:' . serialize($value);
         return Cache::set($key, $value, $expire);
     }

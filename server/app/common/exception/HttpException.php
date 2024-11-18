@@ -3,9 +3,10 @@
 
 namespace app\common\exception;
 
+use RuntimeException;
 use Throwable;
 
-class HttpException extends \RuntimeException
+class HttpException extends RuntimeException
 {
     protected $response = null;
 

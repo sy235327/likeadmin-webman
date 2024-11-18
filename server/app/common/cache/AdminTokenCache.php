@@ -8,6 +8,10 @@ use app\common\model\auth\Admin;
 use app\common\model\auth\AdminSession;
 use app\common\model\auth\SystemRole;
 use app\common\model\BaseModel;
+use DateTime;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\facade\Cache;
 
 class AdminTokenCache extends BaseCache
@@ -42,9 +46,9 @@ class AdminTokenCache extends BaseCache
      * @notes 通过有效token设置管理信息缓存
      * @param $token
      * @return array|false|mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 令狐冲
      * @date 2021/7/5 12:12
      */
@@ -82,7 +86,7 @@ class AdminTokenCache extends BaseCache
             'terminal' => $adminSession->terminal,
             'expire_time' => $adminSession->expire_time,
         ];
-        Cache::set($this->prefix . $token, $adminInfo, new \DateTime(Date('Y-m-d H:i:s', $adminSession->expire_time)));
+        Cache::set($this->prefix . $token, $adminInfo, new DateTime(Date('Y-m-d H:i:s', $adminSession->expire_time)));
         return $this->getAdminInfo($token);
     }
 

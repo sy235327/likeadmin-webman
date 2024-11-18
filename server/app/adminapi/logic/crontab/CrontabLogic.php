@@ -17,6 +17,7 @@ use app\common\enum\CrontabEnum;
 use app\common\logic\BaseLogic;
 use app\common\model\Crontab;
 use Cron\CronExpression;
+use Exception;
 
 /**
  * 定时任务逻辑层
@@ -42,7 +43,7 @@ class CrontabLogic extends BaseLogic
             Crontab::create($params);
 
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }
@@ -83,7 +84,7 @@ class CrontabLogic extends BaseLogic
             Crontab::update($params);
 
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }
@@ -103,7 +104,7 @@ class CrontabLogic extends BaseLogic
             Crontab::destroy($params['id']);
 
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }
@@ -122,7 +123,7 @@ class CrontabLogic extends BaseLogic
         try {
             $crontab = Crontab::findOrEmpty($params['id']);
             if ($crontab->isEmpty()) {
-                throw new \Exception('定时任务不存在');
+                throw new Exception('定时任务不存在');
             }
             switch ($params['operate']) {
                 case 'start';
@@ -135,7 +136,7 @@ class CrontabLogic extends BaseLogic
             $crontab->save();
 
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }
@@ -162,7 +163,7 @@ class CrontabLogic extends BaseLogic
             }
             $lists[] = ['time' => 'x', 'date' => '……'];
             return $lists;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $e->getMessage();
         }
     }

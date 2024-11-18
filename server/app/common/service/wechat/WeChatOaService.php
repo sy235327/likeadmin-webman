@@ -15,7 +15,19 @@ namespace app\common\service\wechat;
 
 
 use EasyWeChat\Kernel\Exceptions\Exception;
+use EasyWeChat\Kernel\Exceptions\HttpException;
+use EasyWeChat\Kernel\HttpClient\Response;
 use EasyWeChat\OfficialAccount\Application;
+use EasyWeChat\OfficialAccount\Server;
+use Psr\SimpleCache\InvalidArgumentException;
+use ReflectionException;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
+use Throwable;
 
 
 /**
@@ -40,10 +52,10 @@ class WeChatOaService
 
     /**
      * @notes easywechat服务端
-     * @return \EasyWeChat\Kernel\Contracts\Server|\EasyWeChat\OfficialAccount\Server
+     * @return \EasyWeChat\Kernel\Contracts\Server|Server
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
-     * @throws \ReflectionException
-     * @throws \Throwable
+     * @throws ReflectionException
+     * @throws Throwable
      * @author 段誉
      * @date 2023/2/27 14:22
      */
@@ -114,8 +126,8 @@ class WeChatOaService
      * @notes 创建公众号菜单
      * @param array $buttons
      * @param array $matchRule
-     * @return \EasyWeChat\Kernel\HttpClient\Response|\Symfony\Contracts\HttpClient\ResponseInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
+     * @return Response|ResponseInterface
+     * @throws TransportExceptionInterface
      * @author 段誉
      * @date 2023/2/27 12:07
      */
@@ -139,13 +151,13 @@ class WeChatOaService
      * @param array $openTagList
      * @param false $debug
      * @return mixed[]
-     * @throws \EasyWeChat\Kernel\Exceptions\HttpException
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
+     * @throws HttpException
+     * @throws InvalidArgumentException
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
      * @author 段誉
      * @date 2023/3/1 11:46
      */

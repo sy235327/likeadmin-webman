@@ -5,9 +5,13 @@ namespace app\common\model;
 
 
 use app\common\service\FileService;
+use Closure;
+use Generator;
 use think\db\BaseQuery;
 use think\db\Query;
 use think\Model;
+use think\model\Collection;
+use think\Paginator;
 
 /**
  * Class BaseModel 基础模型
@@ -57,8 +61,8 @@ use think\Model;
  * @method array column(string $field, string $key = '') static 获取某个列的值
  * @method Model find(mixed $data = null) static 查询单个记录 不存在返回Null
  * @method Model findOrEmpty(mixed $data = null) static 查询单个记录 不存在返回空模型
- * @method \think\model\Collection select(mixed $data = null) static 查询多个记录
- * @method Model withAttr(array $name, \Closure $closure) 动态定义获取器
+ * @method Collection select(mixed $data = null) static 查询多个记录
+ * @method Model withAttr(array $name, Closure $closure) 动态定义获取器
  *
  * Class DbManager 数据库管理类
  * @package think
@@ -75,10 +79,10 @@ use think\Model;
  * @method integer update(array $data) static 更新记录
  * @method integer delete(mixed $data = null) static 删除记录
  * @method boolean chunk(integer $count, callable $callback, string $column = null) static 分块获取数据
- * @method \Generator cursor(mixed $data = null) static 使用游标查找记录
+ * @method Generator cursor(mixed $data = null) static 使用游标查找记录
  * @method mixed query(string $sql, array $bind = [], boolean $master = false, bool $pdo = false) static SQL查询
  * @method integer execute(string $sql, array $bind = [], boolean $fetch = false, boolean $getLastInsID = false, string $sequence = null) static SQL执行
- * @method \think\Paginator paginate(integer $listRows = 15, mixed $simple = null, array $config = []) static 分页查询
+ * @method Paginator paginate(integer $listRows = 15, mixed $simple = null, array $config = []) static 分页查询
  * @method mixed transaction(callable $callback) static 执行数据库事务
  * @method void startTrans() static 启动事务
  * @method void commit() static 用于非自动提交状态下面的查询提交

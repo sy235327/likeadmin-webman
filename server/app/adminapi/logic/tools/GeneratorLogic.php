@@ -19,7 +19,9 @@ use app\common\logic\BaseLogic;
 use app\common\model\tools\GenerateColumn;
 use app\common\model\tools\GenerateTable;
 use app\common\service\generator\GenerateService;
+use Exception;
 use think\facade\Db;
+use think\Model;
 
 
 /**
@@ -74,7 +76,7 @@ class GeneratorLogic extends BaseLogic
             }
             Db::commit();
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Db::rollback();
             self::$error = $e->getMessage();
             return false;
@@ -130,7 +132,7 @@ class GeneratorLogic extends BaseLogic
             }
             Db::commit();
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Db::rollback();
             self::$error = $e->getMessage();
             return false;
@@ -153,7 +155,7 @@ class GeneratorLogic extends BaseLogic
             GenerateColumn::whereIn('table_id', $params['id'])->delete();
             Db::commit();
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Db::rollback();
             self::$error = $e->getMessage();
             return false;
@@ -183,7 +185,7 @@ class GeneratorLogic extends BaseLogic
 
             Db::commit();
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Db::rollback();
             self::$error = $e->getMessage();
             return false;
@@ -227,7 +229,7 @@ class GeneratorLogic extends BaseLogic
 
             return ['file' => $zipFile];
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::$error = $e->getMessage();
             return false;
         }
@@ -251,7 +253,7 @@ class GeneratorLogic extends BaseLogic
 
             return make(GenerateService::class)->preview($table);
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::$error = $e->getMessage();
             return false;
         }
@@ -276,7 +278,7 @@ class GeneratorLogic extends BaseLogic
      * @notes 初始化代码生成数据表信息
      * @param $tableData
      * @param $adminId
-     * @return GenerateTable|\think\Model
+     * @return GenerateTable|Model
      * @author 乔峰
      * @date 2022/6/23 16:28
      */
@@ -312,7 +314,7 @@ class GeneratorLogic extends BaseLogic
      * @notes 初始化代码生成字段信息
      * @param $column
      * @param $tableId
-     * @throws \Exception
+     * @throws Exception
      * @author 乔峰
      * @date 2022/6/23 16:28
      */

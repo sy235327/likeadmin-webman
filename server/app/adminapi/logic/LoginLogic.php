@@ -18,6 +18,9 @@ use app\common\logic\BaseLogic;
 use app\common\model\auth\Admin;
 use app\adminapi\service\AdminTokenService;
 use app\common\service\FileService;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use Webman\Config;
 
 /**
@@ -31,9 +34,9 @@ class LoginLogic extends BaseLogic
      * @notes 管理员账号登录
      * @param $params
      * @return false|mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2021/6/30 17:00
      */
@@ -66,9 +69,9 @@ class LoginLogic extends BaseLogic
      * @notes 退出登录
      * @param $adminInfo
      * @return bool
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2021/7/5 14:34
      */

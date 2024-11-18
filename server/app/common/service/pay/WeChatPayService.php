@@ -22,8 +22,16 @@ use app\common\logic\PayNotifyLogic;
 use app\common\model\recharge\RechargeOrder;
 use app\common\model\user\UserAuth;
 use app\common\service\wechat\WeChatConfigService;
+use EasyWeChat\Kernel\Exceptions\InvalidArgumentException;
+use EasyWeChat\Kernel\Exceptions\InvalidConfigException;
+use EasyWeChat\Kernel\Exceptions\RuntimeException;
 use EasyWeChat\Pay\Application;
 use EasyWeChat\Pay\Message;
+use Exception;
+use Psr\Http\Message\ResponseInterface;
+use ReflectionException;
+use think\Model;
+use Throwable;
 
 
 /**
@@ -35,7 +43,7 @@ class WeChatPayService extends BasePayService
 {
     /**
      * 授权信息
-     * @var UserAuth|array|\think\Model
+     * @var UserAuth|array|Model
      */
     protected $auth;
 
@@ -111,14 +119,14 @@ class WeChatPayService extends BasePayService
                     $result = $this->nativePay($from, $order, $config['app_id']);
                     break;
                 default:
-                    throw new \Exception('支付方式错误');
+                    throw new Exception('支付方式错误');
             }
 
             return [
                 'config' => $result,
                 'pay_way' => PayEnum::WECHAT_PAY
             ];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->setError($e->getMessage());
             return false;
         }
@@ -131,8 +139,8 @@ class WeChatPayService extends BasePayService
      * @param $order
      * @param $appId
      * @return mixed
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     * @throws InvalidArgumentException
+     * @throws InvalidConfigException
      * @author 段誉
      * @date 2023/2/28 12:12
      */
@@ -165,8 +173,8 @@ class WeChatPayService extends BasePayService
      * @param $order
      * @param $appId
      * @return mixed
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     * @throws InvalidArgumentException
+     * @throws InvalidConfigException
      * @author 段誉
      * @date 2023/2/28 12:12
      */
@@ -195,8 +203,8 @@ class WeChatPayService extends BasePayService
      * @param $order
      * @param $appId
      * @return mixed
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     * @throws InvalidArgumentException
+     * @throws InvalidConfigException
      * @author 段誉
      * @date 2023/2/28 12:12
      */
@@ -226,8 +234,8 @@ class WeChatPayService extends BasePayService
      * @param $appId
      * @param $redirectUrl
      * @return mixed
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     * @throws InvalidArgumentException
+     * @throws InvalidConfigException
      * @author 段誉
      * @date 2023/2/28 12:13
      */
@@ -266,8 +274,8 @@ class WeChatPayService extends BasePayService
      * @notes 退款
      * @param array $refundData
      * @return mixed
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     * @throws InvalidArgumentException
+     * @throws InvalidConfigException
      * @author 段誉
      * @date 2023/2/28 16:53
      */
@@ -291,8 +299,8 @@ class WeChatPayService extends BasePayService
     /**
      * @notes 查询退款
      * @param $refundSn
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     * @throws InvalidArgumentException
+     * @throws InvalidConfigException
      * @author 段誉
      * @date 2023/3/1 11:16
      */
@@ -323,14 +331,14 @@ class WeChatPayService extends BasePayService
     /**
      * @notes 捕获错误
      * @param $result
-     * @throws \Exception
+     * @throws Exception
      * @author 段誉
      * @date 2023/2/28 12:09
      */
     public function checkResultFail($result)
     {
         if (!empty($result['code']) || !empty($result['message'])) {
-            throw new \Exception('微信:'. $result['code'] . '-' . $result['message']);
+            throw new Exception('微信:'. $result['code'] . '-' . $result['message']);
         }
     }
 
@@ -340,8 +348,8 @@ class WeChatPayService extends BasePayService
      * @param $prepayId
      * @param $appId
      * @return mixed[]
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     * @throws InvalidArgumentException
+     * @throws InvalidConfigException
      * @author 段誉
      * @date 2023/2/28 17:38
      */
@@ -353,11 +361,11 @@ class WeChatPayService extends BasePayService
 
     /**
      * @notes 支付回调
-     * @return \Psr\Http\Message\ResponseInterface
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
-     * @throws \EasyWeChat\Kernel\Exceptions\RuntimeException
-     * @throws \ReflectionException
-     * @throws \Throwable
+     * @return ResponseInterface
+     * @throws InvalidArgumentException
+     * @throws RuntimeException
+     * @throws ReflectionException
+     * @throws Throwable
      * @author 段誉
      * @date 2023/2/28 14:20
      */

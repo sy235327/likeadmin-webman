@@ -2,6 +2,7 @@
 namespace app\common\service;
 
 use app\common\logic\NoticeLogic;
+use Exception;
 use support\Log;
 
 /**
@@ -15,15 +16,15 @@ class NoticeService
     {
         try {
             if (empty($params['scene_id'])) {
-                throw new \Exception('场景ID不能为空');
+                throw new Exception('场景ID不能为空');
             }
             // 根据不同的场景发送通知
             $result = NoticeLogic::noticeByScene($params);
             if (false === $result) {
-                throw new \Exception(NoticeLogic::getError());
+                throw new Exception(NoticeLogic::getError());
             }
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::info('通知发送失败:'.$e->getMessage());
             return $e->getMessage();
         }

@@ -17,6 +17,10 @@ namespace app\adminapi\logic\dept;
 use app\common\enum\YesNoEnum;
 use app\common\logic\BaseLogic;
 use app\common\model\dept\Jobs;
+use Exception;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 
 /**
@@ -65,7 +69,7 @@ class JobsLogic extends BaseLogic
                 'remark' => $params['remark'] ?? '',
             ]);
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }
@@ -100,9 +104,9 @@ class JobsLogic extends BaseLogic
     /**
      * @notes 岗位数据
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2022/10/13 10:30
      */

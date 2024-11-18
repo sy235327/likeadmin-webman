@@ -29,7 +29,7 @@ class JobsLists extends BaseAdminDataLists implements ListsSearchInterface,Lists
 
     /**
      * @notes 设置搜索条件
-     * @return \string[][]
+     * @return string[][]
      * @author 乔峰
      * @date 2022/5/26 9:46
      */

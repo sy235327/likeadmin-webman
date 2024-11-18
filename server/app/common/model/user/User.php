@@ -7,7 +7,11 @@ namespace app\common\model\user;
 use app\common\enum\user\UserEnum;
 use app\common\model\BaseModel;
 use app\common\service\FileService;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\model\concern\SoftDelete;
+use think\model\relation\HasOne;
 
 /**
  * 用户模型
@@ -23,7 +27,7 @@ class User extends BaseModel
 
     /**
      * @notes 关联用户授权模型
-     * @return \think\model\relation\HasOne
+     * @return HasOne
      * @author 乔峰
      * @date 2022/9/22 16:03
      */
@@ -141,9 +145,9 @@ class User extends BaseModel
      * @param string $prefix
      * @param int $length
      * @return string
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2022/9/16 10:33
      */

@@ -17,7 +17,7 @@ class StorageValidate extends BaseValidate
 
     /**
      * @notes 设置存储引擎参数场景
-     * @return \app\adminapi\validate\setting\StorageValidate
+     * @return StorageValidate
      * @author 乔峰
      * @date 2022/4/20 16:18
      */

@@ -16,6 +16,9 @@ namespace app\api\lists;
 
 use app\common\enum\user\AccountLogEnum;
 use app\common\model\user\UserAccountLog;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 
 /**
@@ -54,9 +57,9 @@ class AccountLogLists extends BaseApiDataLists
     /**
      * @notes 获取列表
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2023/2/24 14:43
      */

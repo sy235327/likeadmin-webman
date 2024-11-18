@@ -19,6 +19,9 @@ use app\common\enum\YesNoEnum;
 use app\common\lists\ListsSearchInterface;
 use app\common\model\article\Article;
 use app\common\model\article\ArticleCollect;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 
 /**
@@ -31,7 +34,7 @@ class ArticleLists extends BaseApiDataLists implements ListsSearchInterface
 
     /**
      * @notes 搜索条件
-     * @return \string[][]
+     * @return string[][]
      * @author 段誉
      * @date 2022/9/16 18:54
      */
@@ -62,9 +65,9 @@ class ArticleLists extends BaseApiDataLists implements ListsSearchInterface
     /**
      * @notes 获取文章列表
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2022/9/16 18:55
      */

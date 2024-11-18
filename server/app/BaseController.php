@@ -5,6 +5,7 @@ declare (strict_types = 1);
 namespace app;
 
 use ReflectionClass;
+use ReflectionException;
 use taoser\exception\ValidateException;
 use taoser\Validate;
 use support\Request;
@@ -61,7 +62,7 @@ abstract class BaseController
      * @param array $message 提示信息
      * @param bool $batch 是否批量验证
      * @throws ValidateException
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     protected function validate(array $data, array|string $validate, array $message = [], bool $batch = false): true|array|string
     {

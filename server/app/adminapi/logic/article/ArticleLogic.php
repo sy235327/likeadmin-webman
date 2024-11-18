@@ -17,6 +17,7 @@ namespace app\adminapi\logic\article;
 use app\common\logic\BaseLogic;
 use app\common\model\article\Article;
 use app\common\service\FileService;
+use Exception;
 
 /**
  * 资讯管理逻辑
@@ -73,7 +74,7 @@ class ArticleLogic extends BaseLogic
                 'content' => $params['content'] ?? '',
             ]);
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }

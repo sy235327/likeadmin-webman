@@ -17,6 +17,9 @@ namespace app\adminapi\lists\finance;
 
 use app\adminapi\lists\BaseAdminDataLists;
 use app\common\model\refund\RefundLog;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 
 /**
@@ -43,9 +46,9 @@ class RefundLogLists extends BaseAdminDataLists
     /**
      * @notes 获取列表
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2023/3/1 9:56
      */

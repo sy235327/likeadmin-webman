@@ -15,7 +15,16 @@ namespace app\common\service\wechat;
 
 
 use EasyWeChat\Kernel\Exceptions\Exception;
+use EasyWeChat\Kernel\Exceptions\HttpException;
+use EasyWeChat\Kernel\Exceptions\InvalidArgumentException;
+use EasyWeChat\Kernel\HttpClient\Response;
 use EasyWeChat\MiniApp\Application;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 
 /**
@@ -59,13 +68,13 @@ class WeChatMnpService
      * @param string $code
      * @return array
      * @throws Exception
-     * @throws \EasyWeChat\Kernel\Exceptions\HttpException
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
-     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
+     * @throws HttpException
+     * @throws InvalidArgumentException
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
      * @author 段誉
      * @date 2023/2/27 11:03
      */
@@ -85,8 +94,8 @@ class WeChatMnpService
     /**
      * @notes 获取手机号
      * @param string $code
-     * @return \EasyWeChat\Kernel\HttpClient\Response|\Symfony\Contracts\HttpClient\ResponseInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
+     * @return Response|ResponseInterface
+     * @throws TransportExceptionInterface
      * @author 段誉
      * @date 2023/2/27 11:46
      */

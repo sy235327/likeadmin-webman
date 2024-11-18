@@ -5,6 +5,7 @@ namespace app\common\model\tools;
 
 use app\common\enum\GeneratorEnum;
 use app\common\model\BaseModel;
+use think\model\relation\HasMany;
 
 
 /**
@@ -21,7 +22,7 @@ class GenerateTable extends BaseModel
 
     /**
      * @notes 关联数据表字段
-     * @return \think\model\relation\HasMany
+     * @return HasMany
      * @author bingo
      * @date 2022/6/15 10:46
      */

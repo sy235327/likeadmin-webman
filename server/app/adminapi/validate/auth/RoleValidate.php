@@ -17,6 +17,9 @@ namespace app\adminapi\validate\auth;
 
 use app\common\validate\BaseValidate;
 use app\common\model\auth\{AdminRole, SystemRole, Admin};
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * 角色验证器
@@ -80,9 +83,9 @@ class RoleValidate extends BaseValidate
      * @param $rule
      * @param $data
      * @return bool|string
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2021/12/29 15:48
      */
@@ -102,9 +105,9 @@ class RoleValidate extends BaseValidate
      * @param $rule
      * @param $data
      * @return bool|string
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2021/12/29 15:49
      */

@@ -35,6 +35,7 @@ use app\common\enum\YesNoEnum;
 use app\common\model\Notice;
 use app\common\model\notice\SmsLog;
 use app\common\service\ConfigService;
+use Exception;
 
 /**
  * 短信驱动
@@ -82,26 +83,26 @@ class SmsDriver
         try {
             $defaultEngine = ConfigService::get('sms', 'engine', false);
             if($defaultEngine === false) {
-                throw new \Exception('请开启短信配置');
+                throw new Exception('请开启短信配置');
             }
             $this->defaultEngine = $defaultEngine;
             $classSpace = __NAMESPACE__ . '\\engine\\' . ucfirst(strtolower($defaultEngine)) . 'Sms';
             if (!class_exists($classSpace)) {
-                throw new \Exception('没有相应的短信驱动类');
+                throw new Exception('没有相应的短信驱动类');
             }
             $engineConfig = ConfigService::get('sms', strtolower($defaultEngine), false);
             if($engineConfig === false) {
-                throw new \Exception($defaultEngine . '未配置');
+                throw new Exception($defaultEngine . '未配置');
             }
             if ($engineConfig['status'] != 1) {
-                throw new \Exception('短信服务未开启');
+                throw new Exception('短信服务未开启');
             }
             $this->engine = new $classSpace($engineConfig);
             if(!is_null($this->engine->getError())) {
-                throw new \Exception($this->engine->getError());
+                throw new Exception($this->engine->getError());
             }
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->error = $e->getMessage();
             return false;
         }
@@ -140,10 +141,10 @@ class SmsDriver
                 ->setTemplateParams($data['params'])
                 ->send();
             if(false === $result) {
-                throw new \Exception($this->engine->getError());
+                throw new Exception($this->engine->getError());
             }
             return $result;
-        } catch(\Exception $e) {
+        } catch(Exception $e) {
             $this->error = $e->getMessage();
             return false;
         }
@@ -153,7 +154,7 @@ class SmsDriver
     /**
      * @notes 发送频率限制
      * @param $mobile
-     * @throws \Exception
+     * @throws Exception
      * @author 段誉
      * @date 2022/9/15 16:29
      */
@@ -168,7 +169,7 @@ class SmsDriver
             ->findOrEmpty()
             ->toArray();
         if(!empty($smsLog) && ($smsLog['send_time'] > time() - 60)) {
-            throw new \Exception('同一手机号1分钟只能发送1条短信');
+            throw new Exception('同一手机号1分钟只能发送1条短信');
         }
     }
 

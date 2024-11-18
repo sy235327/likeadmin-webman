@@ -16,6 +16,9 @@ namespace app\api\service;
 
 
 use app\common\enum\YesNoEnum;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use app\common\model\user\{User, UserAuth};
 use app\common\enum\user\UserTerminalEnum;
 use app\common\service\{ConfigService, storage\Driver as StorageDriver};
@@ -197,9 +200,9 @@ class WechatUserService
 
     /**
      * @notes 获取token
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author cjhao
      * @date 2021/8/2 16:45
      */

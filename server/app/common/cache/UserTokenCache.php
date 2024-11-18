@@ -17,6 +17,10 @@ namespace app\common\cache;
 
 use app\common\model\user\User;
 use app\common\model\user\UserSession;
+use DateTime;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 class UserTokenCache extends BaseCache
 {
@@ -28,9 +32,9 @@ class UserTokenCache extends BaseCache
      * @notes 通过token获取缓存用户信息
      * @param $token
      * @return array|false|mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2022/9/16 10:11
      */
@@ -56,9 +60,9 @@ class UserTokenCache extends BaseCache
      * @notes 通过有效token设置用户信息缓存
      * @param $token
      * @return array|false|mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2022/9/16 10:11
      */
@@ -83,7 +87,7 @@ class UserTokenCache extends BaseCache
             'expire_time' => $userSession->expire_time,
         ];
 
-        $ttl = new \DateTime(Date('Y-m-d H:i:s', $userSession->expire_time));
+        $ttl = new DateTime(Date('Y-m-d H:i:s', $userSession->expire_time));
         $this->set($this->prefix . $token, $userInfo, $ttl);
         return $this->getUserInfo($token);
     }

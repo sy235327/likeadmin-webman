@@ -6,6 +6,9 @@ namespace app\adminapi\validate\user;
 
 use app\common\model\user\User;
 use app\common\validate\BaseValidate;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 class UserValidate extends BaseValidate
 {
@@ -24,7 +27,7 @@ class UserValidate extends BaseValidate
 
     /**
      * @notes 详情场景
-     * @return \app\adminapi\validate\user\UserValidate
+     * @return UserValidate
      * @author 乔峰
      * @date 2022/9/22 16:35
      */
@@ -40,9 +43,9 @@ class UserValidate extends BaseValidate
      * @param $rule
      * @param $data
      * @return bool|string
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2022/9/22 17:03
      */

@@ -15,6 +15,7 @@ use app\common\service\generator\core\VueEditGenerator;
 use app\common\service\generator\core\VueIndexGenerator;
 use support\Request;
 use Webman\App;
+use ZipArchive;
 
 
 /**
@@ -171,8 +172,8 @@ class GenerateService
         $fileName = 'curd-' . date('YmdHis') . '.zip';
         $this->zipTempName = $fileName;
         $this->zipTempPath = $this->generatePath . $fileName;
-        $zip = new \ZipArchive();
-        $zip->open($this->zipTempPath, \ZipArchive::CREATE);
+        $zip = new ZipArchive();
+        $zip->open($this->zipTempPath, ZipArchive::CREATE);
         $this->addFileZip($this->runtimePath, 'generate', $zip);
         $zip->close();
     }

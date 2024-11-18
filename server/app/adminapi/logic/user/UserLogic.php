@@ -18,6 +18,7 @@ use app\common\enum\user\UserTerminalEnum;
 use app\common\logic\AccountLogLogic;
 use app\common\logic\BaseLogic;
 use app\common\model\user\User;
+use Exception;
 use think\facade\Db;
 
 /**
@@ -110,7 +111,7 @@ class UserLogic extends BaseLogic
             Db::commit();
             return true;
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Db::rollback();
             return $e->getMessage();
         }

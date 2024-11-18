@@ -5,6 +5,7 @@ namespace app\adminapi\listener;
 
 
 use ReflectionClass;
+use ReflectionException;
 use support\Log;
 use Webman\Http\Request;
 use think\Exception;
@@ -17,7 +18,7 @@ class OperationLog
      * @param Request $request
      * @param Response $response
      * @return bool
-     * @throws \ReflectionException
+     * @throws ReflectionException
      * @author bingo
      * @date 2022/4/8 17:09
      */

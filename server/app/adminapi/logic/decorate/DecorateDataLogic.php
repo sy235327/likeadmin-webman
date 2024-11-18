@@ -15,6 +15,9 @@ namespace app\adminapi\logic\decorate;
 
 use app\common\logic\BaseLogic;
 use app\common\model\article\Article;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 
 /**
@@ -29,9 +32,9 @@ class DecorateDataLogic extends BaseLogic
      * @notes 获取文章列表
      * @param $limit
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2022/9/22 16:49
      */

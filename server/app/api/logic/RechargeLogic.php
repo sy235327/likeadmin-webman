@@ -19,6 +19,7 @@ use app\common\logic\BaseLogic;
 use app\common\model\recharge\RechargeOrder;
 use app\common\model\user\User;
 use app\common\service\ConfigService;
+use Exception;
 
 
 /**
@@ -52,7 +53,7 @@ class RechargeLogic extends BaseLogic
                 'order_id' => (int)$order['id'],
                 'from' => 'recharge'
             ];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }

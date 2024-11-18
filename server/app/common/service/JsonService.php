@@ -71,7 +71,7 @@ class JsonService
     private static function result(int $code, int $show, string $msg = 'OK', array $data = [], int $httpStatus = 200,...$options): Response
     {
         $result = compact('code', 'show', 'msg', 'data');
-        return json($result, $httpStatus,...$options);
+        return response(json_encode($result,...$options),$httpStatus,['Content-Type' => 'application/json; charset=utf-8']);
     }
 
     /**

@@ -6,7 +6,7 @@
 {USE}
 use app\common\lists\ListsSearchInterface;
 use app\common\lists\ListsExcelInterface;
-
+use think\db\Query;
 
 /**
  * {CLASS_COMMENT}
@@ -32,16 +32,16 @@ class {UPPER_CAMEL_NAME}Lists extends {EXTENDS_LISTS} implements ListsSearchInte
      * 设置别名
      * @return {UPPER_CAMEL_NAME}
      */
-    public function getModel(){
+    public function getModel():{UPPER_CAMEL_NAME}|Query{
         return {UPPER_CAMEL_NAME}::whereRaw('1=1');
     }
 
     /**
      * @notes 获取{NOTES}列表
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws think\db\exception\DataNotFoundException
+     * @throws think\db\exception\DbException
+     * @throws think\db\exception\ModelNotFoundException
      * @author bingo
      * @date {DATE}
      */

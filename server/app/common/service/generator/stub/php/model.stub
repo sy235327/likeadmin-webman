@@ -4,6 +4,8 @@
 
 
 use app\common\model\BaseModel;
+use think\model\relation\HasMany;
+use think\model\relation\HasOne;
 {USE}
 
 

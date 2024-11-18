@@ -35,7 +35,7 @@ class ArticleCate extends BaseModel
      * @author 段誉
      * @date 2022/10/19 16:59
      */
-    public function article()
+    public function article(): \think\model\relation\HasMany
     {
         return $this->hasMany(Article::class, 'cid', 'id');
     }

@@ -7,7 +7,7 @@ namespace app;
 use ReflectionClass;
 use taoser\exception\ValidateException;
 use taoser\Validate;
-use \support\Request;
+use support\Request;
 /**
  * 控制器基础类
  */
@@ -22,6 +22,10 @@ abstract class BaseController
      * 是否批量验证
      */
     protected bool $batchValidate = false;
+    /**
+     * 自定义中间件
+     */
+    protected array $middleware = [];
 
     /**
      * 构造方法

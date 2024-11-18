@@ -24,7 +24,7 @@ class AdminSession extends BaseModel
      * @author 令狐冲
      * @date 2021/7/5 14:39
      */
-    public function admin()
+    public function admin(): \think\model\relation\HasOne
     {
         return $this->hasOne(Admin::class, 'id', 'admin_id')
             ->field('id,multipoint_login');

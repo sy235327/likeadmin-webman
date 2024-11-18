@@ -5,7 +5,7 @@
 
 
 {USE}
-
+use support\Response;
 
 /**
  * {CLASS_COMMENT}
@@ -22,11 +22,11 @@ class {UPPER_CAMEL_NAME}Controller extends {EXTENDS_CONTROLLER}
     }
     /**
      * @notes 获取{NOTES}列表
-     * @return \support\Response
+     * @return Response
      * @author bingo
      * @date {DATE}
      */
-    public function lists()
+    public function lists(): Response
     {
         return $this->dataLists(new {UPPER_CAMEL_NAME}Lists());
     }
@@ -34,11 +34,11 @@ class {UPPER_CAMEL_NAME}Controller extends {EXTENDS_CONTROLLER}
 
     /**
      * @notes 添加{NOTES}
-     * @return \support\Response
+     * @return Response
      * @author bingo
      * @date {DATE}
      */
-    public function add()
+    public function add(): Response
     {
         $params = $this->validateObj->post()->goCheck('add');
         $result = {UPPER_CAMEL_NAME}Logic::add($params);
@@ -51,11 +51,11 @@ class {UPPER_CAMEL_NAME}Controller extends {EXTENDS_CONTROLLER}
 
     /**
      * @notes 编辑{NOTES}
-     * @return \support\Response
+     * @return Response
      * @author bingo
      * @date {DATE}
      */
-    public function edit()
+    public function edit(): Response
     {
         $params = $this->validateObj->post()->goCheck('edit');
         $result = {UPPER_CAMEL_NAME}Logic::edit($params);
@@ -68,11 +68,11 @@ class {UPPER_CAMEL_NAME}Controller extends {EXTENDS_CONTROLLER}
 
     /**
      * @notes 删除{NOTES}
-     * @return \support\Response
+     * @return Response
      * @author bingo
      * @date {DATE}
      */
-    public function delete()
+    public function delete(): Response
     {
         $params = $this->validateObj->post()->goCheck('delete');
         {UPPER_CAMEL_NAME}Logic::delete($params);
@@ -82,11 +82,11 @@ class {UPPER_CAMEL_NAME}Controller extends {EXTENDS_CONTROLLER}
 
     /**
      * @notes 获取{NOTES}详情
-     * @return \support\Response
+     * @return Response
      * @author bingo
      * @date {DATE}
      */
-    public function detail()
+    public function detail(): Response
     {
         $params = $this->validateObj->goCheck('detail');
         $result = {UPPER_CAMEL_NAME}Logic::detail($params);

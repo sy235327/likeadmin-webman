@@ -17,7 +17,7 @@ trait ListsSortTrait
      * @author 令狐冲
      * @date 2021/7/16 00:06
      */
-    private function createOrder($sortField, $defaultOrder)
+    private function createOrder($sortField, $defaultOrder): array
     {
         if (empty($sortField) || empty($this->orderBy) || empty($this->field) || !in_array($this->field, array_keys($sortField))) {
             return $defaultOrder;

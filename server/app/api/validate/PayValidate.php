@@ -46,7 +46,7 @@ class PayValidate extends BaseValidate
      * @author 段誉
      * @date 2023/2/24 17:43
      */
-    public function scenePayway()
+    public function scenePayway(): PayValidate
     {
         return $this->only(['from', 'order_id']);
     }
@@ -58,7 +58,7 @@ class PayValidate extends BaseValidate
      * @author 段誉
      * @date 2023/3/1 16:17
      */
-    public function sceneStatus()
+    public function sceneStatus(): PayValidate
     {
         return $this->only(['from', 'order_id']);
     }

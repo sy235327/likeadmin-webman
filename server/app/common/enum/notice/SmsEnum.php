@@ -36,12 +36,12 @@ class SmsEnum
 
     /**
      * @notes 获取短信平台名称
-     * @param $value
+     * @param string $value
      * @return string
      * @author 段誉
      * @date 2022/8/5 11:10
      */
-    public static function getNameDesc($value)
+    public static function getNameDesc(string $value): string
     {
         $desc = [
             'ALI' => '阿里云短信',

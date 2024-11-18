@@ -37,7 +37,7 @@ class RechargeLogic extends BaseLogic
      * @author 段誉
      * @date 2023/2/24 10:43
      */
-    public static function recharge(array $params)
+    public static function recharge(array $params): false|array
     {
         try {
             $data = [
@@ -67,7 +67,7 @@ class RechargeLogic extends BaseLogic
      * @author 段誉
      * @date 2023/2/24 16:56
      */
-    public static function config($userId)
+    public static function config($userId): array
     {
         $userMoney = User::where(['id' => $userId])->value('user_money');
         $minAmount = ConfigService::get('recharge', 'min_amount', 0);

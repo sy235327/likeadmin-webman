@@ -73,7 +73,7 @@ class MenuLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/6/30 10:06
      */
-    public static function add(array $params)
+    public static function add(array $params): SystemMenu|Model
     {
         return SystemMenu::create([
             'pid' => $params['pid'],

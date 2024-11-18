@@ -8,7 +8,7 @@ use Throwable;
 
 class HttpException extends RuntimeException
 {
-    protected $response = null;
+    protected ?\support\Response $response = null;
 
     public function __construct($message = "", $code = 0, $header=[],Throwable $previous = null)
     {
@@ -17,7 +17,8 @@ class HttpException extends RuntimeException
         parent::__construct($message, $code, $previous);
     }
 
-    public function getResponse(){
+    public function getResponse(): ?\support\Response
+    {
         return $this->response;
     }
 }

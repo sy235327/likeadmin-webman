@@ -18,7 +18,7 @@ use support\Log;
 class PayNotifyLogic extends BaseLogic
 {
 
-    public static function handle($action, $orderSn, $extra = [])
+    public static function handle($action, $orderSn, $extra = []): true|string
     {
         Db::startTrans();
         try {
@@ -47,7 +47,7 @@ class PayNotifyLogic extends BaseLogic
      * @author bingo
      * @date 2023/2/27 15:28
      */
-    public static function recharge($orderSn, $extra = [])
+    public static function recharge($orderSn, $extra = []): void
     {
         $order = RechargeOrder::where('sn', $orderSn)->findOrEmpty();
         // 增加用户累计充值金额及用户余额

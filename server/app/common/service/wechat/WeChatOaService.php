@@ -38,9 +38,9 @@ use Throwable;
 class WeChatOaService
 {
 
-    protected $app;
+    protected Application $app;
 
-    protected $config;
+    protected array $config;
 
 
     public function __construct()
@@ -59,7 +59,7 @@ class WeChatOaService
      * @author 段誉
      * @date 2023/2/27 14:22
      */
-    public function getServer()
+    public function getServer(): Server|\EasyWeChat\Kernel\Contracts\Server
     {
         return $this->app->getServer();
     }
@@ -72,7 +72,7 @@ class WeChatOaService
      * @author 段誉
      * @date 2023/2/27 12:03
      */
-    protected function getConfig()
+    protected function getConfig(): array
     {
         $config = WeChatConfigService::getOaConfig();
         if (empty($config['app_id']) || empty($config['secret'])) {
@@ -91,7 +91,7 @@ class WeChatOaService
      * @author 段誉
      * @date 2023/2/27 11:04
      */
-    public function getOaResByCode(string $code)
+    public function getOaResByCode(string $code): mixed
     {
         $response = $this->app->getOAuth()
             ->scopes(['snsapi_userinfo'])
@@ -114,7 +114,7 @@ class WeChatOaService
      * @author 段誉
      * @date 2023/2/27 10:35
      */
-    public function getCodeUrl(string $url)
+    public function getCodeUrl(string $url): mixed
     {
         return $this->app->getOAuth()
             ->scopes(['snsapi_userinfo'])
@@ -131,7 +131,7 @@ class WeChatOaService
      * @author 段誉
      * @date 2023/2/27 12:07
      */
-    public function createMenu(array $buttons, array $matchRule = [])
+    public function createMenu(array $buttons, array $matchRule = []): ResponseInterface|Response
     {
         if (!empty($matchRule)) {
             return $this->app->getClient()->postJson('cgi-bin/menu/addconditional', [
@@ -161,7 +161,7 @@ class WeChatOaService
      * @author 段誉
      * @date 2023/3/1 11:46
      */
-    public function getJsConfig($url, $jsApiList, $openTagList = [], $debug = false)
+    public function getJsConfig($url, $jsApiList, $openTagList = [], $debug = false): array
     {
         return $this->app->getUtils()->buildJsSdkConfig($url, $jsApiList, $openTagList, $debug);
     }

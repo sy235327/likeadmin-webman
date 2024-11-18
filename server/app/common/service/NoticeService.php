@@ -12,7 +12,7 @@ use support\Log;
  */
 class NoticeService
 {
-    public function handle($params)
+    public function handle($params): true|string
     {
         try {
             if (empty($params['scene_id'])) {

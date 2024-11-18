@@ -52,7 +52,7 @@ class ArticleLists extends BaseApiDataLists implements ListsSearchInterface
      * @author 段誉
      * @date 2022/10/25 16:53
      */
-    public function queryWhere()
+    public function queryWhere(): array
     {
         $where[] = ['is_show', '=', 1];
         if (!empty($this->params['keyword'])) {

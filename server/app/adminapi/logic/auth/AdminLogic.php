@@ -42,10 +42,11 @@ class AdminLogic extends BaseLogic
     /**
      * @notes 添加管理员
      * @param array $params
+     * @return bool
      * @author 乔峰
      * @date 2021/12/29 10:23
      */
-    public static function add(array $params)
+    public static function add(array $params): bool
     {
         Db::startTrans();
         try {

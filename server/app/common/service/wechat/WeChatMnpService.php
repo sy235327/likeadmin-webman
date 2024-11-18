@@ -35,9 +35,9 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 class WeChatMnpService
 {
 
-    protected $app;
+    protected Application $app;
 
-    protected $config;
+    protected array $config;
 
     public function __construct()
     {
@@ -53,7 +53,7 @@ class WeChatMnpService
      * @author 段誉
      * @date 2023/2/27 12:03
      */
-    protected function getConfig()
+    protected function getConfig(): array
     {
         $config = WeChatConfigService::getMnpConfig();
         if (empty($config['app_id']) || empty($config['secret'])) {
@@ -78,7 +78,7 @@ class WeChatMnpService
      * @author 段誉
      * @date 2023/2/27 11:03
      */
-    public function getMnpResByCode(string $code)
+    public function getMnpResByCode(string $code): array
     {
         $utils = $this->app->getUtils();
         $response = $utils->codeToSession($code);
@@ -99,7 +99,7 @@ class WeChatMnpService
      * @author 段誉
      * @date 2023/2/27 11:46
      */
-    public function getUserPhoneNumber(string $code)
+    public function getUserPhoneNumber(string $code): ResponseInterface|Response
     {
         return $this->app->getClient()->postJson('wxa/business/getuserphonenumber', [
             'code' => $code,

@@ -27,19 +27,19 @@ class GenerateService
 {
 
     // 标记
-    protected $flag;
+    protected string|null $flag;
 
     // 生成文件路径
-    protected $generatePath;
+    protected string $generatePath;
 
     // runtime目录
-    protected $runtimePath;
+    protected string $runtimePath;
 
     // 压缩包名称
-    protected $zipTempName;
+    protected string $zipTempName;
 
     // 压缩包临时路径
-    protected $zipTempPath;
+    protected string $zipTempPath;
 
     public function __construct()
     {

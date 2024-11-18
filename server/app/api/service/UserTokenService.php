@@ -27,8 +27,8 @@ class UserTokenService
 
     /**
      * @notes 设置或更新用户token
-     * @param $userId
-     * @param $terminal
+     * @param int $userId
+     * @param int $terminal
      * @return array|false|mixed
      * @throws DataNotFoundException
      * @throws DbException
@@ -36,7 +36,7 @@ class UserTokenService
      * @author 段誉
      * @date 2022/9/16 10:10
      */
-    public static function setToken($userId, $terminal)
+    public static function setToken(int $userId,int $terminal): mixed
     {
         $time = time();
         $userSession = UserSession::where([['user_id', '=', $userId], ['terminal', '=', $terminal]])->find();
@@ -70,7 +70,7 @@ class UserTokenService
 
     /**
      * @notes 延长token过期时间
-     * @param $token
+     * @param string $token
      * @return array|false|mixed
      * @throws DataNotFoundException
      * @throws DbException
@@ -78,7 +78,7 @@ class UserTokenService
      * @author 段誉
      * @date 2022/9/16 10:10
      */
-    public static function overtimeToken($token)
+    public static function overtimeToken(string $token): mixed
     {
         $time = time();
         $adminSession = UserSession::where('token', '=', $token)->find();
@@ -93,7 +93,7 @@ class UserTokenService
 
     /**
      * @notes 设置token为过期
-     * @param $token
+     * @param string $token
      * @return bool
      * @throws DataNotFoundException
      * @throws DbException
@@ -101,7 +101,7 @@ class UserTokenService
      * @author 段誉
      * @date 2022/9/16 10:10
      */
-    public static function expireToken($token)
+    public static function expireToken(string $token): bool
     {
         $userSession = UserSession::where('token', '=', $token)
             ->find();

@@ -45,7 +45,7 @@ class PcLogic extends BaseLogic
      * @author 段誉
      * @date 2022/9/21 19:15
      */
-    public static function getIndexData()
+    public static function getIndexData(): array
     {
         // 装修配置
         $decoratePage = DecoratePage::findOrEmpty(4);

@@ -35,7 +35,7 @@ class WechatLogic extends BaseLogic
      * @author 段誉
      * @date 2023/3/1 11:49
      */
-    public static function jsConfig($params)
+    public static function jsConfig($params): array|false
     {
         try {
             $url = urldecode($params['url']);

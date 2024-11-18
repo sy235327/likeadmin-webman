@@ -55,7 +55,7 @@ class AllowMiddleware implements MiddlewareInterface
                 }));
                 $fiber->start();
             }catch (Exception|Throwable $e){
-                Log::error('请求日志记录失败:'.$e->getMessage());
+//                Log::error('请求日志记录失败:'.$e->getMessage());
             }
         }
 

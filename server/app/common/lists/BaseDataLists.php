@@ -30,8 +30,8 @@ abstract class BaseDataLists implements ListsInterface
     protected string $orderBy;
     protected string $field;
 
-    protected int $startTime;
-    protected int $endTime;
+    protected int|null $startTime = null;
+    protected int|null $endTime = null;
 
     protected string|null $start;
     protected string|null $end;
@@ -70,7 +70,7 @@ abstract class BaseDataLists implements ListsInterface
      * @author 令狐冲
      * @date 2021/7/30 23:55
      */
-    private function initPage()
+    private function initPage(): void
     {
         $this->pageSizeMax = Config::get('project.lists.page_size_max');
         $this->pageSize = Config::get('project.lists.page_size');
@@ -97,7 +97,7 @@ abstract class BaseDataLists implements ListsInterface
      * @author 令狐冲
      * @date 2021/7/31 00:00
      */
-    private function initSearch()
+    private function initSearch(): array
     {
         if (!($this instanceof ListsSearchInterface)) {
             return [];
@@ -123,7 +123,7 @@ abstract class BaseDataLists implements ListsInterface
      * @author 令狐冲
      * @date 2021/7/31 00:03
      */
-    private function initSort()
+    private function initSort(): array
     {
         if (!($this instanceof ListsSortInterface)) {
             return [];
@@ -141,7 +141,7 @@ abstract class BaseDataLists implements ListsInterface
      * @author 令狐冲
      * @date 2021/7/31 01:15
      */
-    private function initExport()
+    private function initExport(): Response|false
     {
         $this->export = $this->request->get('export', 0);
 

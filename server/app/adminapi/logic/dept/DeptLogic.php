@@ -112,7 +112,7 @@ class DeptLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/5/25 18:20
      */
-    public static function add(array $params)
+    public static function add(array $params): void
     {
         Dept::create([
             'pid' => $params['pid'],

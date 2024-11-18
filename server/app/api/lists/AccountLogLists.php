@@ -35,7 +35,7 @@ class AccountLogLists extends BaseApiDataLists
      * @author 段誉
      * @date 2023/2/24 14:43
      */
-    public function queryWhere()
+    public function queryWhere(): array
     {
         // 指定用户
         $where[] = ['user_id', '=', $this->userId];

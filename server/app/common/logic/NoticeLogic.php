@@ -39,7 +39,7 @@ class NoticeLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/9/15 15:28
      */
-    public static function noticeByScene($params)
+    public static function noticeByScene($params): bool
     {
         try {
             $noticeSetting = NoticeSetting::where('scene_id', $params['scene_id'])->findOrEmpty()->toArray();
@@ -71,7 +71,7 @@ class NoticeLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/9/15 15:28
      */
-    public static function mergeParams($params)
+    public static function mergeParams($params): array
     {
         // 用户相关
         if (!empty($params['params']['user_id'])) {
@@ -99,7 +99,7 @@ class NoticeLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/9/15 15:29
      */
-    public static function getPathByScene($sceneId, $extraId)
+    public static function getPathByScene($sceneId, $extraId): array
     {
         // 小程序主页路径
         $page = '/pages/index/index';
@@ -120,7 +120,7 @@ class NoticeLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/9/15 15:29
      */
-    public static function contentFormat($content, $params)
+    public static function contentFormat($content, $params): mixed
     {
         foreach ($params['params'] as $k => $v) {
             $search = '{' . $k . '}';
@@ -141,7 +141,7 @@ class NoticeLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/9/15 15:29
      */
-    public static function addNotice($params, $noticeSetting, $sendType, $content, $extra = '')
+    public static function addNotice($params, $noticeSetting, $sendType, $content, $extra = ''): NoticeRecord|Model
     {
         return NoticeRecord::create([
             'user_id' => $params['params']['user_id'] ?? 0,
@@ -165,7 +165,7 @@ class NoticeLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/9/15 15:30
      */
-    public static function getTitleByScene($sendType, $noticeSetting)
+    public static function getTitleByScene($sendType, $noticeSetting): string
     {
         switch ($sendType) {
             case NoticeEnum::SMS:

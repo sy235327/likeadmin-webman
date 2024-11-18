@@ -48,19 +48,19 @@ class SmsDriver
      * 错误信息
      * @var
      */
-    protected $error = null;
+    protected string|null $error = null;
 
     /**
      * 默认短信引擎
      * @var
      */
-    protected $defaultEngine;
+    protected mixed $defaultEngine;
 
     /**
      * 短信引擎
      * @var
      */
-    protected $engine;
+    protected mixed $engine;
 
     /**
      * 架构方法
@@ -115,7 +115,7 @@ class SmsDriver
      * @author 段誉
      * @date 2022/9/15 16:29
      */
-    public function getError()
+    public function getError(): string|null
     {
         return $this->error;
     }
@@ -129,7 +129,7 @@ class SmsDriver
      * @author 段誉
      * @date 2022/9/15 16:29
      */
-    public function send($mobile, $data)
+    public function send($mobile, $data): mixed
     {
         try {
             // 发送频率限制
@@ -158,7 +158,7 @@ class SmsDriver
      * @author 段誉
      * @date 2022/9/15 16:29
      */
-    public function sendLimit($mobile)
+    public function sendLimit($mobile): void
     {
         $smsLog = SmsLog::where([
             ['mobile', '=', $mobile],
@@ -182,7 +182,7 @@ class SmsDriver
      * @author 段誉
      * @date 2022/9/15 16:29
      */
-    public function verify($mobile, $code, $sceneId = 0)
+    public function verify($mobile, $code, $sceneId = 0): bool
     {
         $where = [
             ['mobile', '=', $mobile],

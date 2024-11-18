@@ -37,7 +37,7 @@ class GenerateTableValidate extends BaseValidate
      * @author bingo
      * @date 2022/6/15 18:58
      */
-    public function sceneSelect()
+    public function sceneSelect(): GenerateTableValidate
     {
         return $this->only(['table']);
     }
@@ -49,7 +49,7 @@ class GenerateTableValidate extends BaseValidate
      * @author bingo
      * @date 2022/6/15 18:58
      */
-    public function sceneId()
+    public function sceneId(): GenerateTableValidate
     {
         return $this->only(['id']);
     }
@@ -61,7 +61,7 @@ class GenerateTableValidate extends BaseValidate
      * @author bingo
      * @date 2022/6/24 10:02
      */
-    public function sceneDownload()
+    public function sceneDownload(): GenerateTableValidate
     {
         return $this->only(['file']);
     }
@@ -76,7 +76,7 @@ class GenerateTableValidate extends BaseValidate
      * @author bingo
      * @date 2022/6/15 18:58
      */
-    protected function checkTable($value, $rule, $data)
+    protected function checkTable($value, $rule, $data): bool|string
     {
         foreach ($value as $item) {
             if (!isset($item['name']) || !isset($item['comment'])) {
@@ -100,7 +100,7 @@ class GenerateTableValidate extends BaseValidate
      * @author bingo
      * @date 2022/6/15 18:58
      */
-    protected function checkTableData($value, $rule, $data)
+    protected function checkTableData($value, $rule, $data): bool|string
     {
         if (!is_array($value)) {
             $value = [$value];

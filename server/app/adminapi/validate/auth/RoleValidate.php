@@ -48,7 +48,7 @@ class RoleValidate extends BaseValidate
      * @author 乔峰
      * @date 2021/12/29 15:47
      */
-    public function sceneAdd()
+    public function sceneAdd(): RoleValidate
     {
         return $this->only(['name', 'menu_id']);
     }
@@ -59,7 +59,7 @@ class RoleValidate extends BaseValidate
      * @author 乔峰
      * @date 2021/12/29 15:47
      */
-    public function sceneDetail()
+    public function sceneDetail(): RoleValidate
     {
         return $this->only(['id']);
     }
@@ -70,7 +70,7 @@ class RoleValidate extends BaseValidate
      * @author 乔峰
      * @date 2021/12/29 15:48
      */
-    public function sceneDel()
+    public function sceneDel(): RoleValidate
     {
         return $this->only(['id'])
             ->append('id', 'checkAdmin');
@@ -89,7 +89,7 @@ class RoleValidate extends BaseValidate
      * @author 乔峰
      * @date 2021/12/29 15:48
      */
-    public function checkRole($value, $rule, $data)
+    public function checkRole($value, $rule, $data): bool|string
     {
         if (!SystemRole::find($value)) {
             return '角色不存在';
@@ -111,7 +111,7 @@ class RoleValidate extends BaseValidate
      * @author 乔峰
      * @date 2021/12/29 15:49
      */
-    public function checkAdmin($value, $rule, $data)
+    public function checkAdmin($value, $rule, $data): bool|string
     {
         if (AdminRole::where('role_id',$value)->find()){
             return '有管理员在使用该角色，不允许删除';

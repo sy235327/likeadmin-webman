@@ -25,7 +25,7 @@ use think\db\exception\ModelNotFoundException;
 class UserTokenCache extends BaseCache
 {
 
-    private $prefix = 'token_user_';
+    private string $prefix = 'token_user_';
 
 
     /**
@@ -38,7 +38,7 @@ class UserTokenCache extends BaseCache
      * @author 段誉
      * @date 2022/9/16 10:11
      */
-    public function getUserInfo($token)
+    public function getUserInfo($token): mixed
     {
         //直接从缓存获取
         $userInfo = $this->get($this->prefix . $token);
@@ -66,7 +66,7 @@ class UserTokenCache extends BaseCache
      * @author 段誉
      * @date 2022/9/16 10:11
      */
-    public function setUserInfo($token)
+    public function setUserInfo($token): mixed
     {
         $userSession = UserSession::where([['token', '=', $token], ['expire_time', '>', time()]])->find();
         if (empty($userSession)) {
@@ -100,7 +100,7 @@ class UserTokenCache extends BaseCache
      * @author 段誉
      * @date 2022/9/16 10:13
      */
-    public function deleteUserInfo($token)
+    public function deleteUserInfo($token): bool
     {
         return $this->delete($this->prefix . $token);
     }

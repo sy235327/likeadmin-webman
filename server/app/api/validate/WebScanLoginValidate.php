@@ -45,7 +45,7 @@ class WebScanLoginValidate extends BaseValidate
      * @author 段誉
      * @date 2022/10/21 9:47
      */
-    protected function checkState($value, $rule, $data)
+    protected function checkState($value, $rule, $data): bool|string
     {
         $check = (new WebScanLoginCache())->getScanLoginState($value);
 

@@ -39,7 +39,7 @@ class DictTypeLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/6/20 16:08
      */
-    public static function add(array $params)
+    public static function add(array $params): DictType|Model
     {
         return DictType::create([
             'name' => $params['name'],

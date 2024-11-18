@@ -33,7 +33,7 @@ class ArticleLogic extends BaseLogic
      * @author heshihu
      * @date 2022/2/22 9:57
      */
-    public static function add(array $params)
+    public static function add(array $params): void
     {
         Article::create([
             'title' => $params['title'],

@@ -39,7 +39,7 @@ class LoginValidate extends BaseValidate
      * @author 乔峰
      * @date 2021/7/2 14:00
      */
-    public function password($password, $other, $data)
+    public function password($password, $other, $data): bool|string
     {
         // 登录限制
         $config = [

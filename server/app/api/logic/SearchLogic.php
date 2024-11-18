@@ -39,7 +39,7 @@ class SearchLogic extends BaseLogic
      * @author 段誉
      * @date 2022/9/23 14:34
      */
-    public static function hotLists()
+    public static function hotLists(): array
     {
         $data = HotSearch::field(['name', 'sort'])
             ->order(['sort' => 'desc', 'id' => 'desc'])

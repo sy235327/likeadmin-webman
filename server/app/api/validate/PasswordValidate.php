@@ -49,7 +49,7 @@ class PasswordValidate extends BaseValidate
      * @author 段誉
      * @date 2022/9/16 18:11
      */
-    public function sceneResetPassword()
+    public function sceneResetPassword(): PasswordValidate
     {
         return $this->only(['mobile', 'code', 'password', 'password_confirm']);
     }
@@ -61,7 +61,7 @@ class PasswordValidate extends BaseValidate
      * @author 段誉
      * @date 2022/9/20 19:14
      */
-    public function sceneChangePassword()
+    public function sceneChangePassword(): PasswordValidate
     {
         return $this->only(['password', 'password_confirm']);
     }

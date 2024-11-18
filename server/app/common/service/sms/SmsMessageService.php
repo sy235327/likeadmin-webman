@@ -45,10 +45,10 @@ use think\Model;
  */
 class SmsMessageService
 {
-    protected $notice;
-    protected $smsLog;
+    protected mixed $notice;
+    protected mixed $smsLog;
 
-    public function send($params)
+    public function send($params): true
     {
         try {
             // 通知设置
@@ -90,7 +90,7 @@ class SmsMessageService
      * @author 段誉
      * @date 2022/9/15 16:24
      */
-    public function contentFormat($noticeSetting, $params)
+    public function contentFormat($noticeSetting, $params): mixed
     {
         $content = $noticeSetting['sms_notice']['content'];
         foreach($params['params'] as $k => $v) {
@@ -109,7 +109,7 @@ class SmsMessageService
      * @author 段誉
      * @date 2022/9/15 16:24
      */
-    public function addSmsLog($params, $content)
+    public function addSmsLog($params, $content): SmsLog|Model
     {
         $data = [
             'scene_id'   => $params['scene_id'],
@@ -131,7 +131,7 @@ class SmsMessageService
      * @author 段誉
      * @date 2022/9/15 16:25
      */
-    public function setSmsParams($noticeSetting, $params)
+    public function setSmsParams($noticeSetting, $params): mixed
     {
         $defaultEngine = ConfigService::get('sms', 'engine', false);
         // 阿里云 且是 验证码类型
@@ -186,7 +186,7 @@ class SmsMessageService
      * @author 段誉
      * @date 2022/9/15 16:25
      */
-    public function updateSmsLog($id, $status, $result)
+    public function updateSmsLog($id, $status, $result): void
     {
         SmsLog::update([
             'id' => $id,

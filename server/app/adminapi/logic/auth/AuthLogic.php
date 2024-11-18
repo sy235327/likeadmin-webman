@@ -34,7 +34,7 @@ class AuthLogic
      * @author 乔峰
      * @date 2022/7/1 11:55
      */
-    public static function getAllAuth()
+    public static function getAllAuth(): mixed
     {
         return SystemMenu::distinct(true)
             ->where([

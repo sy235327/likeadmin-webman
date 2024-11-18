@@ -72,7 +72,7 @@ class UserLogic extends BaseLogic
      * @author 段誉
      * @date 2022/9/20 19:45
      */
-    public static function info(int $userId)
+    public static function info(int $userId): array
     {
         $user = User::where(['id' => $userId])
             ->field('id,sn,sex,account,password,nickname,real_name,avatar,mobile,create_time,user_money')
@@ -93,7 +93,7 @@ class UserLogic extends BaseLogic
      * @author 段誉
      * @date 2022/9/21 16:53
      */
-    public static function setInfo(int $userId, array $params)
+    public static function setInfo(int $userId, array $params): User|false
     {
         try {
             return User::update([
@@ -114,7 +114,7 @@ class UserLogic extends BaseLogic
      * @author 段誉
      * @date 2022/9/20 19:36
      */
-    public static function hasWechatAuth(int $userId)
+    public static function hasWechatAuth(int $userId): bool
     {
         //是否有微信授权登录
         $terminal = [UserTerminalEnum::WECHAT_MMP, UserTerminalEnum::WECHAT_OA,UserTerminalEnum::PC];
@@ -132,7 +132,7 @@ class UserLogic extends BaseLogic
      * @author 段誉
      * @date 2022/9/16 18:06
      */
-    public static function resetPassword(array $params)
+    public static function resetPassword(array $params): bool
     {
         try {
             // 校验验证码
@@ -166,7 +166,7 @@ class UserLogic extends BaseLogic
      * @author 段誉
      * @date 2022/9/20 19:13
      */
-    public static function changePassword(array $params, int $userId)
+    public static function changePassword(array $params, int $userId): bool
     {
         try {
             $user = User::findOrEmpty($userId);
@@ -208,7 +208,7 @@ class UserLogic extends BaseLogic
      * @author 段誉
      * @date 2023/2/27 11:49
      */
-    public static function getMobileByMnp(array $params)
+    public static function getMobileByMnp(array $params): bool
     {
         try {
             $response = (new WeChatMnpService())->getUserPhoneNumber($params['code']);
@@ -247,7 +247,7 @@ class UserLogic extends BaseLogic
      * @author 段誉
      * @date 2022/9/21 17:28
      */
-    public static function bindMobile(array $params)
+    public static function bindMobile(array $params): bool
     {
         try {
             // 变更手机号场景

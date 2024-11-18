@@ -30,7 +30,7 @@ class PaymentLogic extends BaseLogic
      * @author bingo
      * @date 2023/2/24 17:53
      */
-    public static function getPayWay($userId, $terminal, $params)
+    public static function getPayWay($userId, $terminal, $params): false|array
     {
         try {
             if ($params['from'] == 'recharge') {
@@ -87,7 +87,7 @@ class PaymentLogic extends BaseLogic
      * @author bingo
      * @date 2023/3/1 16:23
      */
-    public static function getPayStatus($params)
+    public static function getPayStatus($params): false|array
     {
         try {
             $order = [];
@@ -131,7 +131,7 @@ class PaymentLogic extends BaseLogic
      * @author bingo
      * @date 2023/2/27 15:19
      */
-    public static function getPayOrderInfo($params)
+    public static function getPayOrderInfo($params): false|array|RechargeOrder|Model
     {
         try {
             switch ($params['from']) {
@@ -165,7 +165,7 @@ class PaymentLogic extends BaseLogic
      * @author bingo
      * @date 2023/2/28 12:15
      */
-    public static function pay($payWay, $from, $order, $terminal, $redirectUrl)
+    public static function pay($payWay, $from, $order, $terminal, $redirectUrl): mixed
     {
         // 支付编号-仅为微信支付预置(同一商户号下不同客户端支付需使用唯一订单号)
         $paySn = $order['sn'];
@@ -215,7 +215,7 @@ class PaymentLogic extends BaseLogic
      * @date 2023/3/1 16:31
      * @remark 回调时使用了不同的回调地址,导致跨客户端支付时(例如小程序,公众号)可能出现201,商户订单号重复错误
      */
-    public static function formatOrderSn($orderSn, $terminal)
+    public static function formatOrderSn($orderSn, $terminal): string
     {
         $suffix = mb_substr(time(), -4);
         return $orderSn . $terminal . $suffix;

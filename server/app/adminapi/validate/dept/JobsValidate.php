@@ -56,7 +56,7 @@ class JobsValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/5/26 9:53
      */
-    public function sceneAdd()
+    public function sceneAdd(): JobsValidate
     {
         return $this->remove('id', true);
     }
@@ -68,7 +68,7 @@ class JobsValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/5/26 9:53
      */
-    public function sceneDetail()
+    public function sceneDetail(): JobsValidate
     {
         return $this->only(['id']);
     }
@@ -85,7 +85,7 @@ class JobsValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/5/26 9:54
      */
-    public function sceneDelete()
+    public function sceneDelete(): JobsValidate
     {
         return $this->only(['id'])->append('id', 'checkAbleDetele');
     }
@@ -98,7 +98,7 @@ class JobsValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/5/26 9:55
      */
-    public function checkJobs($value)
+    public function checkJobs($value): bool|string
     {
         $jobs = Jobs::findOrEmpty($value);
         if ($jobs->isEmpty()) {
@@ -115,7 +115,7 @@ class JobsValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/5/26 14:22
      */
-    public function checkAbleDetele($value)
+    public function checkAbleDetele($value): bool|string
     {
         $check = AdminJobs::where(['jobs_id' => $value])->findOrEmpty();
         if (!$check->isEmpty()) {

@@ -38,7 +38,7 @@ class JobsLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/5/26 9:58
      */
-    public static function add(array $params)
+    public static function add(array $params): void
     {
         Jobs::create([
             'name' => $params['name'],

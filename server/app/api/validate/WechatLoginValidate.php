@@ -51,7 +51,7 @@ class WechatLoginValidate extends BaseValidate
      * @author 段誉
      * @date 2022/9/16 10:57
      */
-    public function sceneOa()
+    public function sceneOa(): WechatLoginValidate
     {
         return $this->only(['code']);
     }
@@ -63,7 +63,7 @@ class WechatLoginValidate extends BaseValidate
      * @author 段誉
      * @date 2022/9/16 11:15
      */
-    public function sceneMnpLogin()
+    public function sceneMnpLogin(): WechatLoginValidate
     {
         return $this->only(['code']);
     }
@@ -75,7 +75,7 @@ class WechatLoginValidate extends BaseValidate
      * @author 段誉
      * @date 2022/9/16 11:15
      */
-    public function sceneWechatAuth()
+    public function sceneWechatAuth(): WechatLoginValidate
     {
         return $this->only(['code']);
     }
@@ -87,7 +87,7 @@ class WechatLoginValidate extends BaseValidate
      * @author 段誉
      * @date 2023/2/22 11:14
      */
-    public function sceneUpdateUser()
+    public function sceneUpdateUser(): WechatLoginValidate
     {
         return $this->only(['nickname', 'avatar']);
     }

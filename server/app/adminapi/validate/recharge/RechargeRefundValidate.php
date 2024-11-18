@@ -41,13 +41,13 @@ class RechargeRefundValidate extends BaseValidate
     ];
 
 
-    public function sceneRefund()
+    public function sceneRefund(): RechargeRefundValidate
     {
         return $this->only(['recharge_id']);
     }
 
 
-    public function sceneAgain()
+    public function sceneAgain(): RechargeRefundValidate
     {
         return $this->only(['record_id']);
     }
@@ -62,7 +62,7 @@ class RechargeRefundValidate extends BaseValidate
      * @author 段誉
      * @date 2023/2/28 17:00
      */
-    protected function checkRecharge($rechargeId, $rule, $data)
+    protected function checkRecharge($rechargeId, $rule, $data): bool|string
     {
         $order = RechargeOrder::findOrEmpty($rechargeId);
 
@@ -98,7 +98,7 @@ class RechargeRefundValidate extends BaseValidate
      * @author 段誉
      * @date 2023/3/1 9:40
      */
-    protected function checkRecord($recordId, $rule, $data)
+    protected function checkRecord($recordId, $rule, $data): bool|string
     {
         $record = RefundRecord::findOrEmpty($recordId);
         if ($record->isEmpty()) {

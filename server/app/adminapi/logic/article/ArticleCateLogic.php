@@ -37,7 +37,7 @@ class ArticleCateLogic extends BaseLogic
      * @author heshihu
      * @date 2022/2/18 10:17
      */
-    public static function add(array $params)
+    public static function add(array $params): void
     {
         ArticleCate::create([
             'name' => $params['name'],

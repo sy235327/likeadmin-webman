@@ -18,7 +18,7 @@ trait ListsSearchTrait
      * @author 令狐冲
      * @date 2021/7/7 19:36
      */
-    private function createWhere($search)
+    private function createWhere($search): array
     {
         if (empty($search)) {
             return [];

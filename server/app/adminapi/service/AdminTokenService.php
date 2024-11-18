@@ -15,9 +15,9 @@ class AdminTokenService
 {
     /**
      * @notes 设置或更新管理员token
-     * @param $adminId //管理员id
-     * @param $terminal //多终端名称
-     * @param $multipointLogin //是否支持多处登录
+     * @param int $adminId //管理员id
+     * @param int $terminal //多终端名称
+     * @param int $multipointLogin //是否支持多处登录
      * @return false|mixed
      * @throws DataNotFoundException
      * @throws DbException
@@ -25,7 +25,7 @@ class AdminTokenService
      * @author 乔峰
      * @date 2021/7/2 20:25
      */
-    public static function setToken($adminId, $terminal, $multipointLogin = 1)
+    public static function setToken(int $adminId,int $terminal, int $multipointLogin = 1): mixed
     {
         $time = time();
         $adminSession = AdminSession::where([['admin_id', '=', $adminId], ['terminal', '=', $terminal]])->find();
@@ -62,7 +62,7 @@ class AdminTokenService
 
     /**
      * @notes 延长token过期时间
-     * @param $token
+     * @param string $token
      * @return array|false|mixed
      * @throws DataNotFoundException
      * @throws DbException
@@ -70,7 +70,7 @@ class AdminTokenService
      * @author 乔峰
      * @date 2021/7/5 14:25
      */
-    public static function overtimeToken($token)
+    public static function overtimeToken(string $token): mixed
     {
         $time = time();
         $adminSession = AdminSession::where('token', '=', $token)->findOrEmpty();
@@ -86,7 +86,7 @@ class AdminTokenService
 
     /**
      * @notes 设置token为过期
-     * @param $token
+     * @param string $token
      * @return bool
      * @throws DataNotFoundException
      * @throws DbException
@@ -94,7 +94,7 @@ class AdminTokenService
      * @author 乔峰
      * @date 2021/7/5 14:31
      */
-    public static function expireToken($token)
+    public static function expireToken(string $token): bool
     {
         $adminSession = AdminSession::where('token', '=', $token)
             ->with('admin')

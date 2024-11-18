@@ -21,7 +21,7 @@ class StorageValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/4/20 16:18
      */
-    public function sceneSetup()
+    public function sceneSetup(): StorageValidate
     {
         return $this->only(['engine', 'status']);
     }
@@ -33,7 +33,7 @@ class StorageValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/4/20 16:18
      */
-    public function sceneDetail()
+    public function sceneDetail(): StorageValidate
     {
         return $this->only(['engine']);
     }
@@ -45,7 +45,7 @@ class StorageValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/4/20 16:18
      */
-    public function sceneChange()
+    public function sceneChange(): StorageValidate
     {
         return $this->only(['engine']);
     }

@@ -35,7 +35,7 @@ class SmsLogic extends BaseLogic
      * @author 段誉
      * @date 2022/9/15 16:17
      */
-    public static function sendCode($params)
+    public static function sendCode($params): mixed
     {
         try {
             $scene = NoticeEnum::getSceneByTag($params['scene']);

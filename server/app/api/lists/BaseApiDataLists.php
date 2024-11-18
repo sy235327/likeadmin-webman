@@ -21,7 +21,7 @@ abstract class BaseApiDataLists extends BaseDataLists
     protected array $userInfo = [];
     protected int $userId = 0;
 
-    public $export;
+    public int $export;
 
     public function __construct()
     {

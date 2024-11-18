@@ -39,12 +39,12 @@ class RefundEnum
 
     /**
      * @notes 退款类型描述
-     * @param bool $value
+     * @param bool|int $value
      * @return string|string[]
      * @author 段誉
      * @date 2022/12/1 10:40
      */
-    public static function getTypeDesc($value = true)
+    public static function getTypeDesc(bool|int $value = true): array|string
     {
         $data = [
             self::TYPE_ADMIN  => '后台退款',
@@ -58,12 +58,12 @@ class RefundEnum
 
     /**
      * @notes 退款状态
-     * @param bool $value
+     * @param bool|int $value
      * @return string|string[]
      * @author 段誉
      * @date 2022/12/1 10:43
      */
-    public static function getStatusDesc($value = true)
+    public static function getStatusDesc(bool|int $value = true): array|string
     {
         $data = [
             self::REFUND_ING  => '退款中',
@@ -80,12 +80,12 @@ class RefundEnum
 
     /**
      * @notes 退款方式
-     * @param bool $value
+     * @param bool|int $value
      * @return string|string[]
      * @author 段誉
      * @date 2022/12/1 10:43
      */
-    public static function getWayDesc($value = true)
+    public static function getWayDesc(bool|int $value = true)
     {
         $data = [
             self::REFUND_ONLINE  => '线上退款',

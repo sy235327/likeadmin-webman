@@ -28,7 +28,7 @@ class AccountLogLogic extends BaseLogic
      * @author bingo
      * @date 2023/2/23 12:03
      */
-    public static function add($userId, $changeType, $action, $changeAmount, string $sourceSn = '', string $remark = '',  array $extra = [])
+    public static function add($userId, $changeType, $action, $changeAmount, string $sourceSn = '', string $remark = '',  array $extra = []): false|Model|UserAccountLog
     {
         $user = User::findOrEmpty($userId);
         if($user->isEmpty()) {

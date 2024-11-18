@@ -46,7 +46,7 @@ class ArticleValidate extends BaseValidate
      * @author heshihu
      * @date 2022/2/22 9:57
      */
-    public function sceneAdd()
+    public function sceneAdd(): ArticleValidate
     {
         return $this->remove(['id'])
             ->remove('id','require|checkArticle');
@@ -58,7 +58,7 @@ class ArticleValidate extends BaseValidate
      * @author heshihu
      * @date 2022/2/22 10:15
      */
-    public function sceneDetail()
+    public function sceneDetail(): ArticleValidate
     {
         return $this->only(['id']);
     }
@@ -69,7 +69,7 @@ class ArticleValidate extends BaseValidate
      * @author heshihu
      * @date 2022/2/22 10:18
      */
-    public function sceneStatus()
+    public function sceneStatus(): ArticleValidate
     {
         return $this->only(['id', 'is_show']);
     }
@@ -84,7 +84,7 @@ class ArticleValidate extends BaseValidate
      * @author heshihu
      * @date 2022/2/22 10:17
      */
-    public function sceneDelete()
+    public function sceneDelete(): ArticleValidate
     {
         return $this->only(['id']);
     }
@@ -96,7 +96,7 @@ class ArticleValidate extends BaseValidate
      * @author heshihu
      * @date 2022/2/22 10:11
      */
-    public function checkArticle($value)
+    public function checkArticle($value): bool|string
     {
         $article = Article::findOrEmpty($value);
         if ($article->isEmpty()) {

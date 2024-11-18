@@ -16,16 +16,16 @@ use think\facade\Cache;
 
 class AdminTokenCache extends BaseCache
 {
-    private $prefix = 'token_admin_';
+    private string $prefix = 'token_admin_';
 
     /**
      * @notes 通过token获取缓存管理员信息
-     * @param $token
+     * @param string $token
      * @return false|mixed
      * @author 令狐冲
      * @date 2021/6/30 16:57
      */
-    public function getAdminInfo($token)
+    public function getAdminInfo(string $token): mixed
     {
         //直接从缓存获取
         $adminInfo = Cache::get($this->prefix . $token);
@@ -44,7 +44,7 @@ class AdminTokenCache extends BaseCache
 
     /**
      * @notes 通过有效token设置管理信息缓存
-     * @param $token
+     * @param string $token
      * @return array|false|mixed
      * @throws DataNotFoundException
      * @throws DbException
@@ -52,7 +52,7 @@ class AdminTokenCache extends BaseCache
      * @author 令狐冲
      * @date 2021/7/5 12:12
      */
-    public function setAdminInfo($token)
+    public function setAdminInfo(string $token): mixed
     {
         $adminSession = AdminSession::where([['token', '=', $token], ['expire_time', '>', time()]])
             ->find();
@@ -92,12 +92,12 @@ class AdminTokenCache extends BaseCache
 
     /**
      * @notes 删除缓存
-     * @param $token
+     * @param string $token
      * @return bool
      * @author 令狐冲
      * @date 2021/7/3 16:57
      */
-    public function deleteAdminInfo($token)
+    public function deleteAdminInfo(string $token): bool
     {
         return Cache::delete($this->prefix . $token);
     }

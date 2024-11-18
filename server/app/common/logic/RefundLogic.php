@@ -36,7 +36,7 @@ use Exception;
 class RefundLogic extends BaseLogic
 {
 
-    protected static $refundLog;
+    protected static mixed $refundLog;
 
 
     /**
@@ -50,7 +50,7 @@ class RefundLogic extends BaseLogic
      * @author bingo
      * @date 2023/2/28 17:24
      */
-    public static function refund($order, $refundRecordId, $refundAmount, $handleId)
+    public static function refund($order, $refundRecordId, $refundAmount, $handleId): bool
     {
         // 退款前校验
         self::refundBeforeCheck($refundAmount);
@@ -87,7 +87,7 @@ class RefundLogic extends BaseLogic
      * @author bingo
      * @date 2023/2/28 16:27
      */
-    public static function refundBeforeCheck($refundAmount)
+    public static function refundBeforeCheck($refundAmount): void
     {
         if ($refundAmount <= 0) {
             throw new Exception('订单金额异常');
@@ -104,7 +104,7 @@ class RefundLogic extends BaseLogic
      * @author bingo
      * @date 2023/2/28 17:19
      */
-    public static function wechatPayRefund($order, $refundAmount)
+    public static function wechatPayRefund($order, $refundAmount): void
     {
         // 发起退款。 若发起退款请求返回明确错误，退款日志和记录标记状态为退款失败
         // 退款日志及记录的成功状态目前统一由定时任务查询退款结果为退款成功后才标记成功
@@ -125,7 +125,7 @@ class RefundLogic extends BaseLogic
      * @date 2023/2/28 16:00
      * @remark 【微信，支付宝】退款接口请求失败时，更新退款记录及日志为失败,在退款记录重新发起
      */
-    public static function refundFailHandle($refundRecordId, $msg)
+    public static function refundFailHandle($refundRecordId, $msg): void
     {
         // 更新退款日志记录
         RefundLog::update([
@@ -153,7 +153,7 @@ class RefundLogic extends BaseLogic
      * @author bingo
      * @date 2023/2/28 15:29
      */
-    public static function log($order, $refundRecordId, $refundAmount, $handleId, $refundStatus = RefundEnum::REFUND_ING)
+    public static function log($order, $refundRecordId, $refundAmount, $handleId, $refundStatus = RefundEnum::REFUND_ING): void
     {
         $sn = generate_sn(RefundLog::class, 'sn');
 

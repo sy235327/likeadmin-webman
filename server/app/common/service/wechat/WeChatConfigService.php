@@ -94,7 +94,7 @@ class WeChatConfigService
      * @author 段誉
      * @date 2023/2/27 15:45
      */
-    public static function getPayConfigByTerminal($terminal)
+    public static function getPayConfigByTerminal($terminal): array
     {
         switch ($terminal) {
             case UserTerminalEnum::WECHAT_MMP:

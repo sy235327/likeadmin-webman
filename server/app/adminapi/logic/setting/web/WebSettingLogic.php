@@ -143,10 +143,10 @@ class WebSettingLogic extends BaseLogic
     public static function getAgreement() : array
     {
         $config = [
-            'service_title' => ConfigService::get('agreement', 'service_title'),
-            'service_content' => ConfigService::get('agreement', 'service_content'),
-            'privacy_title' => ConfigService::get('agreement', 'privacy_title'),
-            'privacy_content' => ConfigService::get('agreement', 'privacy_content'),
+            'service_title' => ConfigService::get('agreement', 'service_title',''),
+            'service_content' => ConfigService::get('agreement', 'service_content',''),
+            'privacy_title' => ConfigService::get('agreement', 'privacy_title',''),
+            'privacy_content' => ConfigService::get('agreement', 'privacy_content',''),
         ];
 
         $config['service_content'] = get_file_domain($config['service_content']);

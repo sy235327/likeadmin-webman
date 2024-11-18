@@ -408,11 +408,11 @@ if (!function_exists('get_file_domain')) {
     /**
      * @notes 设置内容图片域名
      * @param $content
-     * @return array|string|string[]|null
+     * @return array|string|string[]
      * @author 段誉
      * @date 2022/9/26 10:43
      */
-    function get_file_domain($content): array|string|null
+    function get_file_domain($content): array|string
     {
         $preg = '/(<img .*?src=")[^https|^http](.*?)(".*?>)/is';
         $fileUrl = FileService::getFileUrl();

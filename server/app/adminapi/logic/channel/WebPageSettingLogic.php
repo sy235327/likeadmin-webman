@@ -38,8 +38,9 @@ class WebPageSettingLogic extends BaseLogic
             'page_status' => ConfigService::get('web_page', 'page_status', 0),
             // 自定义链接
             'page_url' => ConfigService::get('web_page', 'page_url', ''),
-            'url' => request()->domain() . '/mobile'
+            'url' => getAgreementHost() . '/mobile'
         ];
+
         return $config;
     }
 

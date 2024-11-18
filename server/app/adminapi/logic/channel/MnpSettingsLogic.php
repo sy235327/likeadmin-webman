@@ -33,7 +33,7 @@ class MnpSettingsLogic extends BaseLogic
      */
     public function getConfig()
     {
-        $domainName = $_SERVER['SERVER_NAME'];
+        $domainName = str_replace(['http://','https://'],'',getAgreementHost());
         $qrCode = ConfigService::get('mnp_setting', 'qr_code', '');
         $qrCode = empty($qrCode) ? $qrCode : FileService::getFileUrl($qrCode);
         $config = [

@@ -59,10 +59,9 @@ use think\Paginator;
  * @method Query cache(mixed $key = null, integer $expire = null) static 设置查询缓存
  * @method mixed value(string $field) static 获取某个字段的值
  * @method array column(string $field, string $key = '') static 获取某个列的值
- * @method Model find(mixed $data = null) static 查询单个记录 不存在返回Null
- * @method Model findOrEmpty(mixed $data = null) static 查询单个记录 不存在返回空模型
+ * @method static $this find(mixed $data = null) static 查询单个记录 不存在返回Null
+ * @method static $this findOrEmpty(mixed $data = null) static 查询单个记录 不存在返回空模型
  * @method Collection select(mixed $data = null) static 查询多个记录
- * @method Model withAttr(array $name, Closure $closure) 动态定义获取器
  *
  * Class DbManager 数据库管理类
  * @package think

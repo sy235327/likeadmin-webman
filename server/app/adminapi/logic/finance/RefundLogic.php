@@ -19,6 +19,9 @@ use app\common\enum\RefundEnum;
 use app\common\logic\BaseLogic;
 use app\common\model\refund\RefundLog;
 use app\common\model\refund\RefundRecord;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 
 /**
@@ -32,13 +35,13 @@ class RefundLogic extends BaseLogic
     /**
      * @notes 退款统计
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2023/3/3 12:09
      */
-    public static function stat()
+    public static function stat(): array
     {
         $records = RefundRecord::select()->toArray();
 
@@ -75,13 +78,13 @@ class RefundLogic extends BaseLogic
      * @notes 退款日志
      * @param $recordId
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2023/3/3 14:25
      */
-    public static function refundLog($recordId)
+    public static function refundLog($recordId): array
     {
         return (new RefundLog())
             ->order(['id' => 'desc'])

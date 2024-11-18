@@ -20,6 +20,10 @@ use app\common\{
     logic\BaseLogic,
     model\auth\SystemRoleMenu
 };
+use Exception;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\facade\Db;
 
 
@@ -64,7 +68,7 @@ class RoleLogic extends BaseLogic
 
             Db::commit();
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Db::rollback();
             self::$error = $e->getMessage();
             return false;
@@ -108,7 +112,7 @@ class RoleLogic extends BaseLogic
 
             Db::commit();
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Db::rollback();
             self::$error = $e->getMessage();
             return false;
@@ -122,7 +126,7 @@ class RoleLogic extends BaseLogic
      * @author 乔峰
      * @date 2021/12/29 14:16
      */
-    public static function delete(int $id)
+    public static function delete(int $id): bool
     {
         SystemRole::destroy(['id' => $id]);
         (new AdminAuthCache())->deleteTag();
@@ -134,9 +138,9 @@ class RoleLogic extends BaseLogic
      * @notes 角色详情
      * @param int $id
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2021/12/29 14:17
      */
@@ -153,13 +157,13 @@ class RoleLogic extends BaseLogic
     /**
      * @notes 角色数据
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2022/10/13 10:39
      */
-    public static function getAllData()
+    public static function getAllData(): array
     {
         return SystemRole::order(['sort' => 'desc', 'id' => 'desc'])
             ->select()

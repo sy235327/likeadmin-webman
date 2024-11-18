@@ -17,6 +17,7 @@ namespace app\adminapi\controller\channel;
 use app\adminapi\controller\BaseAdminController;
 use app\adminapi\logic\channel\MnpSettingsLogic;
 use app\adminapi\validate\channel\MnpSettingsValidate;
+use support\Response;
 
 /**
  * 小程序设置
@@ -27,11 +28,11 @@ class MnpSettingsController extends BaseAdminController
 {
     /**
      * @notes 获取小程序配置
-     * @return \support\Response
+     * @return Response
      * @author ljj
      * @date 2022/2/16 9:38 上午
      */
-    public function getConfig()
+    public function getConfig(): Response
     {
         $result = (new MnpSettingsLogic())->getConfig();
         return $this->data($result);
@@ -39,11 +40,11 @@ class MnpSettingsController extends BaseAdminController
 
     /**
      * @notes 设置小程序配置
-     * @return \support\Response
+     * @return Response
      * @author ljj
      * @date 2022/2/16 9:51 上午
      */
-    public function setConfig()
+    public function setConfig(): Response
     {
         $params = (new MnpSettingsValidate())->post()->goCheck();
         (new MnpSettingsLogic())->setConfig($params);

@@ -17,6 +17,7 @@ namespace app\adminapi\controller\channel;
 use app\adminapi\controller\BaseAdminController;
 use app\adminapi\logic\channel\OpenSettingLogic;
 use app\adminapi\validate\channel\OpenSettingValidate;
+use support\Response;
 
 /**
  * 微信开放平台
@@ -34,11 +35,11 @@ class OpenSettingController extends BaseAdminController
     }
     /**
      * @notes 获取微信开放平台设置
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/3/29 11:03
      */
-    public function getConfig()
+    public function getConfig(): Response
     {
         $result = OpenSettingLogic::getConfig();
         return $this->data($result);
@@ -47,11 +48,11 @@ class OpenSettingController extends BaseAdminController
 
     /**
      * @notes 微信开放平台设置
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/3/29 11:03
      */
-    public function setConfig()
+    public function setConfig(): Response
     {
         $params = $this->validateObj->post()->goCheck();
         OpenSettingLogic::setConfig($params);

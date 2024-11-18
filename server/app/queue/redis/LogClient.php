@@ -3,6 +3,7 @@
 namespace app\queue\redis;
 
 use app\queue\send\SendQueue;
+use Throwable;
 use Webman\RedisQueue\Consumer;
 
 class LogClient implements Consumer
@@ -41,7 +42,7 @@ class LogClient implements Consumer
         'error' => '错误信息' // 错误信息
     ]
     */
-    public function onConsumeFailure(\Throwable $e, $package): void
+    public function onConsumeFailure(Throwable $e, $package): void
     {
         echo "consume failure\n";
         echo $e->getMessage() . "\n";

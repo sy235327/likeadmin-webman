@@ -73,6 +73,10 @@ return [
     'file_video' => [
         'wmv', 'avi', 'mpg', 'mpeg', '3gp', 'mov', 'mp4', 'flv', 'f4v', 'rmvb', 'mkv'
     ],
+    // 文件上传限制 (other)
+    'file_other' => [
+        'pdf', 'doc', 'docx', 'xls', 'xlsx'
+    ],
 
     // 登录设置
     'login' => [

@@ -21,7 +21,7 @@ use think\facade\Cache;
 class ExportCache extends BaseCache
 {
 
-    protected $uniqid = '';
+    protected string $uniqid = '';
 
     public function __construct()
     {
@@ -36,7 +36,7 @@ class ExportCache extends BaseCache
      * @author 令狐冲
      * @date 2021/7/28 17:36
      */
-    public function getSrc()
+    public function getSrc(): string
     {
         return public_path() . '/export/'.date('Y-m').'/'.$this->uniqid.'/';
     }
@@ -49,7 +49,7 @@ class ExportCache extends BaseCache
      * @author 令狐冲
      * @date 2021/7/28 17:36
      */
-    public function setFile($fileName)
+    public function setFile($fileName): string
     {
         $src = $this->getSrc();
         $key = md5($src . $fileName) . time();
@@ -64,7 +64,7 @@ class ExportCache extends BaseCache
      * @author 令狐冲
      * @date 2021/7/26 18:36
      */
-    public function getFile($key)
+    public function getFile($key): mixed
     {
         return Cache::get($key);
     }

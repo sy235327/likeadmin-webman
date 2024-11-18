@@ -16,6 +16,9 @@ namespace app\api\service;
 
 
 use app\common\enum\YesNoEnum;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use app\common\model\user\{User, UserAuth};
 use app\common\enum\user\UserTerminalEnum;
 use app\common\service\{ConfigService, storage\Driver as StorageDriver};
@@ -32,11 +35,11 @@ class WechatUserService
 
     protected int $terminal = UserTerminalEnum::WECHAT_MMP;
     protected array $response = [];
-    protected ?string $code = null;
-    protected ?string $openid = null;
-    protected ?string $unionid = null;
-    protected ?string $nickname = null;
-    protected ?string $headimgurl = null;
+    protected string|null $code = null;
+    protected string|null $openid = null;
+    protected string|null $unionid = null;
+    protected string|null $nickname = null;
+    protected string|null $headimgurl = null;
     protected User $user;
 
 
@@ -98,7 +101,7 @@ class WechatUserService
      * @author cjhao
      * @date 2021/8/3 11:42
      */
-    public function getUserInfo($isCheck = true): array
+    public function getUserInfo(bool $isCheck = true): array
     {
         if (!$this->user->isEmpty() && $isCheck) {
             $this->checkAccount();
@@ -116,7 +119,7 @@ class WechatUserService
      * @author 段誉
      * @date 2022/9/16 10:14
      */
-    private function checkAccount()
+    private function checkAccount(): void
     {
         if ($this->user->is_disable) {
             throw new Exception('您的账号异常，请联系客服。');
@@ -197,9 +200,9 @@ class WechatUserService
 
     /**
      * @notes 获取token
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author cjhao
      * @date 2021/8/2 16:45
      */

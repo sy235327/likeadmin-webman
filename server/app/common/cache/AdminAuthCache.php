@@ -9,16 +9,16 @@ use think\facade\Cache;
 
 class AdminAuthCache extends BaseCache
 {
-    private $prefix = 'admin_auth_';
-    private $authConfigList = [];
-    private $cacheMd5Key = '';      //权限文件MD5的key
-    private $cacheAllKey = '';      //全部权限的key
-    private $cacheUrlKey = '';       //管理员的url缓存key
-    private $authMd5 = '';          //权限文件MD5的值
-    private $adminId = '';
+    private string $prefix = 'admin_auth_';
+    private mixed $authConfigList = [];
+    private string $cacheMd5Key = '';      //权限文件MD5的key
+    private string $cacheAllKey = '';      //全部权限的key
+    private string $cacheUrlKey = '';       //管理员的url缓存key
+    private string $authMd5 = '';          //权限文件MD5的值
+    private mixed $adminId = 0;
 
 
-    public function __construct($adminId = '')
+    public function __construct($adminId = 0)
     {
         parent::__construct();
 
@@ -48,7 +48,7 @@ class AdminAuthCache extends BaseCache
      * @author 令狐冲
      * @date 2021/8/19 15:27
      */
-    public function getAdminUri()
+    public function getAdminUri(): mixed
     {
         //从缓存获取，直接返回
         $urisAuth = Cache::get($this->cacheUrlKey);
@@ -75,7 +75,7 @@ class AdminAuthCache extends BaseCache
      * @author cjhao
      * @date 2021/9/13 11:41
      */
-    public function getAllUri()
+    public function getAllUri(): mixed
     {
         $cacheAuth = Cache::get($this->cacheAllKey);
         if ($cacheAuth) {
@@ -96,7 +96,7 @@ class AdminAuthCache extends BaseCache
      * @author cjhao
      * @date 2021/10/13 18:47
      */
-    public function clearAuthCache()
+    public function clearAuthCache(): bool
     {
         Cache::clear($this->cacheUrlKey);
         return true;

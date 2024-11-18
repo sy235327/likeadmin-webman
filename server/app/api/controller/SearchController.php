@@ -16,6 +16,7 @@ namespace app\api\controller;
 
 
 use app\api\logic\SearchLogic;
+use support\Response;
 
 /**
  * 搜索
@@ -29,11 +30,11 @@ class SearchController extends BaseApiController
 
     /**
      * @notes 热门搜素
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/9/22 10:14
      */
-    public function hotLists()
+    public function hotLists(): Response
     {
         return $this->data(SearchLogic::hotLists());
     }

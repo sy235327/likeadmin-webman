@@ -16,7 +16,10 @@ namespace app\adminapi\validate\auth;
 
 
 use app\common\validate\BaseValidate;
-use app\common\model\auth\{SystemRole, Admin};
+use app\common\model\auth\{AdminRole, SystemRole, Admin};
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * 角色验证器
@@ -45,7 +48,7 @@ class RoleValidate extends BaseValidate
      * @author 乔峰
      * @date 2021/12/29 15:47
      */
-    public function sceneAdd()
+    public function sceneAdd(): RoleValidate
     {
         return $this->only(['name', 'menu_id']);
     }
@@ -56,7 +59,7 @@ class RoleValidate extends BaseValidate
      * @author 乔峰
      * @date 2021/12/29 15:47
      */
-    public function sceneDetail()
+    public function sceneDetail(): RoleValidate
     {
         return $this->only(['id']);
     }
@@ -67,7 +70,7 @@ class RoleValidate extends BaseValidate
      * @author 乔峰
      * @date 2021/12/29 15:48
      */
-    public function sceneDel()
+    public function sceneDel(): RoleValidate
     {
         return $this->only(['id'])
             ->append('id', 'checkAdmin');
@@ -80,13 +83,13 @@ class RoleValidate extends BaseValidate
      * @param $rule
      * @param $data
      * @return bool|string
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2021/12/29 15:48
      */
-    public function checkRole($value, $rule, $data)
+    public function checkRole($value, $rule, $data): bool|string
     {
         if (!SystemRole::find($value)) {
             return '角色不存在';
@@ -102,15 +105,15 @@ class RoleValidate extends BaseValidate
      * @param $rule
      * @param $data
      * @return bool|string
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2021/12/29 15:49
      */
-    public function checkAdmin($value, $rule, $data)
+    public function checkAdmin($value, $rule, $data): bool|string
     {
-        if (Admin::where(['role_id' => $value])->find()) {
+        if (AdminRole::where('role_id',$value)->find()){
             return '有管理员在使用该角色，不允许删除';
         }
         return true;

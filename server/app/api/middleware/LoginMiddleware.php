@@ -30,8 +30,9 @@ class LoginMiddleware implements MiddlewareInterface
     {
         // TODO: Implement process() method.
         $token = $request->header('token');
+        $controllerObject = make($request->controller);
         //判断接口是否免登录
-        $isNotNeedLogin = $request->controllerObject->isNotNeedLogin();
+        $isNotNeedLogin = $controllerObject->isNotNeedLogin($request->action);
 
         //不直接判断$isNotNeedLogin结果，使不需要登录的接口通过，为了兼容某些接口可以登录或不登录访问
         if (empty($token) && !$isNotNeedLogin) {
@@ -61,8 +62,11 @@ class LoginMiddleware implements MiddlewareInterface
         }
 
         //给request赋值，用于控制器
-        $request->userInfo = $userInfo;
-        $request->userId = $userInfo['user_id'] ?? 0;
+        $userId = $userInfo['user_id'] ?? 0;
+        if (!$userInfo){
+            $userInfo = [];
+        }
+        $controllerObject->setUser($userId,$userInfo);
 
         return $handler($request);
     }

@@ -15,6 +15,7 @@ use app\common\service\generator\core\VueEditGenerator;
 use app\common\service\generator\core\VueIndexGenerator;
 use support\Request;
 use Webman\App;
+use ZipArchive;
 
 
 /**
@@ -26,19 +27,19 @@ class GenerateService
 {
 
     // 标记
-    protected $flag;
+    protected string|null $flag;
 
     // 生成文件路径
-    protected $generatePath;
+    protected string $generatePath;
 
     // runtime目录
-    protected $runtimePath;
+    protected string $runtimePath;
 
     // 压缩包名称
-    protected $zipTempName;
+    protected string $zipTempName;
 
     // 压缩包临时路径
-    protected $zipTempPath;
+    protected string $zipTempPath;
 
     public function __construct()
     {
@@ -171,8 +172,8 @@ class GenerateService
         $fileName = 'curd-' . date('YmdHis') . '.zip';
         $this->zipTempName = $fileName;
         $this->zipTempPath = $this->generatePath . $fileName;
-        $zip = new \ZipArchive();
-        $zip->open($this->zipTempPath, \ZipArchive::CREATE);
+        $zip = new ZipArchive();
+        $zip->open($this->zipTempPath, ZipArchive::CREATE);
         $this->addFileZip($this->runtimePath, 'generate', $zip);
         $zip->close();
     }

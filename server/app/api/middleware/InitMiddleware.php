@@ -32,24 +32,22 @@ class InitMiddleware implements MiddlewareInterface
      * @notes 初始化
      * @return mixed
      * @throws ControllerExtendException
-     * @author 段誉
-     * @date 2022/9/6 18:17
+     * @throws HttpException
+     * @author suyi
+     * @date 2024/11/15
      */
     public function process(Request $request, callable $handler): Response
     {
-        $controllerClass = null;
         //获取控制器
         try {
-            $controller = str_replace('.', '\\', $request->controller);
-            $controllerClass = new $controller;
+            $controllerClass = make($request->controller);
             if (($controllerClass instanceof BaseApiController) === false) {
-                throw new ControllerExtendException($controller, '404');
+                throw new ControllerExtendException($request->controller, BaseApiController::class);
             }
+            $controllerClass->setUser(0,[]);
         } catch (ClassNotFoundException $e) {
-            throw new HttpException(404, 'controller not exists:' . $e->getClass());
+            throw new HttpException($e->getMessage().' controller not exists:' . $e->getClass(),404);
         }
-        //创建控制器对象
-        $request->controllerObject = $controllerClass;
         return $handler($request);
     }
 }

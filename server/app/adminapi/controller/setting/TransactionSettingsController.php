@@ -18,6 +18,7 @@ namespace app\adminapi\controller\setting;
 use app\adminapi\controller\BaseAdminController;
 use app\adminapi\logic\setting\TransactionSettingsLogic;
 use app\adminapi\validate\setting\TransactionSettingsValidate;
+use support\Response;
 
 /**
  * 交易设置
@@ -38,7 +39,7 @@ class TransactionSettingsController extends BaseAdminController
      * @author ljj
      * @date 2022/2/15 11:40 上午
      */
-    public function getConfig()
+    public function getConfig(): Response
     {
         $result = TransactionSettingsLogic::getConfig();
         return $this->data($result);
@@ -49,7 +50,7 @@ class TransactionSettingsController extends BaseAdminController
      * @author ljj
      * @date 2022/2/15 11:50 上午
      */
-    public function setConfig()
+    public function setConfig(): Response
     {
         $params = $this->validateObj->post()->goCheck('setConfig');
         TransactionSettingsLogic::setConfig($params);

@@ -17,6 +17,7 @@ namespace app\adminapi\controller\decorate;
 use app\adminapi\controller\BaseAdminController;
 use app\adminapi\logic\decorate\DecoratePageLogic;
 use app\adminapi\validate\decorate\DecoratePageValidate;
+use support\Response;
 
 
 /**
@@ -35,11 +36,11 @@ class PageController extends BaseAdminController
     }
     /**
      * @notes 获取装修修页面详情
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/9/14 18:43
      */
-    public function detail()
+    public function detail(): Response
     {
         $id = $this->request->get('id');
         $result = DecoratePageLogic::getDetail($id);
@@ -49,11 +50,11 @@ class PageController extends BaseAdminController
 
     /**
      * @notes 保存装修配置
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/9/15 9:57
      */
-    public function save()
+    public function save(): Response
     {
         $params = $this->validateObj->post()->goCheck();
         $result = DecoratePageLogic::save($params);

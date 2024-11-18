@@ -16,6 +16,7 @@ namespace app\adminapi\controller\channel;
 
 use app\adminapi\controller\BaseAdminController;
 use app\adminapi\logic\channel\AppSettingLogic;
+use support\Response;
 
 /**
  * APP设置控制器
@@ -27,11 +28,11 @@ class AppSettingController extends BaseAdminController
 
     /**
      * @notes 获取App设置
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/3/29 10:24
      */
-    public function getConfig()
+    public function getConfig(): Response
     {
         $result = AppSettingLogic::getConfig();
         return $this->data($result);
@@ -40,11 +41,11 @@ class AppSettingController extends BaseAdminController
 
     /**
      * @notes App设置
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/3/29 10:25
      */
-    public function setConfig()
+    public function setConfig(): Response
     {
         $params = $this->request->post();
         AppSettingLogic::setConfig($params);

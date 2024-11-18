@@ -16,6 +16,7 @@ namespace app\adminapi\controller\setting\system;
 
 use app\adminapi\controller\BaseAdminController;
 use app\adminapi\logic\setting\system\SystemLogic;
+use support\Response;
 
 
 /**
@@ -31,7 +32,7 @@ class SystemController extends BaseAdminController
      * @author 乔峰
      * @date 2021/12/28 18:36
      */
-    public function info()
+    public function info(): Response
     {
         $result = SystemLogic::getInfo();
         return $this->data($result);

@@ -23,9 +23,17 @@
     "wiki": "https://workerman.net/doc/webman",
     "source": "https://github.com/walkor/webman"
   },
+  "repositories": {
+    "opis/closure": {
+      "type": "git",
+      "url": "https://github.com/sy235327/closure.git"
+    }
+  },
   "require": {
     "php": ">=8.2",
-    "workerman/workerman": ">=v5.0.0-beta.7",
+    "opis/closure": "master-dev",
+    "workerman/workerman": "v5.0.0-rc.2",
+    "workerman/http-client": "^2.2.8",
     "revolt/event-loop": "^1.0",
     "workerman/webman-framework": "^1.5.16",
     "monolog/monolog": "^2.9.2",
@@ -38,7 +46,7 @@
     "aliyuncs/oss-sdk-php": "^2.7.1",
     "tencentcloud/tencentcloud-sdk-php": "^3.0",
     "webman/console": "v1.2.35",
-    "qiniu/php-sdk": "7.4",
+    "qiniu/php-sdk": "7.14",
     "qcloud/cos-sdk-v5": "^2.6",
     "dragonmantank/cron-expression": "^3.3",
     "tinywan/storage": "^0.3.4",

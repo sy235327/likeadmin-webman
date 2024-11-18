@@ -9,6 +9,8 @@ use app\common\model\pay\PayWay;
 use app\common\model\recharge\RechargeOrder;
 use app\common\model\user\User;
 use app\common\service\pay\WeChatPayService;
+use Exception;
+use think\Model;
 
 
 /**
@@ -28,7 +30,7 @@ class PaymentLogic extends BaseLogic
      * @author bingo
      * @date 2023/2/24 17:53
      */
-    public static function getPayWay($userId, $terminal, $params)
+    public static function getPayWay($userId, $terminal, $params): false|array
     {
         try {
             if ($params['from'] == 'recharge') {
@@ -37,7 +39,7 @@ class PaymentLogic extends BaseLogic
             }
 
             if (empty($order)) {
-                throw new \Exception('待支付订单不存在');
+                throw new Exception('待支付订单不存在');
             }
 
             //获取支付场景
@@ -71,7 +73,7 @@ class PaymentLogic extends BaseLogic
                 'order_amount' => $order['order_amount'],
             ];
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }
@@ -85,7 +87,7 @@ class PaymentLogic extends BaseLogic
      * @author bingo
      * @date 2023/3/1 16:23
      */
-    public static function getPayStatus($params)
+    public static function getPayStatus($params): false|array
     {
         try {
             $order = [];
@@ -107,7 +109,7 @@ class PaymentLogic extends BaseLogic
             }
 
             if (empty($order)) {
-                throw new \Exception('订单不存在');
+                throw new Exception('订单不存在');
             }
 
             return [
@@ -115,7 +117,7 @@ class PaymentLogic extends BaseLogic
                 'pay_way' => $order['pay_way'],
                 'order' => $orderInfo
             ];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }
@@ -125,27 +127,27 @@ class PaymentLogic extends BaseLogic
     /**
      * @notes 获取预支付订单信息
      * @param $params
-     * @return RechargeOrder|array|false|\think\Model
+     * @return RechargeOrder|array|false|Model
      * @author bingo
      * @date 2023/2/27 15:19
      */
-    public static function getPayOrderInfo($params)
+    public static function getPayOrderInfo($params): false|array|RechargeOrder|Model
     {
         try {
             switch ($params['from']) {
                 case 'recharge':
                     $order = RechargeOrder::findOrEmpty($params['order_id']);
                     if ($order->isEmpty()) {
-                        throw new \Exception('充值订单不存在');
+                        throw new Exception('充值订单不存在');
                     }
                     break;
             }
 
             if ($order['pay_status'] == PayEnum::ISPAID) {
-                throw new \Exception('订单已支付');
+                throw new Exception('订单已支付');
             }
             return $order;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::$error = $e->getMessage();
             return false;
         }
@@ -163,7 +165,7 @@ class PaymentLogic extends BaseLogic
      * @author bingo
      * @date 2023/2/28 12:15
      */
-    public static function pay($payWay, $from, $order, $terminal, $redirectUrl)
+    public static function pay($payWay, $from, $order, $terminal, $redirectUrl): mixed
     {
         // 支付编号-仅为微信支付预置(同一商户号下不同客户端支付需使用唯一订单号)
         $paySn = $order['sn'];
@@ -213,7 +215,7 @@ class PaymentLogic extends BaseLogic
      * @date 2023/3/1 16:31
      * @remark 回调时使用了不同的回调地址,导致跨客户端支付时(例如小程序,公众号)可能出现201,商户订单号重复错误
      */
-    public static function formatOrderSn($orderSn, $terminal)
+    public static function formatOrderSn($orderSn, $terminal): string
     {
         $suffix = mb_substr(time(), -4);
         return $orderSn . $terminal . $suffix;

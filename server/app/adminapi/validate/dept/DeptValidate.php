@@ -54,7 +54,7 @@ class DeptValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/5/25 18:16
      */
-    public function sceneAdd()
+    public function sceneAdd(): DeptValidate
     {
         return $this->remove('id', true)->append('pid', 'checkDept');
     }
@@ -66,7 +66,7 @@ class DeptValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/5/25 18:16
      */
-    public function sceneDetail()
+    public function sceneDetail(): DeptValidate
     {
         return $this->only(['id']);
     }
@@ -78,7 +78,7 @@ class DeptValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/5/26 18:42
      */
-    public function sceneEdit()
+    public function sceneEdit(): DeptValidate
     {
         return $this->append('pid', 'checkPid');
     }
@@ -90,7 +90,7 @@ class DeptValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/5/25 18:16
      */
-    public function sceneDelete()
+    public function sceneDelete(): DeptValidate
     {
         return $this->only(['id'])->append('id', 'checkAbleDetele');
     }
@@ -103,7 +103,7 @@ class DeptValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/5/25 18:17
      */
-    public function checkDept($value)
+    public function checkDept($value): bool|string
     {
         $dept = Dept::findOrEmpty($value);
         if ($dept->isEmpty()) {
@@ -120,7 +120,7 @@ class DeptValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/5/26 14:22
      */
-    public function checkAbleDetele($value)
+    public function checkAbleDetele($value): bool|string
     {
         $hasLower = Dept::where(['pid' => $value])->findOrEmpty();
         if (!$hasLower->isEmpty()) {
@@ -149,7 +149,7 @@ class DeptValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/5/26 18:41
      */
-    public function checkPid($value, $rule, $data = [])
+    public function checkPid($value, $rule, $data = []): bool|string
     {
         // 当前编辑的部门id信息是否存在
         $dept = Dept::findOrEmpty($data['id']);

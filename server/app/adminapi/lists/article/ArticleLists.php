@@ -76,7 +76,7 @@ class ArticleLists extends BaseAdminDataLists implements ListsSearchInterface, L
         return Article::where($this->searchWhere)->count();
     }
 
-    public function extend()
+    public function extend(): array
     {
         return [];
     }

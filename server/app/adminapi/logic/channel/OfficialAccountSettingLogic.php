@@ -31,9 +31,9 @@ class OfficialAccountSettingLogic extends BaseLogic
      * @author ljj
      * @date 2022/2/16 10:08 上午
      */
-    public function getConfig()
+    public function getConfig(): array
     {
-        $domainName = $_SERVER['SERVER_NAME'];
+        $domainName = str_replace(['http://','https://'],'',getAgreementHost());
         $qrCode = ConfigService::get('oa_setting', 'qr_code', '');
         $qrCode = empty($qrCode) ? $qrCode : FileService::getFileUrl($qrCode);
         $config = [
@@ -60,7 +60,7 @@ class OfficialAccountSettingLogic extends BaseLogic
      * @author ljj
      * @date 2022/2/16 10:08 上午
      */
-    public function setConfig($params)
+    public function setConfig($params): void
     {
         $qrCode = isset($params['qr_code']) ? FileService::setFileUrl($params['qr_code']) : '';
 

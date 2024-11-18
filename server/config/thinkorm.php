@@ -23,7 +23,7 @@ return [
             // 断线重连
             'break_reconnect' => true,
             // 关闭SQL监听日志
-            'trigger_sql' => !getenv('SQL_DEBUG',false),
+            'trigger_sql' => getenv('SQL_DEBUG',false),
             // 自定义分页类
             'bootstrap' =>  ''
         ],

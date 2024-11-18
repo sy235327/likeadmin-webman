@@ -7,6 +7,7 @@ namespace app\common\controller;
 use app\BaseController;
 use app\common\lists\BaseDataLists;
 use app\common\service\JsonService;
+use support\Response;
 
 class BaseLikeAdminController extends BaseController
 {
@@ -18,10 +19,11 @@ class BaseLikeAdminController extends BaseController
      * @param array $data
      * @param int $code
      * @param int $show
+     * @return Response
      * @author 乔峰
      * @date 2021/12/27 14:21
      */
-    protected function success(string $msg = 'success', array $data = [], int $code = 1, int $show = 0)
+    protected function success(string $msg = 'success', array $data = [], int $code = 1, int $show = 0): Response
     {
         return JsonService::success($msg, $data, $code, $show);
     }
@@ -30,10 +32,11 @@ class BaseLikeAdminController extends BaseController
     /**
      * @notes 数据返回
      * @param $data
+     * @return Response
      * @author 乔峰
      * @date 2021/12/27 14:21\
      */
-    protected function data($data)
+    protected function data($data): Response
     {
         return JsonService::data($data);
     }
@@ -41,11 +44,11 @@ class BaseLikeAdminController extends BaseController
 
     /**
      * @notes 列表数据返回
-     * @param \app\common\lists\BaseDataLists|null $lists
+     * @param BaseDataLists|null $lists
      * @author 令狐冲
      * @date 2021/7/8 00:40
      */
-    protected function dataLists(BaseDataLists $lists = null)
+    protected function dataLists(BaseDataLists $lists = null): Response
     {
         //列表类和控制器一一对应，"app/应用/controller/控制器的方法" =》"app\应用\lists\"目录下
         //（例如："app/adminapi/controller/auth/AdminController.php的lists()方法" =》 "app/adminapi/lists/auth/AminLists.php")
@@ -67,7 +70,7 @@ class BaseLikeAdminController extends BaseController
      * @author 乔峰
      * @date 2021/12/27 14:21
      */
-    protected function fail(string $msg = 'fail', array $data = [], int $code = 0, int $show = 1)
+    protected function fail(string $msg = 'fail', array $data = [], int $code = 0, int $show = 1): Response
     {
         return JsonService::fail($msg, $data, $code, $show);
     }
@@ -80,14 +83,12 @@ class BaseLikeAdminController extends BaseController
      * @author 乔峰
      * @date 2021/12/27 14:21
      */
-    public function isNotNeedLogin() : bool
+    public function isNotNeedLogin($action) : bool
     {
         $notNeedLogin = $this->notNeedLogin;
         if (empty($notNeedLogin)) {
             return false;
         }
-        $action = $this->request->action;
-
         if (!in_array(trim($action), $notNeedLogin)) {
             return false;
         }

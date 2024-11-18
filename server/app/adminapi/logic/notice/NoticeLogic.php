@@ -17,6 +17,7 @@ namespace app\adminapi\logic\notice;
 use app\common\enum\notice\NoticeEnum;
 use app\common\logic\BaseLogic;
 use app\common\model\notice\NoticeSetting;
+use Exception;
 
 /**
  * 通知逻辑层
@@ -33,7 +34,7 @@ class NoticeLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/3/29 11:34
      */
-    public static function detail($params)
+    public static function detail($params): array
     {
         $field = 'id,type,scene_id,scene_name,scene_desc,system_notice,sms_notice,oa_notice,mnp_notice,support';
         $noticeSetting = NoticeSetting::field($field)->findOrEmpty($params['id'])->toArray();
@@ -95,7 +96,7 @@ class NoticeLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/3/29 11:34
      */
-    public static function set($params)
+    public static function set($params): bool
     {
         try {
             // 校验参数
@@ -108,7 +109,7 @@ class NoticeLogic extends BaseLogic
             // 更新通知设置
             NoticeSetting::where('id', $params['id'])->update($updateData);
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }
@@ -118,20 +119,20 @@ class NoticeLogic extends BaseLogic
     /**
      * @notes 校验参数
      * @param $params
-     * @throws \Exception
+     * @throws Exception
      * @author 乔峰
      * @date 2022/3/29 11:35
      */
-    public static function checkSet($params)
+    public static function checkSet($params): void
     {
         $noticeSetting = NoticeSetting::findOrEmpty($params['id'] ?? 0);
 
         if ($noticeSetting->isEmpty()) {
-            throw new \Exception('通知配置不存在');
+            throw new Exception('通知配置不存在');
         }
 
         if (!isset($params['template']) || !is_array($params['template']) || count($params['template']) == 0) {
-            throw new \Exception('模板配置不存在或格式错误');
+            throw new Exception('模板配置不存在或格式错误');
         }
 
         // 通知类型
@@ -139,11 +140,11 @@ class NoticeLogic extends BaseLogic
 
         foreach ($params['template'] as $item) {
             if (!is_array($item)) {
-                throw new \Exception('模板项格式错误');
+                throw new Exception('模板项格式错误');
             }
 
             if (!isset($item['type']) || !in_array($item['type'], $noticeType)) {
-                throw new \Exception('模板项缺少模板类型或模板类型有误');
+                throw new Exception('模板项缺少模板类型或模板类型有误');
             }
 
             switch ($item['type']) {
@@ -167,14 +168,14 @@ class NoticeLogic extends BaseLogic
     /**
      * @notes 校验系统通知参数
      * @param $item
-     * @throws \Exception
+     * @throws Exception
      * @author 乔峰
      * @date 2022/3/29 11:35
      */
-    public static function checkSystem($item)
+    public static function checkSystem($item): void
     {
         if (!isset($item['title']) || !isset($item['content']) || !isset($item['status'])) {
-            throw new \Exception('系统通知必填参数：title、content、status');
+            throw new Exception('系统通知必填参数：title、content、status');
         }
     }
 
@@ -182,14 +183,14 @@ class NoticeLogic extends BaseLogic
     /**
      * @notes 校验短信通知必填参数
      * @param $item
-     * @throws \Exception
+     * @throws Exception
      * @author 乔峰
      * @date 2022/3/29 11:35
      */
-    public static function checkSms($item)
+    public static function checkSms($item): void
     {
         if (!isset($item['template_id']) || !isset($item['content']) || !isset($item['status'])) {
-            throw new \Exception('短信通知必填参数：template_id、content、status');
+            throw new Exception('短信通知必填参数：template_id、content、status');
         }
     }
 
@@ -197,14 +198,14 @@ class NoticeLogic extends BaseLogic
     /**
      * @notes 校验微信模板消息参数
      * @param $item
-     * @throws \Exception
+     * @throws Exception
      * @author 乔峰
      * @date 2022/3/29 11:35
      */
-    public static function checkOa($item)
+    public static function checkOa($item): void
     {
         if (!isset($item['template_id']) || !isset($item['template_sn']) || !isset($item['name']) || !isset($item['first']) || !isset($item['remark']) || !isset($item['tpl']) || !isset($item['status'])) {
-            throw new \Exception('微信模板消息必填参数：template_id、template_sn、name、first、remark、tpl、status');
+            throw new Exception('微信模板消息必填参数：template_id、template_sn、name、first、remark、tpl、status');
         }
     }
 
@@ -212,14 +213,14 @@ class NoticeLogic extends BaseLogic
     /**
      * @notes 校验微信小程序提醒必填参数
      * @param $item
-     * @throws \Exception
+     * @throws Exception
      * @author 乔峰
      * @date 2022/3/29 11:35
      */
-    public static function checkMnp($item)
+    public static function checkMnp($item): void
     {
         if (!isset($item['template_id']) || !isset($item['template_sn']) || !isset($item['name']) || !isset($item['tpl']) || !isset($item['status'])) {
-            throw new \Exception('微信模板消息必填参数：template_id、template_sn、name、tpl、status');
+            throw new Exception('微信模板消息必填参数：template_id、template_sn、name、tpl、status');
         }
     }
 }

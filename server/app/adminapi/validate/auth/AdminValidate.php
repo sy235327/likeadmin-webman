@@ -60,7 +60,7 @@ class AdminValidate extends BaseValidate
      * @author 乔峰
      * @date 2021/12/29 15:46
      */
-    public function sceneAdd()
+    public function sceneAdd(): AdminValidate
     {
         return $this->remove(['password', 'edit'])
             ->remove('id', 'require|checkAdmin')
@@ -73,7 +73,7 @@ class AdminValidate extends BaseValidate
      * @author 乔峰
      * @date 2021/12/29 15:46
      */
-    public function sceneDetail()
+    public function sceneDetail(): AdminValidate
     {
         return $this->only(['id']);
     }
@@ -84,7 +84,7 @@ class AdminValidate extends BaseValidate
      * @author 乔峰
      * @date 2021/12/29 15:47
      */
-    public function sceneEdit()
+    public function sceneEdit(): AdminValidate
     {
         return $this->remove('password', 'require|length')
             ->append('id', 'require|checkAdmin');
@@ -97,7 +97,7 @@ class AdminValidate extends BaseValidate
      * @author 乔峰
      * @date 2021/12/29 15:47
      */
-    public function sceneDelete()
+    public function sceneDelete(): AdminValidate
     {
         return $this->only(['id']);
     }
@@ -113,7 +113,7 @@ class AdminValidate extends BaseValidate
      * @author 乔峰
      * @date 2021/12/29 10:19
      */
-    public function edit($value, $rule, $data)
+    public function edit($value, $rule, $data): bool|string
     {
         if (empty($data['password']) && empty($data['password_confirm'])) {
             return true;
@@ -133,7 +133,7 @@ class AdminValidate extends BaseValidate
      * @author 乔峰
      * @date 2021/12/29 10:19
      */
-    public function checkAdmin($value)
+    public function checkAdmin($value): bool|string
     {
         $admin = Admin::findOrEmpty($value);
         if ($admin->isEmpty()) {
@@ -152,7 +152,7 @@ class AdminValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/8/11 9:59
      */
-    public function checkAbleDisable($value, $rule, $data)
+    public function checkAbleDisable($value, $rule, $data): bool|string
     {
         $admin = Admin::findOrEmpty($data['id']);
         if ($admin->isEmpty()) {

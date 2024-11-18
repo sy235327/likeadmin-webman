@@ -15,17 +15,19 @@ class AuthMiddleware implements MiddlewareInterface
 {
     public function process(Request $request, callable $handler): Response
     {
+        $controllerObject = make($request->controller);
+        [$adminId,$adminInfo] = $controllerObject->getAdmin();
         //不登录访问，无需权限验证
-        if ($request->controllerObject->isNotNeedLogin()) {
+        if ($controllerObject->isNotNeedLogin($request->action)) {
             return $handler($request);
         }
 
         //系统默认超级管理员，无需权限验证
-        if (1 === $request->adminInfo['root']) {
+        if (1 === $adminInfo['root']) {
             return $handler($request);
         }
 
-        $adminAuthCache = new AdminAuthCache($request->adminInfo['admin_id']);
+        $adminAuthCache = new AdminAuthCache($adminId);
 
         // 当前访问路径
         $accessUri = strtolower($request->controller . '/' . $request->action);

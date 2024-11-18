@@ -45,13 +45,13 @@ class UserConfigValidate extends BaseValidate
     ];
 
     //用户设置验证
-    public function sceneUser()
+    public function sceneUser(): UserConfigValidate
     {
         return $this->only(['default_avatar']);
     }
 
     //注册验证
-    public function sceneRegister()
+    public function sceneRegister(): UserConfigValidate
     {
         return $this->only(['login_way', 'coerce_mobile', 'login_agreement', 'third_auth', 'wechat_auth']);
     }

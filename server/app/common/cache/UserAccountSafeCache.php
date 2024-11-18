@@ -24,9 +24,9 @@ namespace app\common\cache;
 class UserAccountSafeCache extends BaseCache
 {
 
-    private $key;//缓存次数名称
-    public $minute = 15;//缓存设置为15分钟，即密码错误次数达到，锁定15分钟
-    public $count = 15;  //设置连续输错次数，即15分钟内连续输错误15次后，锁定
+    private string $key;//缓存次数名称
+    public int $minute = 15;//缓存设置为15分钟，即密码错误次数达到，锁定15分钟
+    public int $count = 15;  //设置连续输错次数，即15分钟内连续输错误15次后，锁定
 
     public function __construct()
     {
@@ -40,7 +40,7 @@ class UserAccountSafeCache extends BaseCache
      * @author 令狐冲
      * @date 2021/6/30 01:51
      */
-    public function record()
+    public function record(): void
     {
         if ($this->get($this->key)) {
             //缓存存在，记录错误次数
@@ -57,7 +57,7 @@ class UserAccountSafeCache extends BaseCache
      * @author 令狐冲
      * @date 2021/6/30 01:53
      */
-    public function isSafe()
+    public function isSafe(): bool
     {
         $count = $this->get($this->key);
         if ($count >= $this->count) {
@@ -71,7 +71,7 @@ class UserAccountSafeCache extends BaseCache
      * @author 令狐冲
      * @date 2021/6/30 01:55
      */
-    public function relieve()
+    public function relieve(): void
     {
         $this->delete($this->key);
     }

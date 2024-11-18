@@ -25,18 +25,18 @@ class BaseLogic
 {
     /**
      * 错误信息
-     * @var string
+     * @var string|null
      */
-    protected static $error;
+    protected static string|null $error;
 
     /**
      * 返回状态码
      * @var int
      */
-    protected static $returnCode = 0;
+    protected static int $returnCode = 0;
 
 
-    protected static $returnData;
+    protected static mixed $returnData;
 
     /**
      * @notes 获取错误信息
@@ -106,7 +106,7 @@ class BaseLogic
      * @author cjhao
      * @date 2021/9/11 17:29
      */
-    public static function getReturnData()
+    public static function getReturnData(): mixed
     {
         return self::$returnData;
     }

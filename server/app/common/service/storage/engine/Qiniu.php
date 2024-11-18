@@ -2,6 +2,7 @@
 
 namespace app\common\service\storage\engine;
 
+use ArrayObject;
 use Exception;
 use Qiniu\Auth;
 use Qiniu\Storage\UploadManager;
@@ -14,7 +15,7 @@ use Qiniu\Storage\BucketManager;
  */
 class Qiniu extends Server
 {
-    private $config;
+    private mixed $config;
 
     /**
      * 构造方法
@@ -29,12 +30,12 @@ class Qiniu extends Server
 
     /**
      * @notes 执行上传
-     * @param $save_dir
-     * @return bool|mixed
+     * @param string $save_dir
+     * @return bool
      * @author 张无忌
      * @date 2021/7/27 16:02
      */
-    public function upload($save_dir)
+    public function upload(string $save_dir): bool
     {
         // 要上传图片的本地路径
         $realPath = $this->getRealPath();
@@ -68,11 +69,11 @@ class Qiniu extends Server
      * @notes 抓取远程资源
      * @param $url
      * @param null $key
-     * @return bool|mixed
+     * @return bool
      * @author 张无忌
      * @date 2021/7/27 16:02
      */
-    public function fetch($url, $key=null)
+    public function fetch($url, $key=null): bool
     {
         try {
             if (substr($url, 0, 1) !== '/' || strstr($url, 'http://') || strstr($url, 'https://')) {
@@ -101,11 +102,11 @@ class Qiniu extends Server
     /**
      * @notes 删除文件
      * @param $fileName
-     * @return bool|mixed
+     * @return bool
      * @author 张无忌
      * @date 2021/7/27 16:02
      */
-    public function delete($fileName)
+    public function delete($fileName): bool
     {
         // 构建鉴权对象
         $auth = new Auth($this->config['access_key'], $this->config['secret_key']);
@@ -129,8 +130,28 @@ class Qiniu extends Server
      * 返回文件路径
      * @return mixed
      */
-    public function getFileName()
+    public function getFileName(): string
     {
         return $this->fileName;
+    }
+
+
+    public function getUploadToken($name,$src,$size): array
+    {
+        $dummyAuth = new Auth($this->config['access_key'], $this->config['secret_key']);
+        //size 单位byte
+        $token = $dummyAuth->uploadToken($this->config['bucket'], $src.'/'.$name, 3600, array('fsizeLimit'=>$size));
+        $params = new ArrayObject();
+        $headers = new ArrayObject();
+        $req_url = '';
+        return [
+            'upload_token'=>$token,
+            'save_dir'=>$src,
+            'upload_file_name'=>$name,
+            'upload_file_size'=>$size,
+            'params'=>$params,
+            'headers'=>$headers,
+            'req_url'=>$req_url,
+        ];
     }
 }

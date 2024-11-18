@@ -14,6 +14,7 @@
 namespace app\common\service\sms\engine;
 
 use AlibabaCloud\Client\AlibabaCloud;
+use Exception;
 
 /**
  * 阿里云短信
@@ -22,11 +23,11 @@ use AlibabaCloud\Client\AlibabaCloud;
  */
 class AliSms
 {
-    protected $error = null;
-    protected $config;
-    protected $mobile;
-    protected $templateId;
-    protected $templateParams;
+    protected string|null $error = null;
+    protected mixed $config;
+    protected string|null $mobile;
+    protected string|null $templateId;
+    protected mixed $templateParams;
 
     public function __construct($config)
     {
@@ -40,12 +41,12 @@ class AliSms
 
     /**
      * @notes 设置手机号
-     * @param $mobile
+     * @param int|string $mobile
      * @return $this
      * @author 段誉
      * @date 2022/9/15 16:28
      */
-    public function setMobile($mobile)
+    public function setMobile(int|string$mobile): static
     {
         $this->mobile = $mobile;
         return $this;
@@ -59,7 +60,7 @@ class AliSms
      * @author 段誉
      * @date 2022/9/15 16:28
      */
-    public function setTemplateId($templateId)
+    public function setTemplateId($templateId): static
     {
         $this->templateId = $templateId;
         return $this;
@@ -73,7 +74,7 @@ class AliSms
      * @author 段誉
      * @date 2022/9/15 16:28
      */
-    public function setTemplateParams($templateParams)
+    public function setTemplateParams($templateParams): static
     {
         $this->templateParams = json_encode($templateParams, JSON_UNESCAPED_UNICODE);
         return $this;
@@ -86,7 +87,7 @@ class AliSms
      * @author 段誉
      * @date 2022/9/15 16:27
      */
-    public function getError()
+    public function getError(): string|null
     {
         return $this->error;
     }
@@ -98,7 +99,7 @@ class AliSms
      * @author 段誉
      * @date 2022/9/15 16:27
      */
-    public function send()
+    public function send(): false|array
     {
         try {
             AlibabaCloud::accessKeyClient($this->config['app_key'], $this->config['secret_key'])
@@ -126,8 +127,8 @@ class AliSms
                 return $res;
             }
             $message = $res['Message'] ?? $res;
-            throw new \Exception('阿里云短信错误：' . $message);
-        } catch(\Exception $e) {
+            throw new Exception('阿里云短信错误：' . $message);
+        } catch(Exception $e) {
             $this->error = $e->getMessage();
             return false;
         }

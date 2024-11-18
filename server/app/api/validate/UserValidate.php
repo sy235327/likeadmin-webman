@@ -40,7 +40,7 @@ class UserValidate extends BaseValidate
      * @author 段誉
      * @date 2022/9/21 16:44
      */
-    public function sceneGetMobileByMnp()
+    public function sceneGetMobileByMnp(): UserValidate
     {
         return $this->only(['code']);
     }
@@ -52,7 +52,7 @@ class UserValidate extends BaseValidate
      * @author 段誉
      * @date 2022/9/21 17:37
      */
-    public function sceneBindMobile()
+    public function sceneBindMobile(): UserValidate
     {
         return $this->only(['mobile', 'code']);
     }

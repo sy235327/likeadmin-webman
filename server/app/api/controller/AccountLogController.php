@@ -15,6 +15,7 @@
 namespace app\api\controller;
 
 use app\api\lists\AccountLogLists;
+use support\Response;
 
 /**
  * 账户流水
@@ -25,11 +26,11 @@ class AccountLogController extends BaseApiController
 {
     /**
      * @notes 账户流水
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2023/2/24 14:34
      */
-    public function lists()
+    public function lists(): Response
     {
         return $this->dataLists(new AccountLogLists());
     }

@@ -32,8 +32,9 @@ class ModelGenerator extends BaseGenerator implements GenerateInterface
             '{DELETE_USE}',
             '{DELETE_TIME}',
             '{RELATION_MODEL}',
+            '{TABLE_COLUMNS}',
+            '{TABLE_COLUMNS_PROPERTY}',
         ];
-
         // 等待替换的内容
         $waitReplace = [
             $this->getNameSpaceContent(),
@@ -45,6 +46,8 @@ class ModelGenerator extends BaseGenerator implements GenerateInterface
             $this->getDeleteUseContent(),
             $this->getDeleteTimeContent(),
             $this->getRelationModel(),
+            $this->getTableColumns(),
+            $this->getTableColumnsProperty(),
         ];
 
         $templatePath = $this->getTemplatePath('php/model');
@@ -55,6 +58,44 @@ class ModelGenerator extends BaseGenerator implements GenerateInterface
         $this->setContent($content);
     }
 
+    /**
+     * 获取表字段
+     * @return string
+     */
+    public function getTableColumns(){
+        $columnValue = '    //设置字段信息'. PHP_EOL;
+        $columnValue .= '    protected $schema = ['. PHP_EOL;
+        $pk = $this->getPkContent();
+        foreach ($this->tableColumn as $column) {
+            $column_comment = $column['column_comment'];
+            if ($pk==$column['column_name']){
+                $column_comment = "主键 " . $column_comment;
+            }
+            $columnValue.= '    //'.$column_comment. PHP_EOL;
+            $columnValue.= "    '".$column['column_name']."' => '".$column['column_type']. "',". PHP_EOL;
+        }
+        $columnValue .= '    ];'. PHP_EOL;
+        return $columnValue;
+    }
+
+
+    /**
+     * 获取表字段
+     * @return string
+     */
+    public function getTableColumnsProperty(){
+        $columnValue = '';
+        $pk = $this->getPkContent();
+        foreach ($this->tableColumn as $column) {
+            $column_comment = $column['column_comment'];
+            if ($pk==$column['column_name']){
+                $column_comment = "主键 " . $column_comment;
+            }
+            //@property int $id 主键
+            $columnValue.= " * @property ".$column['column_type']." $".$column['column_name']. " ".$column_comment. PHP_EOL;
+        }
+        return $columnValue;
+    }
 
     /**
      * @notes 获取命名空间模板内容
@@ -79,8 +120,8 @@ class ModelGenerator extends BaseGenerator implements GenerateInterface
      */
     public function getClassCommentContent()
     {
-        if (!empty($this->tableData['class_comment'])) {
-            $tpl = $this->tableData['class_comment'] . '模型';
+        if (!empty($this->tableData['table_comment'])) {
+            $tpl = $this->tableData['table_comment'] . '模型';
         } else {
             $tpl = $this->getUpperCamelName() . '模型';
         }

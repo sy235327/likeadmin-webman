@@ -36,12 +36,12 @@ class DefaultEnum
 
     /**
      * @notes 获取显示状态
-     * @param bool $value
+     * @param bool|int $value
      * @return string|string[]
      * @author ljj
      * @date 2022/2/8 3:56 下午
      */
-    public static function getShowDesc($value = true)
+    public static function getShowDesc(bool|int $value = true): array|string
     {
         $data = [
             self::HIDE => '隐藏',
@@ -55,12 +55,12 @@ class DefaultEnum
 
     /**
      * @notes 启用状态
-     * @param bool $value
+     * @param bool|int $value
      * @return string|string[]
      * @author ljj
      * @date 2022/2/14 4:02 下午
      */
-    public static function getEnableDesc($value = true)
+    public static function getEnableDesc(bool|int $value = true): array|string
     {
         $data = [
             self::HIDE => '停用',
@@ -74,12 +74,12 @@ class DefaultEnum
 
     /**
      * @notes 性别
-     * @param bool $value
+     * @param bool|int $value
      * @return string|string[]
      * @author ljj
      * @date 2022/2/10 11:40 上午
      */
-    public static function getSexDesc($value = true)
+    public static function getSexDesc(bool|int $value = true): array|string
     {
         $data = [
             self::UNKNOWN => '未知',
@@ -95,12 +95,12 @@ class DefaultEnum
 
     /**
      * @notes 属性
-     * @param bool $value
+     * @param bool|int $value
      * @return string|string[]
      * @author ljj
      * @date 2022/2/14 4:41 下午
      */
-    public static function getAttrDesc($value = true)
+    public static function getAttrDesc(bool|int $value = true): array|string
     {
         $data = [
             self::SYSTEM => '系统默认',
@@ -115,12 +115,12 @@ class DefaultEnum
 
     /**
      * @notes 是否推荐
-     * @param bool $value
+     * @param bool|int $value
      * @return string|string[]
      * @author ljj
      * @date 2022/2/23 3:30 下午
      */
-    public static function getRecommendDesc($value = true)
+    public static function getRecommendDesc(bool|int $value = true): array|string
     {
         $data = [
             self::HIDE => '不推荐',

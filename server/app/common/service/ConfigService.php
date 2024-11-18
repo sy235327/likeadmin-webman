@@ -17,7 +17,7 @@ class ConfigService
      * @author 乔峰
      * @date 2021/12/27 15:00
      */
-    public static function set(string $type, string $name, $value)
+    public static function set(string $type, string $name, $value): mixed
     {
         $original = $value;
         if (is_array($value)) {
@@ -50,7 +50,7 @@ class ConfigService
      * @author Tab
      * @date 2021/7/15 15:16
      */
-    public static function get(string $type, string $name = '', $default_value = null)
+    public static function get(string $type, string $name = '', $default_value = null): mixed
     {
         if (!empty($name)) {
             $value = Config::where(['type' => $type, 'name' => $name])->value('value');
@@ -84,5 +84,6 @@ class ConfigService
         if ($data) {
             return $data;
         }
+        return false;
     }
 }

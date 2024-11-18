@@ -17,6 +17,7 @@ namespace app\adminapi\logic\setting\dict;
 use app\common\logic\BaseLogic;
 use app\common\model\dict\DictData;
 use app\common\model\dict\DictType;
+use think\Model;
 
 
 /**
@@ -30,11 +31,11 @@ class DictDataLogic extends BaseLogic
     /**
      * @notes 添加编辑
      * @param array $params
-     * @return DictData|\think\Model
+     * @return DictData|Model
      * @author 乔峰
      * @date 2022/6/20 17:13
      */
-    public static function save(array $params)
+    public static function save(array $params): DictData|Model
     {
         $data = [
             'name' => $params['name'],
@@ -62,7 +63,7 @@ class DictDataLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/6/20 17:01
      */
-    public static function delete(array $params)
+    public static function delete(array $params): bool
     {
         return DictData::destroy($params['id']);
     }

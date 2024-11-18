@@ -17,6 +17,7 @@ namespace app\adminapi\controller\notice;
 use app\adminapi\controller\BaseAdminController;
 use app\adminapi\logic\notice\SmsConfigLogic;
 use app\adminapi\validate\notice\SmsConfigValidate;
+use support\Response;
 
 /**
  * 短信配置控制器
@@ -37,7 +38,7 @@ class SmsConfigController extends BaseAdminController
      * @author 乔峰
      * @date 2022/3/29 11:36
      */
-    public function getConfig()
+    public function getConfig(): Response
     {
         $result = SmsConfigLogic::getConfig();
         return $this->data($result);
@@ -49,7 +50,7 @@ class SmsConfigController extends BaseAdminController
      * @author 乔峰
      * @date 2022/3/29 11:36
      */
-    public function setConfig()
+    public function setConfig(): Response
     {
         $params = $this->validateObj->post()->goCheck('setConfig');
         SmsConfigLogic::setConfig($params);
@@ -62,7 +63,7 @@ class SmsConfigController extends BaseAdminController
      * @author 乔峰
      * @date 2022/3/29 11:36
      */
-    public function detail()
+    public function detail(): Response
     {
         $params = $this->validateObj->goCheck('detail');
         $result = SmsConfigLogic::detail($params);

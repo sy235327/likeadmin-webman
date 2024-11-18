@@ -11,14 +11,19 @@ class BaseAdminController extends BaseLikeAdminController
 {
     public array $notNeedLogin = [];
 
-    protected $adminId = 0;
-    protected $adminInfo = [];
+    protected int $adminId = 0;
+    protected array $adminInfo = [];
 
-    public function initialize()
+    public function setAdmin(int $adminId,array $adminInfo): void
     {
-        if (isset($this->request->adminInfo) && $this->request->adminInfo) {
-            $this->adminInfo = $this->request->adminInfo;
-            $this->adminId = $this->request->adminInfo['admin_id'];
-        }
+        $this->adminId = $adminId;
+        $this->adminInfo = $adminInfo;
+    }
+    public function getAdmin(): array
+    {
+        return [
+            $this->adminId,
+            $this->adminInfo
+        ];
     }
 }

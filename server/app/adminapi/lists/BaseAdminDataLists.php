@@ -25,14 +25,14 @@ use app\common\lists\BaseDataLists;
  */
 abstract class BaseAdminDataLists extends BaseDataLists
 {
-    protected $adminInfo;
-    protected $adminId;
+    protected array $adminInfo;
+    protected int $adminId;
 
     public function __construct()
     {
         parent::__construct();
-        $this->adminInfo = $this->request->adminInfo;
-        $this->adminId = $this->request->adminId;
+        $controllerObject = make($this->request->controller);
+        [$this->adminId,$this->adminInfo] = $controllerObject->getAdmin();
     }
 
 

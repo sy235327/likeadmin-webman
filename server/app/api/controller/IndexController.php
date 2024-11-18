@@ -16,7 +16,10 @@ namespace app\api\controller;
 
 
 use app\api\logic\IndexLogic;
-use think\response\Json;
+use support\Response;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 
 /**
@@ -33,14 +36,14 @@ class IndexController extends BaseApiController
 
     /**
      * @notes 首页数据
-     * @return \support\Response
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @return Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2022/9/21 19:15
      */
-    public function index()
+    public function index(): Response
     {
         $result = IndexLogic::getIndexData();
         return $this->data($result);
@@ -49,14 +52,14 @@ class IndexController extends BaseApiController
 
     /**
      * @notes 全局配置
-     * @return \support\Response
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @return Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2022/9/21 19:41
      */
-    public function config()
+    public function config(): Response
     {
         $result = IndexLogic::getConfigData();
         return $this->data($result);
@@ -65,11 +68,11 @@ class IndexController extends BaseApiController
 
     /**
      * @notes 政策协议
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/9/20 20:00
      */
-    public function policy()
+    public function policy(): Response
     {
         $type = $this->request->get('type', '');
         $result = IndexLogic::getPolicyByType($type);
@@ -79,11 +82,11 @@ class IndexController extends BaseApiController
 
     /**
      * @notes 装修信息
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/9/21 18:37
      */
-    public function decorate()
+    public function decorate(): Response
     {
         $id = $this->request->get('id');
         $result = IndexLogic::getDecorate($id);

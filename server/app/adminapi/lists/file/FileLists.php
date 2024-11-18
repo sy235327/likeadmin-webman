@@ -9,12 +9,15 @@ use app\common\enum\FileEnum;
 use app\common\lists\ListsSearchInterface;
 use app\common\model\file\File;
 use app\common\service\FileService;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 class FileLists extends BaseAdminDataLists implements ListsSearchInterface
 {
     /**
      * @notes 文件搜索条件
-     * @return \string[][]
+     * @return string[][]
      * @author 乔峰
      * @date 2021/12/29 14:27
      */
@@ -30,9 +33,9 @@ class FileLists extends BaseAdminDataLists implements ListsSearchInterface
     /**
      * @notes 获取文件列表
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2021/12/29 14:27
      */

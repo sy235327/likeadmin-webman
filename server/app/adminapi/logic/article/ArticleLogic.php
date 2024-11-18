@@ -17,6 +17,7 @@ namespace app\adminapi\logic\article;
 use app\common\logic\BaseLogic;
 use app\common\model\article\Article;
 use app\common\service\FileService;
+use Exception;
 
 /**
  * 资讯管理逻辑
@@ -32,7 +33,7 @@ class ArticleLogic extends BaseLogic
      * @author heshihu
      * @date 2022/2/22 9:57
      */
-    public static function add(array $params)
+    public static function add(array $params): void
     {
         Article::create([
             'title' => $params['title'],
@@ -73,7 +74,7 @@ class ArticleLogic extends BaseLogic
                 'content' => $params['content'] ?? '',
             ]);
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }
@@ -86,7 +87,7 @@ class ArticleLogic extends BaseLogic
      * @author heshihu
      * @date 2022/2/22 10:17
      */
-    public static function delete(array $params)
+    public static function delete(array $params): void
     {
         Article::destroy($params['id']);
     }
@@ -110,7 +111,7 @@ class ArticleLogic extends BaseLogic
      * @author heshihu
      * @date 2022/2/22 10:18
      */
-    public static function updateStatus(array $params)
+    public static function updateStatus(array $params): bool
     {
         Article::update([
             'id' => $params['id'],

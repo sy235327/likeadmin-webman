@@ -2,6 +2,7 @@
 
 namespace app\common\service\storage\engine;
 
+use ArrayObject;
 use Exception;
 use Qcloud\Cos\Client;
 
@@ -12,8 +13,8 @@ use Qcloud\Cos\Client;
  */
 class Qcloud extends Server
 {
-    private $config;
-    private $cosClient;
+    private mixed $config;
+    private mixed $cosClient;
 
     /**
      * 构造方法
@@ -31,7 +32,7 @@ class Qcloud extends Server
     /**
      * 创建COS控制类
      */
-    private function createCosClient()
+    private function createCosClient(): void
     {
         $this->cosClient = new Client([
             'region' => $this->config['region'],
@@ -44,10 +45,10 @@ class Qcloud extends Server
 
     /**
      * 执行上传
-     * @param $save_dir (保存路径)
-     * @return bool|mixed
+     * @param $save_dir string
+     * @return bool
      */
-    public function upload($save_dir)
+    public function upload(string $save_dir): bool
     {
         // 上传文件
         // putObject(上传接口，最大支持上传5G文件)
@@ -68,10 +69,11 @@ class Qcloud extends Server
      * notes: 抓取远程资源(最大支持上传5G文件)
      * @param $url
      * @param null $key
-     * @author 张无忌(2021/3/2 14:36)
-     * @return mixed|void
+     * @return bool
+     *@author 张无忌(2021/3/2 14:36)
      */
-    public function fetch($url, $key=null) {
+    public function fetch($url, $key=null): bool
+    {
         try {
             $this->cosClient->putObject([
                 'Bucket' => $this->config['bucket'],
@@ -88,9 +90,9 @@ class Qcloud extends Server
     /**
      * 删除文件
      * @param $fileName
-     * @return bool|mixed
+     * @return bool
      */
-    public function delete($fileName)
+    public function delete($fileName): bool
     {
         try {
             $this->cosClient->deleteObject(array(
@@ -108,9 +110,25 @@ class Qcloud extends Server
      * 返回文件路径
      * @return mixed
      */
-    public function getFileName()
+    public function getFileName(): string
     {
         return $this->fileName;
     }
 
+    public function getUploadToken($name,$src,$size): array
+    {
+        // TODO: Implement getUploadToken() method.
+        $params = new ArrayObject();
+        $headers = new ArrayObject();
+        $req_url = '';
+        return [
+            'upload_token'=>'',
+            'save_dir'=>$src,
+            'upload_file_name'=>$name,
+            'upload_file_size'=>$size,
+            'params'=>$params,
+            'headers'=>$headers,
+            'req_url'=>$req_url,
+        ];
+    }
 }

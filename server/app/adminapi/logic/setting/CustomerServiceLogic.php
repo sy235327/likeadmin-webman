@@ -31,7 +31,7 @@ class CustomerServiceLogic extends BaseLogic
      * @author ljj
      * @date 2022/2/15 12:05 下午
      */
-    public static function getConfig()
+    public static function getConfig(): array
     {
         $qrCode = ConfigService::get('customer_service', 'qr_code');
         $qrCode = empty($qrCode) ? '' : FileService::getFileUrl($qrCode);
@@ -50,7 +50,7 @@ class CustomerServiceLogic extends BaseLogic
      * @author ljj
      * @date 2022/2/15 12:11 下午
      */
-    public static function setConfig($params)
+    public static function setConfig($params): void
     {
         $allowField = ['qr_code','wechat','phone','service_time'];
         foreach($params as $key => $value) {

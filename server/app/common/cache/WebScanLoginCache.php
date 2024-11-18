@@ -19,7 +19,7 @@ namespace app\common\cache;
 class WebScanLoginCache extends BaseCache
 {
 
-    private $prefix = 'web_scan_';
+    private string $prefix = 'web_scan_';
 
 
     /**
@@ -29,7 +29,7 @@ class WebScanLoginCache extends BaseCache
      * @author 段誉
      * @date 2022/10/20 18:39
      */
-    public function getScanLoginState($state)
+    public function getScanLoginState($state): mixed
     {
         return $this->get($this->prefix . $state);
     }
@@ -42,7 +42,7 @@ class WebScanLoginCache extends BaseCache
      * @author 段誉
      * @date 2022/10/20 18:31
      */
-    public function setScanLoginState($state)
+    public function setScanLoginState($state): mixed
     {
         $this->set($this->prefix . $state, $state, 600);
         return $this->getScanLoginState($state);
@@ -56,7 +56,7 @@ class WebScanLoginCache extends BaseCache
      * @author 段誉
      * @date 2022/9/16 10:13
      */
-    public function deleteLoginState($state)
+    public function deleteLoginState($state): bool
     {
         return $this->delete($this->prefix . $state);
     }

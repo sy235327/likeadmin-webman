@@ -53,7 +53,7 @@ class DictDataValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/6/20 16:54
      */
-    public function sceneAdd()
+    public function sceneAdd(): DictDataValidate
     {
         return $this->remove('id', true);
     }
@@ -65,7 +65,7 @@ class DictDataValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/6/20 16:54
      */
-    public function sceneId()
+    public function sceneId(): DictDataValidate
     {
         return $this->only(['id']);
     }
@@ -77,7 +77,7 @@ class DictDataValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/6/20 18:36
      */
-    public function sceneEdit()
+    public function sceneEdit(): DictDataValidate
     {
         return $this->remove('type_id', true);
     }
@@ -90,7 +90,7 @@ class DictDataValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/6/20 16:55
      */
-    protected function checkDictData($value)
+    protected function checkDictData($value): bool|string
     {
         $article = DictData::findOrEmpty($value);
         if ($article->isEmpty()) {
@@ -107,7 +107,7 @@ class DictDataValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/6/20 17:03
      */
-    protected function checkDictType($value)
+    protected function checkDictType($value): bool|string
     {
         $type = DictType::findOrEmpty($value);
         if ($type->isEmpty()) {

@@ -5,6 +5,7 @@ namespace app\adminapi\lists\tools;
 
 
 use app\adminapi\lists\BaseAdminDataLists;
+use think\facade\Db;
 
 /**
  * 数据表列表
@@ -29,7 +30,7 @@ class DataTableLists extends BaseAdminDataLists
         if (!empty($this->params['comment'])) {
             $sql .= "AND comment LIKE '%" . $this->params['comment'] . "%'";
         }
-        return \think\facade\Db::query($sql);
+        return Db::query($sql);
     }
 
 

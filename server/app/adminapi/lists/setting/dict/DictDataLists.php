@@ -17,6 +17,9 @@ namespace app\adminapi\lists\setting\dict;
 use app\adminapi\lists\BaseAdminDataLists;
 use app\common\lists\ListsSearchInterface;
 use app\common\model\dict\DictData;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 
 /**
@@ -29,7 +32,7 @@ class DictDataLists extends BaseAdminDataLists implements ListsSearchInterface
 
     /**
      * @notes 设置搜索条件
-     * @return \string[][]
+     * @return string[][]
      * @author 乔峰
      * @date 2022/6/20 16:29
      */
@@ -45,9 +48,9 @@ class DictDataLists extends BaseAdminDataLists implements ListsSearchInterface
     /**
      * @notes 获取列表
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2022/6/20 16:35
      */

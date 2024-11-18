@@ -17,6 +17,7 @@ namespace app\adminapi\controller\finance;
 use app\adminapi\controller\BaseAdminController;
 use app\adminapi\lists\finance\AccountLogLists;
 use app\common\enum\user\AccountLogEnum;
+use support\Response;
 
 /***
  * 账户流水控制器
@@ -29,11 +30,11 @@ class AccountLogController extends BaseAdminController
 
     /**
      * @notes 账户流水明细
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2023/2/24 15:25
      */
-    public function lists()
+    public function lists(): Response
     {
         return $this->dataLists(new AccountLogLists());
     }
@@ -41,11 +42,11 @@ class AccountLogController extends BaseAdminController
 
     /**
      * @notes 用户余额变动类型
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2023/2/24 15:25
      */
-    public function getUmChangeType()
+    public function getUmChangeType(): Response
     {
         return $this->data(AccountLogEnum::getUserMoneyChangeTypeDesc());
     }

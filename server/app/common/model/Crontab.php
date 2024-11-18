@@ -21,6 +21,22 @@ use think\model\concern\SoftDelete;
  * 定时任务模型
  * Class Crontab
  * @package app\common\model
+ * @property int $id 主键
+ * @property string $name 定时任务名称
+ * @property int $type 类型 1-定时任务
+ * @property int $system 是否系统任务 0-否 1-是
+ * @property string $remark 备注
+ * @property string $command 命令内容
+ * @property string $params 参数
+ * @property int $status 状态 1-运行 2-停止 3-错误
+ * @property string $expression 运行规则
+ * @property string $error 运行失败原因
+ * @property int $last_time 最后执行时间
+ * @property string $time 实时执行时长
+ * @property string $max_time 最大执行时长
+ * @property int $create_time 创建时间
+ * @property int $update_time 更新时间
+ * @property int $delete_time 删除时间
  */
 class Crontab extends BaseModel
 {
@@ -29,6 +45,42 @@ class Crontab extends BaseModel
     protected $deleteTime = 'delete_time';
 
     protected $name = 'dev_crontab';
+    //设置字段信息
+    protected $schema = [
+        //主键
+        'id' => 'int',
+        //定时任务名称
+        'name' => 'string',
+        //类型 1-定时任务
+        'type' => 'int',
+        //是否系统任务 0-否 1-是
+        'system' => 'int',
+        //备注
+        'remark' => 'string',
+        //命令内容
+        'command' => 'string',
+        //参数
+        'params' => 'string',
+        //状态 1-运行 2-停止 3-错误
+        'status' => 'int',
+        //运行规则
+        'expression' => 'string',
+        //运行失败原因
+        'error' => 'string',
+        //最后执行时间
+        'last_time' => 'int',
+        //实时执行时长
+        'time' => 'string',
+        //最大执行时长
+        'max_time' => 'string',
+        //创建时间
+        'create_time' => 'int',
+        //更新时间
+        'update_time' => 'int',
+        //删除时间
+        'delete_time' => 'int',
+    ];
+
 
 
     /**

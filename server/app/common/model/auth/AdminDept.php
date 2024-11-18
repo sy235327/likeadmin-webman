@@ -16,8 +16,25 @@ namespace app\common\model\auth;
 
 use app\common\model\BaseModel;
 
+/**
+ * 部门关联表模型
+ * Class AdminDept
+ * @package app\common\model\auth
+ * @property int $admin_id 管理员id
+ * @property int $dept_id 主键 部门id
+
+ */
 class AdminDept extends BaseModel
 {
+    protected $name = 'admin_dept';
+    //设置字段信息
+    protected $schema = [
+        //管理员id
+        'admin_id' => 'int',
+        //主键 部门id
+        'dept_id' => 'int',
+    ];
+
     /**
      * @notes 删除用户关联部门
      * @param $adminId

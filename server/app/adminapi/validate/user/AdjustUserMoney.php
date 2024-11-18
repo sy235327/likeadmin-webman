@@ -32,7 +32,7 @@ class AdjustUserMoney extends BaseValidate
     ];
 
 
-    protected function checkMoney($vaule, $rule, $data)
+    protected function checkMoney($vaule, $rule, $data): true|string
     {
         $user = User::find($data['user_id']);
         if (empty($user)) {

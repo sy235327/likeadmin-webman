@@ -17,6 +17,7 @@ namespace app\api\controller;
 
 use app\api\logic\SmsLogic;
 use app\api\validate\SendSmsValidate;
+use support\Response;
 
 
 /**
@@ -32,11 +33,11 @@ class SmsController extends BaseApiController
 
     /**
      * @notes 发送短信验证码
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/9/15 16:17
      */
-    public function sendCode()
+    public function sendCode(): Response
     {
         $params = (new SendSmsValidate())->post()->goCheck();
         $result = SmsLogic::sendCode($params);

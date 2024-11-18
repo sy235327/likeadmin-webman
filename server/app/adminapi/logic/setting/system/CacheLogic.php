@@ -29,7 +29,7 @@ class CacheLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/4/8 16:29
      */
-    public static function clear()
+    public static function clear(): void
     {
        Cache::clear();
        del_target_dir(root_path().'runtime/file',true);

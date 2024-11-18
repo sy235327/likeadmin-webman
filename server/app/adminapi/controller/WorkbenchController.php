@@ -15,6 +15,7 @@
 namespace app\adminapi\controller;
 
 use app\adminapi\logic\WorkbenchLogic;
+use support\Response;
 
 /**
  * 工作台
@@ -29,7 +30,7 @@ class WorkbenchController extends BaseAdminController
      * @author 乔峰
      * @date 2021/12/29 17:01
      */
-    public function index()
+    public function index(): Response
     {
         $result = WorkbenchLogic::index();
         return $this->data($result);

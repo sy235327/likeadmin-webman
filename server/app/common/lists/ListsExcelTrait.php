@@ -9,12 +9,13 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Writer\Exception;
 
 trait ListsExcelTrait
 {
-    public $pageStart = 1; //导出开始页码
-    public $pageEnd = 200; //导出介绍页码
-    public $fileName = ''; //文件名称
+    public int $pageStart = 1; //导出开始页码
+    public int $pageEnd = 200; //导出介绍页码
+    public string $fileName = ''; //文件名称
 
     /**
      * @notes 创建excel
@@ -22,11 +23,11 @@ trait ListsExcelTrait
      * @param $lists
      * @return string
      * @throws \PhpOffice\PhpSpreadsheet\Exception
-     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     * @throws Exception
      * @author 令狐冲
      * @date 2021/7/21 16:04
      */
-    public function createExcel($excelFields, $lists)
+    public function createExcel($excelFields, $lists): string
     {
         $title = array_values($excelFields);
 
@@ -100,7 +101,7 @@ trait ListsExcelTrait
      * @author 令狐冲
      * @date 2021/7/29 16:08
      */
-    public function excelInfo()
+    public function excelInfo(): array
     {
         $count = $this->count();
         $sum_page = max(ceil($count / $this->pageSize), 1);

@@ -20,6 +20,10 @@ use app\common\logic\BaseLogic;
 use app\common\model\auth\Admin;
 use app\common\model\auth\SystemMenu;
 use app\common\model\auth\SystemRoleMenu;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
+use think\Model;
 
 
 /**
@@ -35,13 +39,13 @@ class MenuLogic extends BaseLogic
      * @notes 获取管理员对应的角色菜单
      * @param $adminId
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2022/7/1 10:50
      */
-    public static function getMenuByAdminId($adminId)
+    public static function getMenuByAdminId($adminId): array
     {
         $admin = Admin::findOrEmpty($adminId);
 
@@ -56,7 +60,7 @@ class MenuLogic extends BaseLogic
 
         $menu = SystemMenu::where($where)
             ->order(['sort' => 'desc', 'id' => 'asc'])
-            ->select();
+            ->select()->toArray();
 
         return linear_to_tree($menu, 'children');
     }
@@ -65,11 +69,11 @@ class MenuLogic extends BaseLogic
     /**
      * @notes 添加菜单
      * @param array $params
-     * @return SystemMenu|\think\Model
+     * @return SystemMenu|Model
      * @author 乔峰
      * @date 2022/6/30 10:06
      */
-    public static function add(array $params)
+    public static function add(array $params): SystemMenu|Model
     {
         return SystemMenu::create([
             'pid' => $params['pid'],
@@ -96,7 +100,7 @@ class MenuLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/6/30 10:07
      */
-    public static function edit(array $params)
+    public static function edit(array $params): SystemMenu
     {
         return SystemMenu::update([
             'id' => $params['id'],
@@ -124,7 +128,7 @@ class MenuLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/6/30 9:54
      */
-    public static function detail($params)
+    public static function detail($params): array
     {
         return SystemMenu::findOrEmpty($params['id'])->toArray();
     }
@@ -136,7 +140,7 @@ class MenuLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/6/30 9:47
      */
-    public static function delete($params)
+    public static function delete($params): void
     {
         // 删除菜单
         SystemMenu::destroy($params['id']);
@@ -148,11 +152,11 @@ class MenuLogic extends BaseLogic
     /**
      * @notes 更新状态
      * @param array $params
-     * @return SystemMenu
+     * @return int
      * @author 乔峰
      * @date 2022/7/6 17:02
      */
-    public static function updateStatus(array $params)
+    public static function updateStatus(array $params): int
     {
         return SystemMenu::update([
             'id' => $params['id'],
@@ -164,13 +168,13 @@ class MenuLogic extends BaseLogic
     /**
      * @notes 全部数据
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2022/10/13 11:03
      */
-    public static function getAllData()
+    public static function getAllData(): array
     {
         $data = SystemMenu::where(['is_disable' => YesNoEnum::NO])
             ->field('id,pid,name')

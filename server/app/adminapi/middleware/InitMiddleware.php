@@ -14,23 +14,27 @@ use Webman\MiddlewareInterface;
 
 class InitMiddleware implements MiddlewareInterface
 {
+    /**
+     * @notes 初始化
+     * @return mixed
+     * @throws ControllerExtendException
+     * @throws HttpException
+     * @author suyi
+     * @date 2024/11/15
+     */
     public function process(Request $request, callable $handler): Response
     {
-        $controllerClass = null;
         //获取控制器
         try {
-            $controller = str_replace('.', '\\', $request->controller);
-            $controllerClass = new $controller;
+            //使用容器中的控制器对象
+            $controllerClass = make($request->controller);
             if (($controllerClass instanceof BaseAdminController) === false) {
-                throw new ControllerExtendException($controller, '404');
+                throw new ControllerExtendException($request->controller, BaseAdminController::class);
             }
+            $controllerClass->setAdmin(0,[]);
         } catch (ClassNotFoundException $e) {
-            throw new HttpException(404, 'controller not exists:' . $e->getClass());
+            throw new HttpException($e->getMessage().' controller not exists:' . $e->getClass(),404);
         }
-
-        //创建控制器对象
-        $request->controllerObject = $controllerClass;
-
         return $handler($request);
     }
 }

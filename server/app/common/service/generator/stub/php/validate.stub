@@ -38,7 +38,7 @@ class {UPPER_CAMEL_NAME}Validate extends BaseValidate
      * @author bingo
      * @date {DATE}
      */
-    public function sceneAdd()
+    public function sceneAdd():{UPPER_CAMEL_NAME}Validate
     {
         {ADD_PARAMS}
     }
@@ -50,7 +50,7 @@ class {UPPER_CAMEL_NAME}Validate extends BaseValidate
      * @author bingo
      * @date {DATE}
      */
-    public function sceneEdit()
+    public function sceneEdit():{UPPER_CAMEL_NAME}Validate
     {
         {EDIT_PARAMS}
     }
@@ -62,7 +62,7 @@ class {UPPER_CAMEL_NAME}Validate extends BaseValidate
      * @author bingo
      * @date {DATE}
      */
-    public function sceneDelete()
+    public function sceneDelete():{UPPER_CAMEL_NAME}Validate
     {
         return $this->only(['{PK}']);
     }
@@ -74,7 +74,7 @@ class {UPPER_CAMEL_NAME}Validate extends BaseValidate
      * @author bingo
      * @date {DATE}
      */
-    public function sceneDetail()
+    public function sceneDetail():{UPPER_CAMEL_NAME}Validate
     {
         return $this->only(['{PK}']);
     }

@@ -34,7 +34,7 @@ class FileLogic extends BaseLogic
      * @author 乔峰
      * @date 2021/7/28 15:29
      */
-    public static function move($params)
+    public static function move($params): void
     {
         (new File())->whereIn('id', $params['ids'])
             ->update([

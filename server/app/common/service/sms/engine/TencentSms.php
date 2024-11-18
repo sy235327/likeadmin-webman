@@ -13,6 +13,7 @@
 // +----------------------------------------------------------------------
 namespace app\common\service\sms\engine;
 
+use Exception;
 use TencentCloud\Sms\V20190711\SmsClient;
 use TencentCloud\Sms\V20190711\Models\SendSmsRequest;
 use TencentCloud\Common\Exception\TencentCloudSDKException;
@@ -27,12 +28,11 @@ use TencentCloud\Common\Profile\HttpProfile;
  */
 class TencentSms
 {
-    protected $error = null;
-    protected $config;
-    protected $mobile;
-    protected $templateId;
-    protected $templateParams;
-
+    protected string|null $error = null;
+    protected mixed $config;
+    protected string|null $mobile;
+    protected string|null $templateId;
+    protected mixed $templateParams;
     public function __construct($config)
     {
         if(empty($config)) {
@@ -45,12 +45,12 @@ class TencentSms
 
     /**
      * @notes 设置手机号
-     * @param $mobile
+     * @param int|string $mobile
      * @return $this
      * @author 段誉
      * @date 2022/9/15 16:26
      */
-    public function setMobile($mobile)
+    public function setMobile(int|string $mobile): static
     {
         $this->mobile = $mobile;
         return $this;
@@ -64,7 +64,7 @@ class TencentSms
      * @author 段誉
      * @date 2022/9/15 16:26
      */
-    public function setTemplateId($templateId)
+    public function setTemplateId($templateId): static
     {
         $this->templateId = $templateId;
         return $this;
@@ -78,7 +78,7 @@ class TencentSms
      * @author 段誉
      * @date 2022/9/15 16:27
      */
-    public function setTemplateParams($templateParams)
+    public function setTemplateParams($templateParams): static
     {
         $this->templateParams = $templateParams;
         return $this;
@@ -91,7 +91,7 @@ class TencentSms
      * @author 段誉
      * @date 2022/9/15 16:27
      */
-    public function getError()
+    public function getError(): string|null
     {
         return $this->error;
     }
@@ -103,7 +103,7 @@ class TencentSms
      * @author 段誉
      * @date 2022/9/15 16:27
      */
-    public function send()
+    public function send(): mixed
     {
         try {
             $cred = new Credential($this->config['secret_id'], $this->config['secret_key']);
@@ -128,9 +128,9 @@ class TencentSms
                 return $resp;
             } else {
                 $message = $res['SendStatusSet'][0]['Message'] ?? json_encode($resp);
-                throw new \Exception('腾讯云短信错误：' . $message);
+                throw new Exception('腾讯云短信错误：' . $message);
             }
-        } catch(\Exception $e) {
+        } catch(Exception $e) {
             $this->error = $e->getMessage();
             return false;
         }

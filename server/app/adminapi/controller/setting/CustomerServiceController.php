@@ -16,6 +16,7 @@ namespace app\adminapi\controller\setting;
 
 use app\adminapi\controller\BaseAdminController;
 use app\adminapi\logic\setting\CustomerServiceLogic;
+use support\Response;
 
 /**
  * 客服设置
@@ -29,7 +30,7 @@ class CustomerServiceController extends BaseAdminController
      * @author ljj
      * @date 2022/2/15 12:05 下午
      */
-    public function getConfig()
+    public function getConfig(): Response
     {
         $result = CustomerServiceLogic::getConfig();
         return $this->data($result);
@@ -40,7 +41,7 @@ class CustomerServiceController extends BaseAdminController
      * @author ljj
      * @date 2022/2/15 12:11 下午
      */
-    public function setConfig()
+    public function setConfig(): Response
     {
         $params = $this->request->post();
         CustomerServiceLogic::setConfig($params);

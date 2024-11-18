@@ -33,7 +33,7 @@ class RefundRecordLists extends BaseAdminDataLists implements ListsSearchInterfa
 
     /**
      * @notes 查询条件
-     * @return \string[][]
+     * @return string[][]
      * @author 段誉
      * @date 2023/3/1 9:51
      */
@@ -124,7 +124,7 @@ class RefundRecordLists extends BaseAdminDataLists implements ListsSearchInterfa
      * @author 段誉
      * @date 2023/3/1 9:51
      */
-    public function extend()
+    public function extend(): array
     {
         $count = (new RefundRecord())->alias('r')
             ->join('user u', 'u.id = r.user_id')

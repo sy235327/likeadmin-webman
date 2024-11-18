@@ -58,12 +58,12 @@ class FileService
 
     /**
      * @notes 转相对路径
-     * @param $uri
+     * @param string|null $uri
      * @return mixed
      * @author 乔峰
      * @date 2021/7/28 15:09
      */
-    public static function setFileUrl($uri)
+    public static function setFileUrl(string|null $uri): mixed
     {
         $default = ConfigService::get('storage', 'default', 'local');
         if ($default === 'local') {

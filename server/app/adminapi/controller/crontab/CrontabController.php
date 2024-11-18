@@ -18,6 +18,7 @@ use app\adminapi\controller\BaseAdminController;
 use app\adminapi\lists\crontab\CrontabLists;
 use app\adminapi\logic\crontab\CrontabLogic;
 use app\adminapi\validate\crontab\CrontabValidate;
+use support\Response;
 
 /**
  * 定时任务控制器
@@ -38,7 +39,7 @@ class CrontabController extends BaseAdminController
      * @author 乔峰
      * @date 2022/3/29 14:27
      */
-    public function lists()
+    public function lists(): Response
     {
         return $this->dataLists(new CrontabLists());
     }
@@ -49,7 +50,7 @@ class CrontabController extends BaseAdminController
      * @author 乔峰
      * @date 2022/3/29 14:27
      */
-    public function add()
+    public function add(): Response
     {
         $params = $this->validateObj->post()->goCheck('add');
         $result = CrontabLogic::add($params);
@@ -65,7 +66,7 @@ class CrontabController extends BaseAdminController
      * @author 乔峰
      * @date 2022/3/29 14:27
      */
-    public function detail()
+    public function detail(): Response
     {
         $params = $this->validateObj->goCheck('detail');
         $result = CrontabLogic::detail($params);
@@ -78,7 +79,7 @@ class CrontabController extends BaseAdminController
      * @author 乔峰
      * @date 2022/3/29 14:27
      */
-    public function edit()
+    public function edit(): Response
     {
         $params = $this->validateObj->post()->goCheck('edit');
         $result = CrontabLogic::edit($params);
@@ -94,7 +95,7 @@ class CrontabController extends BaseAdminController
      * @author 乔峰
      * @date 2022/3/29 14:27
      */
-    public function delete()
+    public function delete(): Response
     {
         $params = $this->validateObj->post()->goCheck('delete');
         $result = CrontabLogic::delete($params);
@@ -110,7 +111,7 @@ class CrontabController extends BaseAdminController
      * @author 乔峰
      * @date 2022/3/29 14:28
      */
-    public function operate()
+    public function operate(): Response
     {
         $params = $this->validateObj->post()->goCheck('operate');
         $result = CrontabLogic::operate($params);
@@ -126,7 +127,7 @@ class CrontabController extends BaseAdminController
      * @author 乔峰
      * @date 2022/3/29 14:28
      */
-    public function expression()
+    public function expression(): Response
     {
         $params = $this->validateObj->goCheck('expression');
         $result = CrontabLogic::expression($params);

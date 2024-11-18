@@ -17,24 +17,28 @@ namespace app\common\cache;
 
 use app\common\model\user\User;
 use app\common\model\user\UserSession;
+use DateTime;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 class UserTokenCache extends BaseCache
 {
 
-    private $prefix = 'token_user_';
+    private string $prefix = 'token_user_';
 
 
     /**
      * @notes 通过token获取缓存用户信息
      * @param $token
      * @return array|false|mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2022/9/16 10:11
      */
-    public function getUserInfo($token)
+    public function getUserInfo($token): mixed
     {
         //直接从缓存获取
         $userInfo = $this->get($this->prefix . $token);
@@ -56,13 +60,13 @@ class UserTokenCache extends BaseCache
      * @notes 通过有效token设置用户信息缓存
      * @param $token
      * @return array|false|mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2022/9/16 10:11
      */
-    public function setUserInfo($token)
+    public function setUserInfo($token): mixed
     {
         $userSession = UserSession::where([['token', '=', $token], ['expire_time', '>', time()]])->find();
         if (empty($userSession)) {
@@ -83,7 +87,7 @@ class UserTokenCache extends BaseCache
             'expire_time' => $userSession->expire_time,
         ];
 
-        $ttl = new \DateTime(Date('Y-m-d H:i:s', $userSession->expire_time));
+        $ttl = new DateTime(Date('Y-m-d H:i:s', $userSession->expire_time));
         $this->set($this->prefix . $token, $userInfo, $ttl);
         return $this->getUserInfo($token);
     }
@@ -96,7 +100,7 @@ class UserTokenCache extends BaseCache
      * @author 段誉
      * @date 2022/9/16 10:13
      */
-    public function deleteUserInfo($token)
+    public function deleteUserInfo($token): bool
     {
         return $this->delete($this->prefix . $token);
     }

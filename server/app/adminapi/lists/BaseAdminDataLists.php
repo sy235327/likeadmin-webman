@@ -25,8 +25,8 @@ use app\common\lists\BaseDataLists;
  */
 abstract class BaseAdminDataLists extends BaseDataLists
 {
-    protected $adminInfo;
-    protected $adminId;
+    protected array $adminInfo;
+    protected int $adminId;
 
     public function __construct()
     {

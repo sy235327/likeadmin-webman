@@ -3,11 +3,13 @@
 namespace app\queue\redis;
 
 use app\queue\send\SendQueue;
+use Exception;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\Csv;
 use PhpOffice\PhpSpreadsheet\Reader\Xls;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use Throwable;
 use Webman\RedisQueue\Consumer;
 
 /**
@@ -225,7 +227,7 @@ class ImportXlsxClient implements Consumer
             //更新插入数量
             $this->handlerEndCallback($handlerNumber,$saveOkNumber,$data);
             print("----执行结束----\r\n");
-        }catch (\Exception $e){
+        }catch (Exception $e){
             print("----执行错误----\r\n");
         }
     }
@@ -279,7 +281,7 @@ class ImportXlsxClient implements Consumer
         'error' => '错误信息' // 错误信息
     ]
     */
-    public function onConsumeFailure(\Throwable $e, $package): void
+    public function onConsumeFailure(Throwable $e, $package): void
     {
         echo "consume failure\n";
         echo $e->getMessage() . "\n";

@@ -37,7 +37,7 @@ class RechargeValidate extends BaseValidate
     ];
 
 
-    public function sceneRecharge()
+    public function sceneRecharge(): RechargeValidate
     {
         return $this->only(['money']);
     }
@@ -53,7 +53,7 @@ class RechargeValidate extends BaseValidate
      * @author 段誉
      * @date 2023/2/24 10:42
      */
-    protected function checkMoney($money, $rule, $data)
+    protected function checkMoney($money, $rule, $data): bool|string
     {
         $status = ConfigService::get('recharge', 'status', 0);
         if (!$status) {

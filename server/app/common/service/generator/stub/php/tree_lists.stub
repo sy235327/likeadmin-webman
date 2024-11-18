@@ -36,9 +36,9 @@ class {UPPER_CAMEL_NAME}Lists extends {EXTENDS_LISTS} implements ListsSearchInte
     /**
      * @notes 获取{NOTES}列表
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws think\db\exception\DataNotFoundException
+     * @throws think\db\exception\DbException
+     * @throws think\db\exception\ModelNotFoundException
      * @author bingo
      * @date {DATE}
      */

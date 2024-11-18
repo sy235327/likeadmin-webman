@@ -23,6 +23,9 @@ use app\common\model\article\ArticleCollect;
 use app\common\model\decorate\DecoratePage;
 use app\common\service\ConfigService;
 use app\common\service\FileService;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 
 /**
@@ -36,13 +39,13 @@ class PcLogic extends BaseLogic
     /**
      * @notes 首页数据
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2022/9/21 19:15
      */
-    public static function getIndexData()
+    public static function getIndexData(): array
     {
         // 装修配置
         $decoratePage = DecoratePage::findOrEmpty(4);
@@ -113,9 +116,9 @@ class PcLogic extends BaseLogic
     /**
      * @notes 获取配置
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2022/9/21 19:38
      */
@@ -176,9 +179,9 @@ class PcLogic extends BaseLogic
     /**
      * @notes 资讯中心
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2022/10/19 16:55
      */

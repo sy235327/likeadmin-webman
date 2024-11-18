@@ -21,8 +21,31 @@ use app\common\model\BaseModel;
  * 用户登录token信息
  * Class UserSession
  * @package app\common\model\user
+ * @property int $id 主键
+ * @property int $user_id 用户id
+ * @property int $terminal 客户端类型：1-微信小程序；2-微信公众号；3-手机H5；4-电脑PC；5-苹果APP；6-安卓APP
+ * @property string $token 令牌
+ * @property int $update_time 更新时间
+ * @property int $expire_time 到期时间
  */
 class UserSession extends BaseModel
 {
+    protected $name = 'user_session';
+
+    //设置字段信息
+    protected $schema = [
+        //主键
+        'id' => 'int',
+        //用户id
+        'user_id' => 'int',
+        //客户端类型：1-微信小程序；2-微信公众号；3-手机H5；4-电脑PC；5-苹果APP；6-安卓APP
+        'terminal' => 'int',
+        //令牌
+        'token' => 'string',
+        //更新时间
+        'update_time' => 'int',
+        //到期时间
+        'expire_time' => 'int',
+    ];
 
 }

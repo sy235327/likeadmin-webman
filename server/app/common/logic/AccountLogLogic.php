@@ -5,6 +5,7 @@ namespace app\common\logic;
 use app\common\enum\user\AccountLogEnum;
 use app\common\model\user\UserAccountLog;
 use app\common\model\user\User;
+use think\Model;
 
 /**
  * 账户流水记录逻辑层
@@ -23,11 +24,11 @@ class AccountLogLogic extends BaseLogic
      * @param string $sourceSn
      * @param string $remark
      * @param array $extra
-     * @return UserAccountLog|false|\think\Model
+     * @return UserAccountLog|false|Model
      * @author bingo
      * @date 2023/2/23 12:03
      */
-    public static function add($userId, $changeType, $action, $changeAmount, string $sourceSn = '', string $remark = '',  array $extra = [])
+    public static function add($userId, $changeType, $action, $changeAmount, string $sourceSn = '', string $remark = '',  array $extra = []): false|Model|UserAccountLog
     {
         $user = User::findOrEmpty($userId);
         if($user->isEmpty()) {

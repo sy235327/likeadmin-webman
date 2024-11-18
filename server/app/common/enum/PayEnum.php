@@ -46,12 +46,12 @@ class PayEnum
 
     /**
      * @notes 获取支付类型
-     * @param bool $value
+     * @param bool|int $value
      * @return string|string[]
      * @author 段誉
      * @date 2023/2/23 15:36
      */
-    public static function getPayDesc($value = true)
+    public static function getPayDesc(bool|int $value = true): array|string
     {
         $data = [
             self::BALANCE_PAY => '余额支付',
@@ -68,12 +68,12 @@ class PayEnum
 
     /**
      * @notes 支付状态
-     * @param bool $value
+     * @param bool|int $value
      * @return string|string[]
      * @author 段誉
      * @date 2023/2/23 15:36
      */
-    public static function getPayStatusDesc($value = true)
+    public static function getPayStatusDesc(bool|int $value = true): array|string
     {
         $data = [
             self::UNPAID => '未支付',

@@ -18,6 +18,7 @@ use app\adminapi\controller\BaseAdminController;
 use app\adminapi\lists\recharge\RechargeLists;
 use app\adminapi\logic\recharge\RechargeLogic;
 use app\adminapi\validate\recharge\RechargeRefundValidate;
+use support\Response;
 
 /**
  * 充值控制器
@@ -35,11 +36,11 @@ class RechargeController extends BaseAdminController
     }
     /**
      * @notes 获取充值设置
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2023/2/22 16:48
      */
-    public function getConfig()
+    public function getConfig(): Response
     {
         $result = RechargeLogic::getConfig();
         return $this->data($result);
@@ -48,11 +49,11 @@ class RechargeController extends BaseAdminController
 
     /**
      * @notes 充值设置
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2023/2/22 16:48
      */
-    public function setConfig()
+    public function setConfig(): Response
     {
         $params = $this->request->post();
         $result = RechargeLogic::setConfig($params);
@@ -65,11 +66,11 @@ class RechargeController extends BaseAdminController
 
     /**
      * @notes 充值记录
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2023/2/24 16:01
      */
-    public function lists()
+    public function lists(): Response
     {
         return $this->dataLists(new RechargeLists());
     }
@@ -77,11 +78,11 @@ class RechargeController extends BaseAdminController
 
     /**
      * @notes 退款
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2023/2/28 17:29
      */
-    public function refund()
+    public function refund(): Response
     {
         $params = $this->validateObj->post()->goCheck('refund');
         $result = RechargeLogic::refund($params, $this->adminId);
@@ -95,11 +96,11 @@ class RechargeController extends BaseAdminController
 
     /**
      * @notes 重新退款
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2023/2/28 19:17
      */
-    public function refundAgain()
+    public function refundAgain(): Response
     {
         $params = $this->validateObj->post()->goCheck('again');
         $result = RechargeLogic::refundAgain($params, $this->adminId);

@@ -9,6 +9,7 @@ use app\adminapi\lists\user\UserLists;
 use app\adminapi\logic\user\UserLogic;
 use app\adminapi\validate\user\AdjustUserMoney;
 use app\adminapi\validate\user\UserValidate;
+use support\Response;
 
 class UserController extends BaseAdminController
 {
@@ -24,7 +25,7 @@ class UserController extends BaseAdminController
      * @author 乔峰
      * @date 2022//22 16:16
      */
-    public function lists()
+    public function lists(): Response
     {
         return $this->dataLists(new UserLists());
     }
@@ -35,7 +36,7 @@ class UserController extends BaseAdminController
      * @author 乔峰
      * @date 2022/9/22 16:34
      */
-    public function detail()
+    public function detail(): Response
     {
         $params = $this->validateObj->goCheck('detail');
         $detail = UserLogic::detail($params['id']);
@@ -48,7 +49,7 @@ class UserController extends BaseAdminController
      * @author 乔峰
      * @date 2022/9/22 16:34
      */
-    public function edit()
+    public function edit(): Response
     {
         $params = $this->validateObj->post()->goCheck('setInfo');
         UserLogic::setUserInfo($params);
@@ -57,11 +58,11 @@ class UserController extends BaseAdminController
 
     /**
      * @notes 调整用户余额
-     * @return \support\Response
+     * @return Response
      * @author bingo
      * @date 2023/2/23 14:33
      */
-    public function adjustMoney()
+    public function adjustMoney(): Response
     {
         $params = (new AdjustUserMoney())->post()->goCheck();
         $res = UserLogic::adjustUserMoney($params);

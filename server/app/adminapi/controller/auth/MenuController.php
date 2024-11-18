@@ -19,6 +19,10 @@ use app\adminapi\controller\BaseAdminController;
 use app\adminapi\lists\auth\MenuLists;
 use app\adminapi\logic\auth\MenuLogic;
 use app\adminapi\validate\auth\MenuValidate;
+use support\Response;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 
 /**
@@ -40,7 +44,7 @@ class MenuController extends BaseAdminController
      * @author 乔峰
      * @date 2022/6/29 17:41
      */
-    public function route()
+    public function route(): Response
     {
         $result = MenuLogic::getMenuByAdminId($this->adminId);
         return $this->data($result);
@@ -52,7 +56,7 @@ class MenuController extends BaseAdminController
      * @author 乔峰
      * @date 2022/6/29 17:23
      */
-    public function lists()
+    public function lists(): Response
     {
         return $this->dataLists(new MenuLists());
     }
@@ -63,7 +67,7 @@ class MenuController extends BaseAdminController
      * @author 乔峰
      * @date 2022/6/30 10:07
      */
-    public function detail()
+    public function detail(): Response
     {
         $params = $this->validateObj->goCheck('detail');
         return $this->data(MenuLogic::detail($params));
@@ -75,7 +79,7 @@ class MenuController extends BaseAdminController
      * @author 乔峰
      * @date 2022/6/30 10:07
      */
-    public function add()
+    public function add(): Response
     {
         $params = $this->validateObj->post()->goCheck('add');
         MenuLogic::add($params);
@@ -88,7 +92,7 @@ class MenuController extends BaseAdminController
      * @author 乔峰
      * @date 2022/6/30 10:07
      */
-    public function edit()
+    public function edit(): Response
     {
         $params = $this->validateObj->post()->goCheck('edit');
         MenuLogic::edit($params);
@@ -101,7 +105,7 @@ class MenuController extends BaseAdminController
      * @author 乔峰
      * @date 2022/6/30 10:07
      */
-    public function delete()
+    public function delete(): Response
     {
         $params = $this->validateObj->post()->goCheck('delete');
         MenuLogic::delete($params);
@@ -114,7 +118,7 @@ class MenuController extends BaseAdminController
      * @author 乔峰
      * @date 2022/7/6 17:04
      */
-    public function updateStatus()
+    public function updateStatus(): Response
     {
         $params = $this->validateObj->post()->goCheck('status');
         MenuLogic::updateStatus($params);
@@ -124,13 +128,13 @@ class MenuController extends BaseAdminController
 
     /**
      * @notes 获取菜单数据
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2022/10/13 11:03
      */
-    public function all()
+    public function all(): Response
     {
         $result = MenuLogic::getAllData();
         return $this->data($result);

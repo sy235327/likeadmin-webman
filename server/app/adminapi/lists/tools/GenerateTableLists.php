@@ -6,6 +6,9 @@ namespace app\adminapi\lists\tools;
 use app\adminapi\lists\BaseAdminDataLists;
 use app\common\lists\ListsSearchInterface;
 use app\common\model\tools\GenerateTable;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * 代码生成所选数据表列表
@@ -17,7 +20,7 @@ class GenerateTableLists extends BaseAdminDataLists implements ListsSearchInterf
 
     /**
      * @notes 设置搜索条件
-     * @return \string[][]
+     * @return string[][]
      * @author bingo
      * @date 2022/6/14 10:55
      */
@@ -32,9 +35,9 @@ class GenerateTableLists extends BaseAdminDataLists implements ListsSearchInterf
     /**
      * @notes 查询列表
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author bingo
      * @date 2022/6/14 10:55
      */

@@ -16,6 +16,7 @@ namespace app\adminapi\controller\channel;
 
 use app\adminapi\controller\BaseAdminController;
 use app\adminapi\logic\channel\OfficialAccountMenuLogic;
+use support\Response;
 
 /**
  * 微信公众号菜单控制器
@@ -27,11 +28,11 @@ class OfficialAccountMenuController extends BaseAdminController
 
     /**
      * @notes 保存菜单
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/3/29 10:41
      */
-    public function save()
+    public function save(): Response
     {
         $params = $this->request->post();
         $result = OfficialAccountMenuLogic::save($params);
@@ -44,11 +45,11 @@ class OfficialAccountMenuController extends BaseAdminController
 
     /**
      * @notes 保存发布菜单
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/3/29 10:42
      */
-    public function saveAndPublish()
+    public function saveAndPublish(): Response
     {
         $params = $this->request->post();
         $result = OfficialAccountMenuLogic::saveAndPublish($params);
@@ -62,11 +63,11 @@ class OfficialAccountMenuController extends BaseAdminController
 
     /**
      * @notes 查看菜单详情
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/3/29 10:42
      */
-    public function detail()
+    public function detail(): Response
     {
         $result = OfficialAccountMenuLogic::detail();
         return $this->data($result);

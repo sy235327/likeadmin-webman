@@ -20,6 +20,8 @@ use app\common\model\notice\NoticeRecord;
 use app\common\model\notice\NoticeSetting;
 use app\common\model\user\User;
 use app\common\service\sms\SmsMessageService;
+use Exception;
+use think\Model;
 
 
 /**
@@ -37,12 +39,12 @@ class NoticeLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/9/15 15:28
      */
-    public static function noticeByScene($params)
+    public static function noticeByScene($params): bool
     {
         try {
             $noticeSetting = NoticeSetting::where('scene_id', $params['scene_id'])->findOrEmpty()->toArray();
             if (empty($noticeSetting)) {
-                throw new \Exception('找不到对应场景的配置');
+                throw new Exception('找不到对应场景的配置');
             }
             // 合并额外参数
             $params = self::mergeParams($params);
@@ -55,7 +57,7 @@ class NoticeLogic extends BaseLogic
             }
 
             return $res;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }
@@ -69,7 +71,7 @@ class NoticeLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/9/15 15:28
      */
-    public static function mergeParams($params)
+    public static function mergeParams($params): array
     {
         // 用户相关
         if (!empty($params['params']['user_id'])) {
@@ -97,7 +99,7 @@ class NoticeLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/9/15 15:29
      */
-    public static function getPathByScene($sceneId, $extraId)
+    public static function getPathByScene($sceneId, $extraId): array
     {
         // 小程序主页路径
         $page = '/pages/index/index';
@@ -118,7 +120,7 @@ class NoticeLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/9/15 15:29
      */
-    public static function contentFormat($content, $params)
+    public static function contentFormat($content, $params): mixed
     {
         foreach ($params['params'] as $k => $v) {
             $search = '{' . $k . '}';
@@ -135,11 +137,11 @@ class NoticeLogic extends BaseLogic
      * @param $sendType
      * @param $content
      * @param string $extra
-     * @return NoticeRecord|\think\Model
+     * @return NoticeRecord|Model
      * @author 乔峰
      * @date 2022/9/15 15:29
      */
-    public static function addNotice($params, $noticeSetting, $sendType, $content, $extra = '')
+    public static function addNotice($params, $noticeSetting, $sendType, $content, $extra = ''): NoticeRecord|Model
     {
         return NoticeRecord::create([
             'user_id' => $params['params']['user_id'] ?? 0,
@@ -163,7 +165,7 @@ class NoticeLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/9/15 15:30
      */
-    public static function getTitleByScene($sendType, $noticeSetting)
+    public static function getTitleByScene($sendType, $noticeSetting): string
     {
         switch ($sendType) {
             case NoticeEnum::SMS:

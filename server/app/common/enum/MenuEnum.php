@@ -40,12 +40,12 @@ class MenuEnum
 
     /**
      * @notes 链接类型
-     * @param bool $value
+     * @param bool|int $value
      * @return string|string[]
      * @author ljj
      * @date 2022/2/14 12:14 下午
      */
-    public static function getLinkDesc($value = true)
+    public static function getLinkDesc(bool|int $value = true): array|string
     {
         $data = [
             self::LINK_SHOP => '商城页面',

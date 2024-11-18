@@ -17,6 +17,7 @@ namespace app\adminapi\controller\channel;
 use app\adminapi\controller\BaseAdminController;
 use app\adminapi\logic\channel\WebPageSettingLogic;
 use app\adminapi\validate\channel\WebPageSettingValidate;
+use support\Response;
 
 /**
  * H5设置控制器
@@ -34,11 +35,11 @@ class WebPageSettingController extends BaseAdminController
     }
     /**
      * @notes 获取H5设置
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/3/29 10:36
      */
-    public function getConfig()
+    public function getConfig(): Response
     {
         $result = WebPageSettingLogic::getConfig();
         return $this->data($result);
@@ -47,11 +48,11 @@ class WebPageSettingController extends BaseAdminController
 
     /**
      * @notes H5设置
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2022/3/29 10:36
      */
-    public function setConfig()
+    public function setConfig(): Response
     {
         $params = $this->validateObj->post()->goCheck();
         WebPageSettingLogic::setConfig($params);

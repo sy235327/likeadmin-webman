@@ -18,6 +18,7 @@ use app\adminapi\{
     logic\setting\user\UserLogic,
     validate\setting\UserConfigValidate
 };
+use support\Response;
 
 
 /**
@@ -39,7 +40,7 @@ class UserController extends BaseAdminController
      * @author 乔峰
      * @date 2022/3/29 10:08
      */
-    public function getConfig()
+    public function getConfig(): Response
     {
         $result = (new UserLogic())->getConfig();
         return $this->data($result);
@@ -51,7 +52,7 @@ class UserController extends BaseAdminController
      * @author 乔峰
      * @date 2022/3/29 10:08
      */
-    public function setConfig()
+    public function setConfig(): Response
     {
         $params = $this->validateObj->post()->goCheck('user');
         (new UserLogic())->setConfig($params);
@@ -64,7 +65,7 @@ class UserController extends BaseAdminController
      * @author 乔峰
      * @date 2022/3/29 10:08
      */
-    public function getRegisterConfig()
+    public function getRegisterConfig(): Response
     {
         $result = (new UserLogic())->getRegisterConfig();
         return $this->data($result);
@@ -76,7 +77,7 @@ class UserController extends BaseAdminController
      * @author 乔峰
      * @date 2022/3/29 10:08
      */
-    public function setRegisterConfig()
+    public function setRegisterConfig(): Response
     {
         $params = $this->validateObj->post()->goCheck('register');
         (new UserLogic())->setRegisterConfig($params);

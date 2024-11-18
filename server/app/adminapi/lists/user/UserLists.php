@@ -8,6 +8,9 @@ use app\adminapi\lists\BaseAdminDataLists;
 use app\common\enum\user\UserTerminalEnum;
 use app\common\lists\ListsExcelInterface;
 use app\common\model\user\User;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 class UserLists extends BaseAdminDataLists implements ListsExcelInterface
 {
@@ -27,9 +30,9 @@ class UserLists extends BaseAdminDataLists implements ListsExcelInterface
     /**
      * @notes 获取用户列表
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2022/9/22 15:50
      */

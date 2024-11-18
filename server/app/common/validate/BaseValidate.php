@@ -21,14 +21,14 @@ use taoser\Validate;
 
 class BaseValidate extends Validate
 {
-    public $method = 'GET';
+    public string $method = 'GET';
 
     /**
      * @notes 设置请求方式
      * @author 令狐冲
      * @date 2021/12/27 14:13
      */
-    public function post()
+    public function post(): static
     {
         if (!request()->method() == 'POST') {
             JsonService::throw('请求方式错误，请使用post请求方式');
@@ -42,7 +42,7 @@ class BaseValidate extends Validate
      * @author 令狐冲
      * @date 2021/12/27 14:13
      */
-    public function get()
+    public function get(): static
     {
         if (!request()->method() == 'GET') {
             JsonService::throw('请求方式错误，请使用get请求方式');

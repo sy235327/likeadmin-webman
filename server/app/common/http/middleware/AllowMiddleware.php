@@ -17,8 +17,10 @@ declare (strict_types=1);
 namespace app\common\http\middleware;
 
 use app\adminapi\listener\OperationLog;
+use Exception;
 use Fiber;
 use support\Log;
+use Throwable;
 use Webman\Http\Request;
 use Webman\Http\Response;
 use Webman\MiddlewareInterface;
@@ -52,8 +54,8 @@ class AllowMiddleware implements MiddlewareInterface
                     OperationLog::handle($request,$response);
                 }));
                 $fiber->start();
-            }catch (\Exception|\Throwable $e){
-                Log::error('请求日志记录失败:'.$e->getMessage());
+            }catch (Exception|Throwable $e){
+//                Log::error('请求日志记录失败:'.$e->getMessage());
             }
         }
 

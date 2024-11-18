@@ -1,11 +1,14 @@
 <?php
+
 declare (strict_types = 1);
 
 namespace app;
 
+use ReflectionClass;
+use ReflectionException;
 use taoser\exception\ValidateException;
 use taoser\Validate;
-
+use support\Request;
 /**
  * 控制器基础类
  */
@@ -13,22 +16,17 @@ abstract class BaseController
 {
     /**
      * Request实例
-     * @var \support\Request
      */
-    protected $request;
-
+    protected Request $request;
 
     /**
      * 是否批量验证
-     * @var bool
      */
-    protected $batchValidate = false;
-
+    protected bool $batchValidate = false;
     /**
-     * 控制器中间件
-     * @var array
+     * 自定义中间件
      */
-    protected $middleware = [];
+    protected array $middleware = [];
 
     /**
      * 构造方法
@@ -41,26 +39,32 @@ abstract class BaseController
     }
 
     /**
+     * 请求对象注入
+     */
+    public function setRequest(Request $request): void
+    {
+        $this->request = $request;
+    }
+
+    /**
      * 每次请求在 EndMiddleware拦截器 中进行的初始化
-     * @return void
      */
     // 初始化
-    protected function initialize()
+    public function initialize(): void
     {
-        $this->request = request();
     }
 
     /**
      * 验证数据
      * @access protected
-     * @param  array        $data     数据
-     * @param  string|array $validate 验证器名或者验证规则数组
-     * @param  array        $message  提示信息
-     * @param  bool         $batch    是否批量验证
-     * @return array|string|true
+     * @param array $data 数据
+     * @param array|string $validate 验证器名或者验证规则数组
+     * @param array $message 提示信息
+     * @param bool $batch 是否批量验证
      * @throws ValidateException
+     * @throws ReflectionException
      */
-    protected function validate(array $data, $validate, array $message = [], bool $batch = false)
+    protected function validate(array $data, array|string $validate, array $message = [], bool $batch = false): true|array|string
     {
         if (is_array($validate)) {
             $v = new Validate();
@@ -70,9 +74,13 @@ abstract class BaseController
                 // 支持场景
                 [$validate, $scene] = explode('.', $validate);
             }
-            $class = str_contains($validate, '\\') ? $validate : $this->app->parseClass('validate', $validate);
-            $v     = new $class();
-            if (!empty($scene)) {
+            $class = new ReflectionClass($validate);
+            // 验证器是否存在
+            if (! $class->isInstantiable()) {
+                throw new ValidateException('class not exists:' . $class->getName());
+            }
+            $v = $class->newInstance();
+            if (! empty($scene)) {
                 $v->scene($scene);
             }
         }
@@ -86,6 +94,4 @@ abstract class BaseController
 
         return $v->failException(true)->check($data);
     }
-
-
 }

@@ -53,7 +53,7 @@ class CrontabValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/3/29 14:39
      */
-    public function sceneAdd()
+    public function sceneAdd(): CrontabValidate
     {
         return $this->remove('id', 'require')->remove('operate', 'require');
     }
@@ -65,7 +65,7 @@ class CrontabValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/3/29 14:39
      */
-    public function sceneDetail()
+    public function sceneDetail(): CrontabValidate
     {
         return $this->only(['id']);
     }
@@ -77,7 +77,7 @@ class CrontabValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/3/29 14:39
      */
-    public function sceneEdit()
+    public function sceneEdit(): CrontabValidate
     {
         return $this->remove('operate', 'require');
     }
@@ -89,7 +89,7 @@ class CrontabValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/3/29 14:40
      */
-    public function sceneDelete()
+    public function sceneDelete(): CrontabValidate
     {
         return $this->only(['id']);
     }
@@ -101,7 +101,7 @@ class CrontabValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/3/29 14:40
      */
-    public function sceneOperate()
+    public function sceneOperate(): CrontabValidate
     {
         return $this->only(['id', 'operate']);
     }
@@ -113,7 +113,7 @@ class CrontabValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/3/29 14:40
      */
-    public function sceneExpression()
+    public function sceneExpression(): CrontabValidate
     {
         return $this->only(['expression']);
     }
@@ -128,7 +128,7 @@ class CrontabValidate extends BaseValidate
      * @author 乔峰
      * @date 2022/3/29 14:40
      */
-    public function checkExpression($value, $rule, $data)
+    public function checkExpression($value, $rule, $data): bool|string
     {
         if (CronExpression::isValidExpression($value) === false) {
             return '定时任务运行规则错误';

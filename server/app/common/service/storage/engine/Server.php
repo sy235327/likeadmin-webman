@@ -12,13 +12,13 @@ use Tinywan\Storage\Storage;
  */
 abstract class Server
 {
-    protected $file;
-    protected $error;
-    protected $fileName;
-    protected $fileInfo;
+    protected mixed $file;
+    protected string|null $error;
+    protected string $fileName;
+    protected mixed $fileInfo;
 
     // 是否为内部上传
-    protected $isInternal = false;
+    protected bool $isInternal = false;
 
     /**
      * 构造函数
@@ -33,7 +33,7 @@ abstract class Server
      * @param string $name
      * @throws Exception
      */
-    public function setUploadFile($name)
+    public function setUploadFile(string $name): void
     {
         // 接收上传的文件
         $this->file = request()->file($name);
@@ -68,7 +68,7 @@ abstract class Server
      * 设置上传的文件信息
      * @param string $filePath
      */
-    public function setUploadFileByReal($filePath)
+    public function setUploadFileByReal(string $filePath): void
     {
         // 设置为系统内部上传
         $this->isInternal = true;
@@ -88,41 +88,41 @@ abstract class Server
      * @param $url
      * @param $key
      * @author 张无忌(2021/3/2 14:15)
-     * @return mixed
+     * @return bool
      */
-    abstract protected function fetch($url, $key);
+    abstract protected function fetch($url, $key): bool;
 
     /**
      * 文件上传
-     * @param $save_dir (保存路径)
+     * @param string $save_dir (保存路径)
      * @return mixed
      */
-    abstract protected function upload($save_dir);
+    abstract protected function upload(string $save_dir): bool;
 
     /**
      * 文件删除
      * @param $fileName
      * @return mixed
      */
-    abstract protected function delete($fileName);
+    abstract protected function delete($fileName): bool;
 
     /**
      * 返回上传后文件路径
-     * @return mixed
+     * @return string
      */
-    abstract public function getFileName();
+    abstract public function getFileName(): string;
 
     /**
      * 构建文件上传凭证
      * @return mixed
      */
-    abstract public function getUploadToken($name,$src,$size);
+    abstract public function getUploadToken(string $name,string $src,int|string $size): mixed;
 
     /**
      * 返回文件信息
      * @return mixed
      */
-    public function getFileInfo()
+    public function getFileInfo(): mixed
     {
         return $this->fileInfo;
     }
@@ -134,9 +134,9 @@ abstract class Server
 
     /**
      * 返回错误信息
-     * @return mixed
+     * @return string|null
      */
-    public function getError()
+    public function getError(): ?string
     {
         return $this->error;
     }
@@ -144,7 +144,7 @@ abstract class Server
     /**
      * 生成保存文件名
      */
-    private function buildSaveName()
+    private function buildSaveName(): string
     {
         // 要上传图片的本地路径
         $realPath = $this->getRealPath();

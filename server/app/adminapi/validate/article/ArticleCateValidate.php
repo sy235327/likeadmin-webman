@@ -45,7 +45,7 @@ class ArticleCateValidate extends BaseValidate
      * @author heshihu
      * @date 2022/2/10 15:11
      */
-    public function sceneAdd()
+    public function sceneAdd(): ArticleCateValidate
     {
         return $this->remove(['id'])
             ->remove('id', 'require|checkArticleCate');
@@ -57,7 +57,7 @@ class ArticleCateValidate extends BaseValidate
      * @author heshihu
      * @date 2022/2/21 17:55
      */
-    public function sceneDetail()
+    public function sceneDetail(): ArticleCateValidate
     {
         return $this->only(['id']);
     }
@@ -68,7 +68,7 @@ class ArticleCateValidate extends BaseValidate
      * @author heshihu
      * @date 2022/2/21 18:02
      */
-    public function sceneStatus()
+    public function sceneStatus(): ArticleCateValidate
     {
         return $this->only(['id', 'is_show']);
     }
@@ -83,7 +83,7 @@ class ArticleCateValidate extends BaseValidate
      * @author heshihu
      * @date 2022/2/15 10:05
      */
-    public function sceneSelect()
+    public function sceneSelect(): ArticleCateValidate
     {
         return $this->only(['type']);
     }
@@ -95,7 +95,7 @@ class ArticleCateValidate extends BaseValidate
      * @author heshihu
      * @date 2022/2/21 17:52
      */
-    public function sceneDelete()
+    public function sceneDelete(): ArticleCateValidate
     {
         return $this->only(['id'])
             ->append('id', 'checkDeleteArticleCate');
@@ -108,7 +108,7 @@ class ArticleCateValidate extends BaseValidate
      * @author heshihu
      * @date 2022/2/10 15:10
      */
-    public function checkArticleCate($value)
+    public function checkArticleCate($value): bool|string
     {
         $article_category = ArticleCate::findOrEmpty($value);
         if ($article_category->isEmpty()) {
@@ -124,7 +124,7 @@ class ArticleCateValidate extends BaseValidate
      * @author heshihu
      * @date 2022/2/22 14:45
      */
-    public function checkDeleteArticleCate($value)
+    public function checkDeleteArticleCate($value): bool|string
     {
         $article = Article::where('cid', $value)->findOrEmpty();
         if (!$article->isEmpty()) {

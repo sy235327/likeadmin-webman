@@ -18,6 +18,10 @@ use app\adminapi\controller\BaseAdminController;
 use app\adminapi\lists\setting\dict\DictTypeLists;
 use app\adminapi\logic\setting\dict\DictTypeLogic;
 use app\adminapi\validate\dict\DictTypeValidate;
+use support\Response;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 
 /**
@@ -40,7 +44,7 @@ class DictTypeController extends BaseAdminController
      * @author 乔峰
      * @date 2022/6/20 15:50
      */
-    public function lists()
+    public function lists(): Response
     {
         return $this->dataLists(new DictTypeLists());
     }
@@ -51,7 +55,7 @@ class DictTypeController extends BaseAdminController
      * @author 乔峰
      * @date 2022/6/20 16:24
      */
-    public function add()
+    public function add(): Response
     {
         $params = $this->validateObj->post()->goCheck('add');
         DictTypeLogic::add($params);
@@ -64,7 +68,7 @@ class DictTypeController extends BaseAdminController
      * @author 乔峰
      * @date 2022/6/20 16:25
      */
-    public function edit()
+    public function edit(): Response
     {
         $params = $this->validateObj->post()->goCheck('edit');
         DictTypeLogic::edit($params);
@@ -77,7 +81,7 @@ class DictTypeController extends BaseAdminController
      * @author 乔峰
      * @date 2022/6/20 16:25
      */
-    public function delete()
+    public function delete(): Response
     {
         $params = $this->validateObj->post()->goCheck('delete');
         DictTypeLogic::delete($params);
@@ -90,7 +94,7 @@ class DictTypeController extends BaseAdminController
      * @author 乔峰
      * @date 2022/6/20 16:25
      */
-    public function detail()
+    public function detail(): Response
     {
         $params = $this->validateObj->goCheck('detail');
         $result = DictTypeLogic::detail($params);
@@ -100,13 +104,13 @@ class DictTypeController extends BaseAdminController
 
     /**
      * @notes 获取字典类型数据
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2022/10/13 10:46
      */
-    public function all()
+    public function all(): Response
     {
         $result = DictTypeLogic::getAllData();
         return $this->data($result);

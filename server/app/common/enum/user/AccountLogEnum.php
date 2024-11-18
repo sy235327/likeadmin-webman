@@ -75,13 +75,13 @@ class AccountLogEnum
 
     /**
      * @notes 动作描述
-     * @param $action
-     * @param false $flag
+     * @param string $action
+     * @param bool $flag
      * @return string|string[]
      * @author 段誉
      * @date 2023/2/23 10:07
      */
-    public static function getActionDesc($action, $flag = false)
+    public static function getActionDesc(string $action, bool $flag = false): array|string
     {
         $desc = [
             self::DEC => '减少',
@@ -96,13 +96,13 @@ class AccountLogEnum
 
     /**
      * @notes 变动类型描述
-     * @param $changeType
-     * @param false $flag
+     * @param int $changeType
+     * @param bool $flag
      * @return string|string[]
      * @author 段誉
      * @date 2023/2/23 10:07
      */
-    public static function getChangeTypeDesc($changeType, $flag = false)
+    public static function getChangeTypeDesc(int $changeType, bool $flag = false): array|string
     {
         $desc = [
             self::UM_DEC_ADMIN => '平台减少余额',
@@ -123,10 +123,10 @@ class AccountLogEnum
      * @author 段誉
      * @date 2023/2/23 10:08
      */
-    public static function getUserMoneyChangeTypeDesc()
+    public static function getUserMoneyChangeTypeDesc(): array|string
     {
         $UMChangeType = self::getUserMoneyChangeType();
-        $changeTypeDesc = self::getChangeTypeDesc('', true);
+        $changeTypeDesc = self::getChangeTypeDesc(0, true);
         return array_filter($changeTypeDesc, function ($key) use ($UMChangeType) {
             return in_array($key, $UMChangeType);
         }, ARRAY_FILTER_USE_KEY);
@@ -148,11 +148,11 @@ class AccountLogEnum
     /**
      * @notes 获取变动对象
      * @param $changeType
-     * @return false
+     * @return false|int
      * @author 段誉
      * @date 2023/2/23 10:10
      */
-    public static function getChangeObject($changeType)
+    public static function getChangeObject($changeType): false|int
     {
         // 用户余额
         $um = self::getUserMoneyChangeType();

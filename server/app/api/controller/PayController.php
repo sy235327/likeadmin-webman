@@ -19,6 +19,12 @@ use app\api\validate\PayValidate;
 use app\common\enum\user\UserTerminalEnum;
 use app\common\logic\PaymentLogic;
 use app\common\service\pay\WeChatPayService;
+use EasyWeChat\Kernel\Exceptions\InvalidArgumentException;
+use EasyWeChat\Kernel\Exceptions\RuntimeException;
+use Psr\Http\Message\ResponseInterface;
+use ReflectionException;
+use support\Response;
+use Throwable;
 
 /**
  * 支付
@@ -32,11 +38,11 @@ class PayController extends BaseApiController
 
     /**
      * @notes 支付方式
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2023/2/24 17:54
      */
-    public function payWay()
+    public function payWay(): Response
     {
         $params = (new PayValidate())->goCheck('payway');
         $result = PaymentLogic::getPayWay($this->userId, $this->userInfo['terminal'], $params);
@@ -49,11 +55,11 @@ class PayController extends BaseApiController
 
     /**
      * @notes 预支付
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2023/2/28 14:21
      */
-    public function prepay()
+    public function prepay(): Response
     {
         $params = (new PayValidate())->post()->goCheck();
         //订单信息
@@ -73,11 +79,11 @@ class PayController extends BaseApiController
 
     /**
      * @notes 获取支付状态
-     * @return \support\Response
+     * @return Response
      * @author 段誉
      * @date 2023/3/1 16:23
      */
-    public function payStatus()
+    public function payStatus(): Response
     {
         $params = (new PayValidate())->goCheck('status', ['user_id' => $this->userId]);
         $result = PaymentLogic::getPayStatus($params);
@@ -90,15 +96,15 @@ class PayController extends BaseApiController
 
     /**
      * @notes 小程序支付回调
-     * @return \Psr\Http\Message\ResponseInterface
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
-     * @throws \EasyWeChat\Kernel\Exceptions\RuntimeException
-     * @throws \ReflectionException
-     * @throws \Throwable
+     * @return ResponseInterface
+     * @throws InvalidArgumentException
+     * @throws RuntimeException
+     * @throws ReflectionException
+     * @throws Throwable
      * @author 段誉
      * @date 2023/2/28 14:21
      */
-    public function notifyMnp()
+    public function notifyMnp(): ResponseInterface
     {
         return (new WeChatPayService(UserTerminalEnum::WECHAT_MMP))->notify();
     }
@@ -106,15 +112,15 @@ class PayController extends BaseApiController
 
     /**
      * @notes 公众号支付回调
-     * @return \Psr\Http\Message\ResponseInterface
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
-     * @throws \EasyWeChat\Kernel\Exceptions\RuntimeException
-     * @throws \ReflectionException
-     * @throws \Throwable
+     * @return ResponseInterface
+     * @throws InvalidArgumentException
+     * @throws RuntimeException
+     * @throws ReflectionException
+     * @throws Throwable
      * @author 段誉
      * @date 2023/2/28 14:21
      */
-    public function notifyOa()
+    public function notifyOa(): ResponseInterface
     {
         return (new WeChatPayService(UserTerminalEnum::WECHAT_OA))->notify();
     }

@@ -44,12 +44,12 @@ class GeneratorEnum
 
     /**
      * @notes 获取模板类型描述
-     * @param bool $value
+     * @param bool|int $value
      * @return string|string[]
      * @author 段誉
      * @date 2022/6/14 11:24
      */
-    public static function getTemplateTypeDesc($value = true)
+    public static function getTemplateTypeDesc(bool|int $value = true): array|string
     {
         $data = [
             self::TEMPLATE_TYPE_SINGLE => '单表(增删改查)',

@@ -15,6 +15,10 @@ namespace app\adminapi\controller\decorate;
 
 use app\adminapi\controller\BaseAdminController;
 use app\adminapi\logic\decorate\DecorateDataLogic;
+use support\Response;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 
 /**
@@ -28,14 +32,14 @@ class DataController extends BaseAdminController
 
     /**
      * @notes 文章列表
-     * @return \support\Response
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @return Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 段誉
      * @date 2022/9/22 16:50
      */
-    public function article()
+    public function article(): Response
     {
         $limit = $this->request->get('limit', 10);
         $result = DecorateDataLogic::getArticleLists($limit);

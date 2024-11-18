@@ -82,12 +82,12 @@ class OfficialAccountEnum
 
     /**
      * @notes 获取类型英文名称
-     * @param $type
+     * @param int $type
      * @return string
      * @author Tab
      * @date 2021/7/29 16:32
      */
-    public static function getReplyType($type)
+    public static function getReplyType(int $type): string
     {
         return self::REPLY_TYPE[$type] ?? '';
     }

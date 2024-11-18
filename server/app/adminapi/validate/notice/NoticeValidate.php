@@ -31,7 +31,7 @@ class NoticeValidate extends BaseValidate
         'id.require' => '参数缺失',
     ];
 
-    protected function sceneDetail()
+    protected function sceneDetail(): NoticeValidate
     {
         return $this->only(['id']);
     }

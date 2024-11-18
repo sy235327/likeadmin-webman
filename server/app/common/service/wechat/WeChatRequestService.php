@@ -35,7 +35,7 @@ class WeChatRequestService extends BaseLogic
      * @author 段誉
      * @date 2022/10/20 18:20
      */
-    public static function getScanCodeUrl($appId, $redirectUri, $state)
+    public static function getScanCodeUrl($appId, $redirectUri, $state): string
     {
         $url = 'https://open.weixin.qq.com/connect/qrconnect?';
         $url .= 'appid=' . $appId . '&redirect_uri=' . $redirectUri . '&response_type=code&scope=snsapi_login';
@@ -51,7 +51,7 @@ class WeChatRequestService extends BaseLogic
      * @author 段誉
      * @date 2022/10/21 10:16
      */
-    public static function getUserAuthByCode($code)
+    public static function getUserAuthByCode($code): mixed
     {
         $config = WeChatConfigService::getOpConfig();
         $url = 'https://api.weixin.qq.com/sns/oauth2/access_token';
@@ -70,7 +70,7 @@ class WeChatRequestService extends BaseLogic
      * @author 段誉
      * @date 2022/10/21 10:21
      */
-    public static function getUserInfoByAuth($accessToken, $openId)
+    public static function getUserInfoByAuth($accessToken, $openId): mixed
     {
         $url = 'https://api.weixin.qq.com/sns/userinfo';
         $url .= '?access_token=' . $accessToken . '&openid=' . $openId;

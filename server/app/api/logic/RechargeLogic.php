@@ -19,6 +19,7 @@ use app\common\logic\BaseLogic;
 use app\common\model\recharge\RechargeOrder;
 use app\common\model\user\User;
 use app\common\service\ConfigService;
+use Exception;
 
 
 /**
@@ -36,7 +37,7 @@ class RechargeLogic extends BaseLogic
      * @author 段誉
      * @date 2023/2/24 10:43
      */
-    public static function recharge(array $params)
+    public static function recharge(array $params): false|array
     {
         try {
             $data = [
@@ -52,7 +53,7 @@ class RechargeLogic extends BaseLogic
                 'order_id' => (int)$order['id'],
                 'from' => 'recharge'
             ];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::setError($e->getMessage());
             return false;
         }
@@ -66,7 +67,7 @@ class RechargeLogic extends BaseLogic
      * @author 段誉
      * @date 2023/2/24 16:56
      */
-    public static function config($userId)
+    public static function config($userId): array
     {
         $userMoney = User::where(['id' => $userId])->value('user_money');
         $minAmount = ConfigService::get('recharge', 'min_amount', 0);

@@ -30,7 +30,7 @@ class AppSettingLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/3/29 10:25
      */
-    public static function getConfig()
+    public static function getConfig(): array
     {
         $config = [
             'ios_download_url' => ConfigService::get('app', 'ios_download_url', ''),
@@ -47,7 +47,7 @@ class AppSettingLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/3/29 10:26
      */
-    public static function setConfig($params)
+    public static function setConfig($params): void
     {
         ConfigService::set('app', 'ios_download_url', $params['ios_download_url'] ?? '');
         ConfigService::set('app', 'android_download_url', $params['android_download_url'] ?? '');

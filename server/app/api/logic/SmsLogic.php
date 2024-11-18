@@ -17,6 +17,7 @@ namespace app\api\logic;
 use app\common\enum\notice\NoticeEnum;
 use app\common\logic\BaseLogic;
 use app\common\service\NoticeService;
+use Exception;
 
 
 /**
@@ -34,12 +35,12 @@ class SmsLogic extends BaseLogic
      * @author 段誉
      * @date 2022/9/15 16:17
      */
-    public static function sendCode($params)
+    public static function sendCode($params): mixed
     {
         try {
             $scene = NoticeEnum::getSceneByTag($params['scene']);
             if (empty($scene)) {
-                throw new \Exception('场景值异常');
+                throw new Exception('场景值异常');
             }
             $result = (new NoticeService())->handle([
                 'scene_id' => $scene,
@@ -50,7 +51,7 @@ class SmsLogic extends BaseLogic
             ]);
             return $result[0];
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             self::$error = $e->getMessage();
             return false;
         }

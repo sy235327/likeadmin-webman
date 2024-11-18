@@ -17,6 +17,9 @@ namespace app\adminapi\logic;
 
 use app\common\model\dict\DictData;
 use app\common\service\{FileService, ConfigService};
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * 配置类逻辑层
@@ -57,13 +60,13 @@ class ConfigLogic
      * @notes 根据类型获取字典类型
      * @param $type
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2022/9/27 19:09
      */
-    public static function getDictByType($type)
+    public static function getDictByType($type): array
     {
         if (!is_string($type)) {
             return [];

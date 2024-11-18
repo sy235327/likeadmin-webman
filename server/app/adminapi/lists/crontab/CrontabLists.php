@@ -16,6 +16,9 @@ namespace app\adminapi\lists\crontab;
 
 use app\adminapi\lists\BaseAdminDataLists;
 use app\common\model\Crontab;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * 定时任务列表
@@ -27,9 +30,9 @@ class CrontabLists extends BaseAdminDataLists
     /**
      * @notes 定时任务列表
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 乔峰
      * @date 2022/3/29 14:30
      */

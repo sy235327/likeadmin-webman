@@ -10,6 +10,7 @@ use app\adminapi\lists\tools\GenerateTableLists;
 use app\adminapi\logic\tools\GeneratorLogic;
 use app\adminapi\validate\tools\EditTableValidate;
 use app\adminapi\validate\tools\GenerateTableValidate;
+use support\Response;
 
 /**
  * 代码生成器控制器
@@ -34,7 +35,7 @@ class GeneratorController extends BaseAdminController
      * @author bingo
      * @date 2022/6/14 10:57
      */
-    public function dataTable()
+    public function dataTable(): Response
     {
         return $this->dataLists(new DataTableLists());
     }
@@ -46,7 +47,7 @@ class GeneratorController extends BaseAdminController
      * @author bingo
      * @date 2022/6/14 10:57
      */
-    public function generateTable()
+    public function generateTable(): Response
     {
         return $this->dataLists(new GenerateTableLists());
     }
@@ -58,7 +59,7 @@ class GeneratorController extends BaseAdminController
      * @author bingo
      * @date 2022/6/15 10:09
      */
-    public function selectTable()
+    public function selectTable(): Response
     {
         $params = $this->validateObj->post()->goCheck('select');
         $result = GeneratorLogic::selectTable($params, $this->adminId);
@@ -75,7 +76,7 @@ class GeneratorController extends BaseAdminController
      * @author bingo
      * @date 2022/6/23 19:08
      */
-    public function generate()
+    public function generate(): Response
     {
         $params = $this->validateObj->post()->goCheck('id');
         $result = GeneratorLogic::generate($params);
@@ -91,7 +92,7 @@ class GeneratorController extends BaseAdminController
      * @author bingo
      * @date 2022/6/24 9:51
      */
-    public function download()
+    public function download(): Response|\Webman\Http\Response
     {
         $params = $this->validateObj->goCheck('download');
         $result = GeneratorLogic::download($params['file']);
@@ -108,7 +109,7 @@ class GeneratorController extends BaseAdminController
      * @author bingo
      * @date 2022/6/23 19:07
      */
-    public function preview()
+    public function preview(): Response
     {
         $params = $this->validateObj->post()->goCheck('id');
         $result = GeneratorLogic::preview($params);
@@ -125,7 +126,7 @@ class GeneratorController extends BaseAdminController
      * @author bingo
      * @date 2022/6/17 15:22
      */
-    public function syncColumn()
+    public function syncColumn(): Response
     {
         $params = $this->validateObj->post()->goCheck('id');
         $result = GeneratorLogic::syncColumn($params);
@@ -142,7 +143,7 @@ class GeneratorController extends BaseAdminController
      * @author bingo
      * @date 2022/6/20 10:44
      */
-    public function edit()
+    public function edit(): Response
     {
         $params = (new EditTableValidate())->post()->goCheck();
         $result = GeneratorLogic::editTable($params);
@@ -159,7 +160,7 @@ class GeneratorController extends BaseAdminController
      * @author bingo
      * @date 2022/6/15 19:00
      */
-    public function detail()
+    public function detail(): Response
     {
         $params = $this->validateObj->goCheck('id');
         $result = GeneratorLogic::getTableDetail($params);
@@ -173,7 +174,7 @@ class GeneratorController extends BaseAdminController
      * @author bingo
      * @date 2022/6/15 19:00
      */
-    public function delete()
+    public function delete(): Response
     {
         $params = $this->validateObj->post()->goCheck('id');
         $result = GeneratorLogic::deleteTable($params);
@@ -190,7 +191,7 @@ class GeneratorController extends BaseAdminController
      * @author bingo
      * @date 2022/12/14 11:07
      */
-    public function getModels()
+    public function getModels(): Response
     {
         $result = GeneratorLogic::getAllModels();
         return $this->success('', $result, 1, 1);

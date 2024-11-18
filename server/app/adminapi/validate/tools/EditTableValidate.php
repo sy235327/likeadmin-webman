@@ -49,7 +49,7 @@ class EditTableValidate extends BaseValidate
      * @author bingo
      * @date 2022/6/15 18:58
      */
-    protected function checkTableData($value, $rule, $data)
+    protected function checkTableData($value, $rule, $data): bool|string
     {
         $table = GenerateTable::findOrEmpty($value);
         if ($table->isEmpty()) {
@@ -68,7 +68,7 @@ class EditTableValidate extends BaseValidate
      * @author bingo
      * @date 2022/6/20 10:42
      */
-    protected function checkColumn($value, $rule, $data)
+    protected function checkColumn($value, $rule, $data): bool|string
     {
         foreach ($value as $item) {
             if (!isset($item['id'])) {

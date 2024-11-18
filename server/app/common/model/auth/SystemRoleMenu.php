@@ -22,9 +22,17 @@ use app\common\model\BaseModel;
  * 角色与菜单权限关系
  * Class SystemRoleMenu
  * @package app\common\model\auth
+ * @property int $role_id 角色ID
+ * @property int $menu_id 主键 菜单ID
  */
 class SystemRoleMenu extends BaseModel
 {
-
-
+    protected $name = 'system_role_menu';
+    //设置字段信息
+    protected $schema = [
+        //角色ID
+        'role_id' => 'int',
+        //主键 菜单ID
+        'menu_id' => 'int',
+    ];
 }

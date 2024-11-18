@@ -19,6 +19,9 @@ use app\adminapi\lists\BaseAdminDataLists;
 use app\common\lists\ListsExcelInterface;
 use app\common\lists\ListsSearchInterface;
 use app\common\model\OperationLog;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * 日志列表
@@ -29,7 +32,7 @@ class LogLists extends BaseAdminDataLists implements ListsSearchInterface, Lists
 {
     /**
      * @notes 设置搜索条件
-     * @return \string[][]
+     * @return string[][]
      * @author ljj
      * @date 2021/8/3 4:21 下午
      */
@@ -44,9 +47,9 @@ class LogLists extends BaseAdminDataLists implements ListsSearchInterface, Lists
     /**
      * @notes 查看系统日志列表
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author ljj
      * @date 2021/8/3 4:21 下午
      */

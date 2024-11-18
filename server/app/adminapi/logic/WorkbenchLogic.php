@@ -34,7 +34,7 @@ class WorkbenchLogic extends BaseLogic
      * @author 乔峰
      * @date 2021/12/29 15:58
      */
-    public static function index()
+    public static function index(): array
     {
         return [
             // 版本信息
@@ -179,7 +179,7 @@ class WorkbenchLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/7/18 11:18
      */
-    public static function support()
+    public static function support(): array
     {
         return [
             [

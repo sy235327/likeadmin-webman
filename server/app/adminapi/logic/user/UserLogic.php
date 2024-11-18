@@ -18,6 +18,7 @@ use app\common\enum\user\UserTerminalEnum;
 use app\common\logic\AccountLogLogic;
 use app\common\logic\BaseLogic;
 use app\common\model\user\User;
+use Exception;
 use think\facade\Db;
 
 /**
@@ -59,7 +60,7 @@ class UserLogic extends BaseLogic
      * @author 乔峰
      * @date 2022/9/22 16:38
      */
-    public static function setUserInfo(array $params)
+    public static function setUserInfo(array $params): User
     {
         return User::update([
             'id' => $params['id'],
@@ -75,7 +76,7 @@ class UserLogic extends BaseLogic
      * @author bingo
      * @date 2023/2/23 14:25
      */
-    public static function adjustUserMoney(array $params)
+    public static function adjustUserMoney(array $params): bool|string
     {
         Db::startTrans();
         try {
@@ -110,7 +111,7 @@ class UserLogic extends BaseLogic
             Db::commit();
             return true;
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Db::rollback();
             return $e->getMessage();
         }

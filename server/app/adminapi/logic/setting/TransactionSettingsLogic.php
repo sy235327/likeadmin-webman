@@ -30,7 +30,7 @@ class TransactionSettingsLogic extends BaseLogic
      * @author ljj
      * @date 2022/2/15 11:40 上午
      */
-    public static function getConfig()
+    public static function getConfig(): array
     {
         $config = [
             'cancel_unpaid_orders' => ConfigService::get('transaction', 'cancel_unpaid_orders', 1),
@@ -48,7 +48,7 @@ class TransactionSettingsLogic extends BaseLogic
      * @author ljj
      * @date 2022/2/15 11:49 上午
      */
-    public static function setConfig($params)
+    public static function setConfig($params): void
     {
         ConfigService::set('transaction', 'cancel_unpaid_orders', $params['cancel_unpaid_orders']);
         ConfigService::set('transaction', 'verification_orders', $params['verification_orders']);

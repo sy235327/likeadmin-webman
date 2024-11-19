@@ -194,5 +194,17 @@ abstract class BaseDataLists implements ListsInterface
                 return JsonService::throw($msg);
             }
         }
+        return false;
     }
+    /**
+     * @notes 不需要分页，可以调用此方法，无需查询第二次
+     * @return int
+     * @author 令狐冲
+     * @date 2021/7/6 00:34
+     */
+    public function defaultCount(): int
+    {
+        return count($this->lists());
+    }
+
 }

@@ -51,6 +51,8 @@ class ConfigLogic
 
             // 版权信息
             'copyright_config' => ConfigService::get('copyright', 'config', []),
+            // 版本号
+            'version' => config('project.version')
         ];
         return $config;
     }

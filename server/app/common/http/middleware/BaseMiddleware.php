@@ -16,7 +16,11 @@ declare (strict_types=1);
 
 namespace app\common\http\middleware;
 
+use app\adminapi\listener\OperationLog;
 use Closure;
+use Exception;
+use Fiber;
+use Throwable;
 
 /**
  * 基础中间件
@@ -27,6 +31,16 @@ class BaseMiddleware
 {
     public function handle($request, Closure $next)
     {
-        return $next($request);
+        $response = $next($request);
+        //创建一个纤程任务记录日志
+        try{
+            $fiber = (new Fiber(function() use ($request, $response): void{
+                OperationLog::handle($request,$response);
+            }));
+            $fiber->start();
+        }catch (Exception|Throwable $e){
+//                Log::error('请求日志记录失败:'.$e->getMessage());
+        }
+        return $response;
     }
 }

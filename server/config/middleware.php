@@ -17,6 +17,8 @@ return [
     ''=>[
         // 跨域中间件
         app\common\http\middleware\AllowMiddleware::class,
+        // 日志中间件
+        app\common\http\middleware\BaseMiddleware::class,
     ],
     'adminapi'=>[
         // 初始化

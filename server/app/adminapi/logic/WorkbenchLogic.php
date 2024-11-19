@@ -46,7 +46,9 @@ class WorkbenchLogic extends BaseLogic
             // 近15日访客数
             'visitor' => self::visitor(),
             // 服务支持
-            'support' => self::support()
+            'support' => self::support(),
+            // 销售数据
+            'sale' => self::sale()
         ];
     }
 
@@ -63,7 +65,7 @@ class WorkbenchLogic extends BaseLogic
             [
                 'name' => '管理员',
                 'image' => FileService::getFileUrl(config('project.default_image.menu_admin')),
-                'url' => '/permission/adminapi'
+                'url' => '/permission/admin'
             ],
             [
                 'name' => '角色管理',
@@ -160,7 +162,7 @@ class WorkbenchLogic extends BaseLogic
         $date = [];
         for ($i = 0; $i < 15; $i++) {
             $where_start = strtotime("- " . $i . "day");
-            $date[] = date('Y/m/d', $where_start);
+            $date[] = date('m/d', $where_start);
             $num[$i] = rand(0, 100);
         }
 
@@ -168,6 +170,30 @@ class WorkbenchLogic extends BaseLogic
             'date' => $date,
             'list' => [
                 ['name' => '访客数', 'data' => $num]
+            ]
+        ];
+    }
+
+    /**
+     * @notes 访问数
+     * @return array
+     * @author 段誉
+     * @date 2021/12/29 16:57
+     */
+    public static function sale(): array
+    {
+        $num = [];
+        $date = [];
+        for ($i = 0; $i < 7; $i++) {
+            $where_start = strtotime("- " . $i . "day");
+            $date[] = date('m/d', $where_start);
+            $num[$i] = rand(30, 200);
+        }
+
+        return [
+            'date' => $date,
+            'list' => [
+                ['name' => '销售量', 'data' => $num]
             ]
         ];
     }

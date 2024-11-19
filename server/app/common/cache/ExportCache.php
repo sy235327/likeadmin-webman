@@ -38,7 +38,7 @@ class ExportCache extends BaseCache
      */
     public function getSrc(): string
     {
-        return public_path() . '/export/'.date('Y-m').'/'.$this->uniqid.'/';
+        return run_path().'/file/export/'.date('Y-m').'/'.$this->uniqid.'/';
     }
 
 

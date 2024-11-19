@@ -8,6 +8,7 @@ use app\common\enum\YesNoEnum;
 use app\common\model\pay\PayWay;
 use app\common\model\recharge\RechargeOrder;
 use app\common\model\user\User;
+use app\common\service\pay\AliPayService;
 use app\common\service\pay\WeChatPayService;
 use Exception;
 use think\Model;
@@ -185,10 +186,16 @@ class PaymentLogic extends BaseLogic
             return ['pay_way' => PayEnum::BALANCE_PAY];
         }
 
+        $payService = null;
         switch ($payWay) {
             case PayEnum::WECHAT_PAY:
                 $payService = (new WeChatPayService($terminal, $order['user_id'] ?? null));
                 $order['pay_sn'] = $paySn;
+                $order['redirect_url'] = $redirectUrl;
+                $result = $payService->pay($from, $order);
+                break;
+            case PayEnum::ALI_PAY:
+                $payService = (new AliPayService($terminal));
                 $order['redirect_url'] = $redirectUrl;
                 $result = $payService->pay($from, $order);
                 break;

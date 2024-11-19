@@ -162,13 +162,13 @@ class MenuValidate extends BaseValidate
     {
         $hasChild = SystemMenu::where(['pid' => $value])->findOrEmpty();
         if (!$hasChild->isEmpty()) {
-            //return '存在子菜单,不允许删除';
+            return '存在子菜单,不允许删除';
         }
 
         // 已绑定角色菜单不可以删除
         $isBindRole = SystemRole::hasWhere('roleMenuIndex', ['menu_id' => $value])->findOrEmpty();
         if (!$isBindRole->isEmpty()) {
-            //return '已分配菜单不可删除';
+            return '已分配菜单不可删除';
         }
 
         return true;

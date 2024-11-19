@@ -27,7 +27,7 @@ class PayNotifyLogic extends BaseLogic
             return true;
         } catch (Exception $e) {
             Db::rollback();
-            Log::info(implode('-', [
+            Log::error(implode('-', [
                 __CLASS__,
                 __FUNCTION__,
                 $e->getFile(),
@@ -67,7 +67,7 @@ class PayNotifyLogic extends BaseLogic
         );
 
         // 更新充值订单状态
-        $order->transaction_id = $extra['transaction_id'];
+        $order->transaction_id = $extra['transaction_id'] ?? '';
         $order->pay_status = PayEnum::ISPAID;
         $order->pay_time = time();
         $order->save();

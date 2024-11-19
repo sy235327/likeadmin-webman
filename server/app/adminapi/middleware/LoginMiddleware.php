@@ -25,7 +25,7 @@ class LoginMiddleware implements  MiddlewareInterface
      */
     public function process(Request $request, callable $handler): Response
     {
-        $token = $request->header('token');
+        $token = $request->header('token','');
         $controllerObject = make($request->controller);
         //判断接口是否免登录
         $isNotNeedLogin = $controllerObject->isNotNeedLogin($request->action);

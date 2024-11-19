@@ -60,6 +60,7 @@
     "ext-simplexml": "*",
     "alibabacloud/client": "^1.5",
     "rmccue/requests": "^2.0",
+    "alipaysdk/easysdk": "^2.2",
     "ext-bcmath": "*",
     "ext-curl": "*"
   },

@@ -22,14 +22,7 @@ Route::fallback(function(Request $request){
     if ($request->method() !== 'OPTIONS'){
         $json = json_encode(['code' => 404, 'msg' => '404 not found']);
     }
-    $response = response($json,404);
-    // 给响应添加跨域相关的http头
-    $response->withHeaders([
-        'Access-Control-Allow-Credentials' => 'true',
-        'Access-Control-Allow-Origin' => $request->header('origin', '*'),
-        'Access-Control-Allow-Methods' => $request->header('access-control-request-method', '*'),
-        'Access-Control-Allow-Headers' => $request->header('access-control-request-headers', '*'),
-        'Access-Control-Expose-Headers'=>'*'
-    ]);
-    return $response;
-});
+    return response($json,404);
+})->middleware([
+    \app\common\http\middleware\AllowMiddleware::class
+]);

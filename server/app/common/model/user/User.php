@@ -108,7 +108,7 @@ class User extends BaseModel
     public function searchKeywordAttr($query, $value, $data)
     {
         if ($value) {
-            $query->where('sn|nickname|mobile', 'like', '%' . $value . '%');
+            $query->where('sn|nickname|mobile|account', 'like', '%' . $value . '%');
         }
     }
 
@@ -140,7 +140,7 @@ class User extends BaseModel
     public function searchCreateTimeStartAttr($query, $value, $data)
     {
         if ($value) {
-            $query->where('create_time', '>=', $value);
+            $query->where('create_time', '>=', strtotime($value));
         }
     }
 
@@ -156,7 +156,7 @@ class User extends BaseModel
     public function searchCreateTimeEndAttr($query, $value, $data)
     {
         if ($value) {
-            $query->where('create_time', '<=', $value);
+            $query->where('create_time', '<=', strtotime($value));
         }
     }
 
@@ -215,7 +215,7 @@ class User extends BaseModel
     {
         $rand_str = '';
         for ($i = 0; $i < $length; $i++) {
-            $rand_str .= mt_rand(0, 9);
+            $rand_str .= mt_rand(1, 9);
         }
         $sn = $prefix . $rand_str;
         if (User::where(['sn' => $sn])->find()) {

@@ -5,7 +5,7 @@
 require_once __DIR__ . '/vendor/autoload.php';
 
 use Dotenv\Dotenv;
-use app\process\Monitor;
+use process\Monitor;
 use support\App;
 use Workerman\Worker;
 

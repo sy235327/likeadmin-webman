@@ -1,10 +1,11 @@
-import path from "path"
-import fsExtra from "fs-extra"
+import fsExtra from 'fs-extra'
+import path from 'path'
+
 const { existsSync, remove, copy } = fsExtra
 const cwd = process.cwd()
 //打包发布路径，谨慎改动
-const releaseRelativePath = "../server/public/admin"
-const distPath = path.resolve(cwd, "dist")
+const releaseRelativePath = '../server/public/admin'
+const distPath = path.resolve(cwd, 'dist')
 const releasePath = path.resolve(cwd, releaseRelativePath)
 
 async function build() {
@@ -32,4 +33,4 @@ function copyFile(sourceDir, targetDir) {
     })
 }
 
-// build()
+build()

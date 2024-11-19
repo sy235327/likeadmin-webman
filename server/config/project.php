@@ -1,7 +1,7 @@
 <?php
 return [
     // 系统版本号
-    'version' => '1.5.0',
+    'version' => '1.9.4',
 
     // 官网
     'website' => [
@@ -52,6 +52,7 @@ return [
     'default_image' => [
         'admin_avatar' => 'resource/image/admin/avatar.png',
         'user_avatar' => 'resource/image/admin/default_avatar.png',
+        'qq_group' => 'resource/image/adminapi/default/qq_group.png', // qq群
         'git_png' => 'resource/image/admin/gitee.png', // 仓库地址
         'customer_service' => 'resource/image/admin/customer_service.png', // 客服
         'menu_admin' => 'resource/image/admin/menu_admin.png',// 首页快捷菜单-管理员
@@ -73,9 +74,15 @@ return [
     'file_video' => [
         'wmv', 'avi', 'mpg', 'mpeg', '3gp', 'mov', 'mp4', 'flv', 'f4v', 'rmvb', 'mkv'
     ],
-    // 文件上传限制 (other)
+
+    // 其他上传限制 (other)
     'file_other' => [
         'pdf', 'doc', 'docx', 'xls', 'xlsx'
+    ],
+
+    //上传文件的格式 (文件)
+    'file_file' => [
+        'zip','rar','txt','pdf','doc','docx','xls','xlsx','ppt','pptx','csv','txt','ftr','7z','gz'
     ],
 
     // 登录设置
@@ -97,7 +104,7 @@ return [
     // 后台装修
     'decorate' => [
         // 底部导航栏样式设置
-        'tabbar_style' => ['default_color' => '#999999', 'selected_color' => '#4173ff'],
+        'tabbar_style' => ['default_color' => '#999999', 'selected_color' => '#c455ff'],
     ]
 
 ];

@@ -110,4 +110,29 @@ class WebSettingController extends BaseAdminController
         $result = WebSettingLogic::getAgreement();
         return $this->data($result);
     }
+
+    /**
+     * @notes 获取站点统计配置
+     * @return Response
+     * @author yfdong
+     * @date 2024/09/20 22:24
+     */
+    public function getSiteStatistics(): Response
+    {
+        $result = WebSettingLogic::getSiteStatistics();
+        return $this->data($result);
+    }
+
+    /**
+     * @notes 获取站点统计配置
+     * @return Response
+     * @author yfdong
+     * @date 2024/09/20 22:51
+     */
+    public function setSiteStatistics(): Response
+    {
+        $params = (new WebSettingValidate())->post()->goCheck('siteStatistics');
+        WebSettingLogic::setSiteStatistics($params);
+        return $this->success('设置成功', [], 1, 1);
+    }
 }

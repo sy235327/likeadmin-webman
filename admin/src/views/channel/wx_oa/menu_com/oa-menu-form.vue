@@ -46,10 +46,18 @@
 </template>
 
 <script lang="ts" setup>
-import { rules } from "./useMenuOa"
-import type { FormInstance } from "element-plus"
+import type { FormInstance } from 'element-plus'
 
-const emit = defineEmits(["update:name", "update:menuType", "update:visitType", "update:url", "update:appId", "update:pagePath"])
+import { rules } from './useMenuOa'
+
+const emit = defineEmits([
+    'update:name',
+    'update:menuType',
+    'update:visitType',
+    'update:url',
+    'update:appId',
+    'update:pagePath'
+])
 
 const props = withDefaults(
     defineProps<{
@@ -62,13 +70,13 @@ const props = withDefaults(
         pagePath?: string
     }>(),
     {
-        modular: "master",
-        name: "",
+        modular: 'master',
+        name: '',
         menuType: false,
-        visitType: "view",
-        url: "",
-        appId: "",
-        pagePath: ""
+        visitType: 'view',
+        url: '',
+        appId: '',
+        pagePath: ''
     }
 )
 
@@ -85,14 +93,14 @@ watch(
 )
 
 watchEffect(() => {
-    if (props.modular === "master") {
-        emit("update:menuType", menuForm.value.menuType)
+    if (props.modular === 'master') {
+        emit('update:menuType', menuForm.value.menuType)
     }
-    emit("update:name", menuForm.value.name)
-    emit("update:visitType", menuForm.value.visitType)
-    emit("update:url", menuForm.value.url)
-    emit("update:appId", menuForm.value.appId)
-    emit("update:pagePath", menuForm.value.pagePath)
+    emit('update:name', menuForm.value.name)
+    emit('update:visitType', menuForm.value.visitType)
+    emit('update:url', menuForm.value.url)
+    emit('update:appId', menuForm.value.appId)
+    emit('update:pagePath', menuForm.value.pagePath)
 })
 
 defineExpose({

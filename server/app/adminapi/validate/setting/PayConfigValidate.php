@@ -30,7 +30,7 @@ class PayConfigValidate extends BaseValidate
         'name' => 'require|checkName',
         'icon' => 'require',
         'sort' => 'require|number|max:5',
-        'config' => 'require|checkConfig',
+        'config' => 'checkConfig',
     ];
 
     protected $message = [
@@ -66,6 +66,9 @@ class PayConfigValidate extends BaseValidate
         $result = PayConfig::where('id', $data['id'])->find();
         if (empty($result)) {
             return '支付方式不存在';
+        }
+        if ($result['pay_way'] != PayEnum::BALANCE_PAY && !isset($config)) {
+            return '支付配置不能为空';
         }
 
         if ($result['pay_way'] == PayEnum::WECHAT_PAY) {

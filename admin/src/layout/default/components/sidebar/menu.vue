@@ -1,17 +1,35 @@
 <template>
-    <div class="menu flex-1 min-h-0" :class="themeClass" :style="isCollapsed ? '' : `--aside-width: ${width}px`">
+    <div
+        class="menu flex-1 min-h-0"
+        :class="themeClass"
+        :style="isCollapsed ? '' : `--aside-width: ${width}px`"
+    >
         <el-scrollbar>
-            <el-menu v-bind="config" :default-active="activeMenu" :collapse="isCollapsed" mode="vertical" :unique-opened="uniqueOpened" @select="$emit('select')">
-                <menu-item v-for="route in routes" :key="route.path" :route="route" :route-path="route.path" :popper-class="themeClass" />
+            <el-menu
+                v-bind="config"
+                :default-active="activeMenu"
+                :collapse="isCollapsed"
+                mode="vertical"
+                :unique-opened="uniqueOpened"
+                @select="$emit('select')"
+            >
+                <menu-item
+                    v-for="route in routes"
+                    :key="route.path"
+                    :route="route"
+                    :route-path="route.path"
+                    :popper-class="themeClass"
+                />
             </el-menu>
         </el-scrollbar>
     </div>
 </template>
 
 <script setup lang="ts">
-import type { PropType } from "vue"
-import MenuItem from "./menu-item.vue"
-import type { RouteRecordRaw } from "vue-router"
+import type { PropType } from 'vue'
+import type { RouteRecordRaw } from 'vue-router'
+
+import MenuItem from './menu-item.vue'
 
 const props = defineProps({
     routes: {
@@ -37,7 +55,7 @@ const props = defineProps({
     }
 })
 
-defineEmits(["select"])
+defineEmits(['select'])
 
 const route = useRoute()
 const activeMenu = computed<string>(() => route.meta?.activeMenu || route.path)

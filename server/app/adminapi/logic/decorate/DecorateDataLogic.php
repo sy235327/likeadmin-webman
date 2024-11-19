@@ -15,6 +15,7 @@ namespace app\adminapi\logic\decorate;
 
 use app\common\logic\BaseLogic;
 use app\common\model\article\Article;
+use app\common\model\decorate\DecoratePage;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -52,6 +53,21 @@ class DecorateDataLogic extends BaseLogic
             ->select()->toArray();
     }
 
+    /**
+     * @notes pc设置
+     * @return array
+     * @author mjf
+     * @date 2024/3/14 18:13
+     */
+    public static function pc(): array
+    {
+        $pcPage = DecoratePage::findOrEmpty(4)->toArray();
+        $updateTime = !empty($pcPage['update_time']) ? $pcPage['update_time'] : date('Y-m-d H:i:s');
+        return [
+            'update_time' => $updateTime,
+            'pc_url' => getAgreementHost() . '/pc'
+        ];
+    }
 
 
 

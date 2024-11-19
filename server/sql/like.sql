@@ -756,3 +756,43 @@ CREATE TABLE `la_user_session`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户会话表';
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+
+-- 截至到 likeadmin version 1.8.0.20240806
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+
+USE `test_demo`;
+
+/* Alter table in target */
+ALTER TABLE `la_admin`
+    CHANGE `password` `password` varchar(32)  COLLATE utf8mb4_general_ci NOT NULL COMMENT '密码' after `account` ,
+    CHANGE `login_ip` `login_ip` varchar(39)  COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '最后登录ip' after `login_time` ;
+
+/* Alter table in target */
+ALTER TABLE `la_decorate_page`
+    ADD COLUMN `meta` text  COLLATE utf8mb4_general_ci NULL COMMENT '页面设置' after `data` ,
+    CHANGE `create_time` `create_time` int(10) unsigned   NOT NULL DEFAULT 0 COMMENT '创建时间' after `meta` ;
+
+/* Alter table in target */
+ALTER TABLE `la_decorate_tabbar`
+    ADD COLUMN `is_show` tinyint(255) unsigned   NOT NULL DEFAULT 1 COMMENT '显示状态' after `link` ,
+    CHANGE `create_time` `create_time` int(10) unsigned   NOT NULL DEFAULT 0 COMMENT '创建时间' after `is_show` ;
+
+/* Alter table in target */
+ALTER TABLE `la_file`
+    CHANGE `name` `name` varchar(255)  COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '文件名称' after `type` ;
+
+/* Alter table in target */
+ALTER TABLE `la_operation_log`
+    CHANGE `url` `url` varchar(600)  COLLATE utf8mb4_general_ci NOT NULL COMMENT '访问链接' after `type` ,
+    CHANGE `ip` `ip` varchar(39)  COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT 'ip地址' after `result` ;
+
+/* Alter table in target */
+ALTER TABLE `la_recharge_order`
+    ADD COLUMN `refund_transaction_id` varchar(255)  COLLATE utf8mb4_general_ci NULL COMMENT '退款交易流水号' after `refund_status` ,
+    CHANGE `create_time` `create_time` int(10)   NULL COMMENT '创建时间' after `refund_transaction_id` ;
+
+/* Alter table in target */
+ALTER TABLE `la_user`
+    CHANGE `login_ip` `login_ip` varchar(200)  COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '最后登录IP' after `is_disable` ;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

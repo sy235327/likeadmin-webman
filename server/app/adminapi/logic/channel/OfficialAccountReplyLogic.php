@@ -48,7 +48,7 @@ class OfficialAccountReplyLogic extends BaseLogic
     {
         try {
             // 关键字回复排序值须大于0
-            if ($params['reply_type'] == OfficialAccountEnum::REPLY_TYPE_KEYWORD && $params['sort'] <= 0) {
+            if ($params['reply_type'] == OfficialAccountEnum::REPLY_TYPE_KEYWORD && $params['sort'] < 0) {
                 throw new Exception('排序值须大于0');
             }
             if ($params['reply_type'] != OfficialAccountEnum::REPLY_TYPE_KEYWORD && $params['status']) {
@@ -90,7 +90,7 @@ class OfficialAccountReplyLogic extends BaseLogic
     {
         try {
             // 关键字回复排序值须大于0
-            if ($params['reply_type'] == OfficialAccountEnum::REPLY_TYPE_KEYWORD && $params['sort'] <= 0) {
+            if ($params['reply_type'] == OfficialAccountEnum::REPLY_TYPE_KEYWORD && $params['sort'] < 0) {
                 throw new Exception('排序值须大于0');
             }
             if ($params['reply_type'] != OfficialAccountEnum::REPLY_TYPE_KEYWORD && $params['status']) {
@@ -169,10 +169,6 @@ class OfficialAccountReplyLogic extends BaseLogic
                     ])
                         ->value('content');
 
-                    if (empty($replyContent)) {
-                        // 未启用关注回复 或 关注回复内容为空
-                        $replyContent = static::getDefaultReply();
-                    }
                     if ($replyContent) {
                         return $replyContent;
                     }

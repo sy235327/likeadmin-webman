@@ -241,6 +241,11 @@ class WeChatPayService extends BasePayService
      */
     public function mwebPay($from, $order, $appId): mixed
     {
+        $ip = getRealIP();
+        if (!empty(getenv('project.test_web_ip')) && getenv('APP_DEBUG')) {
+            $ip = getenv('project.test_web_ip');
+        }
+
         $response = $this->app->getClient()->postJson('v3/pay/transactions/h5', [
             'appid' => $appId,
             'mchid' => $this->config['mch_id'],
@@ -252,7 +257,7 @@ class WeChatPayService extends BasePayService
             ],
             'attach' => $from,
             'scene_info' => [
-                'payer_client_ip' => getRealIP(),
+                'payer_client_ip' => $ip,
                 'h5_info' => [
                     'type' => 'Wap',
                 ]
@@ -261,7 +266,7 @@ class WeChatPayService extends BasePayService
         $result = $response->toArray(false);
         $this->checkResultFail($result);
 
-        $domain = getAgreementHost();
+        $domain = getDomainHost();
         if (!empty(getenv('project.test_web_domain')) && getenv('APP_DEBUG')) {
             $domain = getenv('project.test_web_domain');
         }

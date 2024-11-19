@@ -3,7 +3,12 @@
         <el-card class="!border-none" shadow="never">
             <el-form ref="formRef" class="mb-[-16px]" :model="queryParams" :inline="true">
                 <el-form-item label="部门名称" prop="name">
-                    <el-input class="w-[280px]" v-model="queryParams.name" clearable @keyup.enter="getLists" />
+                    <el-input
+                        class="w-[280px]"
+                        v-model="queryParams.name"
+                        clearable
+                        @keyup.enter="getLists"
+                    />
                 </el-form-item>
                 <el-form-item label="部门状态" prop="status">
                     <el-select class="w-[280px]" v-model="queryParams.status">
@@ -28,11 +33,26 @@
                 </el-button>
                 <el-button @click="handleExpand"> 展开/折叠 </el-button>
             </div>
-            <el-table ref="tableRef" class="mt-4" size="large" v-loading="loading" :data="lists" row-key="id" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }">
-                <el-table-column label="部门名称" prop="name" min-width="150" show-overflow-tooltip />
+            <el-table
+                ref="tableRef"
+                class="mt-4"
+                size="large"
+                v-loading="loading"
+                :data="lists"
+                row-key="id"
+                :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+            >
+                <el-table-column
+                    label="部门名称"
+                    prop="name"
+                    min-width="150"
+                    show-overflow-tooltip
+                />
                 <el-table-column label="部门状态" prop="status" min-width="100">
                     <template #default="{ row }">
-                        <el-tag class="ml-2" :type="row.status ? '' : 'danger'">{{ row.status_desc }}</el-tag>
+                        <el-tag class="ml-2" :type="row.status ? '' : 'danger'">{{
+                            row.status_desc
+                        }}</el-tag>
                     </template>
                 </el-table-column>
 
@@ -40,9 +60,31 @@
                 <el-table-column label="更新时间" prop="update_time" min-width="180" />
                 <el-table-column label="操作" width="160" fixed="right">
                     <template #default="{ row }">
-                        <el-button v-perms="['dept.dept/add']" type="primary" link @click="handleAdd(row.id)"> 新增 </el-button>
-                        <el-button v-perms="['dept.dept/edit']" type="primary" link @click="handleEdit(row)"> 编辑 </el-button>
-                        <el-button v-if="row.pid !== 0" v-perms="['dept.dept/delete']" type="danger" link @click="handleDelete(row.id)"> 删除 </el-button>
+                        <el-button
+                            v-perms="['dept.dept/add']"
+                            type="primary"
+                            link
+                            @click="handleAdd(row.id)"
+                        >
+                            新增
+                        </el-button>
+                        <el-button
+                            v-perms="['dept.dept/edit']"
+                            type="primary"
+                            link
+                            @click="handleEdit(row)"
+                        >
+                            编辑
+                        </el-button>
+                        <el-button
+                            v-if="row.pid !== 0"
+                            v-perms="['dept.dept/delete']"
+                            type="danger"
+                            link
+                            @click="handleDelete(row.id)"
+                        >
+                            删除
+                        </el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -51,10 +93,13 @@
     </div>
 </template>
 <script lang="ts" setup name="department">
-import type { ElTable, FormInstance } from "element-plus"
-import EditPopup from "./edit.vue"
-import { deptDelete, deptLists } from "@/api/org/department"
-import feedback from "@/utils/feedback"
+import type { ElTable, FormInstance } from 'element-plus'
+
+import { deptDelete, deptLists } from '@/api/org/department'
+import feedback from '@/utils/feedback'
+
+import EditPopup from './edit.vue'
+
 const tableRef = shallowRef<InstanceType<typeof ElTable>>()
 const editRef = shallowRef<InstanceType<typeof EditPopup>>()
 const formRef = shallowRef<FormInstance>()
@@ -62,8 +107,8 @@ let isExpand = false
 const loading = ref(false)
 const lists = ref<any[]>([])
 const queryParams = reactive({
-    status: "",
-    name: ""
+    status: '',
+    name: ''
 })
 const showEdit = ref(false)
 const getLists = async () => {
@@ -85,18 +130,18 @@ const handleAdd = async (id?: number) => {
             pid: id
         })
     }
-    editRef.value?.open("add")
+    editRef.value?.open('add')
 }
 
 const handleEdit = async (data: any) => {
     showEdit.value = true
     await nextTick()
-    editRef.value?.open("edit")
+    editRef.value?.open('edit')
     editRef.value?.getDetail(data)
 }
 
 const handleDelete = async (id: number) => {
-    await feedback.confirm("确定要删除？")
+    await feedback.confirm('确定要删除？')
     await deptDelete({ id })
     getLists()
 }

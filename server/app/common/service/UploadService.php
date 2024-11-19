@@ -164,6 +164,41 @@ class UploadService extends BaseService
             return false;
         }
     }
+    /**
+     * @notes 视频上传
+     * @param $cid
+     * @param int $user_id
+     * @param string $saveDir
+     * @return array|false
+     * @author 乔峰
+     * @date 2021/12/29 16:32
+     */
+    public function file($cid, int $sourceId = 0, int $source = FileEnum::SOURCE_ADMIN, string $saveDir = 'uploads/file'): bool|array
+    {
+        try {
+            $config = [
+                'default' => ConfigService::get('storage', 'default', 'local'),
+                'engine'  => ConfigService::get('storage') ?? ['local'=>[]],
+            ];
+
+            // 2、执行文件上传
+            $StorageDriver = new StorageDriver($config);
+            $StorageDriver->setUploadFile('file');
+            $fileName = $StorageDriver->getFileName();
+            $fileInfo = $StorageDriver->getFileInfo();
+            // 校验上传文件后缀
+            if (!in_array(strtolower($fileInfo['ext']), config('project.file_file'))) {
+                $this->setError("上传文件不允许上传". $fileInfo['ext'] . "文件");
+                return false;
+            }
+
+            // 上传文件
+            return $this->upload($saveDir,$config,$StorageDriver,$fileInfo,$cid,$source,$sourceId,$fileName,FileEnum::FILE_TYPE);
+        } catch (Exception $e) {
+            $this->setError($e->getMessage());
+            return false;
+        }
+    }
     private function upload($saveDir,$config,$StorageDriver,$fileInfo,$cid,$source,$sourceId,$fileName,$file_type): bool|array
     {
         // 上传文件

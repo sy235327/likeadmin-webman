@@ -33,6 +33,7 @@ use think\model\concern\SoftDelete;
  * @property int $order_terminal 终端
  * @property string $transaction_id 第三方平台交易流水号
  * @property int $refund_status 退款状态 0-未退款 1-已退款
+ * @property int $refund_transaction_id 退款交易流水号
  * @property int $create_time 创建时间
  * @property int $update_time 更新时间
  * @property int $delete_time 删除时间
@@ -68,6 +69,8 @@ class RechargeOrder extends BaseModel
         'transaction_id' => 'string',
         //退款状态 0-未退款 1-已退款
         'refund_status' => 'int',
+        //退款交易流水号
+        'refund_transaction_id' => 'string',
         //创建时间
         'create_time' => 'int',
         //更新时间

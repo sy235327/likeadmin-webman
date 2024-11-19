@@ -1,6 +1,12 @@
 <template>
     <aside class="sidebar h-full">
-        <el-drawer v-model="showMenuDrawer" direction="ltr" :size="drawderSize" title="主题设置" :with-header="false">
+        <el-drawer
+            v-model="showMenuDrawer"
+            direction="ltr"
+            :size="drawderSize"
+            title="主题设置"
+            :with-header="false"
+        >
             <side />
         </el-drawer>
         <side v-show="!isMobile" />
@@ -8,9 +14,10 @@
 </template>
 
 <script setup lang="ts">
-import Side from "./side.vue"
-import useAppStore from "@/stores/modules/app"
-import useSettingStore from "@/stores/modules/setting"
+import useAppStore from '@/stores/modules/app'
+import useSettingStore from '@/stores/modules/setting'
+
+import Side from './side.vue'
 
 const appStore = useAppStore()
 const settingStore = useSettingStore()

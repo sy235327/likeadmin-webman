@@ -14,11 +14,11 @@
 </template>
 
 <script lang="ts" setup>
-import { read, utils } from "xlsx"
-import { genFileId, type UploadInstance, type UploadProps, type UploadRawFile } from "element-plus"
-const emit = defineEmits(["success", "error"])
+import { genFileId, type UploadInstance, type UploadProps, type UploadRawFile } from 'element-plus'
+import { read, utils } from 'xlsx'
+const emit = defineEmits(['success', 'error'])
 const uploadRef = ref<UploadInstance>()
-const handleExceed: UploadProps["onExceed"] = (files) => {
+const handleExceed: UploadProps['onExceed'] = (files) => {
     uploadRef.value!.clearFiles()
     const file = files[0] as UploadRawFile
     file.uid = genFileId()
@@ -31,7 +31,7 @@ const beforeUpload = async (file: any) => {
         reader.onload = (e: any) => {
             const data = e.target.result
             const zzexcel = read(data, {
-                type: "binary"
+                type: 'binary'
             })
             const result = []
             for (let i = 0; i < zzexcel.SheetNames.length; i++) {
@@ -45,15 +45,15 @@ const beforeUpload = async (file: any) => {
                 })
                 result.push(...newData)
             }
-            emit("success", result, file)
+            emit('success', result, file)
         }
     } catch (e) {
-        emit("error", e)
+        emit('error', e)
     }
 }
 const props = withDefaults(
     defineProps<{
-        header?: "A" | number | string[]
+        header?: 'A' | number | string[]
         rawNumbers?: boolean
         raw?: boolean
         skipHidden?: boolean
@@ -61,7 +61,7 @@ const props = withDefaults(
         defval?: string | number | null
     }>(),
     {
-        defval: ""
+        defval: ''
     }
 )
 </script>

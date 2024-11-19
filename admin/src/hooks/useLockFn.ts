@@ -1,4 +1,4 @@
-import { ref } from "vue"
+import { ref } from 'vue'
 
 export function useLockFn(fn: (...args: any[]) => Promise<any>) {
     const isLock = ref(false)

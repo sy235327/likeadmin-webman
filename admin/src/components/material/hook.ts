@@ -1,8 +1,18 @@
-import { fileCateAdd, fileCateDelete, fileCateEdit, fileCateLists, fileDelete, fileList, fileMove, fileRename } from "@/api/file"
-import { usePaging } from "@/hooks/usePaging"
-import feedback from "@/utils/feedback"
-import { ElMessage, ElTree, type CheckboxValueType } from "element-plus"
-import { shallowRef, type Ref } from "vue"
+import { type CheckboxValueType, ElMessage, ElTree } from 'element-plus'
+import { type Ref, shallowRef } from 'vue'
+
+import {
+    fileCateAdd,
+    fileCateDelete,
+    fileCateEdit,
+    fileCateLists,
+    fileDelete,
+    fileList,
+    fileMove,
+    fileRename
+} from '@/api/file'
+import { usePaging } from '@/hooks/usePaging'
+import feedback from '@/utils/feedback'
 
 // 左侧分组的钩子函数
 export function useCate(type: number) {
@@ -11,7 +21,7 @@ export function useCate(type: number) {
     const cateLists = ref<any[]>([])
 
     // 选中的分组id
-    const cateId = ref<number | string>("")
+    const cateId = ref<number | string>('')
 
     // 获取分组列表
     const getCateLists = async () => {
@@ -21,11 +31,11 @@ export function useCate(type: number) {
         })
         const item: any[] = [
             {
-                name: "全部",
-                id: ""
+                name: '全部',
+                id: ''
             },
             {
-                name: "未分组",
+                name: '未分组',
                 id: 0
             }
         ]
@@ -46,6 +56,15 @@ export function useCate(type: number) {
         getCateLists()
     }
 
+    const handleAddChildCate = async (value: string, pid: number) => {
+        await fileCateAdd({
+            type,
+            name: value,
+            pid: pid
+        })
+        getCateLists()
+    }
+
     // 编辑分组
     const handleEditCate = async (value: string, id: number) => {
         await fileCateEdit({
@@ -56,10 +75,14 @@ export function useCate(type: number) {
     }
 
     // 删除分组
-    const handleDeleteCate = async (id: number) => {
-        await feedback.confirm("确定要删除？")
+    const handleDeleteCate = async (id: number, children?: number) => {
+        if (children) {
+            await feedback.confirm('删除文件夹将会永久删除文件夹及其所有内容。您确定要继续吗？')
+        } else {
+            await feedback.confirm('确定要删除？')
+        }
         await fileCateDelete({ id })
-        cateId.value = ""
+        cateId.value = ''
         getCateLists()
     }
 
@@ -73,6 +96,7 @@ export function useCate(type: number) {
         cateId,
         cateLists,
         handleAddCate,
+        handleAddChildCate,
         handleEditCate,
         handleDeleteCate,
         getCateLists,
@@ -81,17 +105,23 @@ export function useCate(type: number) {
 }
 
 // 处理文件的钩子函数
-export function useFile(cateId: Ref<string | number>, type: Ref<number>, limit: Ref<number>, size: number) {
+export function useFile(
+    cateId: Ref<string | number>,
+    type: Ref<number>,
+    limit: Ref<number>,
+    size: number
+) {
     const tableRef = shallowRef()
-    const listShowType = ref("normal")
+    const listShowType = ref('normal')
     const moveId = ref(0)
     const select = ref<any[]>([])
     const isCheckAll = ref(false)
     const isIndeterminate = ref(false)
     const fileParams = reactive({
-        name: "",
+        name: '',
         type: type,
-        cid: cateId
+        cid: cateId,
+        source: ''
     })
     const { pager, getLists, resetPage } = usePaging({
         fetchFun: fileList,
@@ -112,7 +142,9 @@ export function useFile(cateId: Ref<string | number>, type: Ref<number>, limit: 
     }
 
     const batchFileDelete = async (id?: number[]) => {
-        await feedback.confirm("确认删除后，本地或云存储文件也将同步删除，如文件已被使用，请谨慎操作！")
+        await feedback.confirm(
+            '确认删除后，本地或云存储文件也将同步删除，如文件已被使用，请谨慎操作！'
+        )
         const ids = id ? id : select.value.map((item: any) => item.id)
         await fileDelete({ ids })
         getFileList()
@@ -139,7 +171,7 @@ export function useFile(cateId: Ref<string | number>, type: Ref<number>, limit: 
                 select.value.push(item)
                 return
             }
-            ElMessage.warning("已达到选择上限")
+            ElMessage.warning('已达到选择上限')
             return
         }
         select.value.push(item)

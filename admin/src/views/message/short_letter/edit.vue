@@ -1,6 +1,13 @@
 <template>
     <div class="edit-popup">
-        <popup ref="popupRef" title="设置短信" :async="true" width="550px" @confirm="handleSubmit" @close="handleClose">
+        <popup
+            ref="popupRef"
+            title="设置短信"
+            :async="true"
+            width="550px"
+            @confirm="handleSubmit"
+            @close="handleClose"
+        >
             <el-form ref="formRef" :model="formData" label-width="120px" :rules="formRules">
                 <el-form-item label="短信渠道">
                     <div>
@@ -33,20 +40,22 @@
     </div>
 </template>
 <script lang="ts" setup>
-import { setSmsConfig, smsDetail } from "@/api/message"
-import type { FormInstance } from "element-plus"
-import Popup from "@/components/popup/index.vue"
-const emit = defineEmits(["success"])
+import type { FormInstance } from 'element-plus'
+
+import { setSmsConfig, smsDetail } from '@/api/message'
+import Popup from '@/components/popup/index.vue'
+
+const emit = defineEmits(['success'])
 const formRef = shallowRef<FormInstance>()
 const popupRef = shallowRef<InstanceType<typeof Popup>>()
 const formData = reactive({
-    name: "",
-    type: "",
-    sign: "",
-    app_key: "",
-    app_id: "",
-    secret_key: "",
-    secret_id: "",
+    name: '',
+    type: '',
+    sign: '',
+    app_key: '',
+    app_id: '',
+    secret_key: '',
+    secret_id: '',
     status: 0
 })
 
@@ -54,36 +63,36 @@ const formRules = {
     sign: [
         {
             required: true,
-            message: "请输入短信签名",
-            trigger: "blur"
+            message: '请输入短信签名',
+            trigger: 'blur'
         }
     ],
     app_id: [
         {
             required: true,
-            message: "请输入APP_ID",
-            trigger: "blur"
+            message: '请输入APP_ID',
+            trigger: 'blur'
         }
     ],
     app_key: [
         {
             required: true,
-            message: "请输入APP_KEY",
-            trigger: "blur"
+            message: '请输入APP_KEY',
+            trigger: 'blur'
         }
     ],
     secret_key: [
         {
             required: true,
-            message: "请输入SECRET_KEY",
-            trigger: "blur"
+            message: '请输入SECRET_KEY',
+            trigger: 'blur'
         }
     ],
     secret_id: [
         {
             required: true,
-            message: "请输入SECRET_ID",
-            trigger: "blur"
+            message: '请输入SECRET_ID',
+            trigger: 'blur'
         }
     ]
 }
@@ -92,7 +101,7 @@ const handleSubmit = async () => {
     await formRef.value?.validate()
     await setSmsConfig(formData)
     popupRef.value?.close()
-    emit("success")
+    emit('success')
 }
 
 const getDetail = async () => {

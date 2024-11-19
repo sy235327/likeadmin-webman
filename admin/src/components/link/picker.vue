@@ -3,19 +3,25 @@
         <el-input :model-value="getLink" placeholder="请选择链接" readonly :disabled="disabled">
             <template #suffix>
                 <icon v-if="!modelValue?.path" name="el-icon-ArrowRight" />
-                <icon v-else name="el-icon-Close" @click.stop="!disabled && emit('update:modelValue', {})" />
+                <icon
+                    v-else
+                    name="el-icon-Close"
+                    @click.stop="!disabled && emit('update:modelValue', {})"
+                />
             </template>
         </el-input>
-        <popup ref="popupRef" width="700px" title="链接选择" @confirm="handleConfirm">
+        <popup ref="popupRef" width="1050px" title="链接选择" @confirm="handleConfirm">
             <link-content v-model="activeLink" />
         </popup>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { LinkTypeEnum, type Link } from "."
-import LinkContent from "./index.vue"
-import Popup from "@/components/popup/index.vue"
+import Popup from '@/components/popup/index.vue'
+
+import { type Link, LinkTypeEnum } from '.'
+import LinkContent from './index.vue'
+
 const props = defineProps({
     modelValue: {
         type: Object
@@ -26,18 +32,20 @@ const props = defineProps({
     }
 })
 const emit = defineEmits<{
-    (event: "update:modelValue", value: any): void
+    (event: 'update:modelValue', value: any): void
 }>()
 
 const popupRef = shallowRef<InstanceType<typeof Popup>>()
-const activeLink = ref<Link>({ path: "", type: LinkTypeEnum.SHOP_PAGES })
+const activeLink = ref<Link>({ path: '', type: LinkTypeEnum.SHOP_PAGES })
 const handleConfirm = () => {
-    emit("update:modelValue", activeLink.value)
+    emit('update:modelValue', activeLink.value)
 }
 
 const getLink = computed(() => {
     switch (props.modelValue?.type) {
         case LinkTypeEnum.SHOP_PAGES:
+            return props.modelValue.name
+        case LinkTypeEnum.ARTICLE_LIST:
             return props.modelValue.name
         case LinkTypeEnum.CUSTOM_LINK:
             return props.modelValue.query?.url

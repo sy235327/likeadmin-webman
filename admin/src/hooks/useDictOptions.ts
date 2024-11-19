@@ -1,5 +1,6 @@
-import { getDictData } from "@/api/app"
-import { reactive, toRaw } from "vue"
+import { reactive, toRaw } from 'vue'
+
+import { getDictData } from '@/api/app'
 
 interface Options {
     [propName: string]: {
@@ -32,7 +33,7 @@ export function useDictOptions<T = any>(options: Options) {
         const res = await Promise.allSettled<Promise<any>>(apiLists.map((api) => api()))
         res.forEach((item, index) => {
             const key = optionsKey[index]
-            if (item.status == "fulfilled") {
+            if (item.status == 'fulfilled') {
                 const { transformData } = options[key]
                 const data = transformData ? transformData(item.value) : item.value
                 optionsData[key] = data

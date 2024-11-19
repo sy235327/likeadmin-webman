@@ -549,6 +549,19 @@ if (!function_exists('getAgreementHost')){
         return request()->host();
     }
 }
+if (!function_exists('getDomainHost')){
+    /**
+     * proxy_set_header Scheme $scheme;
+     * 获取单域名配置上的协议拼接域名
+     * 如果是后台有单独域名部署那么直接从 host 请求头上拿域名
+     * @return string
+     */
+    function getDomainHost(): string
+    {
+        return str_replace(['http://','https://'],'',getAgreementHost());
+    }
+}
+
 
 if (!function_exists('getRealIP')){
     /**

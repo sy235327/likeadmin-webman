@@ -60,4 +60,22 @@ class UploadController extends BaseAdminController
         }
         return $this->success('上传成功', $result);
     }
+
+
+    /**
+     * @notes 上传文件
+     * @return Response
+     * @author dw
+     * @date 2023/06/26
+     */
+    public function file(): Response
+    {
+        $cid = $this->request->post('cid', 0);
+        $uploadObj = (new UploadService());
+        $result = $uploadObj->file($cid);
+        if ($result===false){
+            return $this->fail($uploadObj->getError());
+        }
+        return $this->success('上传成功', $result);
+    }
 }

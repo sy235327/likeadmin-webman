@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts" naem="webProtocol">
-import { getProtocol, setProtocol } from "@/api/setting/website"
+import { getProtocol, setProtocol } from '@/api/setting/website'
 
 interface formDataObj {
     service_title: string
@@ -40,10 +40,10 @@ interface formDataObj {
     privacy_content: string
 }
 const formData = ref<formDataObj>({
-    service_title: "",
-    service_content: "",
-    privacy_title: "",
-    privacy_content: ""
+    service_title: '',
+    service_content: '',
+    privacy_title: '',
+    privacy_content: ''
 })
 const protocolGet = async () => {
     formData.value = await getProtocol()

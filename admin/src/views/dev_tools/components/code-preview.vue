@@ -2,7 +2,12 @@
     <div class="code-preview">
         <el-dialog v-model="show" width="900px" title="代码预览">
             <el-tabs v-model="activeTab">
-                <el-tab-pane v-for="(item, index) in code" :label="item.name" :name="`index${index}`" :key="index">
+                <el-tab-pane
+                    v-for="(item, index) in code"
+                    :label="item.name"
+                    :name="`index${index}`"
+                    :key="index"
+                >
                     <div class="flex" style="height: 50vh">
                         <el-scrollbar class="flex-1">
                             <highlightjs autodetect :code="item.content" />
@@ -23,8 +28,9 @@
 </template>
 
 <script lang="ts" setup>
-import feedback from "@/utils/feedback"
-import useClipboard from "vue-clipboard3"
+import useClipboard from 'vue-clipboard3'
+
+import feedback from '@/utils/feedback'
 
 const props = defineProps<{
     modelValue: boolean
@@ -32,18 +38,18 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-    (event: "update:modelValue", value: boolean): void
+    (event: 'update:modelValue', value: boolean): void
 }>()
 const { toClipboard } = useClipboard()
 
-const activeTab = ref("index0")
+const activeTab = ref('index0')
 
 const handleCopy = async (text: string) => {
     try {
         await toClipboard(text)
-        feedback.msgSuccess("复制成功")
+        feedback.msgSuccess('复制成功')
     } catch (e) {
-        feedback.msgError("复制失败")
+        feedback.msgError('复制失败')
     }
 }
 
@@ -52,7 +58,7 @@ const show = computed<boolean>({
         return props.modelValue
     },
     set(value) {
-        emit("update:modelValue", value)
+        emit('update:modelValue', value)
     }
 })
 </script>

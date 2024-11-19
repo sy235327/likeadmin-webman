@@ -48,15 +48,6 @@ class AllowMiddleware implements MiddlewareInterface
             $response = response('');
         }else{
             $response = $handler($request);
-            //创建一个纤程任务记录日志
-            try{
-                $fiber = (new Fiber(function() use ($request, $response): void{
-                    OperationLog::handle($request,$response);
-                }));
-                $fiber->start();
-            }catch (Exception|Throwable $e){
-//                Log::error('请求日志记录失败:'.$e->getMessage());
-            }
         }
 
         // 给响应添加跨域相关的http头

@@ -16,17 +16,36 @@ declare (strict_types=1);
 
 namespace app\common\http\middleware;
 
+use app\adminapi\listener\OperationLog;
 use Closure;
+use Exception;
+use Fiber;
+use support\Log;
+use Throwable;
+use Webman\Http\Request;
+use Webman\Http\Response;
+use Webman\MiddlewareInterface;
 
 /**
  * 基础中间件
  * Class LikeShopMiddleware
  * @package app\common\http\middleware
  */
-class BaseMiddleware
+class BaseMiddleware implements MiddlewareInterface
 {
-    public function handle($request, Closure $next)
+
+    public function process(Request $request, callable $handler): Response
     {
-        return $next($request);
+        $response = $handler($request);
+        //创建一个纤程任务记录日志
+        try{
+            $fiber = (new Fiber(function() use ($request, $response): void{
+                OperationLog::handle($request,$response);
+            }));
+            $fiber->start();
+        }catch (Exception|Throwable $e){
+            Log::error('请求日志记录失败:'.$e->getMessage());
+        }
+        return $response;
     }
 }

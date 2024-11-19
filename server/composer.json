@@ -35,7 +35,7 @@
     "workerman/workerman": "v5.0.0-rc.2",
     "workerman/http-client": "^2.2.8",
     "revolt/event-loop": "^1.0",
-    "workerman/webman-framework": "1.6",
+    "workerman/webman-framework": "v1.6.3",
     "monolog/monolog": "^2.9.2",
     "webman/think-orm": "^1.1.1",
     "vlucas/phpdotenv": "^5.5",

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "43bd7878d0c08efd811b96d5f609ce2b",
+    "content-hash": "082687c2be2377563e28cd7161483f53",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
@@ -6010,16 +6010,16 @@
         },
         {
             "name": "workerman/webman-framework",
-            "version": "v1.6.0",
+            "version": "v1.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/walkor/webman-framework.git",
-                "reference": "4e2b62b1f8aecc61cb46605bbfcbbd282f639b96"
+                "reference": "b0db16acf942322d0eb2ad2803300775b19111b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/walkor/webman-framework/zipball/4e2b62b1f8aecc61cb46605bbfcbbd282f639b96",
-                "reference": "4e2b62b1f8aecc61cb46605bbfcbbd282f639b96",
+                "url": "https://api.github.com/repos/walkor/webman-framework/zipball/b0db16acf942322d0eb2ad2803300775b19111b5",
+                "reference": "b0db16acf942322d0eb2ad2803300775b19111b5",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -6074,7 +6074,7 @@
                 "source": "https://github.com/walkor/webman-framework",
                 "wiki": "https://doc.workerman.net/"
             },
-            "time": "2024-11-12T07:42:54+00:00"
+            "time": "2024-11-19T02:16:55+00:00"
         },
         {
             "name": "workerman/workerman",
@@ -6175,6 +6175,6 @@
         "ext-bcmath": "*",
         "ext-curl": "*"
     },
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }

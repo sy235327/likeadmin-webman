@@ -1,11 +1,22 @@
 <template>
     <div>
         <el-card class="!border-none" shadow="never">
-            <el-alert type="warning" title="温馨提示：平台配置在各个场景下的通知发送方式和内容模板" :closable="false" show-icon></el-alert>
+            <el-alert
+                type="warning"
+                title="温馨提示：平台配置在各个场景下的通知发送方式和内容模板"
+                :closable="false"
+                show-icon
+            ></el-alert>
         </el-card>
         <el-card class="!border-none mt-4" shadow="never">
             <el-tabs v-model="tabsActive" @tab-change="getLists">
-                <el-tab-pane v-for="(item, index) in tabsMap" :key="index" :label="item.name" :name="item.type" lazy></el-tab-pane>
+                <el-tab-pane
+                    v-for="(item, index) in tabsMap"
+                    :key="index"
+                    :label="item.name"
+                    :name="item.type"
+                    lazy
+                ></el-tab-pane>
             </el-tabs>
             <el-table size="large" :data="pager.lists" v-loading="pager.loading">
                 <el-table-column label="通知场景" prop="scene_name" min-width="120" />
@@ -37,9 +48,9 @@
     </div>
 </template>
 <script lang="ts" setup name="notice">
-import { noticeLists } from "@/api/message"
-import { usePaging } from "@/hooks/usePaging"
-import { getRoutePath } from "@/router"
+import { noticeLists } from '@/api/message'
+import { usePaging } from '@/hooks/usePaging'
+import { getRoutePath } from '@/router'
 
 enum NoticeEnums {
     USER = 1,
@@ -49,11 +60,11 @@ enum NoticeEnums {
 const tabsActive = ref(NoticeEnums.USER)
 const tabsMap = [
     {
-        name: "通知用户",
+        name: '通知用户',
         type: NoticeEnums.USER
     },
     {
-        name: "通知平台",
+        name: '通知平台',
         type: NoticeEnums.PLATFORM
     }
 ]

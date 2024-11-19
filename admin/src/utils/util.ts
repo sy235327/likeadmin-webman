@@ -1,14 +1,15 @@
-import { isObject } from "@vue/shared"
-import { cloneDeep } from "lodash"
-import { writeFile as xlsxWriteFile, utils as xlsxUtils } from "xlsx"
-import feedback from "@/utils/feedback"
+import { isObject } from '@vue/shared'
+import { cloneDeep } from 'lodash'
+import { utils as xlsxUtils, writeFile as xlsxWriteFile } from 'xlsx'
+
+import feedback from '@/utils/feedback'
 
 /**
  * @description 添加单位
  * @param {String | Number} value 值 100
  * @param {String} unit 单位 px em rem
  */
-export const addUnit = (value: string | number, unit = "px") => {
+export const addUnit = (value: string | number, unit = 'px') => {
     return !Object.is(Number(value), NaN) ? `${value}${unit}` : value
 }
 
@@ -18,7 +19,7 @@ export const addUnit = (value: string | number, unit = "px") => {
  * @return {Boolean}
  */
 export const isEmpty = (value: unknown) => {
-    return value == null && typeof value == "undefined"
+    return value == null && typeof value == 'undefined'
 }
 
 /**
@@ -27,7 +28,7 @@ export const isEmpty = (value: unknown) => {
  * @param {Object} props `{ children: 'children' }`
  */
 
-export const treeToArray = (data: any[], props = { children: "children" }) => {
+export const treeToArray = (data: any[], props = { children: 'children' }) => {
     data = cloneDeep(data)
     const { children } = props
     const newData = []
@@ -50,7 +51,10 @@ export const treeToArray = (data: any[], props = { children: "children" }) => {
  * @param {Object} props `{ parent: 'pid', children: 'children' }`
  */
 
-export const arrayToTree = (data: any[], props = { id: "id", parentId: "pid", children: "children" }) => {
+export const arrayToTree = (
+    data: any[],
+    props = { id: 'id', parentId: 'pid', children: 'children' }
+) => {
     data = cloneDeep(data)
     const { id, parentId, children } = props
     const result: any[] = []
@@ -73,12 +77,12 @@ export const arrayToTree = (data: any[], props = { id: "id", parentId: "pid", ch
  * @param {String} path  数据
  */
 export function getNormalPath(path: string) {
-    if (path.length === 0 || !path || path == "undefined") {
+    if (path.length === 0 || !path || path == 'undefined') {
         return path
     }
-    const newPath = path.replace("//", "/")
+    const newPath = path.replace('//', '/')
     const length = newPath.length
-    if (newPath[length - 1] === "/") {
+    if (newPath[length - 1] === '/') {
         return newPath.slice(0, length - 1)
     }
     return newPath
@@ -90,21 +94,21 @@ export function getNormalPath(path: string) {
  * @return {string} Query语法
  */
 export function objectToQuery(params: Record<string, any>): string {
-    let query = ""
+    let query = ''
     for (const props of Object.keys(params)) {
         const value = params[props]
-        const part = encodeURIComponent(props) + "="
+        const part = encodeURIComponent(props) + '='
         if (!isEmpty(value)) {
             if (isObject(value)) {
                 for (const key of Object.keys(value)) {
                     if (!isEmpty(value[key])) {
-                        const params = props + "[" + key + "]"
-                        const subPart = encodeURIComponent(params) + "="
-                        query += subPart + encodeURIComponent(value[key]) + "&"
+                        const params = props + '[' + key + ']'
+                        const subPart = encodeURIComponent(params) + '='
+                        query += subPart + encodeURIComponent(value[key]) + '&'
                     }
                 }
             } else {
-                query += part + encodeURIComponent(value) + "&"
+                query += part + encodeURIComponent(value) + '&'
             }
         }
     }
@@ -118,7 +122,7 @@ export function objectToQuery(params: Record<string, any>): string {
  * @return { string }
  */
 // yyyy:mm:dd|yyyy:mm|yyyy年mm月dd日|yyyy年mm月dd日 hh时MM分等,可自定义组合
-export const timeFormat = (dateTime: number, fmt = "yyyy-mm-dd") => {
+export const timeFormat = (dateTime: number, fmt = 'yyyy-mm-dd') => {
     // 如果为null,则格式化当前时间
     if (!dateTime) {
         dateTime = Number(new Date())
@@ -130,17 +134,20 @@ export const timeFormat = (dateTime: number, fmt = "yyyy-mm-dd") => {
     const date = new Date(dateTime)
     let ret
     const opt: any = {
-        "y+": date.getFullYear().toString(), // 年
-        "m+": (date.getMonth() + 1).toString(), // 月
-        "d+": date.getDate().toString(), // 日
-        "h+": date.getHours().toString(), // 时
-        "M+": date.getMinutes().toString(), // 分
-        "s+": date.getSeconds().toString() // 秒
+        'y+': date.getFullYear().toString(), // 年
+        'm+': (date.getMonth() + 1).toString(), // 月
+        'd+': date.getDate().toString(), // 日
+        'h+': date.getHours().toString(), // 时
+        'M+': date.getMinutes().toString(), // 分
+        's+': date.getSeconds().toString() // 秒
     }
     for (const k in opt) {
-        ret = new RegExp("(" + k + ")").exec(fmt)
+        ret = new RegExp('(' + k + ')').exec(fmt)
         if (ret) {
-            fmt = fmt.replace(ret[1], ret[1].length == 1 ? opt[k] : opt[k].padStart(ret[1].length, "0"))
+            fmt = fmt.replace(
+                ret[1],
+                ret[1].length == 1 ? opt[k] : opt[k].padStart(ret[1].length, '0')
+            )
         }
     }
     return fmt
@@ -170,8 +177,8 @@ export const getNonDuplicateID = (length = 8) => {
 export const toSheet = async (rows: any, otherJson: any, fileName: string) => {
     const wb = xlsxUtils.book_new()
     const ws = xlsxUtils.json_to_sheet(rows, otherJson)
-    xlsxUtils.book_append_sheet(wb, ws, "Sheet1")
-    xlsxWriteFile(wb, fileName + ".xlsx")
+    xlsxUtils.book_append_sheet(wb, ws, 'Sheet1')
+    xlsxWriteFile(wb, fileName + '.xlsx')
 }
 /**
  * 前端生成表格
@@ -184,7 +191,7 @@ export const toSheet = async (rows: any, otherJson: any, fileName: string) => {
  * @param otherObj {} 接口追加参数
  */
 export const toSheetByFunc = async (func: any, otherObj: any) => {
-    feedback.loading("正在导出中...")
+    feedback.loading('正在导出中...')
     try {
         const res = await func({
             export: 2,

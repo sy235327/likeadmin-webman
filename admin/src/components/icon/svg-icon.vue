@@ -5,8 +5,9 @@
 </template>
 
 <script lang="ts">
-import { addUnit } from "@/utils/util"
-import type { CSSProperties } from "vue"
+import type { CSSProperties } from 'vue'
+
+import { addUnit } from '@/utils/util'
 
 export default defineComponent({
     props: {
@@ -20,7 +21,7 @@ export default defineComponent({
         },
         color: {
             type: String,
-            default: "inherit"
+            default: 'inherit'
         }
     },
     setup(props) {

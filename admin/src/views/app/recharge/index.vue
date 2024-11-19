@@ -16,8 +16,14 @@
                 </el-form-item>
                 <el-form-item label="最低充值金额">
                     <div>
-                        <el-input v-model="formData.min_amount" placeholder="请输入最低充值金额" clearable />
-                        <div class="form-tips">最低充值金额要求，不填或填0表示不限制最低充值金额</div>
+                        <el-input
+                            v-model="formData.min_amount"
+                            placeholder="请输入最低充值金额"
+                            clearable
+                        />
+                        <div class="form-tips">
+                            最低充值金额要求，不填或填0表示不限制最低充值金额
+                        </div>
                     </div>
                 </el-form-item>
             </el-form>
@@ -27,11 +33,12 @@
         </footer-btns>
     </div>
 </template>
-<script lang="ts" setup>
-import { getRechargeConfig, setRechargeConfig } from "@/api/app/recharge"
+<script lang="ts" setup name="rechargeConfig">
+import { getRechargeConfig, setRechargeConfig } from '@/api/app/recharge'
+
 const formData = reactive({
     status: 1, //功能状态 1-开启 0-关闭
-    min_amount: "" //最低充值金额
+    min_amount: '' //最低充值金额
 })
 
 const getConfig = async () => {

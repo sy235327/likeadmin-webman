@@ -2,7 +2,12 @@
 <template>
     <div class="cache">
         <el-card class="!border-none" shadow="never">
-            <el-alert type="warning" title="温馨提示：管理系统运行过程中产生的缓存" :closable="false" show-icon></el-alert>
+            <el-alert
+                type="warning"
+                title="温馨提示：管理系统运行过程中产生的缓存"
+                :closable="false"
+                show-icon
+            ></el-alert>
         </el-card>
 
         <el-card class="!border-none mt-4" shadow="never">
@@ -20,20 +25,21 @@
 </template>
 
 <script setup lang="ts" name="cache">
-import { systemCacheClear } from "@/api/setting/system"
-import feedback from "@/utils/feedback"
+import { systemCacheClear } from '@/api/setting/system'
+import feedback from '@/utils/feedback'
 
 // 列表数据
 const cacheDate = ref<Array<object>>([
     {
-        content: "系统缓存",
-        desc: "系统运行过程中产生的各类缓存数据"
+        content: '系统缓存',
+        desc: '系统运行过程中产生的各类缓存数据'
     }
 ])
 
 // 清理缓存
 const handleClean = async () => {
-    await feedback.confirm("确认清除系统缓存？")
+    await feedback.confirm('确认清除系统缓存？')
     await systemCacheClear()
+    window.location.reload()
 }
 </script>

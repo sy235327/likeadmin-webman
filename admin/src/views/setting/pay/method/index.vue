@@ -1,10 +1,21 @@
 <template>
     <div>
         <div>
-            <el-button type="primary" v-perms="['setting.pay.pay_way/setPayWay']" @click="handelSetupPayWay"> 设置支付方式 </el-button>
+            <el-button
+                type="primary"
+                v-perms="['setting.pay.pay_way/setPayWay']"
+                @click="handelSetupPayWay"
+            >
+                设置支付方式
+            </el-button>
         </div>
 
-        <el-card shadow="never" class="mt-4 !border-none" v-for="(value, scene) in payWay" :key="scene">
+        <el-card
+            shadow="never"
+            class="mt-4 !border-none"
+            v-for="(value, scene) in payWay"
+            :key="scene"
+        >
             <div>
                 <div class="text-lg mb-[24px]" v-if="scene == PaySceneEnum.MP_WEIXIN">
                     微信小程序
@@ -12,7 +23,9 @@
                 </div>
                 <div class="text-lg mb-[24px]" v-if="scene == PaySceneEnum.OA">
                     微信公众号
-                    <span class="form-tips ml-[10px]"> 在微信公众号H5页面中付款的场景，公众号类型一般为服务号 </span>
+                    <span class="form-tips ml-[10px]">
+                        在微信公众号H5页面中付款的场景，公众号类型一般为服务号
+                    </span>
                 </div>
                 <div class="text-lg mb-[24px]" v-if="scene == PaySceneEnum.H5">
                     H5支付
@@ -29,7 +42,11 @@
                 <el-table v-if="value.length" :data="value" style="width: 100%">
                     <el-table-column label="图标" min-width="150">
                         <template #default="{ row }">
-                            <el-image :src="row.icon" alt="图标" style="width: 34px; height: 34px" />
+                            <el-image
+                                :src="row.icon"
+                                alt="图标"
+                                style="width: 34px; height: 34px"
+                            />
                         </template>
                     </el-table-column>
                     <el-table-column prop="pay_way_name" label="支付方式" min-width="150" />
@@ -37,7 +54,13 @@
                         <template #default="{ row, $index }">
                             <div>
                                 <template v-if="setupPayWay">
-                                    <el-radio v-model="row.is_default" :label="1" @change="changePayDefault($index, scene)"> 设为默认 </el-radio>
+                                    <el-radio
+                                        v-model="row.is_default"
+                                        :label="1"
+                                        @change="changePayDefault($index, scene)"
+                                    >
+                                        设为默认
+                                    </el-radio>
                                 </template>
                                 <template v-else>
                                     <el-tag v-if="row.is_default == 1">默认</el-tag>
@@ -48,9 +71,14 @@
                     </el-table-column>
                     <el-table-column label="开启状态" min-width="150">
                         <template #default="{ row }">
-                            <el-switch v-if="setupPayWay" v-model="row.status" :active-value="1" :inactive-value="0" />
+                            <el-switch
+                                v-if="setupPayWay"
+                                v-model="row.status"
+                                :active-value="1"
+                                :inactive-value="0"
+                            />
                             <span v-else>
-                                {{ row.status == 1 ? "开启" : "关闭" }}
+                                {{ row.status == 1 ? '开启' : '关闭' }}
                             </span>
                         </template>
                     </el-table-column>
@@ -65,8 +93,10 @@
 </template>
 
 <script lang="ts" setup>
-import { getPayWay, setPayWay } from "@/api/setting/pay"
-import { cloneDeep } from "lodash"
+import { cloneDeep } from 'lodash'
+
+import { getPayWay, setPayWay } from '@/api/setting/pay'
+
 enum PaySceneEnum {
     MP_WEIXIN = 1,
     OA = 2,

@@ -34,13 +34,13 @@ class SystemLogic extends BaseLogic
     {
         $server = [
             ['param' => '服务器操作系统', 'value' => PHP_OS],
-            ['param' => 'web服务器环境', 'value' => 'nginx/1.18'],
+            ['param' => 'web服务器环境', 'value' => '^nginx/1.18'],
             ['param' => 'PHP版本', 'value' => PHP_VERSION],
         ];
 
         $env = [
             [   'option' => 'PHP版本',
-                'require' => '7.2版本以上',
+                'require' => '8.2版本以上',
                 'status' => (int)compare_php(PHP_VERSION),
                 'remark' => ''
             ]

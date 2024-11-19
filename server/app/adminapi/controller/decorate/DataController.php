@@ -46,6 +46,16 @@ class DataController extends BaseAdminController
         return $this->success('获取成功', $result);
     }
 
-
+    /**
+     * @notes pc设置
+     * @return Response
+     * @author mjf
+     * @date 2024/3/14 18:13
+     */
+    public function pc(): Response
+    {
+        $result = DecorateDataLogic::pc();
+        return $this->data($result);
+    }
 
 }

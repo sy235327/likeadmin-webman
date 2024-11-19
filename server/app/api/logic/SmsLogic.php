@@ -49,7 +49,7 @@ class SmsLogic extends BaseLogic
                     'code' => mt_rand(1000, 9999),
                 ]
             ]);
-            return $result[0];
+            return $result;
 
         } catch (Exception $e) {
             self::$error = $e->getMessage();

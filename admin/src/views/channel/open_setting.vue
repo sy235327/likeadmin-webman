@@ -31,12 +31,13 @@
     </div>
 </template>
 <script lang="ts" setup name="wxDevConfig">
-import { getOpenSettingConfig, setOpenSettingConfig } from "@/api/channel/open_setting"
-import type { FormInstance } from "element-plus"
+import type { FormInstance } from 'element-plus'
+
+import { getOpenSettingConfig, setOpenSettingConfig } from '@/api/channel/open_setting'
 
 const formData = reactive({
-    app_id: "",
-    app_secret: ""
+    app_id: '',
+    app_secret: ''
 })
 
 const formRef = shallowRef<FormInstance>()
@@ -44,15 +45,15 @@ const formRules = {
     app_id: [
         {
             required: true,
-            message: "请输入AppID",
-            trigger: ["blur", "change"]
+            message: '请输入AppID',
+            trigger: ['blur', 'change']
         }
     ],
     app_secret: [
         {
             required: true,
-            message: "请输入AppSecret",
-            trigger: ["blur", "change"]
+            message: '请输入AppSecret',
+            trigger: ['blur', 'change']
         }
     ]
 }

@@ -1,7 +1,11 @@
 <template>
     <div>
         <el-tooltip v-bind="props" :disabled="disabled">
-            <div ref="textRef" class="overflow-text truncate" :style="{ textOverflow: overfloType }">
+            <div
+                ref="textRef"
+                class="overflow-text truncate"
+                :style="{ textOverflow: overfloType }"
+            >
                 {{ content }}
             </div>
         </el-tooltip>
@@ -9,9 +13,9 @@
 </template>
 
 <script lang="ts" setup>
-import { useEventListener } from "@vueuse/core"
-import { useTooltipContentProps, type Placement } from "element-plus"
-import type { PropType } from "vue"
+import { useEventListener } from '@vueuse/core'
+import { type Placement, useTooltipContentProps } from 'element-plus'
+import type { PropType } from 'vue'
 
 const props = defineProps({
     ...useTooltipContentProps,
@@ -21,17 +25,17 @@ const props = defineProps({
     },
     placement: {
         type: String as PropType<Placement>,
-        default: "top"
+        default: 'top'
     },
     overfloType: {
-        type: String as PropType<"ellipsis" | "unset" | "clip">,
-        default: "ellipsis"
+        type: String as PropType<'ellipsis' | 'unset' | 'clip'>,
+        default: 'ellipsis'
     }
 })
 const textRef = shallowRef<HTMLElement>()
 const disabled = ref(false)
 
-useEventListener(textRef, "mouseenter", () => {
+useEventListener(textRef, 'mouseenter', () => {
     if (textRef.value?.scrollWidth! > textRef.value?.offsetWidth!) {
         disabled.value = false
     } else {

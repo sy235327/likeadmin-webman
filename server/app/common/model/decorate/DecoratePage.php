@@ -25,6 +25,7 @@ use app\common\model\BaseModel;
  * @property int $type 页面类型 1=商城首页, 2=个人中心, 3=客服设置 4-PC首页
  * @property string $name 页面名称
  * @property string $data 页面数据
+ * @property string $meta 页面设置
  * @property int $create_time 创建时间
  * @property int $update_time 更新时间
  */
@@ -43,6 +44,8 @@ class DecoratePage extends BaseModel
         'name' => 'string',
         //页面数据
         'data' => 'string',
+        //页面设置
+        'meta' => 'string',
         //创建时间
         'create_time' => 'int',
         //更新时间

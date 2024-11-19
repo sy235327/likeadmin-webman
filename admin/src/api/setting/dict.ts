@@ -2,32 +2,32 @@ import request from '@/utils/request'
 
 // 字典类型列表
 export function dictTypeLists(params: any) {
-    return request.get({ url: '/setting/dict/dict_type/lists', params })
+    return request.get({ url: '/setting/dict/dictType/lists', params })
 }
 
 // 字典类型列表全部
 export function dictTypeAll(params: any) {
-    return request.get({ url: '/setting/dict/dict_type/all', params })
+    return request.get({ url: '/setting/dict/dictType/all', params })
 }
 
 // 添加字典类型
 export function dictTypeAdd(params: any) {
-    return request.post({ url: '/setting/dict/dict_type/add', params })
+    return request.post({ url: '/setting/dict/dictType/add', params })
 }
 
 // 编辑字典类型
 export function dictTypeEdit(params: any) {
-    return request.post({ url: '/setting/dict/dict_type/edit', params })
+    return request.post({ url: '/setting/dict/dictType/edit', params })
 }
 
 // 删除字典类型
 export function dictTypeDelete(params: any) {
-    return request.post({ url: '/setting/dict/dict_type/delete', params })
+    return request.post({ url: '/setting/dict/dictType/delete', params })
 }
 
 // 字典类型详情
 export function dictTypeDetail(params: any) {
-    return request.get({ url: '/setting/dict/dict_type/detail', params })
+    return request.get({ url: '/setting/dict/dictType/detail', params })
 }
 
 // 字典数据列表

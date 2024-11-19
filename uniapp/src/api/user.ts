@@ -36,6 +36,6 @@ export function forgotPassword(data: Record<string, any>) {
 
 //余额明细
 export function accountLog(data: any) {
-    return request.get({ url: '/account_log/lists', data })
+    return request.get({ url: '/accountLog/lists', data })
 }
 

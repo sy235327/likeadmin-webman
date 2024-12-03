@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eeaf7b503c4db71eef02d4a8bd45471a",
+    "content-hash": "1114f41c76241e1f501755543ffe564a",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
@@ -5663,16 +5663,16 @@
         },
         {
             "name": "webman/console",
-            "version": "v1.2.35",
+            "version": "v1.3.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webman-php/console.git",
-                "reference": "19e3f3de09f00adca4cb9c212a2be2ae47c71f00"
+                "reference": "cf7812603114c97bfdeb7d8e3e6eabe567357d77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webman-php/console/zipball/19e3f3de09f00adca4cb9c212a2be2ae47c71f00",
-                "reference": "19e3f3de09f00adca4cb9c212a2be2ae47c71f00",
+                "url": "https://api.github.com/repos/webman-php/console/zipball/cf7812603114c97bfdeb7d8e3e6eabe567357d77",
+                "reference": "cf7812603114c97bfdeb7d8e3e6eabe567357d77",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -5718,7 +5718,7 @@
                 "source": "https://github.com/webman-php/console",
                 "wiki": "http://www.workerman.net/doc/webman"
             },
-            "time": "2023-05-15T06:19:43+00:00"
+            "time": "2024-09-24T06:37:05+00:00"
         },
         {
             "name": "webman/log",

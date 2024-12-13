@@ -92,6 +92,8 @@ use think\Paginator;
  *
  * @method static string buildSql() 获取生成subQuery格式的SQL语句
  * @method static string fetchSql() 获取生成SQL语句
+ * @method static string getLastSql() 获取最近一次查询的sql语句.
+ * @method static int getNumRows() 获取返回或者影响的记录数..
  */
 class BaseModel extends Model
 {

@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'default' => 'mysql',
+    'default' => getenv('DB_CONNECTION','mysql'),
     'connections' => [
         'mysql' => [
             // 数据库类型
@@ -26,6 +26,6 @@ return [
             'trigger_sql' => getenv('SQL_DEBUG',false),
             // 自定义分页类
             'bootstrap' =>  ''
-        ],
+        ]
     ],
 ];

@@ -1,4 +1,14 @@
 <?php
+$custom_ini = '';
+$file_path = config_path().DIRECTORY_SEPARATOR.'php.ini';
+if ((bool)getenv('APP_DEBUG', false)){
+    $file_path = config_path().DIRECTORY_SEPARATOR.'php-debug.ini';
+}
+if (file_exists($file_path)) {
+    $fp = fopen($file_path, "r");
+    $custom_ini = fread($fp, filesize($file_path)); // 读取整个文件内容
+    fclose($fp);
+}
 return [
     'enable'            => true,
 
@@ -10,9 +20,10 @@ return [
 
     'private_key_file'  => '', // The file path for certificate or OpenSSL private key file.
 
-    //'exclude_pattern'   => '#^(?!.*(config/plugin/webman/console/app.php|webman/console/src/Commands/(PharPackCommand.php|ReloadCommand.php)|LICENSE|composer.json|.github|.idea|doc|docs|.git|.setting|runtime|test|test_old|tests|Tests|vendor-bin|.md))(.*)$#',
+    'exclude_pattern'   => '#^(?!.*(composer.json|/.github/|/.idea/|/.git/|/.setting/|/runtime/|/vendor-bin/|/build/))(.*)$#',
 
     'exclude_files'     => [
         '.env', 'LICENSE', 'composer.json', 'composer.lock','start.php'
-    ]
+    ],
+    'custom_ini' => $custom_ini,
 ];

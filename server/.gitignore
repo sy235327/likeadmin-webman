@@ -9,3 +9,5 @@
 /public/pc
 /tests/.phpunit.result.cache
 /config/install.lock
+/.build
+/scripts/test.php

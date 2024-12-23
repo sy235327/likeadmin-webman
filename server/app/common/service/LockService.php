@@ -12,7 +12,6 @@ class LockService extends BaseService
 
     /**
      * 锁
-     *
      * @param string $lockKey
      * @param integer $initialTtl
      */
@@ -36,7 +35,6 @@ class LockService extends BaseService
         }
         //不存在才锁定
         $expire = ['nx'];
-        //
         if (is_int($ttl) && $ttl > 0) {
             $expire['ex'] = $ttl;
         }
@@ -107,10 +105,10 @@ class LockService extends BaseService
      * @param array $expire  有效时间（秒）  Array('nx', 'ex'=>10)
      * @return boolean
      */
-    protected function set(string $name, mixed $value, array $expire = ['nx']): bool
+    protected function set(string $name, mixed $value,array $expire = ['nx']): bool
     {
         $key   = "lock_".getenv('CACHE_PREFIX','') . $name;
         $value = is_scalar($value) ? $value : 'think_serialize:' . serialize($value);
-        return Cache::set($key, $value, $expire);
+        return Cache::handler()->set($key, $value, $expire);
     }
 }

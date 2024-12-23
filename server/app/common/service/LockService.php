@@ -3,6 +3,7 @@
 namespace app\common\service;
 
 use Psr\SimpleCache\InvalidArgumentException;
+use ReflectionClass;
 use think\facade\Cache;
 
 class LockService extends BaseService
@@ -12,7 +13,6 @@ class LockService extends BaseService
 
     /**
      * 锁
-     *
      * @param string $lockKey
      * @param integer $initialTtl
      */
@@ -35,10 +35,9 @@ class LockService extends BaseService
             $ttl = $this->initialTtl;
         }
         //不存在才锁定
-        $expire = ['nx'];
-        //
+        $expire = null;
         if (is_int($ttl) && $ttl > 0) {
-            $expire['ex'] = $ttl;
+            $expire = $ttl;
         }
         return $this->set($this->lockKey, $lockValue === null ? time() : $lockValue, $expire);
     }
@@ -56,7 +55,7 @@ class LockService extends BaseService
         if ($ttl === null) {
             $ttl = $this->initialTtl;
         }
-        return Cache::set($this->lockKey, $lockValue === null ? time() : $lockValue, $ttl);
+        return $this->set($this->lockKey, $lockValue === null ? time() : $lockValue, $ttl);
     }
 
     /**
@@ -104,13 +103,16 @@ class LockService extends BaseService
      *
      * @param string $name 缓存变量名
      * @param mixed   $value  存储数据
-     * @param array $expire  有效时间（秒）  Array('nx', 'ex'=>10)
+     * @param null|int $expire  有效时间（秒）  Array('nx', 'ex'=>10)
      * @return boolean
      */
-    protected function set(string $name, mixed $value, array $expire = ['nx']): bool
+    protected function set(string $name, mixed $value, null|int $expire): bool
     {
         $key   = "lock_".getenv('CACHE_PREFIX','') . $name;
         $value = is_scalar($value) ? $value : 'think_serialize:' . serialize($value);
+        if ($expire === null){
+            return Cache::set($key, $value);
+        }
         return Cache::set($key, $value, $expire);
     }
 }

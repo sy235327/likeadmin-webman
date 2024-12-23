@@ -68,6 +68,7 @@ use think\Paginator;
  * @method static static findOrEmpty(mixed $data = null) 查询单个记录 不存在返回空模型
  * @method static Collection select(mixed $data = null) 查询多个记录
  * @method static Model withAttr(array $name, Closure $closure) 动态定义获取器
+ * @method static bool save(array | object $data = [], ?string $sequence = null)  保存
  *
  * @method static Query master() 从主服务器读取数据
  * @method static Query readMaster(bool $all = false) 后续从主服务器读取数据

@@ -34,9 +34,9 @@ class LockService extends BaseService
             $ttl = $this->initialTtl;
         }
         //不存在才锁定
-        $expire = null;
+        $expire = ['nx'];
         if (is_int($ttl) && $ttl > 0) {
-            $expire = $ttl;
+            $expire['ex'] = $ttl;
         }
         return $this->set($this->lockKey, $lockValue === null ? time() : $lockValue, $expire);
     }
@@ -54,7 +54,7 @@ class LockService extends BaseService
         if ($ttl === null) {
             $ttl = $this->initialTtl;
         }
-        return $this->set($this->lockKey, $lockValue === null ? time() : $lockValue, $ttl);
+        return Cache::set($this->lockKey, $lockValue === null ? time() : $lockValue, $ttl);
     }
 
     /**
@@ -102,16 +102,13 @@ class LockService extends BaseService
      *
      * @param string $name 缓存变量名
      * @param mixed   $value  存储数据
-     * @param null|int $expire  有效时间（秒）  Array('nx', 'ex'=>10)
+     * @param array $expire  有效时间（秒）  Array('nx', 'ex'=>10)
      * @return boolean
      */
-    protected function set(string $name, mixed $value, null|int $expire): bool
+    protected function set(string $name, mixed $value,array $expire = ['nx']): bool
     {
         $key   = "lock_".getenv('CACHE_PREFIX','') . $name;
         $value = is_scalar($value) ? $value : 'think_serialize:' . serialize($value);
-        if ($expire === null){
-            return Cache::set($key, $value);
-        }
-        return Cache::set($key, $value, $expire);
+        return Cache::handler()->set($key, $value, $expire);
     }
 }

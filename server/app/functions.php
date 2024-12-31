@@ -1071,3 +1071,21 @@ if (!function_exists('checkPasswordStrength')){
         return true;
     }
 }
+
+if (!function_exists('dic_map_by_keys')) {
+    function dic_map_by_keys(array $dic,array $keys,callable $callback): array
+    {
+        foreach ($keys as $key){
+            $dic[$key] = $callback($dic[$key],$dic,$key);
+        }
+        return $dic;
+    }
+}
+if (!function_exists('list_dic_map_by_keys')) {
+    function list_dic_map_by_keys(array $list,array $keys,callable $callback): array
+    {
+        return array_map(function($val)use($keys,$callback){
+            return dic_map_by_keys($val,$keys,$callback);
+        },$list);
+    }
+}

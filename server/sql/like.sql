@@ -755,14 +755,7 @@ CREATE TABLE `la_user_session`  (
   UNIQUE INDEX `token`(`token`) USING BTREE COMMENT 'token是唯一的'
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户会话表';
 
-SET FOREIGN_KEY_CHECKS = 1;
-
-
--- 截至到 likeadmin version 1.8.0.20240806
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-
-USE `test_demo`;
-
+# new version sql
 /* Alter table in target */
 ALTER TABLE `la_admin`
     CHANGE `password` `password` varchar(32)  COLLATE utf8mb4_general_ci NOT NULL COMMENT '密码' after `account` ,
@@ -795,4 +788,3 @@ ALTER TABLE `la_recharge_order`
 /* Alter table in target */
 ALTER TABLE `la_user`
     CHANGE `login_ip` `login_ip` varchar(200)  COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '最后登录IP' after `is_disable` ;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

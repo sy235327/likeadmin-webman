@@ -89,11 +89,11 @@ class WeChatPayService extends BasePayService
      * @notes 发起微信支付统一下单
      * @param $from
      * @param $order
-     * @return array|false|string
+     * @return array|false
      * @author 段誉
      * @date 2021/8/4 15:05
      */
-    public function pay($from, $order): false|array|string
+    public function pay($from, $order): false|array
     {
         try {
             switch ($this->terminal) {

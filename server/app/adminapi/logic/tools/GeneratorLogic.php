@@ -239,11 +239,11 @@ class GeneratorLogic extends BaseLogic
     /**
      * @notes 预览
      * @param $params
-     * @return false
+     * @return array|false
      * @author 乔峰
      * @date 2022/6/23 16:27
      */
-    public static function preview($params): false
+    public static function preview($params): array|false
     {
         try {
             // 获取数据表信息

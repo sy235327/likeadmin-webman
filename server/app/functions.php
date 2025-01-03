@@ -1023,6 +1023,12 @@ if (!function_exists('listToMapByItemKey')){
 }
 
 
+/**
+ * 密码强度校验
+ * @param string $password 密码
+ * @param string|null $error 错误信息
+ * @return bool 校验是否成功
+ */
 if (!function_exists('checkPasswordStrength')){
     function checkPasswordStrength(string $password, string|null &$error): bool
     {
@@ -1072,6 +1078,13 @@ if (!function_exists('checkPasswordStrength')){
     }
 }
 
+/**
+ * $dic关联对象遍历$keys执行函数
+ * @param array $dic 关联对象
+ * @param array $keys 需要遍历的key列表
+ * @param callable $callback function($dic[$key],$dic,$key)
+ * @return array $dic 处理后的关联对象
+ */
 if (!function_exists('dic_map_by_keys')) {
     function dic_map_by_keys(array $dic,array $keys,callable $callback): array
     {
@@ -1081,11 +1094,51 @@ if (!function_exists('dic_map_by_keys')) {
         return $dic;
     }
 }
+/**
+ * 关联对象数组遍历调用dic_map_by_keys
+ * @param array $list 关联数组
+ * @param array $keys 需要遍历的key列表
+ * @param callable $callback function($dic[$key],$dic,$key)
+ * @return array $list 处理后的关联对象数组
+ */
 if (!function_exists('list_dic_map_by_keys')) {
     function list_dic_map_by_keys(array $list,array $keys,callable $callback): array
     {
         return array_map(function($val)use($keys,$callback){
             return dic_map_by_keys($val,$keys,$callback);
         },$list);
+    }
+}
+
+/**
+ * 数据库字符串数组保存
+ * @param array|string $arr 数组/字符串
+ * @param string $split_str 分割符
+ * @return string 处理后字符串
+ */
+if (!function_exists('arrayToSaveStr')) {
+    function arrayToSaveStr(array|string $arr,string $split_str = ','): string
+    {
+        if (!is_array($arr)){
+            $arr = [$arr];
+        }
+        return $split_str.join($split_str,$arr).$split_str;
+    }
+}
+
+/**
+ * 字符串数组转数组
+ * @param string $str 字符串
+ * @param string $split_str 分割符
+ * @return array 处理后数组
+ */
+if (!function_exists('saveStrToArray')) {
+    function saveStrToArray(string $str,string $split_str = ','): array
+    {
+        $str = trim($str,$split_str);
+        if ($str){
+            return explode($split_str,$str);
+        }
+        return [];
     }
 }

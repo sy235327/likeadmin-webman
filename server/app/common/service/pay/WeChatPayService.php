@@ -28,10 +28,11 @@ use EasyWeChat\Kernel\Exceptions\RuntimeException;
 use EasyWeChat\Pay\Application;
 use EasyWeChat\Pay\Message;
 use Exception;
-use Psr\Http\Message\ResponseInterface;
 use ReflectionException;
+use Symfony\Component\HttpFoundation\HeaderBag;
 use think\Model;
 use Throwable;
+use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 
 /**
@@ -79,6 +80,12 @@ class WeChatPayService extends BasePayService
         $this->terminal = $terminal;
         $this->config = WeChatConfigService::getPayConfigByTerminal($terminal);
         $this->app = new Application($this->config);
+
+        $request = request();
+        $symfony_request = new SymfonyRequest($request->get(), $request->post(), [], $request->cookie(), [], [], $request->rawBody());
+        $symfony_request->headers = new HeaderBag($request->header());
+        $this->app->setRequestFromSymfonyRequest($symfony_request);
+//        $this->app->setRequest($symfony_request);
         if ($userId !== null) {
             $this->auth = UserAuth::where(['user_id' => $userId, 'terminal' => $terminal])->findOrEmpty();
         }
@@ -366,7 +373,7 @@ class WeChatPayService extends BasePayService
 
     /**
      * @notes 支付回调
-     * @return ResponseInterface
+     * @return \support\Response
      * @throws InvalidArgumentException
      * @throws RuntimeException
      * @throws ReflectionException
@@ -374,11 +381,11 @@ class WeChatPayService extends BasePayService
      * @author 段誉
      * @date 2023/2/28 14:20
      */
-    public function notify(): ResponseInterface
+    public function notify(): \support\Response
     {
         $server = $this->app->getServer();
         // 支付通知
-        $server->handlePaid(function (Message $message) {
+        $server->handlePaid(function (Message $message, \Closure $next) {
             if ($message['trade_state'] === 'SUCCESS') {
                 $extra['transaction_id'] = $message['transaction_id'];
                 $attach = $message['attach'];
@@ -387,20 +394,21 @@ class WeChatPayService extends BasePayService
                     case 'recharge':
                         $order = RechargeOrder::where(['sn' => $message['out_trade_no']])->findOrEmpty();
                         if($order->isEmpty() || $order->pay_status == PayEnum::ISPAID) {
-                            return true;
+                            return $next($message);
                         }
                         PayNotifyLogic::handle('recharge', $message['out_trade_no'], $extra);
                         break;
                 }
             }
-            return true;
+            return $next($message);
         });
 
         // 退款通知
-        $server->handleRefunded(function (Message $message) {
-            return true;
+        $server->handleRefunded(function (Message $message, \Closure $next) {
+            return $next($message);
         });
-        return $server->serve();
+        $response = $server->serve();
+        return response($response->getBody(), $response->getStatusCode(), $response->getHeaders());
     }
 
 

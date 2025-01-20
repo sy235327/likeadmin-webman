@@ -124,7 +124,7 @@ class AliPayService extends BasePayService
             $options->alipayRootCertPath = $aliRootCertPath;
         }
         //回调地址
-        $options->notifyUrl = (string)url('pay/aliNotify', [], false, true);
+        $options->notifyUrl = (string)url('api/pay/aliNotify', [], false, true);
         return $options;
     }
 
@@ -209,7 +209,7 @@ class AliPayService extends BasePayService
      */
     public function pagePay($attach, $order)
     {
-        $domain = request()->domain();
+        $domain = getAgreementHost();
         $result = $this->pay->page()->optional('passback_params', $attach)->pay(
             '订单:' . $order['sn'],
             $order['sn'],
@@ -247,7 +247,7 @@ class AliPayService extends BasePayService
      */
     public function wapPay($attach, $order)
     {
-        $domain = request()->domain();
+        $domain = getAgreementHost();
         $url = $domain . '/mobile' . $order['redirect_url'] .'?id=' . $order['id'] . '&from='. $attach . '&checkPay=true';;
         $result = $this->pay->wap()->optional('passback_params', $attach)->pay(
             '订单:' . $order['sn'],

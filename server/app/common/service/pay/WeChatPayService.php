@@ -30,6 +30,7 @@ use EasyWeChat\Pay\Message;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
 use ReflectionException;
+use Symfony\Component\HttpFoundation\HeaderBag;
 use think\Model;
 use Throwable;
 
@@ -79,6 +80,10 @@ class WeChatPayService extends BasePayService
         $this->terminal = $terminal;
         $this->config = WeChatConfigService::getPayConfigByTerminal($terminal);
         $this->app = new Application($this->config);
+        $request = request();
+        $symfony_request = new \Symfony\Component\HttpFoundation\Request($request->get(), $request->post(), [], $request->cookie(), [], [], $request->rawBody());
+        $symfony_request->headers = new HeaderBag($request->header());
+        $this->app->setRequestFromSymfonyRequest($symfony_request);
         if ($userId !== null) {
             $this->auth = UserAuth::where(['user_id' => $userId, 'terminal' => $terminal])->findOrEmpty();
         }
@@ -366,7 +371,7 @@ class WeChatPayService extends BasePayService
 
     /**
      * @notes 支付回调
-     * @return ResponseInterface
+     * @return \support\Response
      * @throws InvalidArgumentException
      * @throws RuntimeException
      * @throws ReflectionException
@@ -374,7 +379,7 @@ class WeChatPayService extends BasePayService
      * @author 段誉
      * @date 2023/2/28 14:20
      */
-    public function notify(): ResponseInterface
+    public function notify(): \support\Response
     {
         $server = $this->app->getServer();
         // 支付通知
@@ -401,7 +406,7 @@ class WeChatPayService extends BasePayService
             return true;
         });
         $response = $server->serve();
-        return response($response->getBody(), 200, $response->getHeaders());
+        return response($response->getBody(), $response->getStatusCode(), $response->getHeaders());
     }
 
 

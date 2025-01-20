@@ -18,6 +18,7 @@ namespace app\api\controller;
 use app\api\validate\PayValidate;
 use app\common\enum\user\UserTerminalEnum;
 use app\common\logic\PaymentLogic;
+use app\common\service\pay\AliPayService;
 use app\common\service\pay\WeChatPayService;
 use EasyWeChat\Kernel\Exceptions\InvalidArgumentException;
 use EasyWeChat\Kernel\Exceptions\RuntimeException;
@@ -34,7 +35,7 @@ use Throwable;
 class PayController extends BaseApiController
 {
 
-    public array $notNeedLogin = ['notifyMnp', 'notifyOa'];
+    public array $notNeedLogin = ['notifyMnp', 'notifyOa', 'aliNotify'];
 
     /**
      * @notes 支付方式
@@ -96,7 +97,7 @@ class PayController extends BaseApiController
 
     /**
      * @notes 小程序支付回调
-     * @return ResponseInterface
+     * @return Response
      * @throws InvalidArgumentException
      * @throws RuntimeException
      * @throws ReflectionException
@@ -104,7 +105,7 @@ class PayController extends BaseApiController
      * @author 段誉
      * @date 2023/2/28 14:21
      */
-    public function notifyMnp(): ResponseInterface
+    public function notifyMnp(): Response
     {
         return (new WeChatPayService(UserTerminalEnum::WECHAT_MMP))->notify();
     }
@@ -112,18 +113,33 @@ class PayController extends BaseApiController
 
     /**
      * @notes 公众号支付回调
-     * @return ResponseInterface
-     * @throws InvalidArgumentException
+     * @return Response
      * @throws RuntimeException
      * @throws ReflectionException
      * @throws Throwable
+     * @throws InvalidArgumentException
      * @author 段誉
      * @date 2023/2/28 14:21
      */
-    public function notifyOa(): ResponseInterface
+    public function notifyOa(): Response
     {
         return (new WeChatPayService(UserTerminalEnum::WECHAT_OA))->notify();
     }
-
+    /**
+     * @notes 支付宝回调
+     * @author mjf
+     * @return Response
+     * @date 2024/3/18 16:50
+     */
+    public function aliNotify(): Response
+    {
+        $params = $this->request->post();
+        $result = (new AliPayService())->notify($params);
+        if (true === $result) {
+            return response('success');
+        } else {
+            return response('fail');
+        }
+    }
 
 }

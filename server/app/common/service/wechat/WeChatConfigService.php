@@ -98,16 +98,16 @@ class WeChatConfigService
     {
         switch ($terminal) {
             case UserTerminalEnum::WECHAT_MMP:
-                $notifyUrl = (string)url('pay/notifyMnp', [], false, true);
+                $notifyUrl = (string)url('api/pay/notifyMnp', [], false, true);
                 break;
             case UserTerminalEnum::WECHAT_OA:
             case UserTerminalEnum::PC:
             case UserTerminalEnum::H5:
-                $notifyUrl = (string)url('pay/notifyOa', [], false, true);
+                $notifyUrl = (string)url('api/pay/notifyOa', [], false, true);
                 break;
             case UserTerminalEnum::ANDROID:
             case UserTerminalEnum::IOS:
-                $notifyUrl = (string)url('pay/notifyApp', [], false, true);
+                $notifyUrl = (string)url('api/pay/notifyApp', [], false, true);
                 break;
         }
 

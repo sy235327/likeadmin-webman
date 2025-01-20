@@ -400,7 +400,8 @@ class WeChatPayService extends BasePayService
         $server->handleRefunded(function (Message $message) {
             return true;
         });
-        return $server->serve();
+        $response = $server->serve();
+        return response($response->getBody(), 200, $response->getHeaders());
     }
 
 

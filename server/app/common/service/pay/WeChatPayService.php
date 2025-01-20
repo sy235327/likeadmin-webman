@@ -28,11 +28,11 @@ use EasyWeChat\Kernel\Exceptions\RuntimeException;
 use EasyWeChat\Pay\Application;
 use EasyWeChat\Pay\Message;
 use Exception;
-use Psr\Http\Message\ResponseInterface;
 use ReflectionException;
 use Symfony\Component\HttpFoundation\HeaderBag;
 use think\Model;
 use Throwable;
+use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 
 /**
@@ -81,7 +81,7 @@ class WeChatPayService extends BasePayService
         $this->config = WeChatConfigService::getPayConfigByTerminal($terminal);
         $this->app = new Application($this->config);
         $request = request();
-        $symfony_request = new \Symfony\Component\HttpFoundation\Request($request->get(), $request->post(), [], $request->cookie(), [], [], $request->rawBody());
+        $symfony_request = new SymfonyRequest($request->get(), $request->post(), [], $request->cookie(), [], [], $request->rawBody());
         $symfony_request->headers = new HeaderBag($request->header());
         $this->app->setRequestFromSymfonyRequest($symfony_request);
         if ($userId !== null) {

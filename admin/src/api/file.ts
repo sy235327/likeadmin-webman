@@ -40,3 +40,13 @@ export function fileMove(params: Record<string, any>) {
 export function fileRename(params: { id: number; name: string }) {
     return request.post({ url: '/file/rename', params })
 }
+
+// 获取上传凭证
+export function getUploadToken(params: Record<string, any>) {
+    return request.post({ url: '/upload/getUploadToken', params })
+}
+
+// 设置上传文件的id
+export function setUploadFile(params: Record<string, any>) {
+    return request.post({ url: '/upload/setUploadFile', params })
+}

@@ -3,6 +3,7 @@
         <el-upload
             v-model:file-list="fileList"
             ref="uploadRefs"
+            method="PUT"
             :action="action"
             :multiple="multiple"
             :limit="limit"
@@ -51,6 +52,7 @@ import useUserStore from '@/stores/modules/user'
 import feedback from '@/utils/feedback'
 import { isArray, isNil } from 'lodash'
 import { UploadAjaxError } from 'element-plus/es/components/upload/src/ajax'
+import { getUploadToken, setUploadFile } from '@/api/file'
 
 export default defineComponent({
     components: {},
@@ -98,6 +100,7 @@ export default defineComponent({
         }
         let uploadLen = 0
         const handleSuccess = (response: any, file: any) => {
+            console.log('handleSuccess', response, file)
             uploadLen++
             if (uploadLen == fileList.value.length) {
                 uploadLen = 0
@@ -106,7 +109,22 @@ export default defineComponent({
             }
             emit('change', file)
             if (response.code == RequestCodeEnum.SUCCESS) {
-                emit('success', response)
+                if (response.data.id == -1) {
+                    console.log('setUploadFile')
+                    //需要通知后台插入file表
+                    setUploadFile({
+                        ...response.data.other,
+                        name: response.data.name,
+                        uri: response.data.uri,
+                        size: response.data.size,
+                        type: props.type
+                    }).then((res: any) => {
+                        response.data.id = res.data.id
+                        emit('success', response)
+                    }).catch((err: any) => {
+                        feedback.msgError(err.msg)
+                    })
+                }
             }
             if (response.code == RequestCodeEnum.FAIL && response.msg) {
                 feedback.msgError(response.msg)
@@ -168,15 +186,44 @@ export default defineComponent({
             }
         }
         //获取上传地址
-        const getActionUrl = (oldAction: string, option: any): string => {
-            return oldAction
+        const getActionUrl = async (option: any) => {
+            const res = await getUploadToken({
+                name: option.file.name,
+                size: option.file.size,
+            })
+            console.log('getActionUrl', res)
+            if (res && res.is_oss_req == 1) {
+                return {
+                    is_oss_req: 1,
+                    method: res.method,
+                    action: res.req_url,
+                    headers: res.headers,
+                    req_file_url: res.req_file_url,
+                    upload_file_name: res.upload_file_name,
+                    upload_file_size: res.upload_file_size,
+                    save_file_url: res.save_file_url,
+                }
+            }
+            return {
+                is_oss_req: 0,
+                method: option.method,
+                action: option.req_url,
+                headers: option.headers
+            }
         }
-        const ajaxUpload = (option: any): XMLHttpRequest | Promise<unknown> => {
+        const ajaxUpload = async (option: any): Promise<XMLHttpRequest | Promise<unknown>> => {
+            console.log('ajaxUpload', option)
+            const actionRes = await getActionUrl(option)
+            if (!actionRes) {
+                return Promise.reject(new Error('获取上传地址失败'))
+            }
+            const is_oss_req = actionRes.is_oss_req
+            option.action = actionRes.action
+            option.method = actionRes.method
+            option.headers = actionRes.headers
             const xhr = new XMLHttpRequest()
-            const actionUrl: string = getActionUrl(option.action, option)
-
             if (xhr.upload) {
-                xhr.upload.addEventListener('progress', (evt) => {
+                xhr.upload.addEventListener('progress', (evt: any) => {
                     const progressEvt = evt as UploadProgressEvent
                     progressEvt.percent = evt.total > 0 ? (evt.loaded / evt.total) * 100 : 0
                     option.onProgress(progressEvt)
@@ -198,17 +245,33 @@ export default defineComponent({
             formData.append(option.filename, option.file, option.file.name)
 
             xhr.addEventListener('error', () => {
-                option.onError(getError(actionUrl, option, xhr))
+                option.onError(getError(option.action, option, xhr))
             })
 
             xhr.addEventListener('load', () => {
                 if (xhr.status < 200 || xhr.status >= 300) {
-                    return option.onError(getError(actionUrl, option, xhr))
+                    return option.onError(getError(option.action, option, xhr))
                 }
-                option.onSuccess(getBody(xhr))
+                let response: any = getBody(xhr)
+                if (is_oss_req == 1) {
+                    response = {
+                        code: 1,
+                        show: 0,
+                        msg: '上传成功',
+                        data: {
+                            id: -1,
+                            uri: actionRes.req_file_url,
+                            url: actionRes.save_file_url,
+                            name: actionRes.upload_file_name,
+                            size: actionRes.upload_file_size,
+                            other: option.data
+                        }
+                    }
+                }
+                option.onSuccess(response)
             })
 
-            xhr.open(option.method, actionUrl, true)
+            xhr.open(option.method, option.action, true)
 
             if (option.withCredentials && 'withCredentials' in xhr) {
                 xhr.withCredentials = true
@@ -216,7 +279,9 @@ export default defineComponent({
 
             const headers = option.headers || {}
             if (headers instanceof Headers) {
-                headers.forEach((value, key) => xhr.setRequestHeader(key, value))
+                headers.forEach((value, key) => {
+                    xhr.setRequestHeader(key, value)
+                })
             } else {
                 for (const [key, value] of Object.entries(headers)) {
                     if (isNil(value)) continue

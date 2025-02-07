@@ -3,6 +3,16 @@
         <el-card header="基础使用" shadow="never" class="!border-none">
             <div class="flex flex-wrap">
                 <div class="m-4">
+                    <UploadS3
+                        @change="onChange"
+                        @success="onSuccess"
+                        @error="onError"
+                        :show-progress="true"
+                    >
+                        <el-button type="primary">S3上传</el-button>
+                    </UploadS3>
+                </div>
+                <div class="m-4">
                     <upload
                         @change="onChange"
                         @success="onSuccess"
@@ -60,6 +70,7 @@
 <script lang="ts" setup>
 import analysisXlsx from '@/components/analysis-xlsx/index.vue'
 import Upload from '@/components/upload/index.vue'
+import UploadS3 from '@/components/upload/indexS3.vue'
 import { toSheet } from '@/utils/util'
 const onChange = (file: any) => {
     console.log('上传文件的状态发生改变', file)

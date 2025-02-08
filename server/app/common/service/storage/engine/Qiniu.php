@@ -149,8 +149,8 @@ class Qiniu extends Server
         $is_oss_req = 0;
         $req_url = '';
         $method = $this->config['method']??"PUT";
-        $region = $this->config['region']??"cn-south-1";
-        $endpoint = $this->config['endpoint']??"http://s3.cn-south-1.qiniucs.com";
+        $region = $this->config['region']??"";
+        $endpoint = $this->config['endpoint']??"";
         if ($region&&$endpoint){
             $s3Client = new S3Client([
                 "region" => $region, // 地区 region id

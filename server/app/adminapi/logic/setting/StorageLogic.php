@@ -89,7 +89,11 @@ class StorageLogic extends BaseLogic
             'access_key' => '',
             'secret_key' => '',
             'domain' => '',
-            'status' => $default == 'qiniu' ? 1 : 0
+            'status' => $default == 'qiniu' ? 1 : 0,
+            'method' => 'PUT',
+            'region' => '',
+            'endpoint' => '',
+            'is_oss_req' => 0,
         ]);
 
         // 阿里云存储
@@ -98,7 +102,11 @@ class StorageLogic extends BaseLogic
             'access_key' => '',
             'secret_key' => '',
             'domain' => '',
-            'status' => $default == 'aliyun' ? 1 : 0
+            'status' => $default == 'aliyun' ? 1 : 0,
+            'method' => 'PUT',
+            'region' => '',
+            'endpoint' => '',
+            'is_oss_req' => 0,
         ]);
 
         // 腾讯云存储
@@ -108,7 +116,10 @@ class StorageLogic extends BaseLogic
             'access_key' => '',
             'secret_key' => '',
             'domain' => '',
-            'status' => $default == 'qcloud' ? 1 : 0
+            'status' => $default == 'qcloud' ? 1 : 0,
+            'method' => 'PUT',
+            'endpoint' => '',
+            'is_oss_req' => 0,
         ]);
 
         $data = [
@@ -151,7 +162,11 @@ class StorageLogic extends BaseLogic
                     'bucket' => $params['bucket'] ?? '',
                     'access_key' => $params['access_key'] ?? '',
                     'secret_key' => $params['secret_key'] ?? '',
-                    'domain' => $params['domain'] ?? ''
+                    'domain' => $params['domain'] ?? '',
+                    'method' => $params['method'] ?? 'PUT',
+                    'region' => $params['region'] ?? '',
+                    'endpoint' => $params['endpoint'] ?? '',
+                    'is_oss_req' => $params['is_oss_req'] ?? 0,
                 ]);
                 break;
             case 'aliyun':
@@ -159,7 +174,11 @@ class StorageLogic extends BaseLogic
                     'bucket' => $params['bucket'] ?? '',
                     'access_key' => $params['access_key'] ?? '',
                     'secret_key' => $params['secret_key'] ?? '',
-                    'domain' => $params['domain'] ?? ''
+                    'domain' => $params['domain'] ?? '',
+                    'method' => $params['method'] ?? 'PUT',
+                    'region' => $params['region'] ?? '',
+                    'endpoint' => $params['endpoint'] ?? '',
+                    'is_oss_req' => $params['is_oss_req'] ?? 0,
                 ]);
                 break;
             case 'qcloud':
@@ -169,6 +188,9 @@ class StorageLogic extends BaseLogic
                     'access_key' => $params['access_key'] ?? '',
                     'secret_key' => $params['secret_key'] ?? '',
                     'domain' => $params['domain'] ?? '',
+                    'method' => $params['method'] ?? 'PUT',
+                    'endpoint' => $params['endpoint'] ?? '',
+                    'is_oss_req' => $params['is_oss_req'] ?? 0,
                 ]);
                 break;
         }

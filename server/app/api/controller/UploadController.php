@@ -43,8 +43,9 @@ class UploadController extends BaseApiController
         }
         $source_id = $this->userId;
         $source = FileEnum::SOURCE_USER;
-        $name = input('name',0);
+        $name = input('name','');
         $uri = input('uri','');
+
         $fileObj = File::create([
             'cid' => $cid,
             'source_id' => $source_id,

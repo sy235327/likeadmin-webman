@@ -27,7 +27,7 @@ class UploadController extends BaseAdminController
         }
         $source_id = $this->adminId;
         $source = FileEnum::SOURCE_ADMIN;
-        $name = input('name',0);
+        $name = input('name','');
         $uri = input('uri','');
         $fileObj = File::create([
             'cid' => $cid,

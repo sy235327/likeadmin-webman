@@ -48,6 +48,7 @@ class UploadService extends BaseService
                 return false;
             }
             $upload_token_array['id'] = -1;
+            $upload_token_array['name'] = $name;
             return $upload_token_array;
         }catch (Exception $e){
             $this->setError($e->getMessage());

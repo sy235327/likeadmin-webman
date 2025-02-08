@@ -1,39 +1,39 @@
 <template>
-    <div class="upload">
+    <div class='upload'>
         <el-upload
-            v-model:file-list="fileList"
-            ref="uploadRefs"
-            method="PUT"
-            :action="action"
-            :multiple="multiple"
-            :limit="limit"
-            :show-file-list="false"
-            :headers="headers"
-            :data="data"
-            :on-progress="handleProgress"
-            :on-success="handleSuccess"
-            :on-exceed="handleExceed"
-            :on-error="handleError"
-            :accept="getAccept"
+            v-model:file-list='fileList'
+            ref='uploadRefs'
+            method='PUT'
+            :action='action'
+            :multiple='multiple'
+            :limit='limit'
+            :show-file-list='false'
+            :headers='headers'
+            :data='data'
+            :on-progress='handleProgress'
+            :on-success='handleSuccess'
+            :on-exceed='handleExceed'
+            :on-error='handleError'
+            :accept='getAccept'
             :http-request='ajaxUpload'
         >
             <slot />
         </el-upload>
         <el-dialog
-            v-if="showProgress && fileList.length"
-            v-model="visible"
-            title="上传进度"
-            :close-on-click-modal="false"
-            width="500px"
-            :modal="false"
-            @close="handleClose"
+            v-if='showProgress && fileList.length'
+            v-model='visible'
+            title='上传进度'
+            :close-on-click-modal='false'
+            width='500px'
+            :modal='false'
+            @close='handleClose'
         >
-            <div class="file-list p-4">
-                <template v-for="(item, index) in fileList" :key="index">
-                    <div class="mb-5">
+            <div class='file-list p-4'>
+                <template v-for='(item, index) in fileList' :key='index'>
+                    <div class='mb-5'>
                         <div>{{ item.name }}</div>
-                        <div class="flex-1">
-                            <el-progress :percentage="parseInt(item.percentage)" />
+                        <div class='flex-1'>
+                            <el-progress :percentage='parseInt(item.percentage)' />
                         </div>
                     </div>
                 </template>
@@ -42,7 +42,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import type { ElUpload, UploadProgressEvent, UploadRequestOptions } from 'element-plus'
 import { computed, defineComponent, ref, shallowRef } from 'vue'
 
@@ -188,7 +188,7 @@ export default defineComponent({
             const res = await getUploadToken({
                 name: option.file.name,
                 size: option.file.size,
-                contentType: option.file.type,
+                contentType: option.file.type
             })
             if (res && res.is_oss_req == 1) {
                 return {
@@ -199,7 +199,7 @@ export default defineComponent({
                     req_file_url: res.req_file_url,
                     upload_file_name: res.upload_file_name,
                     upload_file_size: res.upload_file_size,
-                    save_file_url: res.save_file_url,
+                    save_file_url: res.save_file_url
                 }
             }
             return {
@@ -213,88 +213,90 @@ export default defineComponent({
             const xhr = new XMLHttpRequest()
             getActionUrl(option)
                 .then((actionRes: any) => {
-                if (!actionRes) {
-                    return Promise.reject(new Error('获取上传地址失败'))
-                }
-                option.is_oss_req = actionRes.is_oss_req
-                option.action = actionRes.action
-                option.method = actionRes.method
-                option.headers = actionRes.headers
-                if (xhr.upload) {
-                    xhr.upload.addEventListener('progress', (evt: any) => {
-                        const progressEvt = evt as UploadProgressEvent
-                        progressEvt.percent = evt.total > 0 ? (evt.loaded / evt.total) * 100 : 0
-                        option.onProgress(progressEvt)
-                    })
-                }
+                    if (!actionRes) {
+                        return Promise.reject(new Error('获取上传地址失败'))
+                    }
+                    option.is_oss_req = actionRes.is_oss_req
+                    option.action = actionRes.action
+                    option.method = actionRes.method
+                    option.headers = actionRes.headers
+                    if (xhr.upload) {
+                        xhr.upload.addEventListener('progress', (evt: any) => {
+                            const progressEvt = evt as UploadProgressEvent
+                            progressEvt.percent = evt.total > 0 ? (evt.loaded / evt.total) * 100 : 0
+                            option.onProgress(progressEvt)
+                        })
+                    }
 
-                const formData = new FormData()
-                if (option.data) {
-                    for (const [key, value] of Object.entries(option.data)) {
-                        if (isArray(value) && value.length) {
-                            for (const item of value) {
-                                formData.append(key, item as string | Blob) // 类型断言
+                    const formData = new FormData()
+                    if (option.data) {
+                        for (const [key, value] of Object.entries(option.data)) {
+                            if (isArray(value) && value.length) {
+                                for (const item of value) {
+                                    formData.append(key, item as string | Blob) // 类型断言
+                                }
+                            } else {
+                                formData.append(key, value as string | Blob) // 类型断言
                             }
-                        } else {
-                            formData.append(key, value as string | Blob) // 类型断言
                         }
                     }
-                }
-                formData.append(option.filename, option.file, option.file.name)
+                    formData.append(option.filename, option.file, option.file.name)
 
-                xhr.addEventListener('error', () => {
-                    option.onError(getError(option.action, option, xhr))
-                })
+                    xhr.addEventListener('error', () => {
+                        option.onError(getError(option.action, option, xhr))
+                    })
 
-                xhr.addEventListener('load', () => {
-                    if (xhr.status < 200 || xhr.status >= 300) {
-                        return option.onError(getError(option.action, option, xhr))
+                    xhr.addEventListener('load', () => {
+                        if (xhr.status < 200 || xhr.status >= 300) {
+                            return option.onError(getError(option.action, option, xhr))
+                        }
+                        let response: any = getBody(xhr)
+                        if (option.is_oss_req == 1) {
+                            response = {
+                                code: RequestCodeEnum.SUCCESS,
+                                show: 0,
+                                msg: '上传成功',
+                                data: {
+                                    id: -1,
+                                    uri: actionRes.req_file_url,
+                                    url: actionRes.save_file_url,
+                                    name: actionRes.name,
+                                    size: actionRes.upload_file_size,
+                                    other: option.data
+                                }
+                            }
+                        }
+                        option.onSuccess(response)
+                    })
+
+                    xhr.open(option.method, option.action, true)
+
+                    if (option.withCredentials && 'withCredentials' in xhr) {
+                        xhr.withCredentials = true
                     }
-                    let response: any = getBody(xhr)
+
+                    const headers = option.headers || {}
+                    if (headers instanceof Headers) {
+                        headers.forEach((value, key) => {
+                            xhr.setRequestHeader(key, value)
+                        })
+                    } else {
+                        for (const [key, value] of Object.entries(headers)) {
+                            if (isNil(value)) continue
+                            xhr.setRequestHeader(key, String(value))
+                        }
+                    }
                     if (option.is_oss_req == 1) {
-                        response = {
-                            code: RequestCodeEnum.SUCCESS,
-                            show: 0,
-                            msg: '上传成功',
-                            data: {
-                                id: -1,
-                                uri: actionRes.req_file_url,
-                                url: actionRes.save_file_url,
-                                name: actionRes.name,
-                                size: actionRes.upload_file_size,
-                                other: option.data
-                            }
-                        }
+                        xhr.setRequestHeader('Content-Type', option.file.type)
+                        xhr.send(option.file)
+                    } else {
+                        xhr.send(formData)
                     }
-                    option.onSuccess(response)
+                }).catch((err: any) => {
+                    return option.onError(
+                        new UploadAjaxError(err, -1, option.method, option.action)
+                    )
                 })
-
-                xhr.open(option.method, option.action, true)
-
-                if (option.withCredentials && 'withCredentials' in xhr) {
-                    xhr.withCredentials = true
-                }
-
-                const headers = option.headers || {}
-                if (headers instanceof Headers) {
-                    headers.forEach((value, key) => {
-                        xhr.setRequestHeader(key, value)
-                    })
-                } else {
-                    for (const [key, value] of Object.entries(headers)) {
-                        if (isNil(value)) continue
-                        xhr.setRequestHeader(key, String(value))
-                    }
-                }
-                if (option.is_oss_req == 1) {
-                    xhr.setRequestHeader('Content-Type', option.file.type)
-                    xhr.send(option.file)
-                }else{
-                    xhr.send(formData)
-                }
-            }).catch((err: any) => {
-                return option.onError(new UploadAjaxError(err, -1, option.method, option.action))
-            })
             return xhr
         }
         return {
@@ -309,11 +311,11 @@ export default defineComponent({
             handleError,
             handleExceed,
             handleClose,
-            ajaxUpload,
+            ajaxUpload
 
         }
     }
 })
 </script>
 
-<style lang="scss"></style>
+<style lang='scss'></style>

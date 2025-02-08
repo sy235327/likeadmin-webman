@@ -115,7 +115,7 @@ class Aliyun extends Server
         return $this->fileName;
     }
 
-    public function getUploadToken($name,$src,$size): array|false
+    public function getUploadToken($name,$src,$size,$contentType='image/png'): array|false
     {
         //size 单位byte
         $params = new ArrayObject();
@@ -134,7 +134,7 @@ class Aliyun extends Server
                 "credentials" => new Credentials($accessKey, $secretKey),
             ]);
             $request = $s3Client->createPresignedRequest(
-                $s3Client->getCommand("PutObject", ["Bucket" => $this->config['bucket'], "Key" => $src.$name]),
+                $s3Client->getCommand("PutObject", ["Bucket" => $this->config['bucket'], "Key" => $src.$name, "ContentType"=>$contentType]),
                 "+1 hours");
             $req_url = $request->getUri();
             if ($req_url){

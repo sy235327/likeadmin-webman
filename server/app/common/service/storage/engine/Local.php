@@ -67,7 +67,7 @@ class Local extends Server
     }
 
 
-    public function getUploadToken($name,$src,$size): array
+    public function getUploadToken($name,$src,$size,$contentType='image/png'): array
     {
         //size 单位byte
         $params = new ArrayObject();

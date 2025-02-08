@@ -188,6 +188,7 @@ export default defineComponent({
             const res = await getUploadToken({
                 name: option.file.name,
                 size: option.file.size,
+                contentType: option.file.type,
             })
             if (res && res.is_oss_req == 1) {
                 return {
@@ -285,8 +286,12 @@ export default defineComponent({
                         xhr.setRequestHeader(key, String(value))
                     }
                 }
-
-                xhr.send(formData)
+                if (option.is_oss_req == 1) {
+                    xhr.setRequestHeader('Content-Type', option.file.type)
+                    xhr.send(option.file)
+                }else{
+                    xhr.send(formData)
+                }
             }).catch((err: any) => {
                 return option.onError(new UploadAjaxError(err, -1, option.method, option.action))
             })

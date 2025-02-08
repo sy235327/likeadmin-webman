@@ -139,7 +139,7 @@ class Qiniu extends Server
     }
 
 
-    public function getUploadToken($name,$src,$size): array
+    public function getUploadToken($name,$src,$size,$contentType='image/png'): array
     {
         //size 单位byte
         $params = new ArrayObject();
@@ -148,7 +148,6 @@ class Qiniu extends Server
         $secretKey = $this->config['secret_key'];
         $is_oss_req = 0;
         $req_url = '';
-        $body = '';
         $method = $this->config['method']??"PUT";
         $region = $this->config['region']??"cn-south-1";
         $endpoint = $this->config['endpoint']??"http://s3.cn-south-1.qiniucs.com";
@@ -159,16 +158,16 @@ class Qiniu extends Server
                 "credentials" => new Credentials($accessKey, $secretKey),
             ]);
             $request = $s3Client->createPresignedRequest(
-                $s3Client->getCommand("PutObject", ["Bucket" => $this->config['bucket'], "Key" => $src.$name]),
+                $s3Client->getCommand("PutObject", ["Bucket" => $this->config['bucket'], "Key" => $src.$name, "ContentType"=>$contentType]),
                 "+1 hours");
             $req_url = $request->getUri();
             if ($req_url){
                 $is_oss_req = 1;
             }
         }
-//        if (($this->config['is_oss_req']??0) == 0){
-//            $is_oss_req = 0;
-//        }
+        if (($this->config['is_oss_req']??0) == 0){
+            $is_oss_req = 0;
+        }
         return [
             'is_oss_req'=>$is_oss_req,
             'req_file_url'=>FileService::getFileUrl($src.$name),

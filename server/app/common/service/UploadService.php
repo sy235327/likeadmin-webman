@@ -15,7 +15,7 @@ class UploadService extends BaseService
      * 获取上传token,前端直接携带token上传文件
      * @return array|false
      */
-    public function getUploadToken($name,$size): array|false
+    public function getUploadToken($name,$size,$contentType='image/png'): array|false
     {
         $config = [
             'default' => ConfigService::get('storage', 'default', 'local'),
@@ -42,7 +42,7 @@ class UploadService extends BaseService
         try {
             // 2、执行文件上传
             $StorageDriver = new StorageDriver($config);
-            $upload_token_array = $StorageDriver->getUploadToken($file_name, $saveDir, $size);
+            $upload_token_array = $StorageDriver->getUploadToken($file_name, $saveDir, $size,$contentType);
             if (!$upload_token_array) {
                 $this->setError("当前上传引擎不支持认证方式上传");
                 return false;

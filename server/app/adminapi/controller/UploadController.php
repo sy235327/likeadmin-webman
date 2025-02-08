@@ -47,8 +47,9 @@ class UploadController extends BaseAdminController
     {
         $name = $this->request->post('name', '');
         $size = $this->request->post('size', '');
+        $contentType = $this->request->post('contentType', 'image/png');
         $uploadObj = (new UploadService());
-        $result = $uploadObj->getUploadToken($name,$size);
+        $result = $uploadObj->getUploadToken($name,$size,$contentType);
         if ($result===false){
             return $this->fail($uploadObj->getError());
         }

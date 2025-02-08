@@ -118,7 +118,7 @@ class Qcloud extends Server
         return $this->fileName;
     }
 
-    public function getUploadToken($name,$src,$size): array
+    public function getUploadToken($name,$src,$size,$contentType='image/png'): array
     {
         // TODO: Implement getUploadToken() method.
         //size 单位byte
@@ -138,7 +138,7 @@ class Qcloud extends Server
                 "credentials" => new Credentials($accessKey, $secretKey),
             ]);
             $request = $s3Client->createPresignedRequest(
-                $s3Client->getCommand("PutObject", ["Bucket" => $this->config['bucket'], "Key" => $src.$name]),
+                $s3Client->getCommand("PutObject", ["Bucket" => $this->config['bucket'], "Key" => $src.$name, "ContentType"=>$contentType]),
                 "+1 hours");
             $req_url = $request->getUri();
             if ($req_url){

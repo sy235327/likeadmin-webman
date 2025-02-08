@@ -100,13 +100,6 @@ export default defineComponent({
         }
         let uploadLen = 0
         const handleSuccess = (response: any, file: any) => {
-            uploadLen++
-            if (uploadLen == fileList.value.length) {
-                uploadLen = 0
-                fileList.value = []
-                emit('allSuccess')
-            }
-            emit('change', file)
             if (response.code == RequestCodeEnum.SUCCESS) {
                 if (response.data.id == -1) {
                     //需要通知后台插入file表
@@ -116,17 +109,36 @@ export default defineComponent({
                         uri: response.data.uri,
                         size: response.data.size,
                         type: props.type
-                    }).then((res: any) => {
-                        response.data.id = res.id
-                        emit('success', response)
-                    }).catch((err: any) => {
-                        feedback.msgError(err.msg)
                     })
+                        .then((res: any) => {
+                            response.data.id = res.id
+                            emit('success', response)
+                        })
+                        .catch((err: any) => {
+                            feedback.msgError(err.msg)
+                        })
+                        .finally(() => {
+                            uploadLen++
+                            if (uploadLen == fileList.value.length) {
+                                uploadLen = 0
+                                fileList.value = []
+                                emit('allSuccess')
+                            }
+                            emit('change', file)
+                        })
+                    return
                 }
             }
             if (response.code == RequestCodeEnum.FAIL && response.msg) {
                 feedback.msgError(response.msg)
             }
+            uploadLen++
+            if (uploadLen == fileList.value.length) {
+                uploadLen = 0
+                fileList.value = []
+                emit('allSuccess')
+            }
+            emit('change', file)
         }
         const handleError = (event: any, file: any) => {
             uploadLen++
@@ -194,6 +206,7 @@ export default defineComponent({
                 return {
                     is_oss_req: 1,
                     method: res.method,
+                    name: res.name,
                     action: res.req_url,
                     headers: res.headers,
                     req_file_url: res.req_file_url,

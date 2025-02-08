@@ -205,7 +205,7 @@ export default defineComponent({
             return {
                 is_oss_req: 0,
                 method: option.method,
-                action: option.req_url,
+                action: option.action,
                 headers: option.headers
             }
         }

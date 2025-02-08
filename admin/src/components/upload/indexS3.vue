@@ -100,7 +100,6 @@ export default defineComponent({
         }
         let uploadLen = 0
         const handleSuccess = (response: any, file: any) => {
-            console.log('handleSuccess', response, file)
             uploadLen++
             if (uploadLen == fileList.value.length) {
                 uploadLen = 0
@@ -110,7 +109,6 @@ export default defineComponent({
             emit('change', file)
             if (response.code == RequestCodeEnum.SUCCESS) {
                 if (response.data.id == -1) {
-                    console.log('setUploadFile')
                     //需要通知后台插入file表
                     setUploadFile({
                         ...response.data.other,
@@ -119,7 +117,7 @@ export default defineComponent({
                         size: response.data.size,
                         type: props.type
                     }).then((res: any) => {
-                        response.data.id = res.data.id
+                        response.data.id = res.id
                         emit('success', response)
                     }).catch((err: any) => {
                         feedback.msgError(err.msg)
@@ -191,7 +189,6 @@ export default defineComponent({
                 name: option.file.name,
                 size: option.file.size,
             })
-            console.log('getActionUrl', res)
             if (res && res.is_oss_req == 1) {
                 return {
                     is_oss_req: 1,
@@ -211,85 +208,88 @@ export default defineComponent({
                 headers: option.headers
             }
         }
-        const ajaxUpload = async (option: any): Promise<XMLHttpRequest | Promise<unknown>> => {
-            console.log('ajaxUpload', option)
-            const actionRes = await getActionUrl(option)
-            if (!actionRes) {
-                return Promise.reject(new Error('获取上传地址失败'))
-            }
-            const is_oss_req = actionRes.is_oss_req
-            option.action = actionRes.action
-            option.method = actionRes.method
-            option.headers = actionRes.headers
+        const ajaxUpload = (option: any): XMLHttpRequest | Promise<unknown> => {
             const xhr = new XMLHttpRequest()
-            if (xhr.upload) {
-                xhr.upload.addEventListener('progress', (evt: any) => {
-                    const progressEvt = evt as UploadProgressEvent
-                    progressEvt.percent = evt.total > 0 ? (evt.loaded / evt.total) * 100 : 0
-                    option.onProgress(progressEvt)
-                })
-            }
-
-            const formData = new FormData()
-            if (option.data) {
-                for (const [key, value] of Object.entries(option.data)) {
-                    if (isArray(value) && value.length) {
-                        for (const item of value) {
-                            formData.append(key, item as string | Blob) // 类型断言
-                        }
-                    } else {
-                        formData.append(key, value as string | Blob) // 类型断言
-                    }
+            getActionUrl(option)
+                .then((actionRes: any) => {
+                if (!actionRes) {
+                    return Promise.reject(new Error('获取上传地址失败'))
                 }
-            }
-            formData.append(option.filename, option.file, option.file.name)
-
-            xhr.addEventListener('error', () => {
-                option.onError(getError(option.action, option, xhr))
-            })
-
-            xhr.addEventListener('load', () => {
-                if (xhr.status < 200 || xhr.status >= 300) {
-                    return option.onError(getError(option.action, option, xhr))
+                option.is_oss_req = actionRes.is_oss_req
+                option.action = actionRes.action
+                option.method = actionRes.method
+                option.headers = actionRes.headers
+                if (xhr.upload) {
+                    xhr.upload.addEventListener('progress', (evt: any) => {
+                        const progressEvt = evt as UploadProgressEvent
+                        progressEvt.percent = evt.total > 0 ? (evt.loaded / evt.total) * 100 : 0
+                        option.onProgress(progressEvt)
+                    })
                 }
-                let response: any = getBody(xhr)
-                if (is_oss_req == 1) {
-                    response = {
-                        code: 1,
-                        show: 0,
-                        msg: '上传成功',
-                        data: {
-                            id: -1,
-                            uri: actionRes.req_file_url,
-                            url: actionRes.save_file_url,
-                            name: actionRes.upload_file_name,
-                            size: actionRes.upload_file_size,
-                            other: option.data
+
+                const formData = new FormData()
+                if (option.data) {
+                    for (const [key, value] of Object.entries(option.data)) {
+                        if (isArray(value) && value.length) {
+                            for (const item of value) {
+                                formData.append(key, item as string | Blob) // 类型断言
+                            }
+                        } else {
+                            formData.append(key, value as string | Blob) // 类型断言
                         }
                     }
                 }
-                option.onSuccess(response)
-            })
+                formData.append(option.filename, option.file, option.file.name)
 
-            xhr.open(option.method, option.action, true)
-
-            if (option.withCredentials && 'withCredentials' in xhr) {
-                xhr.withCredentials = true
-            }
-
-            const headers = option.headers || {}
-            if (headers instanceof Headers) {
-                headers.forEach((value, key) => {
-                    xhr.setRequestHeader(key, value)
+                xhr.addEventListener('error', () => {
+                    option.onError(getError(option.action, option, xhr))
                 })
-            } else {
-                for (const [key, value] of Object.entries(headers)) {
-                    if (isNil(value)) continue
-                    xhr.setRequestHeader(key, String(value))
-                }
-            }
 
-            xhr.send(formData)
+                xhr.addEventListener('load', () => {
+                    if (xhr.status < 200 || xhr.status >= 300) {
+                        return option.onError(getError(option.action, option, xhr))
+                    }
+                    let response: any = getBody(xhr)
+                    if (option.is_oss_req == 1) {
+                        response = {
+                            code: RequestCodeEnum.SUCCESS,
+                            show: 0,
+                            msg: '上传成功',
+                            data: {
+                                id: -1,
+                                uri: actionRes.req_file_url,
+                                url: actionRes.save_file_url,
+                                name: actionRes.name,
+                                size: actionRes.upload_file_size,
+                                other: option.data
+                            }
+                        }
+                    }
+                    option.onSuccess(response)
+                })
+
+                xhr.open(option.method, option.action, true)
+
+                if (option.withCredentials && 'withCredentials' in xhr) {
+                    xhr.withCredentials = true
+                }
+
+                const headers = option.headers || {}
+                if (headers instanceof Headers) {
+                    headers.forEach((value, key) => {
+                        xhr.setRequestHeader(key, value)
+                    })
+                } else {
+                    for (const [key, value] of Object.entries(headers)) {
+                        if (isNil(value)) continue
+                        xhr.setRequestHeader(key, String(value))
+                    }
+                }
+
+                xhr.send(formData)
+            }).catch((err: any) => {
+                return option.onError(new UploadAjaxError(err, -1, option.method, option.action))
+            })
             return xhr
         }
         return {

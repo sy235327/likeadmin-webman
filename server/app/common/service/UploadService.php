@@ -15,7 +15,7 @@ class UploadService extends BaseService
      * 获取上传token,前端直接携带token上传文件
      * @return array|false
      */
-    public function getUploadToken($name,$size): array|false
+    public function getUploadToken($name,$size,$contentType='image/png'): array|false
     {
         $config = [
             'default' => ConfigService::get('storage', 'default', 'local'),
@@ -38,16 +38,17 @@ class UploadService extends BaseService
         }
         $saveDir = $saveDir .  date('Ymd').'/';
         $file_name = date('YmdHis') . substr(md5($name), 0, 5)
-            . str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT).$extension;
+            . str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT).".".$extension;
         try {
             // 2、执行文件上传
             $StorageDriver = new StorageDriver($config);
-            $upload_token_array = $StorageDriver->getUploadToken($file_name, $saveDir, $size);
+            $upload_token_array = $StorageDriver->getUploadToken($file_name, $saveDir, $size,$contentType);
             if (!$upload_token_array) {
                 $this->setError("当前上传引擎不支持认证方式上传");
                 return false;
             }
-            $upload_token_array['id'] = 0;
+            $upload_token_array['id'] = -1;
+            $upload_token_array['name'] = $name;
             return $upload_token_array;
         }catch (Exception $e){
             $this->setError($e->getMessage());
@@ -201,6 +202,7 @@ class UploadService extends BaseService
     }
     private function upload($saveDir,$config,$StorageDriver,$fileInfo,$cid,$source,$sourceId,$fileName,$file_type): bool|array
     {
+        $size = $fileInfo['size']??0;
         // 上传文件
         $saveDir = $saveDir . '/' .  date('Ymd');
         if ($config['default']=='local'){
@@ -239,6 +241,7 @@ class UploadService extends BaseService
             'cid'  => $file['cid'],
             'type' => $file['type'],
             'name' => $file['name'],
+            'size' => $size,
             'uri'  => FileService::getFileUrl($file['uri']),
             'url'  => $file['uri']
         ];

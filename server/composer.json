@@ -63,7 +63,8 @@
     "rmccue/requests": "^2.0",
     "alipaysdk/easysdk": "^2.2",
     "ext-bcmath": "*",
-    "ext-curl": "*"
+    "ext-curl": "*",
+    "aws/aws-sdk-php": "^3.337"
   },
   "config": {
     "preferred-install": "dist",

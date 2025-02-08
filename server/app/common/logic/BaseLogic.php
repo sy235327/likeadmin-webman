@@ -16,6 +16,8 @@
 namespace app\common\logic;
 
 
+use think\facade\Db;
+
 /**
  * 逻辑基类
  * Class BaseLogic
@@ -36,7 +38,17 @@ class BaseLogic
     protected static int $returnCode = 0;
 
 
+    /**
+     * @var mixed 返回数据
+     */
     protected static mixed $returnData;
+
+    /**
+     * 事务层级
+     * @var int
+     */
+    private static int $transNumber = 0;
+
 
     /**
      * @notes 获取错误信息
@@ -109,6 +121,36 @@ class BaseLogic
     public static function getReturnData(): mixed
     {
         return self::$returnData;
+    }
+    public static function setReturnData($data) : void
+    {
+        self::$returnData = $data;
+    }
+    public static function base_startTrans(): void
+    {
+        if (self::$transNumber == 0){
+            Db::startTrans();
+        }
+        self::$transNumber++;
+    }
+    public static function base_rollback($msg,$data = null,$code = -1): false
+    {
+        self::$transNumber = 0;
+        Db::rollback();
+        self::setError($msg);
+        self::setReturnData($data);
+        self::setReturnCode($code);
+        return false;
+    }
+    public static function base_commit($data = null,$code = 0): true
+    {
+        self::$transNumber--;
+        if (self::$transNumber == 0){
+            Db::commit();
+        }
+        self::setReturnData($data);
+        self::setReturnCode($code);
+        return true;
     }
 
 }

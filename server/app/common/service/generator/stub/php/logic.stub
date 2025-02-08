@@ -26,18 +26,14 @@ class {UPPER_CAMEL_NAME}Logic extends BaseLogic
      */
     public static function add(array $params): bool
     {
-        Db::startTrans();
+        self::base_startTrans();
         try {
             {UPPER_CAMEL_NAME}::create([
 {CREATE_DATA}
             ]);
-
-            Db::commit();
-            return true;
+            return self::base_commit();
         } catch (\Exception $e) {
-            Db::rollback();
-            self::setError($e->getMessage());
-            return false;
+            return self::base_rollback($e->getMessage());
         }
     }
 
@@ -51,18 +47,15 @@ class {UPPER_CAMEL_NAME}Logic extends BaseLogic
      */
     public static function edit(array $params): bool
     {
-        Db::startTrans();
+        self::base_startTrans();
         try {
             {UPPER_CAMEL_NAME}::where('{PK}', $params['{PK}'])->update([
 {UPDATE_DATA}
             ]);
 
-            Db::commit();
-            return true;
+            return self::base_commit();
         } catch (\Exception $e) {
-            Db::rollback();
-            self::setError($e->getMessage());
-            return false;
+            return self::base_rollback($e->getMessage());
         }
     }
 

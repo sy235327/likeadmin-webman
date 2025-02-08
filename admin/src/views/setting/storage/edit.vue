@@ -39,6 +39,33 @@
                             clearable
                         />
                     </el-form-item>
+                    <el-form-item label="S3状态" prop="status">
+                        <el-radio-group v-model="formData.is_oss_req">
+                            <el-radio :label="0">关闭</el-radio>
+                            <el-radio :label="1">开启</el-radio>
+                        </el-radio-group>
+                    </el-form-item>
+                    <el-form-item label="S3请求方式" prop="method" v-if='formData.is_oss_req == 1'>
+                        <el-input
+                            v-model="formData.method"
+                            placeholder="请输入S3请求方式"
+                            clearable
+                        />
+                    </el-form-item>
+                    <el-form-item
+                        v-if="formData.engine == StorageEnum.QCLOUD || formData.is_oss_req == 1"
+                        label="region 区域代码"
+                        prop="region"
+                    >
+                        <el-input v-model="formData.region" placeholder="请输入region" clearable />
+                    </el-form-item>
+                    <el-form-item
+                        v-if="formData.is_oss_req == 1"
+                        label="endpoint S3区域地址"
+                        prop="endpoint"
+                    >
+                        <el-input v-model="formData.endpoint" placeholder="请输入endpoint" clearable />
+                    </el-form-item>
                     <el-form-item label="空间域名" prop="domain">
                         <div class="flex-1">
                             <div>
@@ -52,13 +79,6 @@
                                 请补全http://或https://，例如https://static.cloud.com
                             </div>
                         </div>
-                    </el-form-item>
-                    <el-form-item
-                        v-if="formData.engine == StorageEnum.QCLOUD"
-                        label="REGION"
-                        prop="region"
-                    >
-                        <el-input v-model="formData.region" placeholder="请输入region" clearable />
                     </el-form-item>
                 </div>
                 <el-form-item label="状态" prop="status">
@@ -95,7 +115,10 @@ const formData = reactive({
     secret_key: '',
     domain: '',
     region: '', // 腾讯云需要
-    status: 0
+    status: 0,
+    is_oss_req: 0,
+    method: 'PUT',
+    endpoint: '',
 })
 
 const storageArr = [

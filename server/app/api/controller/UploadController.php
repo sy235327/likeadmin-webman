@@ -15,6 +15,8 @@
 namespace app\api\controller;
 
 use app\common\enum\FileEnum;
+use app\common\model\file\File;
+use app\common\service\FileService;
 use app\common\service\UploadService;
 use Exception;
 use support\Response;
@@ -27,6 +29,33 @@ use think\response\Json;
  */
 class UploadController extends BaseApiController
 {
+
+    /**
+     * 使用凭证上传文件后回调获取对象
+     * @return Response
+     */
+    public function setUploadFile(): Response{
+        $cid = input('cid',0);
+        $typeStr = input('type','');
+        $type = FileEnum::IMAGE_TYPE;
+        if ($typeStr){
+            $type = FileEnum::TYPE_MAP[$typeStr];
+        }
+        $source_id = $this->userId;
+        $source = FileEnum::SOURCE_USER;
+        $name = input('name','');
+        $uri = input('uri','');
+
+        $fileObj = File::create([
+            'cid' => $cid,
+            'source_id' => $source_id,
+            'source' => $source,
+            'type' => $type,
+            'name' => $name,
+            'uri' => FileService::setFileUrl($uri),
+        ]);
+        return $this->success('上传成功', $fileObj->toArray());
+    }
 
     /**
      * @notes 上传图片
@@ -53,8 +82,9 @@ class UploadController extends BaseApiController
 
         $name = $this->request->post('name', '');
         $size = $this->request->post('size', '');
+        $contentType = $this->request->post('contentType', 'image/png');
         $uploadObj = (new UploadService());
-        $result = $uploadObj->getUploadToken($name,$size);
+        $result = $uploadObj->getUploadToken($name,$size,$contentType);
         if ($result===false){
             return $this->fail($uploadObj->getError());
         }

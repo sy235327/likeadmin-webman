@@ -2,7 +2,10 @@
 
 namespace app\common\service\storage\engine;
 
+use app\common\service\FileService;
 use ArrayObject;
+use Aws\Credentials\Credentials;
+use Aws\S3\S3Client;
 use Exception;
 use Qiniu\Auth;
 use Qiniu\Storage\UploadManager;
@@ -136,22 +139,48 @@ class Qiniu extends Server
     }
 
 
-    public function getUploadToken($name,$src,$size): array
+    public function getUploadToken($name,$src,$size,$contentType='image/png'): array
     {
-        $dummyAuth = new Auth($this->config['access_key'], $this->config['secret_key']);
         //size 单位byte
-        $token = $dummyAuth->uploadToken($this->config['bucket'], $src.'/'.$name, 3600, array('fsizeLimit'=>$size));
         $params = new ArrayObject();
         $headers = new ArrayObject();
+        $accessKey = $this->config['access_key'];
+        $secretKey = $this->config['secret_key'];
+        $is_oss_req = 0;
         $req_url = '';
+        $method = $this->config['method']??"PUT";
+        $region = $this->config['region']??"";
+        $endpoint = $this->config['endpoint']??"";
+        if ($region&&$endpoint){
+            $s3Client = new S3Client([
+                "region" => $region, // 地区 region id
+                "endpoint" => $endpoint,  // 地区上传的 endpoint
+                "credentials" => new Credentials($accessKey, $secretKey),
+            ]);
+            $request = $s3Client->createPresignedRequest(
+                $s3Client->getCommand("PutObject", ["Bucket" => $this->config['bucket'], "Key" => $src.$name, "ContentType"=>$contentType]),
+                "+1 hours");
+            $req_url = $request->getUri();
+            if ($req_url){
+                $is_oss_req = 1;
+            }
+        }
+        if (($this->config['is_oss_req']??0) == 0){
+            $is_oss_req = 0;
+        }
         return [
-            'upload_token'=>$token,
+            'is_oss_req'=>$is_oss_req,
+            'req_file_url'=>FileService::getFileUrl($src.$name),
+            'save_file_url'=>$src.$name,
             'save_dir'=>$src,
             'upload_file_name'=>$name,
             'upload_file_size'=>$size,
             'params'=>$params,
             'headers'=>$headers,
             'req_url'=>$req_url,
+            'region'=>$region,
+            'endpoint'=>$endpoint,
+            'method'=>$method,
         ];
     }
 }

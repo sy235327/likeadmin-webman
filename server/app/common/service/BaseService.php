@@ -2,6 +2,8 @@
 
 namespace app\common\service;
 
+use think\facade\Db;
+
 /**
  * 服务基类
  */
@@ -24,6 +26,12 @@ class BaseService
      * @var
      */
     protected mixed $returnData;
+
+    /**
+     * 事务开启层级
+     * @var int
+     */
+    private int $transNumber = 0;
 
     /**
      * @notes 获取错误信息
@@ -98,4 +106,36 @@ class BaseService
         return $this->returnData;
     }
 
+    public function setReturnData(mixed $data) : void
+    {
+        $this->returnData = $data;
+    }
+
+
+    public function base_startTrans(): void
+    {
+        if ($this->transNumber == 0){
+            Db::startTrans();
+        }
+        $this->transNumber++;
+    }
+    public function base_rollback($msg,$data = null,$code = -1): false
+    {
+        $this->transNumber = 0;
+        Db::rollback();
+        $this->setError($msg);
+        $this->setReturnData($data);
+        $this->setReturnCode($code);
+        return false;
+    }
+    public function base_commit($data = null,$code = 0): true
+    {
+        $this->transNumber--;
+        if ($this->transNumber == 0){
+            Db::commit();
+        }
+        $this->setReturnData($data);
+        $this->setReturnCode($code);
+        return true;
+    }
 }

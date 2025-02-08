@@ -34,9 +34,9 @@ class Driver
      * @param $size
      * @return array
      */
-    public function getUploadToken($name,$src,$size): array
+    public function getUploadToken($name,$src,$size,$contentType='image/png'): array
     {
-        return $this->engine->getUploadToken($name,$src,$size);
+        return $this->engine->getUploadToken($name,$src,$size,$contentType);
     }
     /**
      * 设置上传的文件信息

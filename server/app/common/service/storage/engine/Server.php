@@ -116,7 +116,7 @@ abstract class Server
      * 构建文件上传凭证
      * @return mixed
      */
-    abstract public function getUploadToken(string $name,string $src,int|string $size): mixed;
+    abstract public function getUploadToken(string $name,string $src,int|string $size,$contentType='image/png'): mixed;
 
     /**
      * 返回文件信息

@@ -2,7 +2,10 @@
 
 namespace app\common\service\storage\engine;
 
+use app\common\service\FileService;
 use ArrayObject;
+use Aws\Credentials\Credentials;
+use Aws\S3\S3Client;
 
 /**
  * 本地文件驱动
@@ -11,6 +14,7 @@ use ArrayObject;
  */
 class Local extends Server
 {
+
     public function __construct()
     {
         parent::__construct();
@@ -65,18 +69,28 @@ class Local extends Server
 
     public function getUploadToken($name,$src,$size): array
     {
-        // TODO: Implement getUploadToken() method.
+        //size 单位byte
         $params = new ArrayObject();
         $headers = new ArrayObject();
+        $accessKey = '';
+        $secretKey = '';
+        $is_oss_req = false;
         $req_url = '';
+        $region = "";
+        $endpoint = "";
         return [
-            'upload_token'=>'',
+            'is_oss_req'=>0,
+            'req_file_url'=>FileService::getFileUrl($src.'/'.$name),
+            'save_file_url'=>$src.'/'.$name,
             'save_dir'=>$src,
             'upload_file_name'=>$name,
             'upload_file_size'=>$size,
             'params'=>$params,
             'headers'=>$headers,
             'req_url'=>$req_url,
+            'region'=>'',
+            'endpoint'=>'',
+            'method'=>'post',
         ];
     }
 }

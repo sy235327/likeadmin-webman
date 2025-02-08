@@ -22,6 +22,12 @@ class FileEnum
     const VIDEO_TYPE = 20;  // 视频类型
     const FILE_TYPE = 30;  // 文件类型
 
+    const TYPE_MAP = [
+        'image' => 10,
+        'video' => 20,
+        'file' => 30,
+    ];
+
 
     // 图片来源
     const SOURCE_ADMIN = 0;  // 后台

@@ -29,6 +29,9 @@ class UploadService extends BaseService
         if (in_array($extension, config('project.file_video'))) {
             $saveDir = 'uploads/video/';
         }
+        if (in_array($extension, config('project.file_file'))) {
+            $saveDir = 'uploads/file/';
+        }
         if (in_array($extension, config('project.file_other'))) {
             $saveDir = 'uploads/other/';
         }

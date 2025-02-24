@@ -4,6 +4,8 @@
 namespace app\adminapi\listener;
 
 
+use app\adminapi\controller\BaseAdminController;
+use app\api\controller\BaseApiController;
 use ReflectionClass;
 use ReflectionException;
 use support\Log;
@@ -28,10 +30,10 @@ class OperationLog
         if (!$controllerObject){
             return false;
         }
-        if ($controllerObject instanceof \app\adminapi\controller\BaseAdminController) {
+        if ($controllerObject instanceof BaseAdminController) {
             return self::handleAdmin($controllerObject, $request, $response);
         }
-        if ($controllerObject instanceof \app\api\controller\BaseApiController) {
+        if ($controllerObject instanceof BaseApiController) {
             return self::handleUser($controllerObject, $request, $response);
         }
         return true;

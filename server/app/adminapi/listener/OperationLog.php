@@ -4,6 +4,8 @@
 namespace app\adminapi\listener;
 
 
+use app\adminapi\controller\BaseAdminController;
+use app\api\controller\BaseApiController;
 use ReflectionClass;
 use ReflectionException;
 use support\Log;
@@ -17,17 +19,26 @@ class OperationLog
      * @notes 管理员操作日志
      * @param Request $request
      * @param Response $response
-     * @return bool
+     * @return mixed
      * @throws ReflectionException
      * @author bingo
      * @date 2022/4/8 17:09
      */
-    public static function handle(Request $request, Response $response): bool
+    public static function handle(Request $request, Response $response): mixed
     {
         $controllerObject = make($request->controller);
         if (!$controllerObject){
             return false;
         }
+        if ($controllerObject instanceof BaseAdminController) {
+            return self::handleAdmin($controllerObject, $request, $response);
+        }
+        if ($controllerObject instanceof BaseApiController) {
+            return self::handleUser($controllerObject, $request, $response);
+        }
+        return true;
+    }
+    public static function handleAdmin($controllerObject, Request $request, Response $response): mixed{
         [$adminId,$adminInfo] = $controllerObject->getAdmin();
 
         //需要登录的接口，无效访问时不记录
@@ -36,7 +47,7 @@ class OperationLog
         }
         $pathLower = strtolower($request->path());
         //不记录日志操作
-        if (str_contains($pathLower,"/api/")||$pathLower === '/adminapi/setting/system/log') {
+        if ($pathLower === '/adminapi/setting/system/log') {
             return false;
         }
 
@@ -98,5 +109,8 @@ class OperationLog
             'result'=>$response->rawBody(),
         ]);
         return $res;
+    }
+    public static function handleUser($controllerObject, Request $request, Response $response): mixed{
+        return true;
     }
 }

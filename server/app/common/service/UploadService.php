@@ -221,9 +221,9 @@ class UploadService extends BaseService
         }
 
         // 3、处理文件名称
-        if (strlen($fileInfo['name']) > 128) {
-            $name = substr($fileInfo['name'], 0, 123);
-            $nameEnd = substr($fileInfo['name'], strlen($fileInfo['name'])-5, strlen($fileInfo['name']));
+        if (mb_strlen($fileInfo['name']) > 128) {
+            $name = mb_substr($fileInfo['name'], 0, 123);
+            $nameEnd = mb_substr($fileInfo['name'], mb_strlen($fileInfo['name'])-5, mb_strlen($fileInfo['name']));
             $fileInfo['name'] = $name . $nameEnd;
         }
 

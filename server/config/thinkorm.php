@@ -25,7 +25,15 @@ return [
             // 关闭SQL监听日志
             'trigger_sql' => getenv('SQL_DEBUG',false),
             // 自定义分页类
-            'bootstrap' =>  ''
+            'bootstrap' =>  '',
+            //时间字段的自动处理是框架提供的实现时间字段（包括create_time和update_time，支持自定义字段名）的自动写入和自动输出转换功能。
+            // 自动写入时间戳字段
+            // true为自动识别类型 false关闭
+            // 字符串则明确指定时间字段类型 支持 int timestamp datetime date
+            'auto_timestamp' => true,
+
+            // 时间字段取出后的默认时间格式
+            'datetime_format' => false,
         ]
     ],
 ];

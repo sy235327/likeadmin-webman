@@ -29,11 +29,13 @@ class Handler extends ExceptionHandler
             return $exception->getResponse();
         }
         if ($request->expectsJson()) {
-            if (!$this->_debug) {
-                $json = ['code' => 500, 'msg' => '服务器错误!'];
-                return new Response(200, ['Content-Type' => 'application/json'],
-                    json_encode($json, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+            $msg = '服务器错误!';
+            if (getenv('APP_DEBUG',false)) {
+                $msg = $exception->getMessage();
             }
+            $json = ['code' => 0, 'msg' => $msg, 'show' => 1];
+            return new Response(200, ['Content-Type' => 'application/json'],
+                json_encode($json, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
         }
         return parent::render($request, $exception);
     }

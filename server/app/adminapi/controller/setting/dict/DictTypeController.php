@@ -31,7 +31,6 @@ use think\db\exception\ModelNotFoundException;
  */
 class DictTypeController extends BaseAdminController
 {
-    private DictTypeValidate $validateObj;
 
     public function initialize(): void
     {

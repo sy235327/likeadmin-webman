@@ -27,7 +27,6 @@ use support\Response;
  */
 class NoticeController extends BaseAdminController
 {
-    private NoticeValidate $validateObj;
 
     public function initialize(): void
     {

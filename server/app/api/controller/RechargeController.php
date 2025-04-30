@@ -48,8 +48,8 @@ class RechargeController extends BaseApiController
     public function recharge(): Response
     {
         $params = (new RechargeValidate())->post()->goCheck('recharge', [
-            'user_id' => $this->userId,
-            'terminal' => $this->userInfo['terminal'],
+            'user_id' => $this->getUserId(),
+            'terminal' => $this->getUserInfo()['terminal'],
         ]);
         $result = RechargeLogic::recharge($params);
         if (false === $result) {
@@ -67,7 +67,7 @@ class RechargeController extends BaseApiController
      */
     public function config(): Response
     {
-        return $this->data(RechargeLogic::config($this->userId));
+        return $this->data(RechargeLogic::config($this->getUserId()));
     }
 
 

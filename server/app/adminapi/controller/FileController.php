@@ -12,7 +12,6 @@ use support\Response;
 
 class FileController extends BaseAdminController
 {
-    private FileValidate $validateObj;
 
     public function initialize(): void
     {

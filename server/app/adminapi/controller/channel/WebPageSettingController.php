@@ -26,7 +26,6 @@ use support\Response;
  */
 class WebPageSettingController extends BaseAdminController
 {
-    private WebPageSettingValidate $validateObj;
 
     public function initialize(): void
     {

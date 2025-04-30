@@ -11,7 +11,6 @@ use support\Response;
 
 class StorageController extends BaseAdminController
 {
-    private StorageValidate $validateObj;
 
     public function initialize(): void
     {

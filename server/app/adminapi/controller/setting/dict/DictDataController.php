@@ -28,7 +28,6 @@ use support\Response;
  */
 class DictDataController extends BaseAdminController
 {
-    private DictDataValidate $validateObj;
 
     public function initialize(): void
     {

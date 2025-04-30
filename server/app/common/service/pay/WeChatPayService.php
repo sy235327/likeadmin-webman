@@ -85,7 +85,6 @@ class WeChatPayService extends BasePayService
         $symfony_request = new SymfonyRequest($request->get(), $request->post(), [], $request->cookie(), [], [], $request->rawBody());
         $symfony_request->headers = new HeaderBag($request->header());
         $this->app->setRequestFromSymfonyRequest($symfony_request);
-//        $this->app->setRequest($symfony_request);
         if ($userId !== null) {
             $this->auth = UserAuth::where(['user_id' => $userId, 'terminal' => $terminal])->findOrEmpty();
         }

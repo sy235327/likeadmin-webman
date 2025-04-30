@@ -27,7 +27,6 @@ use support\Response;
  */
 class RechargeController extends BaseAdminController
 {
-    private RechargeRefundValidate $validateObj;
 
     public function initialize(): void
     {
@@ -85,7 +84,7 @@ class RechargeController extends BaseAdminController
     public function refund(): Response
     {
         $params = $this->validateObj->post()->goCheck('refund');
-        $result = RechargeLogic::refund($params, $this->adminId);
+        $result = RechargeLogic::refund($params, $this->getAdminId());
         list($flag, $msg) = $result;
         if(false === $flag) {
             return $this->fail($msg);
@@ -103,7 +102,7 @@ class RechargeController extends BaseAdminController
     public function refundAgain(): Response
     {
         $params = $this->validateObj->post()->goCheck('again');
-        $result = RechargeLogic::refundAgain($params, $this->adminId);
+        $result = RechargeLogic::refundAgain($params, $this->getAdminId());
         list($flag, $msg) = $result;
         if(false === $flag) {
             return $this->fail($msg);

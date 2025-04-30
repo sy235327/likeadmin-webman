@@ -30,7 +30,6 @@ use think\db\exception\ModelNotFoundException;
  */
 class ArticleCateController extends BaseAdminController
 {
-    private ArticleCateValidate $validateObj;
 
     public function initialize(): void
     {

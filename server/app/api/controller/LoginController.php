@@ -78,7 +78,7 @@ class LoginController extends BaseApiController
      */
     public function logout(): Response
     {
-        LoginLogic::logout($this->userInfo);
+        LoginLogic::logout($this->getUserInfo());
         return $this->success();
     }
 
@@ -141,7 +141,7 @@ class LoginController extends BaseApiController
     public function mnpAuthBind(): Response
     {
         $params = (new WechatLoginValidate())->post()->goCheck("wechatAuth");
-        $params['user_id'] = $this->userId;
+        $params['user_id'] = $this->getUserId();
         $result = LoginLogic::mnpAuthLogin($params);
         if ($result === false) {
             return $this->fail(LoginLogic::getError());
@@ -161,7 +161,7 @@ class LoginController extends BaseApiController
     public function oaAuthBind(): Response
     {
         $params = (new WechatLoginValidate())->post()->goCheck("wechatAuth");
-        $params['user_id'] = $this->userId;
+        $params['user_id'] = $this->getUserId();
         $result = LoginLogic::oaAuthLogin($params);
         if ($result === false) {
             return $this->fail(LoginLogic::getError());
@@ -213,7 +213,7 @@ class LoginController extends BaseApiController
     public function updateUser(): Response
     {
         $params = (new WechatLoginValidate())->post()->goCheck("updateUser");
-        LoginLogic::updateUser($params, $this->userId);
+        LoginLogic::updateUser($params, $this->getUserId());
         return $this->success('操作成功', [], 1, 1);
     }
 

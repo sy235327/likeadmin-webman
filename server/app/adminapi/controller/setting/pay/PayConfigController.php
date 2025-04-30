@@ -29,7 +29,6 @@ use support\Response;
 class PayConfigController extends BaseAdminController
 {
 
-    private PayConfigValidate $validateObj;
 
     public function initialize(): void
     {

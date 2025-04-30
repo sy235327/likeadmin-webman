@@ -29,7 +29,6 @@ use support\Response;
  */
 class AdminController extends BaseAdminController
 {
-    private AdminValidate $validateObj;
 
     public function initialize(): void
     {
@@ -116,7 +115,7 @@ class AdminController extends BaseAdminController
      */
     public function mySelf(): Response
     {
-        $result = AdminLogic::detail(['id' => $this->adminId], 'auth');
+        $result = AdminLogic::detail(['id' => $this->getAdminId()], 'auth');
         return $this->data($result);
     }
 
@@ -128,7 +127,7 @@ class AdminController extends BaseAdminController
      */
     public function editSelf(): Response
     {
-        $params = (new editSelfValidate())->post()->goCheck('', ['admin_id' => $this->adminId]);
+        $params = (new editSelfValidate())->post()->goCheck('', ['admin_id' => $this->getAdminId()]);
         $result = AdminLogic::editSelf($params);
         return $this->success('操作成功', [], 1, 1);
     }

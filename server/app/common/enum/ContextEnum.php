@@ -12,35 +12,22 @@
 // | author: likeadminTeam
 // +----------------------------------------------------------------------
 
-declare (strict_types=1);
 
-namespace app\common\http\middleware;
-
-use Webman\Http\Request;
-use Webman\Http\Response;
-use Webman\MiddlewareInterface;
+namespace app\common\enum;
 
 /**
- * 自定义跨域中间件
- * Class LikeAdminAllowMiddleware
- * @package app\common\http\middleware
+ * 协程上下文key
+ * Class YesNoEnum
+ * @package app\common\enum
  */
-class EndMiddleware implements MiddlewareInterface
+class ContextEnum
 {
-    /**
-     * Notes: 跨域处理
-     * Date: 2023/2/27下午3:46
-     * @param Request $request
-     * @param callable $handler
-     * @return Response
-     */
-
-    public function process(Request $request, callable $handler): Response
-    {
-        $controllerObject = make($request->controller);
-        $controllerObject->initialize();
-
-        return $handler($request);
-    }
-
+    const BATCHVALIDATE_KEY = "batchValidate";
+    const VALIDATEOBJ_KEY = "validateObj";
+    const MIDDLEWARE_KEY = "middleware";
+    const REQUEST_KEY = "request";
+    const ADMIN_ID_KEY = "adminId";
+    const ADMIN_INFO_KEY = "adminInfo";
+    const USER_ID_KEY = "userId";
+    const USER_INFO_KEY = "userInfo";
 }

@@ -10,7 +10,7 @@ class HttpException extends RuntimeException
 {
     protected ?\support\Response $response = null;
 
-    public function __construct($message = "", $code = 200, $header=[],Throwable $previous = null)
+    public function __construct($message = "", $code = 200, $header=[],Throwable|null $previous = null)
     {
         $header = array_merge($header,['Content-Type'=>'application/json']);
         $this->response = response($message,$code,$header);

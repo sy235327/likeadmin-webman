@@ -77,7 +77,7 @@ if (!function_exists('cache')) {
      * @return mixed
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
-    function cache(string $name = null, mixed $value = '', mixed $options = null, $tag = null): mixed
+    function cache(string|null $name = null, mixed $value = '', mixed $options = null, $tag = null): mixed
     {
         if (is_null($name)) {
             return Cache::getFacadeClass();

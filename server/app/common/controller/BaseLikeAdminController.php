@@ -48,7 +48,7 @@ class BaseLikeAdminController extends BaseController
      * @author 令狐冲
      * @date 2021/7/8 00:40
      */
-    protected function dataLists(BaseDataLists $lists = null): Response
+    protected function dataLists(BaseDataLists|null $lists = null): Response
     {
         //列表类和控制器一一对应，"app/应用/controller/控制器的方法" =》"app\应用\lists\"目录下
         //（例如："app/adminapi/controller/auth/AdminController.php的lists()方法" =》 "app/adminapi/lists/auth/AminLists.php")

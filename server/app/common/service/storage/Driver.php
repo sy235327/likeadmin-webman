@@ -21,7 +21,7 @@ class Driver
      * @param string|null $storage 指定存储方式，如不指定则为系统默认
      * @throws Exception
      */
-    public function __construct($config, string $storage = null)
+    public function __construct($config, string|null $storage = null)
     {
         $this->config = $config;
         $this->engine = $this->getEngineClass($storage);

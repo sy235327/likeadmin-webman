@@ -4,7 +4,7 @@
 namespace app\common\cache;
 
 
-use think\facade\Cache;
+use support\think\Cache;
 
 class BaseCache extends Cache
 {
@@ -18,12 +18,12 @@ class BaseCache extends Cache
     public function __construct(){
         $this->tagName = get_class($this);
     }
-    public function get($key, $default = null)
+    public function get($key, $default = null): mixed
     {
         // TODO: Implement get() method.
         return Cache::get($key,$default);
     }
-    public function delete($key)
+    public function delete($key): bool
     {
         // TODO: Implement get() method.
         return Cache::delete($key);

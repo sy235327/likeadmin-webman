@@ -6,7 +6,7 @@ namespace app\adminapi\controller;
 
 use app\common\cache\ExportCache;
 use app\common\service\JsonService;
-use think\facade\Cache;
+use support\think\Cache;
 use Webman\Http\Response;
 
 class DownloadController extends BaseAdminController

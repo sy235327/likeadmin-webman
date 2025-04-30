@@ -17,7 +17,7 @@ namespace app\adminapi\logic\setting;
 
 use app\common\logic\BaseLogic;
 use app\common\service\ConfigService;
-use think\facade\Cache;
+use support\think\Cache;
 
 
 /**

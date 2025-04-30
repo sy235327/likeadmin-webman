@@ -6,7 +6,7 @@
 use app\common\service\FileService;
 use support\Container;
 use support\Response;
-use think\facade\Cache;
+use support\think\Cache;
 use Webman\Exception\NotFoundException;
 use Workerman\Http\Client;
 use Workerman\Protocols\Http\Chunk;
@@ -77,7 +77,7 @@ if (!function_exists('cache')) {
      * @return mixed
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
-    function cache(string $name = null, mixed $value = '', mixed $options = null, $tag = null): mixed
+    function cache(string|null $name = null, mixed $value = '', mixed $options = null, $tag = null): mixed
     {
         if (is_null($name)) {
             return Cache::getFacadeClass();

@@ -15,7 +15,7 @@
 namespace app\adminapi\logic\setting\system;
 
 use app\common\logic\BaseLogic;
-use think\facade\Cache;
+use support\think\Cache;
 
 /**
  * 系统缓存逻辑

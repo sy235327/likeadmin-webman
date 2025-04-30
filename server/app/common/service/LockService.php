@@ -3,7 +3,7 @@
 namespace app\common\service;
 
 use Psr\SimpleCache\InvalidArgumentException;
-use think\facade\Cache;
+use support\think\Cache;
 
 class LockService extends BaseService
 {
@@ -28,7 +28,7 @@ class LockService extends BaseService
      * @param integer|null $ttl 如不传则使用初始值
      * @return boolean true表示锁定成功，false表示加锁失败
      */
-    public function lock(mixed $lockValue = null, int $ttl = null): bool
+    public function lock(mixed $lockValue = null, int|null $ttl = null): bool
     {
         if ($ttl === null) {
             $ttl = $this->initialTtl;
@@ -49,7 +49,7 @@ class LockService extends BaseService
      * @param integer|null $ttl
      * @return boolean true表示锁定成功，false表示加锁失败
      */
-    public function unblockLock(mixed $lockValue = null, int $ttl = null): bool
+    public function unblockLock(mixed $lockValue = null, int|null $ttl = null): bool
     {
         if ($ttl === null) {
             $ttl = $this->initialTtl;

@@ -31,7 +31,6 @@ use think\db\exception\ModelNotFoundException;
  */
 class JobsController extends BaseAdminController
 {
-    private JobsValidate $validateObj;
 
     public function initialize(): void
     {

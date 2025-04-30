@@ -26,7 +26,6 @@ use support\Response;
  */
 class OfficialAccountSettingController extends BaseAdminController
 {
-    private OfficialAccountSettingValidate $validateObj;
 
     public function initialize(): void
     {

@@ -28,7 +28,6 @@ use support\Response;
  */
 class UserController extends BaseAdminController
 {
-    private UserConfigValidate $validateObj;
 
     public function initialize(): void
     {

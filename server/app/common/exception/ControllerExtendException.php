@@ -4,6 +4,8 @@
 namespace app\common\exception;
 
 
+use Exception;
+
 /**
  * 控制器继承异常
  * Class ControllerExtendException

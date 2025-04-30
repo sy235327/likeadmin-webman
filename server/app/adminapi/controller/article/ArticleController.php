@@ -27,7 +27,6 @@ use support\Response;
  */
 class ArticleController extends BaseAdminController
 {
-    private ArticleValidate $validateObj;
 
     public function initialize(): void
     {

@@ -30,7 +30,6 @@ class OfficialAccountReplyController extends BaseAdminController
 {
 
     public array $notNeedLogin = ['index'];
-    private OfficialAccountReplyValidate $validateObj;
 
     public function initialize(): void
     {

@@ -27,7 +27,6 @@ use support\Response;
  */
 class CrontabController extends BaseAdminController
 {
-    private CrontabValidate $validateObj;
 
     public function initialize(): void
     {

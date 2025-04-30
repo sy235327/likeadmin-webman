@@ -29,7 +29,6 @@ use think\db\exception\ModelNotFoundException;
  */
 class DeptController extends BaseAdminController
 {
-    private DeptValidate $validateObj;
 
     public function initialize(): void
     {

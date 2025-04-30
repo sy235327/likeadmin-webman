@@ -25,7 +25,7 @@ class UploadController extends BaseAdminController
         if ($typeStr){
             $type = FileEnum::TYPE_MAP[$typeStr];
         }
-        $source_id = $this->adminId;
+        $source_id = $this->getAdminId();
         $source = FileEnum::SOURCE_ADMIN;
         $name = input('name','');
         $uri = input('uri','');

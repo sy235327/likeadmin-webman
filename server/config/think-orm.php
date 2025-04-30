@@ -3,7 +3,7 @@
 return [
     'default' => getenv('DB_CONNECTION','mysql'),
     'connections' => [
-        'mysql' => [
+        'mysql'=>[
             // 数据库类型
             'type' => 'mysql',
             // 服务器地址
@@ -16,6 +16,11 @@ return [
             'password' =>  getenv('DB_PASSWORD'),
             // 数据库连接端口
             'hostport' =>  getenv('DB_PORT'),
+            // 数据库连接参数
+            'params' => [
+                // 连接超时3秒
+                \PDO::ATTR_TIMEOUT => 3,
+            ],
             // 数据库编码默认采用utf8
             'charset' => 'utf8',
             // 数据库表前缀
@@ -31,9 +36,16 @@ return [
             // true为自动识别类型 false关闭
             // 字符串则明确指定时间字段类型 支持 int timestamp datetime date
             'auto_timestamp' => true,
-
             // 时间字段取出后的默认时间格式
             'datetime_format' => false,
+            // 连接池配置
+            'pool' => [
+                'max_connections' => 5, // 最大连接数
+                'min_connections' => 1, // 最小连接数
+                'wait_timeout' => 3,    // 从连接池获取连接等待超时时间
+                'idle_timeout' => 60,   // 连接最大空闲时间，超过该时间会被回收
+                'heartbeat_interval' => 50, // 心跳检测间隔，需要小于60秒
+            ],
         ]
     ],
 ];

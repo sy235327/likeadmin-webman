@@ -35,7 +35,7 @@ return [
     //链接不够和进程占用过久 慢链接方案 https://www.workerman.net/doc/webman/others/task.html https://www.workerman.net/q/9067
     //Workerman\Events\Swoole; (需要开启swoole扩展,windows不支持) 协程 异步非阻塞模式,但是这种模式数据库部分需要考虑采用mysql连接池方案，否则并发下链接可能被占用,连接池解决方案 新建一个进程专门负责sql查询，sql操作丢给该进程查询和返回 https://www.workerman.net/q/391
     //Workerman\Events\Select; 它同时轮询数千个文件描述符的 IO 活动时(通常限制为 1024 个文件描述符的固定大小)  原生 PHP 在这方面的功能极限
-    //Workerman\Events\Revolt; 如果您在严格的本地程序中使用该包以实现非阻塞并发，或者您不需要在服务器应用程序中处理超过几百个并发客户端，则php原生实现的Workerman\Events\Revolt应该足够了
+    //Workerman\Events\Fiber; 如果您在严格的本地程序中使用该包以实现非阻塞并发，或者您不需要在服务器应用程序中处理超过几百个并发客户端，则php原生实现的Workerman\Events\Fiber应该足够了
     //Workerman\Events\Event;  (需要开启event扩展)为了实现横向扩展到高容量的性能，我们需要目前仅在扩展中发现的更高级功能,如果您希望在事件循环支持的套接字服务器中为 10,000 个并发客户端提供服务，则应使用基于 PHP 扩展的事件循环实现之一
     'event_loop' => Fiber::class,
     'stop_timeout' => 2,

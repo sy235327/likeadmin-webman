@@ -12,7 +12,7 @@ use DateTime;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
-use think\facade\Cache;
+use support\think\Cache;
 
 class AdminTokenCache extends BaseCache
 {

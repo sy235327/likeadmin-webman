@@ -4,7 +4,7 @@
 namespace app\common\cache;
 
 
-use think\facade\Cache;
+use support\think\Cache;
 
 class BaseCache extends Cache
 {

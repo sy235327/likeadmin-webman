@@ -4,7 +4,7 @@
 namespace app\common\service;
 
 
-use think\facade\Cache;
+use support\think\Cache;
 
 class FileService
 {

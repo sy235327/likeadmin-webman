@@ -23,12 +23,6 @@
     "wiki": "https://workerman.net/doc/webman",
     "source": "https://github.com/walkor/webman"
   },
-  "repositories": {
-    "opis/closure": {
-      "type": "git",
-      "url": "https://github.com/sy235327/closure.git"
-    }
-  },
   "require": {
     "php": "^8.2",
     "ext-json": "*",
@@ -39,17 +33,17 @@
     "ext-zip": "*",
     "ext-mbstring": "*",
     "ext-redis": "*",
-    "opis/closure": "master-dev",
+    "opis/closure": "^4.3.0",
     "workerman/workerman": "^v5.1.0",
     "workerman/http-client": "^2.2.8",
     "revolt/event-loop": "^1.0",
-    "workerman/webman-framework": "1.6.6",
+    "workerman/webman-framework": "^v2.1.0",
     "monolog/monolog": "^2.9.2",
+    "webman/think-cache": "^2.1.0",
     "topthink/think-orm": "^3.0.28",
     "webman/think-orm": "^1.1.6",
     "vlucas/phpdotenv": "^5.5",
     "psr/container": "^1.1.2",
-    "webman/think-cache": "^1.0.2",
     "phpoffice/phpspreadsheet": "^1.29.0",
     "aliyuncs/oss-sdk-php": "^2.7.1",
     "tencentcloud/tencentcloud-sdk-php": "^3.0",
@@ -57,7 +51,7 @@
     "qiniu/php-sdk": "7.14",
     "qcloud/cos-sdk-v5": "^2.6",
     "dragonmantank/cron-expression": "^3.3",
-    "tinywan/storage": "^0.3.4",
+    "tinywan/storage": "^v1.1.0",
     "webman/log": "^1.1",
     "taoser/webman-validate": "^1.7",
     "webman/redis-queue": "^1.3",

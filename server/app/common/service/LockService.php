@@ -3,7 +3,7 @@
 namespace app\common\service;
 
 use Psr\SimpleCache\InvalidArgumentException;
-use think\facade\Cache;
+use support\think\Cache;
 
 class LockService extends BaseService
 {

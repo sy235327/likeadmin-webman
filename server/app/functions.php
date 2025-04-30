@@ -6,7 +6,7 @@
 use app\common\service\FileService;
 use support\Container;
 use support\Response;
-use think\facade\Cache;
+use support\think\Cache;
 use Webman\Exception\NotFoundException;
 use Workerman\Http\Client;
 use Workerman\Protocols\Http\Chunk;

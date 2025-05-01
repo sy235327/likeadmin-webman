@@ -67,7 +67,7 @@ class HotSearchLogic extends BaseLogic
 
             return true;
         } catch (Exception $e) {
-            self::$error = $e->getMessage();
+            self::setError($e->getMessage());
             return false;
         }
     }

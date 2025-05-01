@@ -16,6 +16,8 @@
 namespace app\common\logic;
 
 
+use app\common\enum\ContextEnum;
+use support\Context;
 use think\facade\Db;
 
 /**
@@ -26,31 +28,6 @@ use think\facade\Db;
 class BaseLogic
 {
     /**
-     * 错误信息
-     * @var string|null
-     */
-    protected static string|null $error;
-
-    /**
-     * 返回状态码
-     * @var int
-     */
-    protected static int $returnCode = 0;
-
-
-    /**
-     * @var mixed 返回数据
-     */
-    protected static mixed $returnData;
-
-    /**
-     * 事务层级
-     * @var int
-     */
-    private static int $transNumber = 0;
-
-
-    /**
      * @notes 获取错误信息
      * @return string
      * @author 乔峰
@@ -58,10 +35,11 @@ class BaseLogic
      */
     public static function getError() : string
     {
-        if (false === self::hasError()) {
+        $error =  Context::get(ContextEnum::RETURN_CODE_KEY,null);
+        if (null === $error) {
             return '系统错误';
         }
-        return self::$error;
+        return $error;
     }
 
 
@@ -73,7 +51,7 @@ class BaseLogic
      */
     public static function setError($error) : void
     {
-        !empty($error) && self::$error = $error;
+        Context::set(ContextEnum::RETURN_CODE_KEY,$error);
     }
 
 
@@ -85,7 +63,11 @@ class BaseLogic
      */
     public static function hasError() : bool
     {
-        return !empty(self::$error);
+        $error =  Context::get(ContextEnum::RETURN_CODE_KEY,null);
+        if (null === $error) {
+            return false;
+        }
+        return true;
     }
 
 
@@ -97,7 +79,7 @@ class BaseLogic
      */
     public static function setReturnCode($code) : void
     {
-        self::$returnCode = $code;
+        Context::set(ContextEnum::RETURN_CODE_KEY,0);
     }
 
 
@@ -109,7 +91,7 @@ class BaseLogic
      */
     public static function getReturnCode() : int
     {
-        return self::$returnCode;
+        return Context::get(ContextEnum::RETURN_CODE_KEY,0);
     }
 
     /**
@@ -120,22 +102,25 @@ class BaseLogic
      */
     public static function getReturnData(): mixed
     {
-        return self::$returnData;
+        return Context::get(ContextEnum::RETURN_DATA_KEY,null);
     }
     public static function setReturnData($data) : void
     {
-        self::$returnData = $data;
+        Context::set(ContextEnum::RETURN_DATA_KEY,$data);
     }
     public static function base_startTrans(): void
     {
-        if (self::$transNumber == 0){
+        $transNumber = Context::get(ContextEnum::TRANS_NUMBER_KEY,0);
+        if ($transNumber == 0){
             Db::startTrans();
         }
-        self::$transNumber++;
+        $transNumber++;
+        Context::set(ContextEnum::TRANS_NUMBER_KEY,$transNumber);
     }
     public static function base_rollback($msg,$data = null,$code = -1): false
     {
-        self::$transNumber = 0;
+        $transNumber = 0;
+        Context::set(ContextEnum::TRANS_NUMBER_KEY,$transNumber);
         Db::rollback();
         self::setError($msg);
         self::setReturnData($data);
@@ -144,8 +129,10 @@ class BaseLogic
     }
     public static function base_commit($data = null,$code = 0): true
     {
-        self::$transNumber--;
-        if (self::$transNumber == 0){
+        $transNumber = Context::get(ContextEnum::TRANS_NUMBER_KEY,0);
+        $transNumber--;
+        Context::set(ContextEnum::TRANS_NUMBER_KEY,$transNumber);
+        if ($transNumber == 0){
             Db::commit();
         }
         self::setReturnData($data);

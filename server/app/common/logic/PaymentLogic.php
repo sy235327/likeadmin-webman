@@ -149,7 +149,7 @@ class PaymentLogic extends BaseLogic
             }
             return $order;
         } catch (Exception $e) {
-            self::$error = $e->getMessage();
+            self::setError($e->getMessage());
             return false;
         }
     }
@@ -200,7 +200,7 @@ class PaymentLogic extends BaseLogic
                 $result = $payService->pay($from, $order);
                 break;
             default:
-                self::$error = '订单异常';
+                self::setError('订单异常');
                 $result = false;
         }
 

@@ -24,6 +24,7 @@ use app\common\service\FileService;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
+use Workerman\Timer;
 
 
 /**
@@ -45,6 +46,9 @@ class IndexLogic extends BaseLogic
      */
     public static function getIndexData(): array
     {
+        self::setError(input('int'));
+        Timer::sleep(5);
+        return [self::getError()];
         // 装修配置
         $decoratePage = DecoratePage::findOrEmpty(1);
 

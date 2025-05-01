@@ -51,7 +51,7 @@ class DecoratePageLogic extends BaseLogic
     {
         $pageData = DecoratePage::where(['id' => $params['id']])->findOrEmpty();
         if ($pageData->isEmpty()) {
-            self::$error = '信息不存在';
+            self::setError('信息不存在');
             return false;
         }
         DecoratePage::update([

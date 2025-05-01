@@ -144,7 +144,7 @@ class RechargeLogic extends BaseLogic
             return [$flag, $resultMsg];
         } catch (Exception $e) {
             Db::rollback();
-            self::$error = $e->getMessage();
+            self::setError($e->getMessage());
             return [false, $e->getMessage()];
         }
     }
@@ -179,7 +179,7 @@ class RechargeLogic extends BaseLogic
             return [$flag, $resultMsg];
         } catch (Exception $e) {
             Db::rollback();
-            self::$error = $e->getMessage();
+            self::setError($e->getMessage());
             return [false, $e->getMessage()];
         }
     }

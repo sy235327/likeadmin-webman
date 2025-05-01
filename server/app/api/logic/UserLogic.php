@@ -106,7 +106,7 @@ class UserLogic extends BaseLogic
                     $params['field'] => $params['value']]
             );
         } catch (Exception $e) {
-            self::$error = $e->getMessage();
+            self::setError($e->getMessage());
             return false;
         }
     }

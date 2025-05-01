@@ -52,7 +52,7 @@ class SmsLogic extends BaseLogic
             return $result;
 
         } catch (Exception $e) {
-            self::$error = $e->getMessage();
+            self::setError($e->getMessage());
             return false;
         }
     }

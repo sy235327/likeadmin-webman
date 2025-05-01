@@ -116,7 +116,7 @@ class WebSettingLogic extends BaseLogic
             ConfigService::set('copyright', 'config', $params['config'] ?? []);
             return true;
         } catch (Exception $e) {
-            self::$error = $e->getMessage();
+            self::setError($e->getMessage());
             return false;
         }
     }

@@ -13,7 +13,6 @@ use support\Response;
 
 class UserController extends BaseAdminController
 {
-    private UserValidate $validateObj;
 
     public function initialize(): void
     {

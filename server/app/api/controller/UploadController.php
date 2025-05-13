@@ -41,7 +41,7 @@ class UploadController extends BaseApiController
         if ($typeStr){
             $type = FileEnum::TYPE_MAP[$typeStr];
         }
-        $source_id = $this->userId;
+        $source_id = $this->getUserId();
         $source = FileEnum::SOURCE_USER;
         $name = input('name','');
         $uri = input('uri','');
@@ -66,7 +66,7 @@ class UploadController extends BaseApiController
     public function image(): Response
     {
         $uploadObj = (new UploadService());
-        $result = $uploadObj->image(0,$this->userId,FileEnum::SOURCE_USER);
+        $result = $uploadObj->image(0,$this->getUserId(),FileEnum::SOURCE_USER);
         if ($result===false){
             return $this->fail($uploadObj->getError());
         }

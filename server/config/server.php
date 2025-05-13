@@ -23,7 +23,7 @@ return [
     'context' => [],
     'name' => 'webman',
     // 进程数 （可选，默认1）
-    'count' => cpu_count() * 4,
+    'count' => cpu_count()*4,
     // 进程运行用户 （可选，默认当前用户）
     'user' => '',
     // 进程运行用户组 （可选，默认当前用户组）

@@ -70,7 +70,7 @@ class RoleLogic extends BaseLogic
             return true;
         } catch (Exception $e) {
             Db::rollback();
-            self::$error = $e->getMessage();
+            self::setError($e->getMessage());
             return false;
         }
     }
@@ -114,7 +114,7 @@ class RoleLogic extends BaseLogic
             return true;
         } catch (Exception $e) {
             Db::rollback();
-            self::$error = $e->getMessage();
+            self::setError($e->getMessage());
             return false;
         }
     }

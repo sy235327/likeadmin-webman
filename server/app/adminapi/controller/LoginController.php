@@ -30,7 +30,6 @@ use support\think\Cache;
 class LoginController extends BaseAdminController
 {
     public array $notNeedLogin = ['account'];
-    private LoginValidate $validateObj;
 
     public function initialize(): void
     {
@@ -62,7 +61,7 @@ class LoginController extends BaseAdminController
     public function logout(): Response
     {
         //退出登录情况特殊，只有成功的情况，也不需要token验证
-        (new LoginLogic())->logout($this->adminInfo);
+        (new LoginLogic())->logout($this->getAdminInfo());
         return $this->success();
     }
 }

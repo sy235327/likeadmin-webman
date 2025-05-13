@@ -38,8 +38,6 @@ class EndMiddleware implements MiddlewareInterface
     public function process(Request $request, callable $handler): Response
     {
         $controllerObject = make($request->controller);
-        // 如果是opitons请求则返回一个空的响应，否则继续向洋葱芯穿越，并得到一个响应
-        $controllerObject->setRequest(request());
         $controllerObject->initialize();
 
         return $handler($request);

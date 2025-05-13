@@ -78,7 +78,7 @@ class GeneratorLogic extends BaseLogic
             return true;
         } catch (Exception $e) {
             Db::rollback();
-            self::$error = $e->getMessage();
+            self::setError($e->getMessage());
             return false;
         }
     }
@@ -134,7 +134,7 @@ class GeneratorLogic extends BaseLogic
             return true;
         } catch (Exception $e) {
             Db::rollback();
-            self::$error = $e->getMessage();
+            self::setError($e->getMessage());
             return false;
         }
     }
@@ -157,7 +157,7 @@ class GeneratorLogic extends BaseLogic
             return true;
         } catch (Exception $e) {
             Db::rollback();
-            self::$error = $e->getMessage();
+            self::setError($e->getMessage());
             return false;
         }
     }
@@ -187,7 +187,7 @@ class GeneratorLogic extends BaseLogic
             return true;
         } catch (Exception $e) {
             Db::rollback();
-            self::$error = $e->getMessage();
+            self::setError($e->getMessage());
             return false;
         }
     }
@@ -230,7 +230,7 @@ class GeneratorLogic extends BaseLogic
             return ['file' => $zipFile];
 
         } catch (Exception $e) {
-            self::$error = $e->getMessage();
+            self::setError($e->getMessage());
             return false;
         }
     }
@@ -254,7 +254,7 @@ class GeneratorLogic extends BaseLogic
             return make(GenerateService::class)->preview($table);
 
         } catch (Exception $e) {
-            self::$error = $e->getMessage();
+            self::setError($e->getMessage());
             return false;
         }
     }
@@ -362,13 +362,13 @@ class GeneratorLogic extends BaseLogic
     {
         $cacheFileName = cache('curd_file_name' . $fileName);
         if (empty($cacheFileName)) {
-            self::$error = '请重新生成代码';
+            self::setError('请重新生成代码');
             return false;
         }
 
         $path = root_path() . 'runtime/generate/' . $fileName;
         if (!file_exists($path)) {
-            self::$error = '下载失败';
+            self::setError('下载失败');
             return false;
         }
 

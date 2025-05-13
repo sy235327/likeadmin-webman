@@ -32,7 +32,6 @@ use think\db\exception\ModelNotFoundException;
  */
 class RoleController extends BaseAdminController
 {
-    private RoleValidate $validateObj;
 
     public function initialize(): void
     {

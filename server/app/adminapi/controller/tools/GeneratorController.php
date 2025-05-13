@@ -22,7 +22,6 @@ class GeneratorController extends BaseAdminController
 
     public array $notNeedLogin = ['download'];
 
-    private GenerateTableValidate $validateObj;
 
     public function initialize(): void
     {
@@ -62,7 +61,7 @@ class GeneratorController extends BaseAdminController
     public function selectTable(): Response
     {
         $params = $this->validateObj->post()->goCheck('select');
-        $result = GeneratorLogic::selectTable($params, $this->adminId);
+        $result = GeneratorLogic::selectTable($params, $this->getAdminId());
         if (true === $result) {
             return $this->success('操作成功', [], 1, 1);
         }

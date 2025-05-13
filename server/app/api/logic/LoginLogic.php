@@ -183,7 +183,8 @@ class LoginLogic extends BaseLogic
 
         } catch (Exception $e) {
             Db::rollback();
-            self::$error = $e->getMessage();
+            self::setError($e->getMessage());
+
             return false;
         }
     }
@@ -211,7 +212,7 @@ class LoginLogic extends BaseLogic
 
             return $userInfo;
         } catch (Exception  $e) {
-            self::$error = $e->getMessage();
+            self::setError($e->getMessage());
             return false;
         }
     }
@@ -240,7 +241,7 @@ class LoginLogic extends BaseLogic
             return $userInfo;
         } catch (Exception  $e) {
             Db::rollback();
-            self::$error = $e->getMessage();
+            self::setError($e->getMessage());
             return false;
         }
     }
@@ -286,7 +287,7 @@ class LoginLogic extends BaseLogic
             return self::createAuth($response);
 
         } catch (Exception  $e) {
-            self::$error = $e->getMessage();
+            self::setError($e->getMessage());
             return false;
         }
     }
@@ -311,7 +312,7 @@ class LoginLogic extends BaseLogic
             return self::createAuth($response);
 
         } catch (Exception  $e) {
-            self::$error = $e->getMessage();
+            self::setError($e->getMessage());
             return false;
         }
     }
@@ -375,7 +376,7 @@ class LoginLogic extends BaseLogic
             return ['url' => $url];
 
         } catch (Exception $e) {
-            self::$error = $e->getMessage();
+            self::setError($e->getMessage());
             return false;
         }
     }
@@ -414,7 +415,7 @@ class LoginLogic extends BaseLogic
 
         } catch (Exception $e) {
             Db::rollback();
-            self::$error = $e->getMessage();
+            self::setError($e->getMessage());
             return false;
         }
     }

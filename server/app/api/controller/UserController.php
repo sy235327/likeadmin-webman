@@ -44,7 +44,7 @@ class UserController extends BaseApiController
      */
     public function center(): Response
     {
-        $data = UserLogic::center($this->userInfo);
+        $data = UserLogic::center($this->getUserInfo());
         return $this->success('', $data);
     }
 
@@ -57,7 +57,7 @@ class UserController extends BaseApiController
      */
     public function info(): Response
     {
-        $result = UserLogic::info($this->userId);
+        $result = UserLogic::info($this->getUserId());
         return $this->data($result);
     }
 
@@ -88,7 +88,7 @@ class UserController extends BaseApiController
     public function changePassword(): Response
     {
         $params = (new PasswordValidate())->post()->goCheck('changePassword');
-        $result = UserLogic::changePassword($params, $this->userId);
+        $result = UserLogic::changePassword($params, $this->getUserId());
         if (true === $result) {
             return $this->success('操作成功', [], 1, 1);
         }
@@ -105,7 +105,7 @@ class UserController extends BaseApiController
     public function getMobileByMnp(): Response
     {
         $params = (new UserValidate())->post()->goCheck('getMobileByMnp');
-        $params['user_id'] = $this->userId;
+        $params['user_id'] = $this->getUserId();
         $result = UserLogic::getMobileByMnp($params);
         if ($result === false) {
             return $this->fail(UserLogic::getError());
@@ -122,8 +122,8 @@ class UserController extends BaseApiController
      */
     public function setInfo(): Response
     {
-        $params = (new SetUserInfoValidate())->post()->goCheck(null, ['id' => $this->userId]);
-        $result = UserLogic::setInfo($this->userId, $params);
+        $params = (new SetUserInfoValidate())->post()->goCheck(null, ['id' => $this->getUserId()]);
+        $result = UserLogic::setInfo($this->getUserId(), $params);
         if (false === $result) {
             return $this->fail(UserLogic::getError());
         }
@@ -140,7 +140,7 @@ class UserController extends BaseApiController
     public function bindMobile(): Response
     {
         $params = (new UserValidate())->post()->goCheck('bindMobile');
-        $params['user_id'] = $this->userId;
+        $params['user_id'] = $this->getUserId();
         $result = UserLogic::bindMobile($params);
         if($result) {
             return $this->success('绑定成功', [], 1, 1);

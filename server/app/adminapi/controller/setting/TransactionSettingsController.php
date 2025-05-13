@@ -27,7 +27,6 @@ use support\Response;
  */
 class TransactionSettingsController extends BaseAdminController
 {
-    private TransactionSettingsValidate $validateObj;
 
     public function initialize(): void
     {

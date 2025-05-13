@@ -78,7 +78,7 @@ class RefundLogic extends BaseLogic
             return true;
         } catch (Exception $e) {
             // 退款请求失败,标记退款记录及日志为失败.在退款记录处重新退款
-            self::$error = $e->getMessage();
+            self::setError($e->getMessage());
             self::refundFailHandle($refundRecordId, $e->getMessage());
             return false;
         }

@@ -26,7 +26,6 @@ use support\Response;
  */
 class SmsConfigController extends BaseAdminController
 {
-    private SmsConfigValidate $validateObj;
 
     public function initialize(): void
     {

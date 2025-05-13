@@ -32,7 +32,6 @@ use think\db\exception\ModelNotFoundException;
  */
 class MenuController extends BaseAdminController
 {
-    private MenuValidate $validateObj;
 
     public function initialize(): void
     {
@@ -46,7 +45,7 @@ class MenuController extends BaseAdminController
      */
     public function route(): Response
     {
-        $result = MenuLogic::getMenuByAdminId($this->adminId);
+        $result = MenuLogic::getMenuByAdminId($this->getAdminId());
         return $this->data($result);
     }
 

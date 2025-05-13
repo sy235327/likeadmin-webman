@@ -26,7 +26,6 @@ use support\Response;
  */
 class OpenSettingController extends BaseAdminController
 {
-    private OpenSettingValidate $validateObj;
 
     public function initialize(): void
     {

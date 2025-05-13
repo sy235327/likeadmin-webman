@@ -27,7 +27,6 @@ use support\Response;
  */
 class PageController extends BaseAdminController
 {
-    private DecoratePageValidate $validateObj;
 
     public function initialize(): void
     {

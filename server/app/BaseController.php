@@ -4,29 +4,25 @@ declare (strict_types = 1);
 
 namespace app;
 
+use app\common\enum\ContextEnum;
+use app\common\validate\BaseValidate;
 use ReflectionClass;
 use ReflectionException;
+use support\Context;
 use taoser\exception\ValidateException;
 use taoser\Validate;
 use support\Request;
 /**
  * 控制器基础类
+ * @package app
+ * @property Request $request Request实例
+ * @property BaseValidate  $validateObj Validate实例
+ * @property bool $batchValidate 否批量验证
+ * @property array $middleware 自定义中间件
+ * @property array $notNeedLogin
  */
 abstract class BaseController
 {
-    /**
-     * Request实例
-     */
-    protected Request $request;
-
-    /**
-     * 是否批量验证
-     */
-    protected bool $batchValidate = false;
-    /**
-     * 自定义中间件
-     */
-    protected array $middleware = [];
 
     /**
      * 构造方法
@@ -36,14 +32,6 @@ abstract class BaseController
     public function __construct()
     {
 
-    }
-
-    /**
-     * 请求对象注入
-     */
-    public function setRequest(Request $request): void
-    {
-        $this->request = $request;
     }
 
     /**
@@ -93,5 +81,16 @@ abstract class BaseController
         }
 
         return $v->failException(true)->check($data);
+    }
+
+    public function __get($name) {
+        if ($name == ContextEnum::REQUEST_KEY){
+            return request();
+        }
+        return Context::get(ContextEnum::BATCHVALIDATE_KEY,null);
+    }
+
+    public function __set($name, $value) {
+        Context::set(ContextEnum::BATCHVALIDATE_KEY, $value);
     }
 }

@@ -284,7 +284,7 @@ class AdminLogic extends BaseLogic
                     'role_id' => $roleId,
                 ];
             }
-            (new AdminRole())->saveAll($roleData);
+            (new AdminRole())->insertAll($roleData);
         }
     }
 
@@ -308,7 +308,7 @@ class AdminLogic extends BaseLogic
                     'dept_id' => $deptId
                 ];
             }
-            (new AdminDept())->saveAll($deptData);
+            (new AdminDept())->insertAll($deptData);
         }
     }
 
@@ -332,7 +332,7 @@ class AdminLogic extends BaseLogic
                     'jobs_id' => $jobsId
                 ];
             }
-            (new AdminJobs())->saveAll($jobsData);
+            (new AdminJobs())->insertAll($jobsData);
         }
     }
 

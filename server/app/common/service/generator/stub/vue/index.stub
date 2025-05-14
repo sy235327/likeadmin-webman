@@ -25,7 +25,7 @@
                         </template>
                         新增
                     </el-button>
-                    <!--<el-button v-perms="['{PERMS_DELETE}']" :disabled="!selectData.length" @click="handleDelete(selectData)">删除</el-button>-->
+                    <el-button v-perms="['{PERMS_DELETE}']" :disabled="!selectData.length" @click="handleDelete(selectData)">删除</el-button>
                 </div>
                 <export-data
                     class="ml-2.5"
@@ -44,12 +44,6 @@
                     @selection-change="handleSelectionChange"
                 >
                     <!--<el-table-column type="selection" width="55" />-->
-                    <!-- min-width="200px" -->
-                    <el-table-column label="序号" width="90" type="index">
-                        <template #default="{ row }">
-                            {{ row.parentIndex }}
-                        </template>
-                    </el-table-column>
                     {LISTS_VIEW}
                     <el-table-column label="操作" width="150" fixed="right">
                         <template #default="{ row }">

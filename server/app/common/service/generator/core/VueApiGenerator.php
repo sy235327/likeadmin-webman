@@ -59,15 +59,15 @@ class VueApiGenerator extends BaseGenerator implements GenerateInterface
 
     /**
      * @notes 路由名称
-     * @return array|string|string[]
+     * @return string
      * @author bingo
      * @date 2022/6/22 18:19
      */
     public function getRouteContent()
     {
-        $content = $this->getTableName();
+        $content = Str::studly($this->getTableName());
         if (!empty($this->classDir)) {
-            $content = $this->classDir . '/' . $this->classComment;
+            $content = $this->classDir . '/' . Str::studly($this->getTableName());
         }
         return $content;
     }
